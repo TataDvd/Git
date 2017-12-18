@@ -1,0 +1,42 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Periods.Periods"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tempo2012.UI.WPF.Views.Periods"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="500" Width="500" x:Name="_this">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" >
+            <CustomControls:TextBlockEx  Text="От:" Margin="10,5,10,2" Width="20" TextAlignment="Right" />
+            <DatePicker Text="{Binding Fr}" Width="100" Margin="10,5,10,2"></DatePicker>
+            <CustomControls:TextBlockEx  Text="До:" Margin="10,5,10,2" Width="20" TextAlignment="Right" />
+            <DatePicker Text="{Binding To}" Width="100" Margin="10,5,10,2"></DatePicker>
+        </StackPanel>
+        <ListBox  Grid.Row="1" ItemsSource="{Binding Periods}" SelectedItem="{Binding Period,Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <DatePicker Text="{Binding Fr,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                        <DatePicker Grid.Column="1" Text="{Binding To,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button Content="Добави" Width="120" Margin="10,5,10,5" Command="{Binding AddCommand}" HorizontalContentAlignment="Left" Padding="10,0,0,0"></Button>
+            <Button Content="Изтрий" Width="120" Margin="10,5,10,5"  Command="{Binding UpdateCommand}" HorizontalContentAlignment="Left" Padding="10,0,0,0"></Button>
+            <Button Content="Запис" Width="120" Margin="10,5,10,5"  Command="{Binding SaveCommand}" HorizontalContentAlignment="Left" Padding="10,0,0,0"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

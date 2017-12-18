@@ -1,0 +1,23 @@
+
+Log Entry : 
+05/21/2014 14:24:49
+Error Message:Dynamic SQL Error
+SQL error code = -104
+Token unknown - line 1, column 91
+)
+__________________________
+
+Log Entry : 
+05/21/2014 17:58:38
+Error Message:Failed to create a 'LostFocus' from the text 'MaskTextBox_LostFocus'.
+__________________________
+
+Log Entry : 
+05/21/2014 17:59:41
+Error Message:Failed to create a 'LostFocus' from the text 'MaskTextBox_LostFocus'.
+__________________________
+
+Log Entry : 
+05/21/2014 19:21:41
+Error Message:Failed to create a 'LostFocus' from the text 'MaskTextBox_LostFocus'.
+__________________________

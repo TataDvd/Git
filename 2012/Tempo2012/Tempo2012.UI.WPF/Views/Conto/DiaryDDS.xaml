@@ -1,0 +1,11 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Conto.DiaryDDS"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Данни за ДДС" Height="500" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+    </Grid>
+</Window>

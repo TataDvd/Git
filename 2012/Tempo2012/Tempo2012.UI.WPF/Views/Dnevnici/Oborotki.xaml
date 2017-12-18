@@ -1,0 +1,22 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dnevnici.Oborotki"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="Оборотна ведомост" Height="129" Width="617">
+    <Grid>
+        <StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <customControls:TextBlockEx  Margin="10,5,10,5" >От дата</customControls:TextBlockEx>
+                <DatePicker Text="{Binding FromDate,Mode=TwoWay}" Width="150" Margin="10,5,10,5"></DatePicker>
+                <customControls:TextBlockEx  Margin="10,5,10,5" >До дата</customControls:TextBlockEx>
+                <DatePicker Text="{Binding ToDate,Mode=TwoWay}" Width="150" Margin="10,5,10,5"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Справка" Margin="10,5,10,5" Command="{Binding AddCommand}"></Button>
+               
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
+

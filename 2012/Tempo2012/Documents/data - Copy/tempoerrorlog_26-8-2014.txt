@@ -1,0 +1,64 @@
+
+Log Entry : 
+08/26/2014 00:00:37
+Error Message:Dynamic SQL Error
+SQL error code = -204
+Table unknown
+[null]
+At line 1, column 10
+__________________________
+
+Log Entry : 
+08/26/2014 04:58:17
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'ShortName' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 04:59:01
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'ShortName' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 05:00:12
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'ShortName' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 05:04:43
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'ShortName' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 05:16:08
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'ShortName' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 06:07:28
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'Short' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 06:08:20
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'Short' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 06:13:17
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'Short' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 06:14:45
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'Short' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 06:18:06
+Error Message:A TwoWay or OneWayToSource binding cannot work on the read-only property 'Short' of type 'Tempo2012.EntityFramework.Models.AccountsModel'.
+__________________________
+
+Log Entry : 
+08/26/2014 00:03:24
+Error Message:Object reference not set to an instance of an object.
+__________________________

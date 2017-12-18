@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ArrayOfCartotecaDebit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CartotecaDebit>
+    <Id>1</Id>
+    <ContoId>1</ContoId>
+    <TitleValue>Сума лева</TitleValue>
+    <TypeValue>money</TypeValue>
+    <Value>50.50</Value>
+  </CartotecaDebit>
+  <CartotecaDebit>
+    <Id>2</Id>
+    <ContoId>2</ContoId>
+    <TitleValue>Сума лева</TitleValue>
+    <TypeValue>money</TypeValue>
+    <Value>150.50</Value>
+  </CartotecaDebit>
+</ArrayOfCartotecaDebit>

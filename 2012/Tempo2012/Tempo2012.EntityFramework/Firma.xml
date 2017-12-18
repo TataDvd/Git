@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<ArrayOfFirmModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FirmModel>
+    <Id>1</Id>
+    <Name>Антон ЕООД</Name>
+    <Bulstad>12121221</Bulstad>
+    <DDSnum>433433334</DDSnum>
+    <City>Перник</City>
+    <Country>България</Country>
+    <Zip>2300</Zip>
+    <Address>Tran</Address>
+    <Telefon>343322333</Telefon>
+    <Presentor>Милен Таков</Presentor>
+    <NameBoss>Антон Таков</NameBoss>
+    <EGN>7310153783</EGN>
+    <PresentorYN>Да</PresentorYN>
+    <Names>Станка Такич</Names>
+    <Tel>0898706435</Tel>
+    <FirstName>Антон</FirstName>
+    <SurName>Недялков</SurName>
+    <LastName>Таков</LastName>
+    <City2>София</City2>
+    <Zip2>2333</Zip2>
+    <Address2>Левуново</Address2>
+  </FirmModel>
+  <FirmModel>
+    <Id>2</Id>
+    <Name>Електро ЕООД</Name>
+    <Bulstad>12121221</Bulstad>
+    <DDSnum>433433334</DDSnum>
+    <City>София</City>
+    <Country>България</Country>
+    <Zip>2300</Zip>
+    <Address>София ул. "Русалийски проход" 60</Address>
+    <Telefon>343322333</Telefon>
+    <Presentor>Милен Таков</Presentor>
+    <NameBoss>Антон Таков</NameBoss>
+    <EGN>7310153783</EGN>
+    <PresentorYN>Да</PresentorYN>
+    <Names>Станка Такич</Names>
+    <Tel>0898706435</Tel>
+    <FirstName>Антон</FirstName>
+    <SurName>Недялков</SurName>
+    <LastName>Таков</LastName>
+    <City2>София</City2>
+    <Zip2>2331</Zip2>
+    <Address2>Троян 4</Address2>
+  </FirmModel>
+  <FirmModel>
+    <Id>3</Id>
+    <Name>Нели ЕООД</Name>
+    <Bulstad>12121221</Bulstad>
+    <DDSnum>433433334</DDSnum>
+    <City>София</City>
+    <Country>Англия</Country>
+    <Zip>2300</Zip>
+    <Address>Перни Вишнева градина 60</Address>
+    <Telefon>343322333</Telefon>
+    <Presentor>Милен Таков</Presentor>
+    <NameBoss>Нели Такова</NameBoss>
+    <EGN>7310153783</EGN>
+    <PresentorYN>Да</PresentorYN>
+    <Names>Иван Иванов</Names>
+    <Tel>0898706435</Tel>
+    <FirstName>Антон</FirstName>
+    <SurName>Недялков</SurName>
+    <LastName>Таков</LastName>
+    <City2>София</City2>
+    <Zip2>2311</Zip2>
+    <Address2>Перник Троян 4</Address2>
+  </FirmModel>
+  <FirmModel>
+    <Id>4</Id>
+    <Name>Лили ЕООД</Name>
+    <Bulstad>12121221</Bulstad>
+    <DDSnum>433433334</DDSnum>
+    <City>София</City>
+    <Country>Англия</Country>
+    <Zip>2300</Zip>
+    <Address>Перни Вишнева градина 60</Address>
+    <Telefon>343322333</Telefon>
+    <Presentor>Милен Таков</Presentor>
+    <NameBoss>Нели Такова</NameBoss>
+    <EGN>7310153783</EGN>
+    <PresentorYN>Да</PresentorYN>
+    <Names>Иван Иванов</Names>
+    <Tel>0898706435</Tel>
+    <FirstName>Антон</FirstName>
+    <SurName>Недялков</SurName>
+    <LastName>Таков</LastName>
+    <City2>София</City2>
+    <Zip2>2311</Zip2>
+    <Address2>Перник Троян 4</Address2>
+  </FirmModel>
+  <FirmModel>
+    <Id>5</Id>
+    <Name>Лили AD</Name>
+    <Bulstad>12121221</Bulstad>
+    <DDSnum>433433334</DDSnum>
+    <City>Трън</City>
+    <Country>Англия</Country>
+    <Zip>1000</Zip>
+    <Address>Перник Вишнева градина 60</Address>
+    <Telefon>343322333</Telefon>
+    <Presentor>Милен Таков</Presentor>
+    <NameBoss>Нели Такова</NameBoss>
+    <EGN>7310153783</EGN>
+    <PresentorYN>Да</PresentorYN>
+    <Names>Иван Иванов</Names>
+    <Tel>0898706435</Tel>
+    <FirstName>Антон</FirstName>
+    <SurName>Недялков</SurName>
+    <LastName>Таков</LastName>
+    <City2>София</City2>
+    <Zip2>2311</Zip2>
+    <Address2>Перник Троян 7</Address2>
+  </FirmModel>
+</ArrayOfFirmModel>

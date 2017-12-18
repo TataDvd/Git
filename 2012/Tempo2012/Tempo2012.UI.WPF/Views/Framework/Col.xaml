@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.Framework.Col"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors" mc:Ignorable="d">
+    <UserControl.Resources>
+        <l:LevConvertor x:Key="lv"></l:LevConvertor>
+        <l:KolConvertor x:Key="kol"></l:KolConvertor>
+        <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+        <l:BooleanToColorConvertor x:Key="btoc"/>
+       
+           
+        
+    </UserControl.Resources>
+    <Grid Margin="20,0,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+           
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="{Binding Name}"></CustomControls:TextBlockEx>
+        <CustomControls:MaskTextBox Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding ValueKol,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource kol}}"
+                                    DataType="decimal"  
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    KeyDown="UIElement_OnKeyDown"
+                                    TabIndex="{Binding TabIndex}"></CustomControls:MaskTextBox>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="Единична цена" Grid.Row="1"></CustomControls:TextBlockEx>
+        <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                                     DataType="decimal"  
+                                     Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                     Grid.Row="1" Grid.Column="1"
+                                     Text="{Binding OnePrice,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource lv}}" 
+                                     TabIndex="{Binding TabIndex}" IsEnabled="False">
+                                     
+        </CustomControls:MaskTextBox>
+     </Grid>
+</UserControl>

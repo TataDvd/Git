@@ -1,0 +1,17 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Framework.HoldingSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Избор на група" Height="400" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*">
+            </RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding Holdings}" SelectedItem="{Binding Holding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MouseDoubleClick="Control_OnMouseDoubleClick"></ListBox>
+        <StackPanel  Grid.Row="1" Orientation="Horizontal">
+        <Button TabIndex="21" Content="Избери" Margin="10,5,10,2" IsDefault="True" Click="Button_Click" IsEnabled="{Binding HasSelection}"></Button>
+        <Button TabIndex="22" Content="Откажи" Margin="10,5,10,2" IsCancel="True"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

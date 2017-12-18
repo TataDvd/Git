@@ -1,0 +1,242 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.Lookups"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" x:Name="_this">
+    <UserControl.Resources>
+         <Style TargetType="{x:Type CustomControls:TextBoxEx}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="185" />
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="25" />
+            </Grid.ColumnDefinitions>
+
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Номенклатурa" FontSize="14" FontWeight="Bold" />
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="1" Text="Име" />
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="2" Text="Описание" />
+
+
+
+            <CustomControls:TextBoxEx Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Path=EnableEdits}" 
+                     Text="{Binding Path=Title,
+                     Mode=TwoWay, UpdateSourceTrigger= PropertyChanged,
+                     NotifyOnValidationError=True, ValidatesOnDataErrors=True,
+                     ValidatesOnExceptions =True}"
+                     Width="240" MaxLength="30"
+                     Margin="10,5,0,5"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top" />
+            <ComboBox TabIndex="1" Grid.Row="1" Grid.Column="2" 
+                  Text="{Binding Path=Name}" 
+                  ItemsSource="{Binding Lookups}" 
+                  DisplayMemberPath="Name" 
+                  Margin="0,5,0,5" 
+                  SelectedItem="{Binding Lookup}" 
+                  IsEditable="{Binding Path=DisableEdits}"/>
+            <CustomControls:TextBoxEx Grid.Column="1" Grid.Row="2" IsEnabled="{Binding Path=EnableEdits}" 
+                     Text="{Binding Path=Description,Mode=TwoWay}"
+                     Width="250" MaxLength="200"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" />
+        </Grid>
+        <Grid Height="auto" Width="auto" Grid.Row="3">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" ></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+          
+        <Grid Grid.Column="2" Margin="30,20,30,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <CustomControls:TextBlockEx TextAlignment="Left">Всички полета</CustomControls:TextBlockEx>
+                <Border 
+                BorderBrush="Gray"
+                Background="LightGray"
+                Grid.Row="1"
+                Padding="4">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <CustomControls:TextBlockEx Text="Име" Width="200"/>
+                        <CustomControls:TextBlockEx Text="Тип" Width="100"/>
+                       
+                    </StackPanel>
+                </Border>
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" 
+                          HorizontalScrollBarVisibility="Auto"
+                          >
+                    <ListBox  ItemsSource="{Binding Path=NomenclatureFields}" 
+                              SelectedItem="{Binding Path=CurrentLookUpSpecificField,Mode=TwoWay}"  
+                              IsEnabled="{Binding Path=EnableEdits}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border 
+                                BorderBrush="Gray"
+                                Background="LightGray"
+                                BorderThickness="1"
+                                Padding="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <CustomControls:TextBlockEx Text="{Binding Name}" Width="200"/>
+                                        <CustomControls:TextBlockEx Text="{Binding DbField}" Width="100"/>
+                                     
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                            </ListBox.ItemTemplate>
+                    </ListBox>
+            </ScrollViewer>
+        </Grid>
+           
+        <StackPanel Grid.Column="1" Width="30" Margin="0,70">
+                <Button Content="&lt;" Command="{Binding Path=MoveSelectedLeftCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>
+                <!--<Button Content="&lt;&lt;" Command="{Binding Path=MoveAllLeftCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>-->
+                <Button Content=">" Command="{Binding Path=MoveSelectedRightCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>
+                <!--<Button Content=">>" Command="{Binding Path=MoveAllRightCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>-->
+        </StackPanel>
+            <Grid  Grid.Column="0"
+                    Margin="30,20,30,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <CustomControls:TextBlockEx  TextAlignment="Left">Избрани полета</CustomControls:TextBlockEx>
+                <Border 
+                BorderBrush="Gray"
+                Background="LightGray"
+                Grid.Row="1"
+                Padding="4">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <CustomControls:TextBlockEx Text="Име" Width="200"/>
+                        <CustomControls:TextBlockEx Text="Тип" Width="100"/>
+                        <CustomControls:TextBlockEx Text="*" Width="50" TextAlignment="Left" Foreground="Red" 
+                        FontSize="16"  FontWeight="Bold"/>
+                        <CustomControls:TextBlockEx Text="*" Width="50" TextAlignment="Left" Foreground="Purple" 
+                        FontSize="16"  FontWeight="Bold"/>
+                        <!--<TextBlockEx Text="=-=-=" Width="50"  Foreground="Green" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        FontSize="16"  FontWeight="Bold"/>-->
+                    </StackPanel>
+                </Border>
+                <ScrollViewer Grid.Row="2"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <ListBox ItemsSource="{Binding Path=NomenclatureFieldsSelected,
+                           ValidatesOnDataErrors=True,
+                           ValidatesOnExceptions =True,
+                           NotifyOnValidationError=True}" 
+                           IsEnabled="{Binding Path=EnableEdits}"
+                           SelectedItem="{Binding Path=CurrentLookUpSpecificFieldSelected,Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border 
+                BorderBrush="Gray"
+                Background="LightGray"
+                BorderThickness="1"
+                Padding="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <CustomControls:TextBlockEx Text="{Binding Name}" Width="200"/>
+                                        <CustomControls:TextBlockEx Text="{Binding DbField}" Width="100"/>
+                                        <CheckBox IsChecked="{Binding Path=IsRequared,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                                        <CheckBox IsChecked="{Binding Path=IsUnique,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                                        <!--<ComboBox  Width="100" 
+                                      
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl, AncestorLevel=1},Path=DataContext.Lookups}" 
+                                      DisplayMemberPath=".Name" 
+                                      Margin="0,5,0,5" 
+                                      SelectedItem="{Binding Sl,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" 
+                                               
+                                     />-->
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                   </ListBox>
+                </ScrollViewer>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Width="auto">
+                    <CustomControls:TextBlockEx Margin="25,5,0,5" Text="Указание:"  TextAlignment="Right" 
+                        FontSize="16"  FontWeight="Bold"    
+                       ></CustomControls:TextBlockEx>
+                    <CustomControls:TextBlockEx Margin="25,5,0,5" Text="* Задължително поле"  TextAlignment="Right" Foreground="Red" 
+                        FontSize="16"  FontWeight="Bold"    
+                       ></CustomControls:TextBlockEx>
+                    <CustomControls:TextBlockEx Margin="25,5,0,5" Text="* Уникално поле"  TextAlignment="Right" Foreground="Purple"
+                        FontSize="16" FontWeight="Bold"    
+                       ></CustomControls:TextBlockEx>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

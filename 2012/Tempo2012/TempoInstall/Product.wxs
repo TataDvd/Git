@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="TempoInstall" Language="1033" Version="1.0.0.0" Manufacturer="SOFT 2000" UpgradeCode="9d666054-b5f0-4ea4-8457-4942c595aeee">
+		<Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+		<Feature Id="ProductFeature" Title="TempoInstall" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="TempoInstall" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Guid="{9D31D19D-FE49-45FC-A048-A5480D087793}">
+        <File Source="$(var.DataGrid2DLibrary.TargetPath)" KeyPath="yes"></File>
+      </Component>
+      <Component Guid="{60163A81-28B5-451D-B9D3-EBD80D3F1756}">
+         <File Source="$(var.dragonz.actb.TargetPath)" KeyPath="yes"></File>
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

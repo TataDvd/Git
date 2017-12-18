@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.AnaliticManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" x:Name="_this">
+    <UserControl.Resources>
+         <Style TargetType="{x:Type CustomControls:TextBoxEx}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+      
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="185" />
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="0"  Text="Аналитични сметка" FontSize="14" FontWeight="Bold" />
+            <ComboBox TabIndex="1" Grid.Row="1"   Grid.Column="2"
+                  Text="{Binding Path=Name}" 
+                  ItemsSource="{Binding AllAnaliticalAccount}" 
+                  DisplayMemberPath="Name" 
+                  Margin="0,5,0,5"
+                  SelectedItem="{Binding CurrentAnaliticalAccount}" 
+                  IsEditable="{Binding Path=DisableEdits}"/>
+            <DataGrid Grid.Column="3" Grid.Row="3"  ItemsSource="{Binding Path=SelectedAnaliticalTypeFields}"
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Поле" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Тип" Binding="{Binding FieldType}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="1" Text="Име" />
+            <CustomControls:TextBlockEx Grid.Column="0" Grid.Row="2" Text="Тип Аналитична сметка" VerticalAlignment="Top" />
+
+
+
+            <CustomControls:TextBoxEx Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Path=EnableEdits}" 
+                     Text="{Binding Path=Title,
+                     Mode=TwoWay, UpdateSourceTrigger= PropertyChanged,
+                     NotifyOnValidationError=True, ValidatesOnDataErrors=True,
+                     ValidatesOnExceptions =True}"
+                     MaxLength="30"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top" 
+                     Margin="10,5,0,5" Width="240"/>
+            <ComboBox Grid.Column="1"  Grid.Row="2" VerticalAlignment="Top"
+                          ItemsSource="{Binding AllAnaliticTypes}" 
+                          Margin="10,5,10,2"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding CurrentAllTypeAccount,Mode=TwoWay}"
+                          IsEnabled="{Binding Path=EnableEdits}"
+                         />
+            <!--<ComboBox 
+                    TabIndex="5"
+                    Grid.Row="1"
+                    Grid.Column="5"
+                    ItemsSource="{Binding ElementName=_this,Path=DataContext.Countries}"
+                    DisplayMemberPath="Name" Margin="10,5,10,2"
+                    SelectedValue="{Binding Path=Country,Mode=TwoWay}"
+                    SelectedValuePath="Id" Grid.ColumnSpan="2">
+            </ComboBox>-->
+        </Grid>
+        <Grid Height="auto" Width="auto" Grid.Row="3">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" ></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+          
+        <Grid Grid.Column="2" Margin="30,20,30,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <CustomControls:TextBlockEx TextAlignment="Left">Всички полета</CustomControls:TextBlockEx>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" 
+                          HorizontalScrollBarVisibility="Auto"
+                          >
+                    <DataGrid ItemsSource="{Binding Path=Fields}" SelectedItem="{Binding Path=CurrentField,Mode=TwoWay}" AutoGenerateColumns="False" 
+                              IsReadOnly="True" IsEnabled="{Binding Path=EnableEdits}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+            </ScrollViewer>
+        </Grid>
+           
+        <StackPanel Grid.Column="1" Width="30" Margin="0,70">
+                <Button Content="&lt;" Command="{Binding Path=MoveSelectedLeftCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>
+                <!--<Button Content="&lt;&lt;" Command="{Binding Path=MoveAllLeftCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>-->
+                <Button Content=">" Command="{Binding Path=MoveSelectedRightCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>
+                <!--<Button Content=">>" Command="{Binding Path=MoveAllRightCommand}" IsEnabled="{Binding Path=EnableEdits}"></Button>-->
+        </StackPanel>
+            <Grid  Grid.Column="0"
+                    Margin="30,20,30,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                </Grid.RowDefinitions>
+                <CustomControls:TextBlockEx  TextAlignment="Left">Избрани полета</CustomControls:TextBlockEx>
+                <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <DataGrid  ItemsSource="{Binding Path=FieldsSelected,
+                           ValidatesOnDataErrors=True,
+                           ValidatesOnExceptions =True,
+                           NotifyOnValidationError=True}" 
+                           SelectedItem="{Binding Path=CurrentFieldSelected,Mode=TwoWay}" 
+                           AutoGenerateColumns="False" 
+                           IsEnabled="{Binding Path=EnableEdits}" 
+                           IsReadOnly="True"    
+                           >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                            <DataGridTemplateColumn Header="Контролно">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=Requared,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

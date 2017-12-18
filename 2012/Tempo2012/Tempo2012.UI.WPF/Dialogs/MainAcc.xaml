@@ -1,0 +1,243 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Dialogs.MainAcc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+        x:Name="_this" 
+        KeyDown="_this_KeyDown"
+        Title="Добавяне на основна сметка" Height="auto" Width="auto">
+    <Window.Resources>
+        <l:FromEnumToRadio x:Key="enumBooleanConverter" />
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F2" Command="{Binding Path=DataContext.AddCommand}" />
+        <KeyBinding Key="F3" Command="{Binding Path=DataContext.UpdateCommand}" />
+        <KeyBinding Key="F6" Command="{Binding Path=DataContext.ViewCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding Path=DataContext.DeleteCommand}" />
+    </Window.InputBindings>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            
+        </Grid.RowDefinitions>
+            <GroupBox Grid.Row="1" Header="Сметка" HorizontalAlignment="Stretch"  Name="groupAccount" VerticalAlignment="Top" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Национален сметкоплан" Visibility="{Binding Path=ShowMain,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <ComboBox Grid.Row="0" Grid.Column="1"
+                          Grid.ColumnSpan="4" Margin="10,5,10,2" 
+                          ItemsSource="{Binding ElementName=_this,
+                          Path=DataContext.AllNationalAccounts}"
+                          SelectionChanged="ComboBox_SelectionChanged" Visibility="{Binding Path=ShowMain,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Сметка" />
+                <TextBox x:Name="accountnum" Grid.Row="1" Grid.Column="1"  Text="{Binding Path=Num,Mode=TwoWay}"  Margin="10,5,10,2" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Име Сметка" />
+                <TextBox x:Name="accountname" Grid.Row="1" Grid.Column="3" Text="{Binding Path=NameMain,Mode=TwoWay}"  Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Начално салдо кредит" Margin="10,5,0,5"/>
+                <TextBox  Grid.Row="2" Grid.Column="3"
+                          Text="{Binding Path=Saldo,Mode=TwoWay}"
+                          Margin="10,5,0,5"
+                          Width="70"
+                          HorizontalAlignment="Left"
+                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Начално салдо дебит" Margin="10,5,0,5"/>
+                <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding Path=SaldoDebit,Mode=TwoWay}" 
+                          Margin="10,5,10,2"
+                          Width="70"
+                          HorizontalAlignment="Left"
+                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Характеристики на сметка" HorizontalAlignment="Stretch"  Name="groupAccount1" VerticalAlignment="Top" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0" Header="Тип сметка" HorizontalAlignment="Stretch"  Name="groupAccount11" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsActive}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Активна</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsPasiv}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Активно пасивна</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Column="1" IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsActivePasiv}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Пасивна</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding ElementName=_this,
+                            Path=DataContext.TypeAccountEnumIn,Mode=TwoWay,
+                            Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsTranzitiv}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Транзитивна</TextBox>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="1"  Header="Ниво сметка" HorizontalAlignment="Stretch"  Name="groupAccount12" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton HorizontalContentAlignment="Left" IsChecked="{Binding ElementName=_this,Path=DataContext.LevelAccountIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsSintetic}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Синтетично</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Name="IsAnalitic" IsChecked="{Binding ElementName=_this,Path=DataContext.LevelAccountIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsAnalitic}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Аналитично</TextBox>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="2" Header="Тип салдо" HorizontalAlignment="Stretch"  Name="groupAccount13" VerticalAlignment="Top" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsCompens}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Компенсирано</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsExpand}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Разгънато</TextBox>
+                        </RadioButton>
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="3" Header="Опции" HorizontalAlignment="Stretch"  Name="groupAccount14" VerticalAlignment="Top" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsCompens}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Нормална</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="0" Grid.Column="1" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsExpand}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Бюджетна</TextBox>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeAnaliticIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsExpand}">
+                            <TextBox IsEnabled="False" Margin="0,5,10,2">Собствени средства</TextBox>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>  
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="3" Header="Данни за аналитично ниво" HorizontalAlignment="Stretch" Name="groupAccount2" VerticalAlignment="Stretch" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Вид аналитична сметка" Margin="10,5,10,2" />
+
+                <ComboBox Margin="10,5,10,2" Grid.Column="1"
+                              ItemsSource="{Binding AllAnaliticalAccount}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding CurrentAllAnaliticalAccount,Mode=TwoWay}" />
+                <!--<TextBlock Margin="10" 
+                               DataContext="{Binding Path=CurrentAllAnaliticalAccount}"
+                               Text="{Binding Path=Id}" />-->
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Тип аналитична сметка" Margin="10,5,10,2" />
+
+                <ComboBox Grid.Column="1"  Grid.Row="1" IsEnabled="False"
+                          ItemsSource="{Binding AllAnaliticTypes}" 
+                          Margin="10,5,10,2"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding CurrentAllTypeAccount,Mode=TwoWay}"/>
+                              
+                
+              
+                <DataGrid Grid.Column="1" Grid.Row="3" Grid.RowSpan="5" ItemsSource="{Binding Path=SelectedAnaliticalTypeFields}"
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Поле" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Тип" Binding="{Binding FieldType}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <!--<GroupBox Grid.Row="4" Header="Връзка с номенклатура" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  >-->
+            <DataGrid Grid.Column="0" Grid.Row="4" Name="Mapper" 
+                          ItemsSource="{Binding SelectedAnaliticalFields,Mode=TwoWay}"
+                          SelectedItem="{Binding CurrentSelectedAnaliticalField, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          IsEnabled="True"
+                          IsReadOnly="True"
+                       MouseDoubleClick="DataGrid_MouseDoubleClick"
+                          > <!--IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits}"-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Поле" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Тип" Binding="{Binding FieldType}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.Header>
+                            <Image Source="..\Images\insert_link.png" Height="30"></Image>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                               
+                                    <Image Source="..\Images\insert_link.png" Height="30"></Image>
+                               
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Номеклатура" Binding="{Binding NameLookUp}" />
+                <DataGridTextColumn Header="Свързано Поле" Binding="{Binding NameFieldLookUp}"/>
+
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        <!--</GroupBox>-->
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        
+        
+    </Grid>
+</Window>

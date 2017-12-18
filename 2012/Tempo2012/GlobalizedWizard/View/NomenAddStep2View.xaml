@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="GlobalizedWizard.View.NomenAddStep2View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+            >
+    <Grid Height="auto" Width="auto">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" ></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock>Всички полета</TextBlock>
+            <ListBox Height="auto" ItemsSource="{Binding Path=NomenclatureFields}" Margin="10,5,10,2" SelectedItem="{Binding Path=CurrentLookUpSpecificField,Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                        <!--<Grid Margin="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" SharedSizeGroup="Key" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>-->
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"  />
+                            <!--<TextBox Grid.Column="1" Text="{Binding Description }" />-->
+                            <TextBox Text="{Binding Type }" />
+                        <!--</Grid>-->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Width="30">
+            <Button Content="&lt;" Command="{Binding Path=MoveSelectedRightCommand}"></Button>
+            <Button Content="&lt;&lt;" Command="{Binding Path=MoveAllRightCommand}"></Button>
+            <Button Content=">" Command="{Binding Path=MoveSelectedLeftCommand}"></Button>
+            <Button Content=">>" Command="{Binding Path=MoveAllLeftCommand}"></Button>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <TextBlock>Избрани полета</TextBlock>
+            <ListBox Height="auto" ItemsSource="{Binding Path=NomenclatureFieldsSelected}" Margin="10,5,10,2" SelectedItem="{Binding Path=CurrentLookUpSpecificFieldSelected,Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"  />
+                            <!--<TextBox Grid.Column="1" Text="{Binding Description }" />-->
+                            <TextBox Text="{Binding Type }" />
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2"  Orientation="Horizontal" Height="30"></StackPanel>
+    </Grid>
+</UserControl>

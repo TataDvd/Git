@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{45BE88E8-5176-4DC6-AEF3-E40148E9ADEF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GlobalizedWizard</RootNamespace>
+    <AssemblyName>GlobalizedWizard</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationMainWindow.xaml.cs">
+      <DependentUpon>ApplicationMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CoffeeWizardDialog.xaml.cs">
+      <DependentUpon>CoffeeWizardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="NomenWizardDialog.xaml.cs">
+      <DependentUpon>NomenWizardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Resources\Strings.bg-BG.Designer.cs">
+      <DependentUpon>Strings.bg-BG.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CoffeeExtrasPageViewModel.cs" />
+    <Compile Include="ViewModel\CoffeeSummaryPageViewModel.cs" />
+    <Compile Include="ViewModel\CoffeeTypeSizePageViewModel.cs" />
+    <Compile Include="ViewModel\CoffeeWizardPageViewModelBase.cs" />
+    <Compile Include="ViewModel\CoffeeWizardViewModel.cs" />
+    <Compile Include="ViewModel\NomenWizardViewModel.cs" />
+    <Compile Include="ViewModel\NomenAddStep0.cs" />
+    <Compile Include="ViewModel\NomenAddStep1.cs" />
+    <Compile Include="ViewModel\NomenAddStep2.cs" />
+    <Compile Include="ViewModel\NomenAddStep3.cs" />
+    <Compile Include="ViewModel\NomenWizardPageViewModelBase.cs" />
+    <Compile Include="ViewModel\OptionViewModel.cs" />
+    <Compile Include="ViewModel\WelcomePageViewModel.cs" />
+    <Compile Include="View\CoffeeExtrasPageView.xaml.cs">
+      <DependentUpon>CoffeeExtrasPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CoffeeSummaryPageView.xaml.cs">
+      <DependentUpon>CoffeeSummaryPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CoffeeTypeSizePageView.xaml.cs">
+      <DependentUpon>CoffeeTypeSizePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CoffeeWizardView.xaml.cs">
+      <DependentUpon>CoffeeWizardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NomenWizardView.xaml.cs">
+      <DependentUpon>NomenWizardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NomenAddStep1View.xaml.cs">
+      <DependentUpon>NomenAddStep1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NomenAddStep2View.xaml.cs">
+      <DependentUpon>NomenAddStep2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NomenAddStep0View.xaml.cs">
+      <DependentUpon>NomenAddStep0View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NomenAddStep3View.xaml.cs">
+      <DependentUpon>NomenAddStep3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WelcomePageView.xaml.cs">
+      <DependentUpon>WelcomePageView.xaml</DependentUpon>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Class Diagrams\OptionViewModel Diagram.cd" />
+    <None Include="Class Diagrams\Wizard ViewModels.cd" />
+    <None Include="Class Diagrams\Entity Relationships.cd" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeLibrary\CoffeeLibrary.csproj">
+      <Project>{C28DBFAB-9CF9-4101-A232-4D85402E4D83}</Project>
+      <Name>CoffeeLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tempo2012.EntityFramework\Tempo2012.EntityFramework.csproj">
+      <Project>{0CCDB4CC-FF4A-421B-8593-B5EBD005D9B4}</Project>
+      <Name>Tempo2012.EntityFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ApplicationMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CoffeeWizardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NomenWizardDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CoffeeExtrasPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CoffeeSummaryPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CoffeeTypeSizePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CoffeeWizardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NomenWizardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NomenAddStep1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NomenAddStep2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NomenAddStep0View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NomenAddStep3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WelcomePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.bg-BG.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.bg-BG.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.de-DE.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr-CH.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.it-IT.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Resources\Images\coffeeCup.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beans.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\cupIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\AccountsManagment\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

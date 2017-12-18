@@ -1,0 +1,1338 @@
+<?xml version="1.0"?>
+<ArrayOfLookUpSpecific xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Служебна                                             </Name>
+    <CodetId>000</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Основен капитал, изискващ регистрация                </Name>
+    <CodetId>101</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Основен капитал, неизискващ регистрация              </Name>
+    <CodetId>102</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Ликвидационен капитал при несъстоятелност и ликвид.  </Name>
+    <CodetId>104</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Капитал на предприятия с нестопанска дейност         </Name>
+    <CodetId>105</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Премии,свързани с капитал                            </Name>
+    <CodetId>108</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Отбиви(сконто),свързани с капитал                    </Name>
+    <CodetId>109</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Общи резерви                                         </Name>
+    <CodetId>111</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви от последваща оценка на дълготр.активи       </Name>
+    <CodetId>112</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Рез-ви от последваща оценка на краткотр.активи       </Name>
+    <CodetId>113</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Рез-ви от последваща оценка на фин.инструменти       </Name>
+    <CodetId>114</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви от емисия на акции                           </Name>
+    <CodetId>115</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други резерви                                        </Name>
+    <CodetId>119</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Непокрита загуба от минали години                    </Name>
+    <CodetId>121</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Неразпределена печалба от минали години              </Name>
+    <CodetId>122</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Печалби и загуби от текущата година                  </Name>
+    <CodetId>123</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резултат при несъстоятелност и ликвидация            </Name>
+    <CodetId>124</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резултат от дейността на предприятия с нестоп.цел    </Name>
+    <CodetId>125</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви за животозастраховане                        </Name>
+    <CodetId>131</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Пренос-премийни резерви                              </Name>
+    <CodetId>132</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви за предстоящи плащания                       </Name>
+    <CodetId>133</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви за запасен фонд                              </Name>
+    <CodetId>134</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви за презастраховане                           </Name>
+    <CodetId>135</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други резерви по застрахователни договори            </Name>
+    <CodetId>136</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви на инвестиционни дружества                   </Name>
+    <CodetId>137</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Резерви на пенсионни дружества                       </Name>
+    <CodetId>138</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Банкноти за обръщение                                </Name>
+    <CodetId>141</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Монети за обръщение                                  </Name>
+    <CodetId>142</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Получени краткосрочни заеми                          </Name>
+    <CodetId>151</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Получени дългосрочни заеми                           </Name>
+    <CodetId>152</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дългови инструменти                                  </Name>
+    <CodetId>153</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други заеми и дългове                                </Name>
+    <CodetId>159</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по депоз.с/ки на банки и др.фин.инст. </Name>
+    <CodetId>161</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по депоз.с/ки на нефин.предпр.и др.кл.</Name>
+    <CodetId>162</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по разпл.с/ки на банки и др.фин.инст. </Name>
+    <CodetId>171</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.ср.по разпл.с/ки на нефин.предпр.и др.клиенти  </Name>
+    <CodetId>172</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по специални сметки                   </Name>
+    <CodetId>173</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по влогови сметки                     </Name>
+    <CodetId>174</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.средства по други сметки                       </Name>
+    <CodetId>175</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.ср.по с/ки на участници в пенсионното осигур.  </Name>
+    <CodetId>181</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.ср.по с/ки на участници в здравното осигур.    </Name>
+    <CodetId>182</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Привл.ср.по с/ки на участници в др.осигур.фондове    </Name>
+    <CodetId>183</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Премии, произтичащи от финанс.инструменти            </Name>
+    <CodetId>191</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Сконто от финанс.инструменти                         </Name>
+    <CodetId>192</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Земи /терени/                                        </Name>
+    <CodetId>201</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Подобрения върху земите                              </Name>
+    <CodetId>202</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Сгради и конструкции                                 </Name>
+    <CodetId>203</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Машини и оборудване                                  </Name>
+    <CodetId>204</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Транспортни средства                                 </Name>
+    <CodetId>205</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Компютърна техника                                   </Name>
+    <CodetId>206</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Съоръжения                                           </Name>
+    <CodetId>207</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Офис обзавеждане                                     </Name>
+    <CodetId>208</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дълготрайни материални активи                  </Name>
+    <CodetId>209</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Продукти от развойна дейност                         </Name>
+    <CodetId>212</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Права върху интелектуална собственост                </Name>
+    <CodetId>213</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Прoграмни продукти                                   </Name>
+    <CodetId>214</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Права върху индустриална собственост                 </Name>
+    <CodetId>215</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дълготрайни нематериални активи                </Name>
+    <CodetId>219</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Инвестиции в дъщерни предприятия                     </Name>
+    <CodetId>221</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Инвестиции в асоциирани предприятия                  </Name>
+    <CodetId>222</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Държавни ценни книжа                                 </Name>
+    <CodetId>223</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Инвестиционни имоти                                  </Name>
+    <CodetId>224</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Инвестиции в смесени предприятия                     </Name>
+    <CodetId>225</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финанс.активи, държани до настъпване на падеж        </Name>
+    <CodetId>226</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финанс.активи, обявени за продажба                   </Name>
+    <CodetId>227</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финанс.активи, заложени като обезпечение             </Name>
+    <CodetId>228</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дългосрочни финанс. активи                     </Name>
+    <CodetId>229</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Положителна търговска репутация                      </Name>
+    <CodetId>231</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Отрицателна търговска репутация                      </Name>
+    <CodetId>232</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Амортизация на дълготрайни материални активи         </Name>
+    <CodetId>241</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Амортизация на дълготрайни нематериални активи       </Name>
+    <CodetId>242</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дългоср.взем.и предост.заеми на банки и др.фин.инст. </Name>
+    <CodetId>261</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дългоср.взем.и предост.заеми на нефин.пр.и др.клиенти</Name>
+    <CodetId>262</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Просрочени дългоср.вземания и предост.заеми          </Name>
+    <CodetId>263</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дългоср.взем.и предост.заеми,заложени като обезпеч.  </Name>
+    <CodetId>264</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дългоср.взем.и предост.заеми                   </Name>
+    <CodetId>269</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Гори                                                 </Name>
+    <CodetId>271</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Трайни насаждения-плододаващи                        </Name>
+    <CodetId>272</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Трайни насаждения-неплододаващи                      </Name>
+    <CodetId>273</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Животни в основни стада                              </Name>
+    <CodetId>274</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дълготрайни биологични активи                  </Name>
+    <CodetId>279</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставки                                             </Name>
+    <CodetId>301</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Материали                                            </Name>
+    <CodetId>302</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Продукция                                            </Name>
+    <CodetId>303</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Стоки                                                </Name>
+    <CodetId>304</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Млади животни                                        </Name>
+    <CodetId>311</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Животни за угояване                                  </Name>
+    <CodetId>312</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дребни продуктивни животни                           </Name>
+    <CodetId>313</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Птици-основни стада                                  </Name>
+    <CodetId>314</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Пчелни семейства                                     </Name>
+    <CodetId>315</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Животни за експериментални цели                      </Name>
+    <CodetId>316</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други краткотрайни биологични активи                 </Name>
+    <CodetId>317</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставчици                                           </Name>
+    <CodetId>401</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставчици по аванси                                 </Name>
+    <CodetId>402</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставчици по търговски кредити                      </Name>
+    <CodetId>403</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставчици по доставки при определени условия        </Name>
+    <CodetId>404</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доставчици по доставки със свързани лица             </Name>
+    <CodetId>406</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети с доставчици                           </Name>
+    <CodetId>409</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Клиенти                                              </Name>
+    <CodetId>411</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Клиенти по аванса                                    </Name>
+    <CodetId>412</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Клиенти по търговски кредити                         </Name>
+    <CodetId>413</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Клиенти по продажби при определени условия           </Name>
+    <CodetId>414</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Клиенти по продажби със свързани лица                </Name>
+    <CodetId>416</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети с клиенти                              </Name>
+    <CodetId>419</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Персонал                                             </Name>
+    <CodetId>421</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Подотчетни лица                                      </Name>
+    <CodetId>422</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Задължения по неизползвани отпуски                   </Name>
+    <CodetId>423</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вземания от съучастия                                </Name>
+    <CodetId>424</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Задължения за съучастия                              </Name>
+    <CodetId>425</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вземания по записани дялови вноски                   </Name>
+    <CodetId>426</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети с персонала и съдружниците             </Name>
+    <CodetId>429</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по междубанкови операции                     </Name>
+    <CodetId>431</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вътрешни разчети по междубанкови операции            </Name>
+    <CodetId>432</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вътрешни разчети по вътрешнобанкови операции         </Name>
+    <CodetId>433</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други вътрешни разчети                               </Name>
+    <CodetId>439</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вземания по рекламации                               </Name>
+    <CodetId>441</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вземания по липси и начети                           </Name>
+    <CodetId>442</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Ценови разлики по липси и начети                     </Name>
+    <CodetId>443</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Вземания по съдебни спорове                          </Name>
+    <CodetId>444</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Присъдени вземания                                   </Name>
+    <CodetId>445</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с общините                                   </Name>
+    <CodetId>451</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за данък върху печалбата                     </Name>
+    <CodetId>452</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за данък върху добавената стойност           </Name>
+    <CodetId>453</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за данъци върху доходи на физ.лица           </Name>
+    <CodetId>454</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с министерствата                             </Name>
+    <CodetId>455</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за акцизи                                    </Name>
+    <CodetId>456</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с митници                                    </Name>
+    <CodetId>457</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети с бюджета и с ведомства                </Name>
+    <CodetId>459</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с НОИ                                        </Name>
+    <CodetId>461</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за доброволно социално осигуряване           </Name>
+    <CodetId>462</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за здравно осигуряване                       </Name>
+    <CodetId>463</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за еднократни помощи и детски надбавки       </Name>
+    <CodetId>464</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети с осигурители                          </Name>
+    <CodetId>469</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети със Международния валутен фонд               </Name>
+    <CodetId>471</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети със Световната банка                         </Name>
+    <CodetId>472</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с др. междунар.финансови институции          </Name>
+    <CodetId>473</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по междуправителствени спогодби              </Name>
+    <CodetId>474</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по предстоящи плащания                       </Name>
+    <CodetId>481</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети при презастраховане и съзастраховане         </Name>
+    <CodetId>482</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети с презастрахователи                          </Name>
+    <CodetId>483</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети със седанти                                  </Name>
+    <CodetId>484</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разчети                                        </Name>
+    <CodetId>484</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Доверители                                           </Name>
+    <CodetId>491</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети за гаранции                                  </Name>
+    <CodetId>492</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети със собственици                              </Name>
+    <CodetId>493</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Текущи разчетни сметки                               </Name>
+    <CodetId>494</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по застраховане                              </Name>
+    <CodetId>495</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по лихви                                     </Name>
+    <CodetId>496</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разчети по отсрочени данъци                          </Name>
+    <CodetId>497</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други дебитори                                       </Name>
+    <CodetId>498</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други кредитори                                      </Name>
+    <CodetId>499</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Каса в левове                                        </Name>
+    <CodetId>501</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Каса във валута                                      </Name>
+    <CodetId>502</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разплащателна сметка в левове                        </Name>
+    <CodetId>503</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разплащателна сметка във валута                      </Name>
+    <CodetId>504</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Акредативи в левове                                  </Name>
+    <CodetId>505</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Акредативи във валута                                </Name>
+    <CodetId>506</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Предоставени депозити                                </Name>
+    <CodetId>507</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разплащателни чекове                                 </Name>
+    <CodetId>508</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други парични средства                               </Name>
+    <CodetId>509</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансови активи, държани за търгуване               </Name>
+    <CodetId>511</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Изкупени собствени акции                             </Name>
+    <CodetId>512</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансови активи, заложени като обезпечение          </Name>
+    <CodetId>513</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Изкупени собствени облигации                         </Name>
+    <CodetId>514</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Държавни ценни книжа                                 </Name>
+    <CodetId>515</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Благородни метали и скъпоценни камъни                </Name>
+    <CodetId>516</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други краткосрочни финансови активи                  </Name>
+    <CodetId>519</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Краткоср.взем.и заеми от банки и др.фин.институции   </Name>
+    <CodetId>521</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Краткоср.взем.и заеми от нефин.предпр.и др.клиенти   </Name>
+    <CodetId>522</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Краткоср.заеми и взем.,заложени като обезпечение     </Name>
+    <CodetId>523</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Просрочени краткоср.вземания и заеми                 </Name>
+    <CodetId>524</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други краткоср.вземания и заеми                      </Name>
+    <CodetId>529</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за материали                                 </Name>
+    <CodetId>601</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за външни услуги                             </Name>
+    <CodetId>602</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за амортизации                               </Name>
+    <CodetId>603</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за заплати /възнаграждения/                  </Name>
+    <CodetId>604</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за осигуровки                                </Name>
+    <CodetId>605</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за данъци,такси и др.подобни плащания        </Name>
+    <CodetId>606</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за провизии                                  </Name>
+    <CodetId>607</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи от последващи оценки на активи               </Name>
+    <CodetId>608</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разходи                                        </Name>
+    <CodetId>609</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за основна дейност                           </Name>
+    <CodetId>611</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за спомагателна дейност                      </Name>
+    <CodetId>612</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за придобиване на ДМА                        </Name>
+    <CodetId>613</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Административни разходи                              </Name>
+    <CodetId>614</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за продажба                                  </Name>
+    <CodetId>615</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за ликвидация на ДМА                         </Name>
+    <CodetId>616</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи по дейности в предпр.с нестопанска цел       </Name>
+    <CodetId>617</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи при ликвидация и несъстоятелност             </Name>
+    <CodetId>618</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за лихви                                     </Name>
+    <CodetId>621</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за провизиране на рискови активи             </Name>
+    <CodetId>622</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи по операции с фин.активи и инструменти       </Name>
+    <CodetId>623</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи по валутни операции                          </Name>
+    <CodetId>624</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи от последващи оценки на  фин.активи и инструм</Name>
+    <CodetId>625</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други финансови разходи                              </Name>
+    <CodetId>629</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Загуба /разходи/ от обезценка                        </Name>
+    <CodetId>631</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Нефинансови разходи за бъдещи периоди                </Name>
+    <CodetId>651</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансови разходи за бъдещи периоди                  </Name>
+    <CodetId>652</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за суми по застраховането                    </Name>
+    <CodetId>661</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за участие в резултата                       </Name>
+    <CodetId>662</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за ликвидация                                </Name>
+    <CodetId>663</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за комисиони по застраховането               </Name>
+    <CodetId>664</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за резерви по застраховането                 </Name>
+    <CodetId>668</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разходи по пряко застраховане                  </Name>
+    <CodetId>669</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разх. за отстъпени премии на презастрахователи       </Name>
+    <CodetId>671</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разх. за освободени резерви по пасивно презастрах.   </Name>
+    <CodetId>678</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разходи по пасивно презастраховане             </Name>
+    <CodetId>679</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за застрахователни обещетения                </Name>
+    <CodetId>681</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за участие в резултата                       </Name>
+    <CodetId>682</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за участие в ликвидацията                    </Name>
+    <CodetId>683</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за отстъпени презастрахователни комис.и такси</Name>
+    <CodetId>684</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разходи за заделени резерви по активно презастр.     </Name>
+    <CodetId>688</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други разходи по активно презастраховане             </Name>
+    <CodetId>689</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Извънредни разходи                                   </Name>
+    <CodetId>691</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от продажби на продукция                     </Name>
+    <CodetId>701</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от продажби на стоки                         </Name>
+    <CodetId>702</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от продажби на услуги                        </Name>
+    <CodetId>703</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от финансирания                              </Name>
+    <CodetId>705</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от продажби на ДМА                           </Name>
+    <CodetId>706</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от продажби на материали                     </Name>
+    <CodetId>707</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от ликвидация и несъстоятелност              </Name>
+    <CodetId>708</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други приходи от дейността                           </Name>
+    <CodetId>709</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от регламентирана дейност                    </Name>
+    <CodetId>711</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от членски внос                              </Name>
+    <CodetId>712</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от финансирания на програми                  </Name>
+    <CodetId>713</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от правителствени дарения                    </Name>
+    <CodetId>714</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от други дарения                             </Name>
+    <CodetId>715</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други приходи                                        </Name>
+    <CodetId>719</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от лихви                                     </Name>
+    <CodetId>721</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от съучастия                                 </Name>
+    <CodetId>722</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от операции с фин.активи и инструменти       </Name>
+    <CodetId>723</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от валутни операции                          </Name>
+    <CodetId>724</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от последващи оценки на фин.активи и инстр.  </Name>
+    <CodetId>725</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от реинтегрирани провизии                    </Name>
+    <CodetId>726</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други финансови приходи                              </Name>
+    <CodetId>729</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от възстановени загуби от обезценка          </Name>
+    <CodetId>731</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Нефинансови приходи за бъдещи периоди                </Name>
+    <CodetId>751</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансови приходи за бъдещи периоди                  </Name>
+    <CodetId>752</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансиране за дълготрайни активи                    </Name>
+    <CodetId>753</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Финансиране на текущата дейност                      </Name>
+    <CodetId>754</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от премии по застраховането                  </Name>
+    <CodetId>761</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от комисиони и такси                         </Name>
+    <CodetId>764</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи по застраховане от минали години             </Name>
+    <CodetId>765</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от регреси                                   </Name>
+    <CodetId>766</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от освободени резерви                        </Name>
+    <CodetId>768</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други застрахователни приходи                        </Name>
+    <CodetId>769</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от получени обещетения от презастр.          </Name>
+    <CodetId>771</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от участие в резултата на презастр.          </Name>
+    <CodetId>772</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от комисиони от презастрахователи            </Name>
+    <CodetId>774</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от пасивно презастрахов.от минали години     </Name>
+    <CodetId>775</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от резерви за презастраховане                </Name>
+    <CodetId>778</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други приходи по пасивно презастраховане             </Name>
+    <CodetId>779</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от премии по презастраховане                 </Name>
+    <CodetId>781</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от активно презастаховане от мин.год.        </Name>
+    <CodetId>785</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от регреси по активно презастаховане         </Name>
+    <CodetId>786</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Приходи от резерви по активно презастаховане         </Name>
+    <CodetId>788</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Други приходи от активно презастаховане              </Name>
+    <CodetId>789</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Извънредни приходи                                   </Name>
+    <CodetId>791</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Чужди материални и нематериални активи               </Name>
+    <CodetId>910</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Чужди финансови активи                               </Name>
+    <CodetId>920</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Чужди материални запаси                              </Name>
+    <CodetId>930</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Дебитори по условни вземания                         </Name>
+    <CodetId>940</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Кредитори по условни задължения                      </Name>
+    <CodetId>950</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Собствени активи,невключени в стопански оборот       </Name>
+    <CodetId>960</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Собствени пасиви,невключени в стопански оборот       </Name>
+    <CodetId>970</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разни активни задбалансови сметки                    </Name>
+    <CodetId>980</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>0</Id>
+    <Name>Разни пасивни задбалансови сметки                    </Name>
+    <CodetId>990</CodetId>
+  </LookUpSpecific>
+</ArrayOfLookUpSpecific>

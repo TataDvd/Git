@@ -1,0 +1,44 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Framework.HoldingsWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Управление на Групи">
+
+   <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="30"></RowDefinition>
+        <RowDefinition Height="30"></RowDefinition>
+        <RowDefinition Height="30"></RowDefinition>
+        <RowDefinition Height="30"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+        <RowDefinition Height="30"></RowDefinition>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <customControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Име на група"  Margin="10,5,10,2"/>
+    <customControls:TextBoxEx TabIndex="6" Grid.Row="0"  Text="{Binding Path=Name}" Grid.Column="1" Margin="10,5,10,2" MaxLength="50"/>
+    <customControls:TextBlockEx Grid.Row="1" Grid.Column="0" Text="Сървър"  Margin="10,5,10,2"/>
+    <customControls:TextBoxEx TabIndex="6" Grid.Row="1"  Text="{Binding Path=IpServer}" Grid.Column="1" Margin="10,5,10,2" MaxLength="50"/>
+    <customControls:TextBlockEx Grid.Row="2" Grid.Column="0" Text="Темплейт"  Margin="10,5,10,2"/>
+    <customControls:TextBoxEx TabIndex="6" Grid.Row="2" Text="{Binding Path=Template}" Grid.Column="1" Margin="10,5,10,2" MaxLength="50"/>
+    <customControls:TextBlockEx Grid.Row="3" Grid.Column="0" Text="Конекция"  Margin="10,5,10,2"/>
+        <customControls:TextBoxEx TabIndex="6" Grid.Row="3" Text="{Binding Path=ConnectionString}" Grid.Column="1" Margin="10,5,10,2" MaxLength="50"/>
+        <ListBox Margin="10,5,10,5"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Holdings}" SelectedItem="{Binding Holding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></ListBox>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">   
+        <Button  Margin="10,2,10,2" Command="{Binding AddCommand}">
+            <customControls:TextBlockEx  Text="Добави"/>
+        </Button>
+           
+            <Button  Margin="5,2,5,2" Command="{Binding UpdateCommand}">
+                <customControls:TextBlockEx Text="Запис"/>
+            </Button>
+            <Button  Margin="5,2,5,2" Click="ButtonBase_OnClick">
+                <customControls:TextBlockEx Text="Изход"/>
+            </Button> 
+            <Button  Margin="5,2,5,2" Command="{Binding DeleteCommand}">
+                <customControls:TextBlockEx Text="Изтрий" />
+            </Button>
+        </StackPanel>  
+    </Grid>
+</Window>

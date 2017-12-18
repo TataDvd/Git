@@ -1,0 +1,76 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.ContragentManagment.ContragenSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="Избери номенклатура" Height="346" Width="789"
+        FocusManager.FocusedElement="{Binding ElementName=bs}">
+    <Grid>
+        <Grid.RowDefinitions>
+             <RowDefinition></RowDefinition>
+            <RowDefinition Height="30" x:Name="_this"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid ItemsSource="{Binding Fields}" x:Name="dg" TabIndex="2"
+                                 AutoGenerateColumns="False" 
+                                 SelectedItem="{Binding SelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="True"
+                                 PreviewKeyDown="FilterDataGrid_PreviewKeyDown" SelectionUnit="FullRow" MouseDoubleClick="FilterDataGrid_MouseDoubleClick"
+                    SelectionMode = "Single"
+                    Margin="10,0,10,0"
+                    AlternatingRowBackground="Gainsboro"
+                    AlternationCount="2"
+                    VirtualizingStackPanel.VirtualizationMode="Recycling"
+                    IsSynchronizedWithCurrentItem="True"
+                    FontSize="10"
+                    VerticalAlignment="Stretch"
+                       HorizontalContentAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name" CanUserSort="True" 
+        SortMemberPath="Name" MinWidth="110" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Bulstad}" />
+                        </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid IsHitTestVisible="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Булстат"/>
+                                <CustomControls:TextBoxEx Grid.Column="1" TextChanged="TextBox_TextChanged" PreviewKeyDown="name_PreviewKeyDown" Width="50" x:Name="bs" TabIndex="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Key}" Header="Номер" />
+                <DataGridTemplateColumn Header="Name" CanUserSort="True" 
+        SortMemberPath="Name" MinWidth="110" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Value}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid IsHitTestVisible="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Име"/>
+                                <CustomControls:TextBoxEx Grid.Column="1" TextChanged="name_TextChanged" Width="50" x:Name="name" TabIndex="1" PreviewKeyDown="name_PreviewKeyDown" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>      
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button TabIndex="21" Content="Избери" Margin="10,5,10,2" IsDefault="True" Click="Button_Click" IsEnabled="{Binding HasSelection}" Focusable="False"></Button>
+            <Button Grid.Column="1" TabIndex="22" Content="Откажи" Margin="10,5,10,2" IsCancel="True" Focusable="False" ></Button>
+        </StackPanel>
+    </Grid>
+</Window>

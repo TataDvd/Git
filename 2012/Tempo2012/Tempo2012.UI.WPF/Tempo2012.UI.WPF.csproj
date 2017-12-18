@@ -1,0 +1,934 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F08860F4-6841-450A-8BEA-16C6BF9C9B01}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tempo2012.UI.WPF</RootNamespace>
+    <AssemblyName>Tempo2012.UI.WPF</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\ExtendetWPFToolkit\Extended WPF Toolkit Binaries\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Views\Framework\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AttachedProps\DataGridBehavior.cs" />
+    <Compile Include="AttachedProps\SelectedDateSyncBehavior.cs" />
+    <Compile Include="AttachedProps\TextBoxBehavior.cs" />
+    <Compile Include="Convertors\AccToColorConvertor.cs" />
+    <Compile Include="Convertors\AccToIconConvertor.cs" />
+    <Compile Include="Convertors\AccToVisibleConvertor.cs" />
+    <Compile Include="Convertors\BolleanToColorConvertor.cs" />
+    <Compile Include="Convertors\BolleanToImageConvertor.cs" />
+    <Compile Include="Convertors\BoolToVisibleConvertor.cs" />
+    <Compile Include="Convertors\KolConvertor.cs" />
+    <Compile Include="Convertors\KursConvertor.cs" />
+    <Compile Include="Convertors\SavedIconConvertor.cs" />
+    <Compile Include="Convertors\ValConvertor.cs" />
+    <Compile Include="Convertors\DateToStringConverter.cs" />
+    <Compile Include="Convertors\LevConvertor.cs" />
+    <Compile Include="Convertors\StringToDoubleValueConverter.cs" />
+    <Compile Include="Convertors\ObjectToStringConvertor.cs" />
+    <Compile Include="Convertors\ValidityToColor.cs" />
+    <Compile Include="CustomControls\ContrSelectorViewModel.cs" />
+    <Compile Include="CustomControls\ContrSelector.xaml.cs">
+      <DependentUpon>ContrSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\AccSelector.xaml.cs">
+      <DependentUpon>AccSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\AccSelectorViewModel.cs" />
+    <Compile Include="CustomControls\CheckBoxEx.cs" />
+    <Compile Include="CustomControls\DialogTemplate.xaml.cs">
+      <DependentUpon>DialogTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\DialogClosed.cs" />
+    <Compile Include="CustomControls\IModalDialogHost.cs" />
+    <Compile Include="CustomControls\IPageControlContract.cs" />
+    <Compile Include="CustomControls\MaskTextBox.cs" />
+    <Compile Include="CustomControls\PaggingControl.cs" />
+    <Compile Include="CustomControls\Pb.xaml.cs">
+      <DependentUpon>Pb.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\TextBlockEx.cs" />
+    <Compile Include="CustomControls\TextBloxExAuto.cs" />
+    <Compile Include="CustomControls\TextBoxEx.cs" />
+    <Compile Include="Events\ChangeValutaEventArgs.cs" />
+    <Compile Include="Extentions\DeciamalExtend.cs" />
+    <Compile Include="Extentions\ExtentionsDataTimePicker.cs" />
+    <Compile Include="FocusHelper\Dg.cs" />
+    <Compile Include="Images\HelpProvider\HelpProvider.cs" />
+    <Compile Include="Models\ChangeKindCurrencyArg.cs" />
+    <Compile Include="Models\DdsDnevnicItem.cs" />
+    <Compile Include="Models\HelpModel.cs" />
+    <Compile Include="Models\Movement.cs" />
+    <Compile Include="Models\ReportItem.cs" />
+    <Compile Include="Models\SaldoItem.cs" />
+    <Compile Include="Models\SaldoItemDebitCredit.cs" />
+    <Compile Include="Models\SaldoItemTypes.cs" />
+    <Compile Include="Models\WhereClauseItem.cs" />
+    <Compile Include="Models\WhereClauseItems.cs" />
+    <Compile Include="TemplateSelector\AccTemplateSelector.cs" />
+    <Compile Include="TemplateSelector\DetailsTemplateSelecorD.cs" />
+    <Compile Include="TemplateSelector\DetailsTemplateSelecorC.cs" />
+    <Compile Include="TemplateSelector\ItemLookupTemplateSelecor.cs" />
+    <Compile Include="TemplateSelector\ItemDataTemplateSelecor.cs" />
+    <Compile Include="TemplateSelector\MainAccTemplateSelecor.cs" />
+    <Compile Include="ViewModels\AccountManagment\ReportAccountsViewModel.cs" />
+    <Compile Include="ViewModels\AccountManagment\TreeManagerModal.cs" />
+    <Compile Include="ViewModels\ContoManagment\ContoRepository.cs" />
+    <Compile Include="ViewModels\ContoManagment\ContoViewModelDds.cs" />
+    <Compile Include="ViewModels\ContoManagment\DdsEventArgs.cs" />
+    <Compile Include="ViewModels\ContoManagment\FastLookupEventArgs.cs" />
+    <Compile Include="ViewModels\ContoManagment\SetFocusEventArg.cs" />
+    <Compile Include="ViewModels\ContoManagment\SinkEventArgs.cs" />
+    <Compile Include="ViewModels\ContoManagment\WraperConto.cs" />
+    <Compile Include="ViewModels\ContragenManager\Filter.cs" />
+    <Compile Include="ViewModels\ContragenManager\LookUpSelectorViewModel.cs" />
+    <Compile Include="ViewModels\Deklar\DeclarsViewModel.cs" />
+    <Compile Include="ViewModels\Deklar\DeklarviewModel.cs" />
+    <Compile Include="ViewModels\Dnevnici\DdsViewModel.cs" />
+    <Compile Include="ViewModels\Dnevnici\DnPurchasesViewModel.cs" />
+    <Compile Include="ViewModels\Dnevnici\DnSalesViewModel.cs" />
+    <Compile Include="ViewModels\FirmManagment\CopyLookupFromFirmToFirmViewModel.cs" />
+    <Compile Include="ViewModels\FirmManagment\CopyAccsFromYeatToYearViewModel.cs" />
+    <Compile Include="ViewModels\FirmManagment\CopyAccsFromYearToYearViewModel.cs" />
+    <Compile Include="ViewModels\FirmManagment\FirmModelWraper.cs" />
+    <Compile Include="ViewModels\LookupsManagment\FieldValuePair.cs" />
+    <Compile Include="ViewModels\LookupsManagment\LookUpWorkerViewModel.cs" />
+    <Compile Include="ViewModels\ReorderViewModel.cs" />
+    <Compile Include="ViewModels\ReportManagerViewModel.cs" />
+    <Compile Include="ViewModels\ReportMenuProvider\ReportMenuProvider.cs" />
+    <Compile Include="ViewModels\ReportNoUseClient\ReportNoUseDost.cs" />
+    <Compile Include="ViewModels\ReportNoUseClient\ReportNoUseClient.cs" />
+    <Compile Include="ViewModels\Saldos\EditorAddSaldosViewModel.cs" />
+    <Compile Include="ViewModels\Saldos\SaldosAnaliticViewModel.cs" />
+    <Compile Include="ViewModels\Saldos\SaldosViewModel.cs" />
+    <Compile Include="ViewModels\SearchFormNS\AccNumm.cs" />
+    <Compile Include="ViewModels\SearchFormNS\DateType.cs" />
+    <Compile Include="ViewModels\SearchFormNS\NameValuePair.cs" />
+    <Compile Include="ViewModels\SearchFormNS\SearchViewModel.cs" />
+    <Compile Include="ViewModels\SearchFormNS\SearchViewModelAcc.cs" />
+    <Compile Include="ViewModels\SearchFormNS\SearchViewModelWithAcc.cs" />
+    <Compile Include="ViewModels\Tetka\AnaliticRegisterViewModel.cs" />
+    <Compile Include="ViewModels\Tetka\MainBook.cs" />
+    <Compile Include="ViewModels\Tetka\ReportDebit.cs" />
+    <Compile Include="ViewModels\Tetka\TetkaViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Views\CompactStyle\AccReg.xaml.cs">
+      <DependentUpon>AccReg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContr.cs" />
+    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelDost.cs" />
+    <Compile Include="Views\Conto\AccountsManagment\TreeManagerViewDialog.xaml.cs">
+      <DependentUpon>TreeManagerViewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conto\DateTimePickerEx.cs" />
+    <Compile Include="Views\Conto\EnhancedFocusScope.cs" />
+    <Compile Include="Views\ContragentManagment\LookupSelector.xaml.cs">
+      <DependentUpon>LookupSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Declar\DeclarVies.xaml.cs">
+      <DependentUpon>DeclarVies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Declar\DeclarConfig.xaml.cs">
+      <DependentUpon>DeclarConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AllConto.cs" />
+    <Compile Include="Views\Dialogs\BisyDialog.xaml.cs">
+      <DependentUpon>BisyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ImportInvoiseIndicator.xaml.cs">
+      <DependentUpon>ImportInvoiseIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ImportInvoiseIndicatorViewModel.cs" />
+    <Compile Include="Views\Dialogs\ModalTemplate.xaml.cs">
+      <DependentUpon>ModalTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MonthSelector - Copy.xaml.cs">
+      <DependentUpon>MonthSelector - Copy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\NumSelector.xaml.cs">
+      <DependentUpon>NumSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SearchFormAcc.xaml.cs">
+      <DependentUpon>SearchFormAcc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectDostDialog.xaml.cs">
+      <DependentUpon>SelectDostDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectContDialog.xaml.cs">
+      <DependentUpon>SelectContDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectAccDialog.xaml.cs">
+      <DependentUpon>SelectAccDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectSimpleAcc.xaml.cs">
+      <DependentUpon>SelectSimpleAcc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\YesNoWindow.xaml.cs">
+      <DependentUpon>YesNoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\DdsAll.xaml.cs">
+      <DependentUpon>DdsAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\DdsAllModel.cs" />
+    <Compile Include="Views\Dnevnici\DnPokupki.xaml.cs">
+      <DependentUpon>DnPokupki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\DocGenerator.cs" />
+    <Compile Include="Views\Dnevnici\Oborotki.xaml.cs">
+      <DependentUpon>Oborotki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\DdsSellsView.xaml.cs">
+      <DependentUpon>DdsSellsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\DnSales.xaml.cs">
+      <DependentUpon>DnSales.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dnevnici\OborotkiViewModelDetail.cs" />
+    <Compile Include="Views\Dnevnici\OborotkiViewModel.cs" />
+    <Compile Include="Views\FirebirdUpdater\FirebirdUpdater.xaml.cs">
+      <DependentUpon>FirebirdUpdater.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmsManagment\ClearContoForFirm.xaml.cs">
+      <DependentUpon>ClearContoForFirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmsManagment\ClearContoForFirmViewModel.cs" />
+    <Compile Include="Views\Framework\AppSetings.xaml.cs">
+      <DependentUpon>AppSetings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\AppSettingsViewModel.cs" />
+    <Compile Include="Views\Framework\Col.xaml.cs">
+      <DependentUpon>Col.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\FirmSettingViewModel.cs" />
+    <Compile Include="Views\Framework\HoldingSelector.xaml.cs">
+      <DependentUpon>HoldingSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\HoldingSelectorViewModel.cs" />
+    <Compile Include="Views\Framework\HoldingsWindowElement.xaml.cs">
+      <DependentUpon>HoldingsWindowElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\HoldingModel.cs" />
+    <Compile Include="Views\Framework\HoldingsWindowViewModel.cs" />
+    <Compile Include="Views\Framework\HoldingsWindow.xaml.cs">
+      <DependentUpon>HoldingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\MainWindowTab.xaml.cs">
+      <DependentUpon>MainWindowTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SetUpMapAnaliticAccToLookup.xaml.cs">
+      <DependentUpon>SetUpMapAnaliticAccToLookup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MainAcc.xaml.cs">
+      <DependentUpon>MainAcc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shemes\Extenders\ExtendTree.cs" />
+    <Compile Include="ViewModels\AccountManagment\AnaliticalManagerViewModel.cs" />
+    <Compile Include="ViewModels\AccountManagment\AnaliticalTypeManager.cs" />
+    <Compile Include="ViewModels\AccountManagment\TreeManager.cs" />
+    <Compile Include="ViewModels\AccountManagment\ReportAccountViewModelWithSaldo.cs" />
+    <Compile Include="ViewModels\DialogsViewModels\AccountsDialogViewModel.cs" />
+    <Compile Include="ViewModels\DialogsViewModels\SetUpMapAnaliticAccToLookupViewModel.cs" />
+    <Compile Include="ViewModels\System\SysLookUpViewModel.cs" />
+    <Compile Include="ViewModels\TreeViewModel\TreeViewModel.cs" />
+    <Compile Include="Views\Conto\AccountsManagment\TreeManagerView.xaml.cs">
+      <DependentUpon>TreeManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conto\AccountsManagment\ReportAccountsWithSaldoView.xaml.cs">
+      <DependentUpon>ReportAccountsWithSaldoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conto\AccountsManagment\ReportAccountsView.xaml.cs">
+      <DependentUpon>ReportAccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\Banner.xaml.cs">
+      <DependentUpon>Banner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Convertors\BoolToOpositeBoolConverter.cs" />
+    <Compile Include="Convertors\FromEnumToRadio.cs" />
+    <Compile Include="Convertors\FromEnumToString.cs" />
+    <Compile Include="Views\Dialogs\DataSelector.xaml.cs">
+      <DependentUpon>DataSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\EditInsertLookups.xaml.cs">
+      <DependentUpon>EditInsertLookups.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SearchForm.xaml.cs">
+      <DependentUpon>SearchForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectFirm.xaml.cs">
+      <DependentUpon>SelectFirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SerializeUtil.cs" />
+    <Compile Include="Views\Framework\LabelTextBox.xaml.cs">
+      <DependentUpon>LabelTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConfigParamModel.cs" />
+    <Compile Include="Validators\DateFormatRegex.cs" />
+    <Compile Include="Validators\RegexValidationRule.cs" />
+    <Compile Include="Validators\RegexValidator.cs" />
+    <Compile Include="ViewModels\ContoManagment\ContoViewModel.cs" />
+    <Compile Include="ViewModels\LookupsManagment\LookupsEdidViewModels.cs" />
+    <Compile Include="ViewModels\LookupsManagment\LookupsViewModel.cs" />
+    <Compile Include="ViewModels\FrameWork\MainViewModel.cs" />
+    <Compile Include="ViewModels\FrameWork\DelegateCommand.cs" />
+    <Compile Include="ViewModels\FirmManagment\FirmViewModel.cs" />
+    <Compile Include="ViewModels\FrameWork\IBaseCommands.cs" />
+    <Compile Include="ViewModels\LookupsManagment\LookupManagerViewModel.cs" />
+    <Compile Include="ViewModels\SearchFormViewModel.cs" />
+    <Compile Include="ViewModels\FrameWork\BaseViewModel.cs" />
+    <Compile Include="Views\Framework\BaseView.xaml.cs">
+      <DependentUpon>BaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\CommandBar.xaml.cs">
+      <DependentUpon>CommandBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conto\ContoView.xaml.cs">
+      <DependentUpon>ContoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\SaldoView.xaml.cs">
+      <DependentUpon>SaldoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\Valuta.xaml.cs">
+      <DependentUpon>Valuta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\QuantityDialog.cs" />
+    <Compile Include="Views\Framework\ValutareportDialog.cs" />
+    <Compile Include="Views\LookupFastSearch\LookupFastSearcherUniverse.xaml.cs">
+      <DependentUpon>LookupFastSearcherUniverse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LookupFastSearch\LookupFastSearcherUniverseShort.xaml.cs">
+      <DependentUpon>LookupFastSearcherUniverseShort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LookupsManagment\Lookups.xaml.cs">
+      <DependentUpon>Lookups.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmsManagment\FirmView.xaml.cs">
+      <DependentUpon>FirmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LookupsManagment\LookupManagerView.xaml.cs">
+      <DependentUpon>LookupManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Framework\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Periods\Periods.xaml.cs">
+      <DependentUpon>Periods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Periods\PeriodsViewModel.cs" />
+    <Compile Include="Views\ReportManager\ReportDialog.xaml.cs">
+      <DependentUpon>ReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportManager\ReportMenuProviderView.xaml.cs">
+      <DependentUpon>ReportMenuProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Saldos\EditorAddSaldo.xaml.cs">
+      <DependentUpon>EditorAddSaldo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Saldos\EditSaldo.xaml.cs">
+      <DependentUpon>EditSaldo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Saldos\SaldosAnalitic.xaml.cs">
+      <DependentUpon>SaldosAnalitic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Saldos\Saldoss.xaml.cs">
+      <DependentUpon>Saldoss.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchableFieldManagment\LookupToFirm.xaml.cs">
+      <DependentUpon>LookupToFirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchableFieldManagment\LookupToFirmViewModel.cs" />
+    <Compile Include="Views\System\AnaliticTypeManager.xaml.cs">
+      <DependentUpon>AnaliticTypeManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\CopyLookupFromFirmToFirm.xaml.cs">
+      <DependentUpon>CopyLookupFromFirmToFirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\CopyAccsFromFirmToFirm.xaml.cs">
+      <DependentUpon>CopyAccsFromFirmToFirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\CopyAccsFromYearToYear.xaml.cs">
+      <DependentUpon>CopyAccsFromYearToYear.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\NumberFormats.xaml.cs">
+      <DependentUpon>NumberFormats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\NumberFormatsViewModel.cs" />
+    <Compile Include="Views\System\SysLookUpView.xaml.cs">
+      <DependentUpon>SysLookUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\System\AnaliticManager.xaml.cs">
+      <DependentUpon>AnaliticManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TetkaView\DetailsUniverse.xaml.cs">
+      <DependentUpon>DetailsUniverse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TetkaView\DetailsUniverseViewModel.cs" />
+    <Compile Include="Views\TetkaView\FacturaComplexViewModelDetail.cs" />
+    <Compile Include="Views\TetkaView\FacturaContragenInfol.xaml.cs">
+      <DependentUpon>FacturaContragenInfol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TetkaView\FacturaControl.xaml.cs">
+      <DependentUpon>FacturaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TetkaView\FacturaControlInfoViewModel.cs" />
+    <Compile Include="Views\TetkaView\FacturaComplexViewModel.cs" />
+    <Compile Include="Views\TetkaView\FacturaControlViewModel.cs" />
+    <Compile Include="Views\TetkaView\TetkaControl.xaml.cs">
+      <DependentUpon>TetkaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserManager.xaml.cs">
+      <DependentUpon>UserManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ValutaReport\ChoiserValutaandAcc.xaml.cs">
+      <DependentUpon>ChoiserValutaandAcc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Valuta\ValutaAdd.xaml.cs">
+      <DependentUpon>ValutaAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Valuta\ValutaAddorEdit.xaml.cs">
+      <DependentUpon>ValutaAddorEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Valuta\ValutaAddorEditViewMode.cs" />
+    <Compile Include="Views\Valuta\ValutaAddViewMode.cs" />
+    <Compile Include="Views\Valuta\ValutaEntityWraper.cs" />
+    <Page Include="CustomControls\ContrSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\AccSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\DialogTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\Pb.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompactStyle\AccReg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conto\AccountsManagment\TreeManagerViewDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ContragentManagment\LookupSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Declar\DeclarVies.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Declar\DeclarConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\BisyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ImportInvoiseIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ModalTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MonthSelector - Copy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\NumSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SearchFormAcc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SelectDostDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\SelectContDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\SelectAccDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SelectSimpleAcc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\YesNoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dnevnici\DdsAll.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dnevnici\DnPokupki.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dnevnici\Oborotki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dnevnici\DdsSellsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dnevnici\DnSales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirebirdUpdater\FirebirdUpdater.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirmsManagment\ClearContoForFirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\AppSetings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\Col.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\HoldingSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\HoldingsWindowElement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\HoldingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\MainWindowTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\SetUpMapAnaliticAccToLookup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\MainAcc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conto\AccountsManagment\TreeManagerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Conto\AccountsManagment\ReportAccountsWithSaldoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Conto\AccountsManagment\ReportAccountsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\Banner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DataSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\EditInsertLookups.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SearchForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SelectFirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\LabelTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Framework\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\Framework\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Framework\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Shemes\BureauBlack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\BureauBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\ExpressionDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\ExpressionLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\MainShema.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\MyShema.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\ShinyBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\ShinyRed.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Shemes\WhistlerBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Framework\BaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\CommandBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CompactStyle\CompactStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conto\ContoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\SaldoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\Valuta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LookupFastSearch\LookupFastSearcherUniverse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LookupFastSearch\LookupFastSearcherUniverseShort.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LookupsManagment\Lookups.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FirmsManagment\FirmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LookupsManagment\LookupManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Framework\TabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Periods\Periods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportManager\ReportDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportManager\ReportMenuProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Saldos\EditorAddSaldo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Saldos\EditSaldo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Saldos\SaldosAnalitic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Saldos\Saldoss.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchableFieldManagment\LookupToFirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\System\AnaliticTypeManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\System\CopyLookupFromFirmToFirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\System\CopyAccsFromFirmToFirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\System\CopyAccsFromYearToYear.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\System\NumberFormats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\System\SysLookUpView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\System\AnaliticManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TetkaView\DetailsUniverse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TetkaView\FacturaContragenInfol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TetkaView\FacturaControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TetkaView\TetkaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Users\UserManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ValutaReport\ChoiserValutaandAcc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Valuta\ValutaAdd.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Valuta\ValutaAddorEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\Tempo2012.EntityFramework.Models.FirmModel.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="tempo.rtf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoCompleteTextBox\dragonz.actb.csproj">
+      <Project>{89BC47C7-F14D-46C5-8B9B-0DB90CE2AC42}</Project>
+      <Name>dragonz.actb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataGrid2DTest\DataGrid2DLibrary\DataGrid2DLibrary.csproj">
+      <Project>{7D76D9E7-AF25-4AA5-995B-E1A526F192EA}</Project>
+      <Name>DataGrid2DLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InputSimulator\InputSimulator.csproj">
+      <Project>{3549cd6f-80f8-450f-b99e-cf0a736b1f2a}</Project>
+      <Name>InputSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportBuilder\ReportBuilder.csproj">
+      <Project>{29990691-8EFA-45D3-A70B-D5F862221018}</Project>
+      <Name>ReportBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemplateGenerator\TemplateGenerator.csproj">
+      <Project>{dbc1e486-257a-42d9-b914-3fe5684f6414}</Project>
+      <Name>TemplateGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tempo2012.EntityFramework\Tempo2012.EntityFramework.csproj">
+      <Project>{0CCDB4CC-FF4A-421B-8593-B5EBD005D9B4}</Project>
+      <Name>Tempo2012.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Virtualization\Virtualization.csproj">
+      <Project>{363C0FB2-C861-4DC1-857C-C708C82080B9}</Project>
+      <Name>Virtualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPF.MDI\WPF.MDI.csproj">
+      <Project>{BE1ED569-5E0B-4DF0-8964-33AD2AAE4C4A}</Project>
+      <Name>WPF.MDI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cupIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrowleft.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrowright.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\tempo2012icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\insert_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Applications-icon.png" />
+    <Resource Include="Images\Applications-iconsilver.png" />
+    <Resource Include="Images\Apps-knotes-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Apps-knotes-iconsmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\validation_correct.png" />
+    <Resource Include="Images\validation_fail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Help\" />
+    <Folder Include="Views\AccountRegisters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\notes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ajax_loader_blue_32.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

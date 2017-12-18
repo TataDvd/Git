@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ArrayOfCountry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Country>
+    <Id>1</Id>
+    <Name>България</Name>
+  </Country>
+  <Country>
+    <Id>2</Id>
+    <Name>Англия</Name>
+  </Country>
+  <Country>
+    <Id>3</Id>
+    <Name>САЩ</Name>
+  </Country>
+  <Country>
+    <Id>4</Id>
+    <Name>ЮАР</Name>
+  </Country>
+</ArrayOfCountry>

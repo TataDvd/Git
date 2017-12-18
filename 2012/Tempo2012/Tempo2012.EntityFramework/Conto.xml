@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ArrayOfConto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Conto>
+    <Data>2011-08-08T00:00:00</Data>
+    <Id>1</Id>
+    <Oborot>100.5</Oborot>
+    <Folder>8</Folder>
+    <Reason>Фактура N 501</Reason>
+    <Note>Кредитно известие</Note>
+    <DataInvoise>2011-07-08T00:00:00</DataInvoise>
+    <NumberObject>1</NumberObject>
+    <DebitAccount>0</DebitAccount>
+    <CreditAccount>1</CreditAccount>
+    <FirmId>1</FirmId>
+    <DocumentId>1</DocumentId>
+    <CartotekaDebit>0</CartotekaDebit>
+    <CartotecaCredit>1</CartotecaCredit>
+  </Conto>
+  <Conto>
+    <Data>2011-08-08T00:00:00</Data>
+    <Id>2</Id>
+    <Oborot>500.5</Oborot>
+    <Folder>8</Folder>
+    <Reason>Фактура N 501</Reason>
+    <Note>Плащане по фактура</Note>
+    <DataInvoise>2011-07-08T00:00:00</DataInvoise>
+    <NumberObject>1</NumberObject>
+    <DebitAccount>0</DebitAccount>
+    <CreditAccount>1</CreditAccount>
+    <FirmId>1</FirmId>
+    <DocumentId>1</DocumentId>
+    <CartotekaDebit>1</CartotekaDebit>
+    <CartotecaCredit>0</CartotecaCredit>
+  </Conto>
+</ArrayOfConto>

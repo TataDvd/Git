@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CoffeeLibrary.CupOfCoffee">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgAAgBAAAQAAQAACIAAAAAAAgAAAAAIAAAQAAAgGAAA=</HashCode>
+      <FileName>CupOfCoffee.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="CoffeeLibrary.BeanType">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAEAAAAAAAAAAAIAAAAAAABAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CoffeeLibrary.DrinkSize">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CoffeeLibrary.Flavorings">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAEAACAAAAAAAAAAAAAAAQAAAAAAAkCAAA=</HashCode>
+      <FileName>Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CoffeeLibrary.Temperature">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

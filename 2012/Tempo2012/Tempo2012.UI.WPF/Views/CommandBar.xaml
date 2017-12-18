@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.CommandBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <l:FromEnumToString x:Key="etostr"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" TabIndex="21" Content="F2 Добави" 
+                Command="{Binding Path=DataContext.AddCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="{Binding Path=DataContext.DisebleEdits}"
+                Visibility="{Binding Path=DataContext.IsShowAdd,Converter={StaticResource BooleanToVisibilityConverter}}"
+                >
+                
+        </Button>
+        <Button Grid.Column="2" TabIndex="22" Content="F3 Редактирай" 
+                Command="{Binding Path=DataContext.UpdateCommand}"
+                Margin="10,5,10,2"
+                IsEnabled="{Binding Path=DataContext.DisebleEdits}"
+                Visibility="{Binding Path=DataContext.IsShowEdit,Converter={StaticResource BooleanToVisibilityConverter}}"
+                ></Button>
+        <Button Grid.Column="3" TabIndex="23" Content="F4 Изтрий" 
+                Command="{Binding Path=DataContext.DeleteCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowDelete,Converter={StaticResource BooleanToVisibilityConverter}}"
+                ></Button>
+        <Button Grid.Column="4" TabIndex="24" Content="Запис" 
+                Command="{Binding Path=DataContext.SaveCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="{Binding Path=DataContext.EnableEdits}"
+                Visibility="{Binding Path=DataContext.IsShowSave,Converter={StaticResource BooleanToVisibilityConverter}}"
+                ></Button>
+        <Button Grid.Column="5"  TabIndex="25" Content="F5 Търси" 
+                Command="{Binding Path=DataContext.SearchCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowSearch,Converter={StaticResource BooleanToVisibilityConverter}}"
+                ></Button>
+        <Button Grid.Column="6"  TabIndex="30" Content="F6 Разглеждане" 
+                Command="{Binding Path=DataContext.CancelCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="{Binding Path=DataContext.EnableEdits}"
+                Visibility="{Binding Path=DataContext.IsShowView,Converter={StaticResource BooleanToVisibilityConverter}}"
+                ></Button>
+        <Button Grid.Column="7"  TabIndex="26" 
+                Command="{Binding Path=DataContext.MoveFirstCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                >
+            |&lt;&lt;
+        </Button>
+        <Button Grid.Column="8"  TabIndex="27" 
+                Command="{Binding Path=DataContext.MoveNextCommand}" 
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                >
+            &lt;&lt;
+        </Button>
+        <Button Grid.Column="9"  TabIndex="28" 
+                Command="{Binding Path=DataContext.MovePreviusCommand}" Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                >
+            &gt;&gt;
+        </Button>
+        <Button Grid.Column="10"  TabIndex="29" 
+                Command="{Binding Path=DataContext.MoveLastCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                >
+            &gt;&gt;|
+        </Button>
+        <Border Background="White" BorderThickness="3" CornerRadius="5" HorizontalAlignment="Center">
+            <TextBlock Grid.Column="0" TextAlignment="Center" Text="{Binding Path=DataContext.Mode,Converter={StaticResource etostr}}" Margin="5,2,5,2" Foreground="Black" FontWeight="Bold" ></TextBlock>
+        </Border>
+            
+
+    </Grid>
+</UserControl>

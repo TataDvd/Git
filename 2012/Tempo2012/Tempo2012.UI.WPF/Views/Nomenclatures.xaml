@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.Nomenclatures"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary" x:Name="_this" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="180">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        <ComboBox TabIndex="1" Grid.Row="1"  Text="{Binding Path=Nomenclatures,Mode=TwoWay}" ItemsSource="{Binding ElementName=_this,Path=DataContext.Nomenclatures}" DisplayMemberPath="Name" Margin="10,5,10,2" SelectedItem="{Binding CurrentNomenclatures,Mode=TwoWay}" />
+        <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+            <DataGrid  ItemsSource="{Binding NomenclatureFields}" AutoGenerateColumns="False">
+                <!--IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Поле" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
+                    <!--<DataGridTextColumn Header="ДДС номер" Binding="{Binding DDSnum}"/>
+                    <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Binding="{Binding City}" Header="Град:" />
+                    <DataGridTextColumn Binding="{Binding Zip}" Header="ПК" />
+                    <DataGridTextColumn Binding="{Binding Country}" Header="Държава" />
+                    <DataGridTextColumn Binding="{Binding Address}" Header="Адрес" />
+                    <DataGridTextColumn Binding="{Binding Telefon}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding Presentor}" Header="Представляващ" />
+                    <DataGridTextColumn Binding="{Binding NameBoss}" Header="Управител" />
+                    <DataGridTextColumn Binding="{Binding Names}" Header="Имена" />
+                    <DataGridTextColumn Binding="{Binding EGN}" Header="ЕГН" />
+                    <DataGridTextColumn Binding="{Binding Tel}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="Име" />
+                    <DataGridTextColumn Binding="{Binding SurName}" Header="Презиме" />
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия" />-->
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <ScrollViewer  Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+            <dg2d:DataGrid2D Name="dataGrid2D"
+                             Grid.Row="1"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent">
+            </dg2d:DataGrid2D>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

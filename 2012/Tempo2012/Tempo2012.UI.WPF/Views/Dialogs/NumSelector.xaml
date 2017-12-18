@@ -1,0 +1,8 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.NumSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Въведи начален номер и натисни enter" Height="80" Width="250" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <CustomControls:TextBoxEx Width="50" Height="25" x:Name="mo" KeyDown="mo_KeyDown"></CustomControls:TextBoxEx>
+    </Grid>
+</Window>

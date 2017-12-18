@@ -1,0 +1,262 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dnevnici.DdsSellsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+        xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        xmlns:LookupFastSearch="clr-namespace:Tempo2012.UI.WPF.Views.LookupFastSearch" Title="{Binding Title}" Height="600" Width="700" x:Name="_this" 
+        KeyDown="DdsSellsView_OnKeyDown"
+        Closing="_this_Closing"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" >
+    <Window.Resources>
+        <l:LevConvertor x:Key="lv"/>
+    </Window.Resources>
+    <Border BorderBrush="Black" BorderThickness="3">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="160"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx  Grid.ColumnSpan="4" Grid.Row="0" Text="{Binding Title}" Margin="10,5,10,2" ></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx  Grid.Row="1" Text="Документ N" Margin="10,5,10,2" ></CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Grid.Row="1" Grid.Column="1"   Text="{Binding Path=DocID,Mode=TwoWay,ValidatesOnDataErrors=True}" Margin="10,5,10,2" TabIndex="1" x:Name="doki"/>
+                <CustomControls:TextBlockEx  Grid.Row="1" Grid.Column="2" Text="Дата на осчетоводяване" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Grid.Row="1"  Grid.Column="3"   Text="{Binding Path=Date,Mode=TwoWay,StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False" Margin="10,5,10,2"/>
+                <Button Grid.Row="2" Grid.Column="1" Margin="10,5,10,2" Click="Button_Click" Focusable="False" IsEnabled="{Binding Path=CanSaveDds}">F2-Запис</Button>
+                <Button Grid.Row="2" Grid.Column="2" Margin="10,5,10,2" Click="Button_Click_2" Focusable="False">Изтриване</Button>
+                <Button Grid.Row="2" Grid.Column="3" Margin="10,5,10,2" Click="Button_Click_1" Focusable="False">Изход</Button>
+                <CustomControls:TextBlockEx Grid.Column="4" Grid.Row="1" Text="{Binding Linked}" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Grid.Column="4" Grid.Row="2" Text="{Binding Total}" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                <!--<CustomControls:TextBlockEx Grid.Column="4" Grid.Row="2" Text="{Binding DdsIncluded}" Margin="10,5,10,2"></CustomControls:TextBlockEx>-->
+            </Grid>
+            <GroupBox Grid.Row="2" Header="Документ">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--<TextBlockEx Grid.Row="1" Text="Вид дейност" Margin="10,5,10,2"></TextBlockEx>
+                <ComboBox Grid.Row="1" Grid.Column="1" TabIndex="10" 
+                              ItemsSource="{Binding ElementName=_this,Path=DataContext.ActivityTypeLookup}"
+                              DisplayMemberPath="Name" 
+                              SelectedValue="{Binding Path=KindActivity,Mode=TwoWay}"
+                              SelectedValuePath="Id"
+                              Margin="10,5,10,2"/>-->
+                    <CustomControls:TextBlockEx Grid.Row="1" Text="Дата на фактурата" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <DatePicker Grid.Row="1"  Grid.Column="1" TabIndex="2" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
+                                SelectedDate="{Binding Path=DataF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                Behavior:SelectedDateSyncBehavior.SyncText="True"
+                                />
+                    <CustomControls:TextBlockEx Grid.Row="2" Text="Вид Документа" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <ComboBox Grid.Row="2" Grid.Column="1" TabIndex="3" 
+                              ItemsSource="{Binding ElementName=_this,Path=DataContext.KindDocLookup}"
+                              DisplayMemberPath="Name" 
+                              SelectedItem="{Binding Path=KindDoc,Mode=TwoWay}"
+                              Margin="10,5,10,2"/>
+                    <CustomControls:TextBlockEx Grid.Row="3" Text="Вид на Стоката/Услугата" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <CustomControls:TextBoxEx Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
+                                          Text="{Binding Path=Stoke}" 
+                                          Margin="10,5,10,2" 
+                                          TabIndex="4"
+                                          MaxLength="30"></CustomControls:TextBoxEx>
+                    <CustomControls:TextBlockEx Grid.Row="4" Text="Номенклатура контрагент" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <ComboBox  Grid.Row="4" Grid.Column="1" TabIndex="4"
+                  Text="{Binding Path=Name}" 
+                  ItemsSource="{Binding Lookups}" 
+                  DisplayMemberPath="Name" 
+                  Margin="10,5,10,2" 
+                  SelectedItem="{Binding Lookup,ValidatesOnDataErrors=True}"/>
+                    <CustomControls:TextBlockEx Grid.Row="5" Text="Клон" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <CustomControls:TextBoxEx Grid.Row="5" Grid.Column="1" Text="{Binding Path=Branch}" Margin="10,5,150,2" Width="50" MaxLength="4" TabIndex="5"></CustomControls:TextBoxEx>
+                    <CustomControls:TextBlockEx Grid.Row="6" Text="Доставка чл. 163а" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <CustomControls:TextBoxEx Grid.Row="6" Grid.Column="1" Margin="10,5,160,5" Width="25" MaxLength="1" Text="{Binding Path=A8,Mode=TwoWay}" TabIndex="6"></CustomControls:TextBoxEx>
+                    <CustomControls:TextBlockEx Grid.Row="6" Grid.Column="1" Margin="50,5,20,2" Text="0 или 1 или 2"></CustomControls:TextBlockEx>
+                    <!--<TextBlockEx Grid.Row="7" Text="Име на Контрагента" Margin="10,5,10,2"></TextBlockEx>-->
+                    <!--<ComboBox Grid.Row="7" Grid.Column="1" TabIndex="10" 
+                              ItemsSource="{Binding ElementName=_this,Path=DataContext.SelectedLookup}"
+                              DisplayMemberPath="Name" 
+                              SelectedItem="{Binding Path=LookupElementInfo,Mode=TwoWay}"
+                              Margin="10,5,10,2" Visibility="Hidden"/>-->
+                    <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal"  Grid.ColumnSpan="3">
+                        <LookupFastSearch:LookupFastSearcherUniverseShort  x:Name="searchi" DataContext="{Binding SelectedItem,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                                                             TabIndex="7" Focusable="True" ChangeElement="LookupFastSearcherUniverse_OnChangeElement"></LookupFastSearch:LookupFastSearcherUniverseShort>
+                        <CustomControls:TextBoxEx  Text="{Binding Path=ClName,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,5" Width="300" TabIndex="9"></CustomControls:TextBoxEx>
+                    </StackPanel>
+                    <StackPanel Grid.Row="8" Orientation="Horizontal"  Grid.ColumnSpan="3">
+                        <!--<CustomControls:TextBlockEx Grid.Row="7" Text="БУЛСТАТ" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                    <CustomControls:TextBoxEx  Text="{Binding Path=Bustad, Mode=TwoWay,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="150" TabIndex="8"/>-->
+                        <CustomControls:TextBlockEx Grid.Row="7" Text="NЗДДС" Margin="10,5,10,2"></CustomControls:TextBlockEx>
+                        <CustomControls:TextBoxEx  Text="{Binding Path=DdsId,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="150" TabIndex="9"></CustomControls:TextBoxEx>
+                    </StackPanel>
+
+                    <!--<DataGrid x:Name="dgEmp"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  HorizontalAlignment="Left"
+                  Margin="10,10,0,0" 
+                  VerticalAlignment="Top" 
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding AllFields}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="True"
+                  RowEditEnding="dgEmp_RowEditEnding"
+                  PreviewKeyDown="dgEmp_PreviewKeyDown"
+                  BeginningEdit="dgEmp_BeginningEdit"
+                  AlternatingRowBackground="Gainsboro"  AlternationCount="2" Width="660"
+                           Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" TabIndex="10">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Име">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:TextBlockEx Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Сума Сделка">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="{Binding DdsSuma,Converter={StaticResource lv}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:MaskTextBox Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding DdsSuma,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource lv}}"
+                                    DataType="decimal"  
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    ></CustomControls:MaskTextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="ДДС%">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:TextBlockEx Text="{Binding DdsPercent,Converter={StaticResource lv}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:MaskCustomControls:TextBoxEx Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding DdsPercent,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource lv}}"
+                                    DataType="decimal"  
+                                    Behavior:CustomControls:TextBoxExBehavior.SelectAllTextOnFocus="True"
+                                    ></CustomControls:MaskCustomControls:TextBoxEx>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Сума ДДС">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:TextBlockEx Text="{Binding Dds,Converter={StaticResource lv}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:MaskTextBox Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding Dds,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource lv}}"
+                                    DataType="decimal"  
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    ></CustomControls:MaskTextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Общо">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:TextBlockEx Text="{Binding DdsTotal,Converter={StaticResource lv}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:MaskTextBox Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding DdsTotal,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource lv}}"
+                                    DataType="decimal"  
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    ></CustomControls:MaskTextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>-->
+                    <StackPanel Orientation="Horizontal"  Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" >
+                        <CustomControls:TextBlockEx Text="Име" Width="260" Margin="10,5,10,5"></CustomControls:TextBlockEx>
+                        <CustomControls:TextBlockEx Text="Сума Сделка" Width="80" Margin="10,5,10,5"></CustomControls:TextBlockEx>
+                        <CustomControls:TextBlockEx Text="ДДС%" Width="70" Margin="10,5,10,5"></CustomControls:TextBlockEx>
+                        <CustomControls:TextBlockEx Text="Сума ДДС" Width="70" Margin="10,5,10,5"></CustomControls:TextBlockEx>
+                        <CustomControls:TextBlockEx Text="Общо" Width="70" Margin="10,5,10,5"></CustomControls:TextBlockEx>
+                    </StackPanel>
+                    <Border  Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#FF210505" BorderThickness="1" >
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+                            <ItemsControl 
+                                        ItemsSource="{Binding AllFields}"
+                                        IsTabStop="False"
+                                    >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Height="22">
+                                            <CheckBox IsChecked="{Binding In,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                                            <CustomControls:TextBlockEx Text="{Binding Name}" Width="260" Margin="10,1,10,1"></CustomControls:TextBlockEx>
+                                            <CustomControls:TextBoxEx Text="{Binding DdsSuma,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}" Width="80" Margin="10,1,10,1" ></CustomControls:TextBoxEx>
+                                            <CustomControls:TextBoxEx Text="{Binding DdsPercent,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}" Width="70" Margin="10,1,10,1" IsEnabled="False"></CustomControls:TextBoxEx>
+                                            <CustomControls:TextBoxEx Text="{Binding Dds,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}" Width="70" Margin="10,1,10,1" ></CustomControls:TextBoxEx>
+                                            <CustomControls:TextBoxEx Text="{Binding DdsTotal,Converter={StaticResource lv},Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="70" Margin="10,1,10,1" ></CustomControls:TextBoxEx>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                    <!--   <DataGrid  ItemsSource="{Binding AllFields}" 
+                       SelectedItem="{Binding CurrentField,Mode=TwoWay}" 
+                       AutoGenerateColumns="False"
+                       IsReadOnly="False" 
+                       IsManipulationEnabled="False">
+                IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Име" Binding="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="Сума сделка" Binding="{Binding DdsSuma,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="ДДС%" Binding="{Binding DdsPercent,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Сума ДДС" Binding="{Binding Dds,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Общо" Binding="{Binding DdsTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    </DataGrid.Columns>
+            </DataGrid>-->
+
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Border>
+</Window>

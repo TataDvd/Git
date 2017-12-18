@@ -1,0 +1,84 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.Saldoss"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        xmlns:c="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+        Title="{Binding Title}" Height="150" Width="530" x:Name="_this" KeyDown="_this_KeyDown">
+    <Window.Resources>
+        <c:LevConvertor x:Key="stod" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <!--<RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>-->
+        </Grid.RowDefinitions>
+        <!--<TextBlockEx   Margin="15,5,20,5"
+                       Text="{Binding Acc}"
+                       IsEnabled="True"
+                       ></TextBlockEx>-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2">
+            <CustomControls:TextBlockEx Margin="15,15,5,5" Width="130">Салдо лева дебит</CustomControls:TextBlockEx>
+            <CustomControls:MaskTextBox Text="{Binding SumaLvD,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                       Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                 
+                       IsEnabled="True"
+                       Width="80"
+                       DataType="decimal"
+                       Margin="15,15,5,5"></CustomControls:MaskTextBox>
+            <!--<TextBox  "
+                       Text="{Binding SumaLvD,Mode=TwoWay,UpdateSourceTrigger=LostFocus,StringFormat='#.00',ConverterCulture={x:Static Globalization:CultureInfo.CurrentCulture}}"
+                       IsEnabled="True"
+                       Width="100"
+                       ></TextBox>-->
+            <CustomControls:TextBlockEx Margin="25,15,10,5" Width="120">Салдо лева кредит</CustomControls:TextBlockEx>
+            <CustomControls:MaskTextBox   Margin="5,15,20,5" Text="{Binding SumaLvK,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                       MinWidth="{Binding MinWidth}"
+                                       DataType="decimal"
+                                       IsEnabled="True"
+                                       MaxLength="{Binding Length}"  Width="80"></CustomControls:MaskTextBox>
+        </StackPanel>
+        <!--<StackPanel Grid.Row="2" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2">
+        <TextBlockEx Margin="15,5,10,5" Width="200">Салдо количество дебит</TextBlockEx>
+            <CustomControls:MaskTextBox 
+                Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                Margin="15,5,10,5"
+                       Text="{Binding SumaKD,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                       IsEnabled="True"  
+                       DataType="decimal"
+                       Width="100"></CustomControls:MaskTextBox>
+            <TextBlockEx Margin="25,5,20,5" Width="200">Салдо количество кредит</TextBlockEx>
+            <CustomControls:MaskTextBox 
+                Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                Margin="25,5,20,5" Text="{Binding SumaKK,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                                       MinWidth="{Binding MinWidth}"
+                                       IsEnabled="True"
+                                       DataType="decimal"
+                                       MaxLength="{Binding Length}"  Width="100"></CustomControls:MaskTextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2">
+        <TextBlockEx Margin="15,5,10,5" Width="200">Салдо валута дебит</TextBlockEx>
+            <CustomControls:MaskTextBox 
+                Margin="15,5,10,5"
+                Text="{Binding SumaVD,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                DataType="decimal"
+                IsEnabled="True" 
+                Width="100">
+                </CustomControls:MaskTextBox>
+        <TextBlockEx Margin="25,5,20,5" Width="200">Салдо валута кредит</TextBlockEx>
+            <CustomControls:MaskTextBox  Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                Margin="25,5,20,5" Text="{Binding SumaVK,Mode=TwoWay,StringFormat=0.00,UpdateSourceTrigger=LostFocus,Converter={StaticResource stod}}"
+                                       MinWidth="{Binding MinWidth}"
+                                       IsEnabled="True"
+                                       MaxLength="{Binding Length}"  Width="100"  DataType="decimal"></CustomControls:MaskTextBox>
+        </StackPanel>-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Width="auto">
+            <Button Margin="285,25,0,5" Width="100" IsDefault="True" Click="Button_Click">F2 Запис</Button>
+            <Button Margin="5,25,0,5" Width="100" IsCancel="True" >Отказ</Button>
+        </StackPanel>
+    </Grid>
+</Window>

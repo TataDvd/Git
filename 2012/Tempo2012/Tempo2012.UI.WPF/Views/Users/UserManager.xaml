@@ -1,0 +1,188 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Users.UsеrManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Счетоводители" Height="500" Width="1014" x:Name="_this">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        <StackPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120">Име</CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Text="{Binding Name,Mode=TwoWay}" Width="360" Margin="10,5,10,5" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit,UpdateSourceTrigger=PropertyChanged}"></CustomControls:TextBoxEx>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120">Потребилтелско име</CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Text="{Binding UserName,Mode=TwoWay}" Width="360" Margin="10,5,10,5" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit,UpdateSourceTrigger=PropertyChanged}"></CustomControls:TextBoxEx>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120">Парола</CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Text="{Binding PassWord,Mode=TwoWay}" Width="360" Margin="10,5,10,5" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit,UpdateSourceTrigger=PropertyChanged}"></CustomControls:TextBoxEx>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120">Права</CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanUpdateConto}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Контиране
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanDeleteConto}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Триене контиране
+                </CustomControls:CheckBoxEx>
+               
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanHronologicalReport}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Хронологичен регистър
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanAnaliticalReport}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Аналитичен регистър
+                </CustomControls:CheckBoxEx>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanAddStore}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                   Добавяне на складове
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanStoreReports}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Редактиране на сметкоплан
+                </CustomControls:CheckBoxEx>
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanFinishMonth}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                   Приключване на месец
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanFinishYear}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Приключване на година
+                </CustomControls:CheckBoxEx>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanBalansReport}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Балансов отчет
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanNewCurrency}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Нова валута
+                </CustomControls:CheckBoxEx>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanAddCurrencyRates}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Нови валутни курсове
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanUpdateSaldo}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Редактиране на салдо
+                </CustomControls:CheckBoxEx>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx  Margin="10,5,10,0" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:CheckBoxEx Grid.Row="0" Width="250"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanReportPeriodi}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Периоди
+                </CustomControls:CheckBoxEx>
+                <CustomControls:CheckBoxEx Width="250"
+                          Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=CanClasses}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="51"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdit}"
+                                          >
+                    Класове
+                </CustomControls:CheckBoxEx>
+
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</Window>

@@ -1,0 +1,20 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.ReportManager.ReportMenuProviderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Изберете вид период" Height="190" Width="210" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button  Width="200" HorizontalAlignment="Left" Click="Button_Click" >Текущ месец</Button>
+        <Button Grid.Row="1" Width="200" HorizontalAlignment="Left" Click="Button_Click">Произволен месец</Button>
+        <Button Grid.Row="2" Width="200" HorizontalAlignment="Left" Click="Button_Click">Произволен период</Button>
+        <Button Grid.Row="3" Width="200" HorizontalAlignment="Left" Click="Button_Click">Произволна дата</Button>
+        <Button Grid.Row="4" Width="200" HorizontalAlignment="Left" Click="Button_Click">Цяла година</Button>
+    </Grid>
+</Window>

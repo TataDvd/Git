@@ -1,0 +1,613 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.MainWindowTab"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:help="clr-namespace:Tempo2012.UI.WPF.HelpProvider"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="Tempo" 
+        Icon="/Images/tempo2012icon.png"
+        KeyDown="OnKeyPress"
+        Width="1280"
+        Height="1024"
+       
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+       >
+  <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+           
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="5" Grid.ColumnSpan="2">
+            <Menu VerticalAlignment="Top">
+                <MenuItem >
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Група" />
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem Click="MenuItem_OnClick24">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Управление" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_OnClick25">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Избор на група" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem >
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Конфигурация" />
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem Click="MenuItem_Data_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Дата" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_12">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Числови формати" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_13">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Валутни курсове" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_OnClick30">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Конфигурация" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_23">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Забранени Периоди" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Фирми" />
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem Click="MenuItem_Firma_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Фирми" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_FirmaChoise_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Избор на фирма" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                   
+                    <MenuItem Click="MenuItem_OnClick">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Данни за фирмата" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Счетоводство" />
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem  Click="MenuTree_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Индивидуален сметкоплан" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Conto_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Осчетоводяване" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Nomenclature_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Номенклатури" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                   
+                    <!--<MenuItem Click="MenuItem_Click">
+                         <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Национанален сметкоплан" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>-->
+                   
+                </MenuItem>
+                <MenuItem> 
+                    <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    <MenuItem >
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справки сметкоплан"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                        <MenuItem  Click="MenuItem_MainAccountReport_Click">
+                             <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справка за сметки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_MainAccountReportWithSaldo_Click">
+                             <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справка за салда"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                            
+                        </MenuItem>
+                       
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справки фактури"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                            <MenuItem  Click="MenuItem_OnClick23">
+                                <MenuItem.HeaderTemplate>
+                                    <DataTemplate>
+                                        <CustomControls:TextBlockEx Text="Справка за Фактури"/>
+                                    </DataTemplate>
+                                </MenuItem.HeaderTemplate>
+                            </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_25">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_36">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Уведомителни писма"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_33">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка фактури с разбити плащания"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_8">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Дневник продажби"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_7">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Дневник покупки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_9">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Декларация"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <!--<MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_17"/>-->
+                    <MenuItem  Click="MenuItem_Click_14">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="VIES-Декларация"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_16">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Генератор на всички файлове"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_10">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Оборотна ведомост"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_29">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Оборотка на аналитични сметки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_32">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Разгъната Оборотна ведомост"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_19">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Счетоводни регистри"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_OnClick26">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Кореспонденции по сметка дебит"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_OnClick27">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Кореспонденции по сметка кредит"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_OnClick28">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Главна Книга"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_26">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справка неизползвани клиенти"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_31">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справка неизползвани доставчици"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Системни настройки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    <MenuItem Click="MenuItem_NewNomenclature_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Типове номенклатури" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Системни номенклатури"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem  Click="MenuItem_Click_1">
+                         <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Управление на аналитични сметки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_2">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Управление на типове аналитични сметки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_22">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Управление на търсещи полета на номеклатури и фирми"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                   
+                    <MenuItem >
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Цветова схема"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                        <MenuItem Click="Button_Click" x:Name="sh1">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Люляк темпо "/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh2">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Небесно темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh3">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Тъмно темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh4" >
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Сиво темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh5">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Синьо темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh6">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Червено темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh7">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Бяло темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="Button_Click" x:Name="sh8">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Windows темпо"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_3">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Режим прозорци"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Служебни функции"/>
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem>
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Манипулация на данни" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                        <MenuItem  Click="MenuItem_Click_17">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Изтриване всички данни за фирмата" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_20">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Изтриване сметкоплан за годината" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_15">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Изтриване на всички осчетоводявания" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_21">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Изтриване на осчетоводявания за период" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_22">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Копиране на данни от фирма във фирма" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_5">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Копиране на сметкоплан от фирма на фирма"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_11">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Годишно приключване" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_34">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Импорт на фактури" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_OnClick29">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Преномериране на месец"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_24">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Актуализиране на базата"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_35">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Смяна на номер на сметка"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_28">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Бланки"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_27">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Триене на неизползвани клиенти"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_30">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Триене на неизползвани доставчици"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem >
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Счетоводители"/>
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                    <MenuItem  Click="MenuItem_Click_18">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Управление"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
+                    
+                </MenuItem>
+                <MenuItem Click="MenuItem_Click_4">
+                    <MenuItem.HeaderTemplate>
+                        <DataTemplate>
+                            <CustomControls:TextBlockEx Text="Изход"/>
+                        </DataTemplate>
+                    </MenuItem.HeaderTemplate>
+                </MenuItem>
+            </Menu>
+        </Border>
+        <TabControl Name="MDIContainer" Grid.Row="1">
+        </TabControl>
+        <!--<Expander Grid.Row="1" Grid.Column="1" 
+                  Header="Текуща конфигурация" Height="Auto"
+                  VerticalAlignment="Top"
+                  ExpandDire ction="Left" IsExpanded="False">
+                <ListBox x:Name="confi" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <GroupBox Header="{Binding Path=Name,Mode=TwoWay}" Width="170">
+                            <StackPanel>
+                            <CustomControls:TextBlockEx Text="{Binding Path=Value,Mode=TwoWay}"></CustomControls:TextBlockEx>
+                            <CustomControls:TextBlockEx Text="{Binding Path=Description,Mode=TwoWay}"></CustomControls:TextBlockEx>
+                            <Button Content="Избор" Tag ="{Binding Changer}" Click="Button_ClickChange"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+         </Expander>-->
+        
+        <StatusBar Grid.Row="3">
+           
+            <CustomControls:TextBlockEx>Фирма:</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="{Binding FirmaName}"/>
+            <Separator/>
+            <!--<CustomControls:TextBlockEx>Булстат:</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="{Binding Bulstad}"/>
+            <Separator/>
+            <CustomControls:TextBlockEx>ЗДДС номер:</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="{Binding Dn}"/>-->
+            <CustomControls:TextBlockEx Text="{Binding RegDds}"/>
+            <Separator/>
+            <CustomControls:TextBlockEx>Работна дата:</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="{Binding WorkDate}"/>
+            <Separator/>
+            <CustomControls:TextBlockEx>Потребител:</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="{Binding User}"/>
+            <Separator/>
+            <TextBlock>Група:</TextBlock>
+            <TextBlock Text="{Binding Holding,Mode=TwoWay}"/>
+        </StatusBar>
+    </Grid>
+</Window>

@@ -1,0 +1,65 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.ContragentManagment.LookUpSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        xmlns:DataGrid2DLibrary="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+        xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views" Title="Избери елемент от номенклатура" Height="346" Width="789"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            
+        </Grid.RowDefinitions>
+
+        <ItemsControl ItemsSource="{Binding Filters}" Grid.Row="0" 
+                         v:EnhancedFocusScope.IsEnhancedFocusScope="True"
+                          KeyboardNavigation.ControlTabNavigation="Once"
+                          KeyboardNavigation.TabNavigation="Cycle" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                    </StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+           
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CustomControls:TextBlockEx Margin="5,5,5,2" Text="{Binding FilterName}" FontSize="9"></CustomControls:TextBlockEx>
+                            <TextBox Margin="5,5,5,2" Width="60" Text="{Binding FilterWord,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Tag="{Binding}"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"
+                                     TextChanged="TextBox_TextChanged"
+                                     FontSize="9"></TextBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        
+        <DataGrid2DLibrary:DataGrid2D Grid.Row="1"
+                             Name="dg"
+                             VerticalScrollBarVisibility="Auto" 
+                             HorizontalScrollBarVisibility="Auto"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields, Mode=TwoWay}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             SelectedItem="{Binding SelectedItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             SelectionUnit="FullRow"
+                             PreviewKeyDown="dg_PreviewKeyDown"         
+                             MouseDoubleClick="dg_MouseDoubleClick"       
+                             IsReadOnly="True" CanUserSortColumns="True">
+
+
+        </DataGrid2DLibrary:DataGrid2D>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button TabIndex="21" Content="Избери" Margin="10,5,10,2" IsDefault="True" Click="Button_Click" IsEnabled="{Binding HasSelection}" Focusable="False"></Button>
+            <Button Grid.Column="1" TabIndex="22" Content="Откажи" Margin="10,5,10,2" IsCancel="True" Focusable="False" ></Button>
+        </StackPanel>
+    </Grid>
+</Window>

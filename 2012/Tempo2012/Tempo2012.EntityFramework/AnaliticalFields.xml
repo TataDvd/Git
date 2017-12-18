@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ArrayOfAnaliticalFields xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AnaliticalFields>
+    <Id>1</Id>
+    <Name>Сума лв.</Name>
+    <FieldType>money</FieldType>
+  </AnaliticalFields>
+  <AnaliticalFields>
+    <Id>2</Id>
+    <Name>Сума валута</Name>
+    <FieldType>money</FieldType>
+  </AnaliticalFields>
+  <AnaliticalFields>
+    <Id>3</Id>
+    <Name>Дата падеж</Name>
+    <FieldType>data</FieldType>
+  </AnaliticalFields>
+  <AnaliticalFields>
+    <Id>4</Id>
+    <Name>Количество</Name>
+    <FieldType>int</FieldType>
+  </AnaliticalFields>
+  <AnaliticalFields>
+    <Id>5</Id>
+    <Name>Мярка</Name>
+    <FieldType>string</FieldType>
+  </AnaliticalFields>
+</ArrayOfAnaliticalFields>

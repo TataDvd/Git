@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ArrayOfAnaliticalAccountType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AnaliticalAccountType>
+    <Id>1</Id>
+    <Name>Стойностна</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>2</Id>
+    <Name>Валутна</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>3</Id>
+    <Name>Стойностна с падеж</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>4</Id>
+    <Name>Валутна с падеж</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>5</Id>
+    <Name>Материална</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>6</Id>
+    <Name>Материална с валута</Name>
+  </AnaliticalAccountType>
+  <AnaliticalAccountType>
+    <Id>7</Id>
+    <Name>Дълготрайни активи</Name>
+  </AnaliticalAccountType>
+</ArrayOfAnaliticalAccountType>

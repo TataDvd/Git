@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.Framework.Valuta"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors" mc:Ignorable="d">
+    <UserControl.Resources>
+        <l:ValConvertor x:Key="val"></l:ValConvertor>
+        <l:LevConvertor x:Key="lev"></l:LevConvertor>
+        <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+        <l:BooleanToColorConvertor x:Key="btoc"/>
+       
+           
+        
+    </UserControl.Resources>
+    <Grid Margin="20,0,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="{Binding Name}"></CustomControls:TextBlockEx>
+        <CustomControls:MaskTextBox Margin="10,5,10,5" 
+                                    Grid.Column="1" 
+                                    Text="{Binding ValueVal,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource val}}"
+                                    DataType="decimal"  
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    KeyDown="UIElement_OnKeyDown"
+                                    LostFocus="MaskTextBox_LostFocus_2"
+                                    TabIndex="{Binding TabIndex}"></CustomControls:MaskTextBox>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="Курс" Grid.Row="1"></CustomControls:TextBlockEx>
+        <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                                     DataType="decimal"  
+                                     Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                     Grid.Row="1" Grid.Column="1"
+                                     KeyDown="UIElement_OnKeyDown"
+                                     Text="{Binding ValueKurs,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource kurs}}"
+                                     LostFocus="MaskTextBox_LostFocus"
+                                     TabIndex="{Binding TabIndex}">
+           
+        </CustomControls:MaskTextBox>
+        
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="Опорен Курс" Grid.Row="2"></CustomControls:TextBlockEx>
+        <CustomControls:MaskTextBox Margin="10,5,10,5"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="{Binding MainKurs,Mode=TwoWay,UpdateSourceTrigger=LostFocus,Converter={StaticResource kurs}}"
+                                    DataType="decimal"
+                                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                                    TabIndex="{Binding TabIndex}" KeyDown="Oporen_OnKeyDown" LostFocus="MaskTextBox_LostFocus_1" ></CustomControls:MaskTextBox>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Text="Курсова разлика" Grid.Row="3"></CustomControls:TextBlockEx>
+        <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="3" Grid.Column="1" 
+                                    Text="{Binding KursDif,Converter={StaticResource lev}}"
+                                    ></CustomControls:TextBlockEx>
+    </Grid>
+</UserControl>

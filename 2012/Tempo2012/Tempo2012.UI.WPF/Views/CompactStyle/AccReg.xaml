@@ -1,0 +1,25 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.AccountRegisters.AccReg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Счетоводни регистри" Height="300" Width="806" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Menu Height="30" VerticalAlignment="Top">
+            <MenuItem Header="Маска" Click="MenuItem_Click_3"/>
+            <MenuItem Header="Хронологичен регистър">
+                <MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_2"/>
+                <MenuItem Header="Хронологичен регистър с дневници продажби" Click="MenuItem_OnClick_DnevProd"/>
+                <MenuItem Header="Хронологичен регистър с дневници покупки" Click="MenuItem_OnClick"/>
+                <MenuItem Header="Осчетоводявания, несвързани с  дневници" Click="MenuItem_OnClick_bezDDS"/>
+            </MenuItem>
+          
+            <MenuItem Header="Аналитичен регистър">
+                 <MenuItem Header="Аналитичен регистър" Click="MenuItem_Click_1"/>
+                 <MenuItem Header="Аналитичен регистър по клиент" Click="MenuItem_Click_Contr"/>
+                <MenuItem Header="Аналитичен регистър по доставчик" Click="MenuItem_Click_Dost"/>
+                 <MenuItem Header="Справка валута" Click="MenuItemValRep_OnClick"/>
+                <MenuItem Header="Справка материали" Click="MenuItem_Click_Quantity"/>
+            </MenuItem>
+            <MenuItem Header="Изход" Click="MenuItem_Click"/>        
+        </Menu>
+    </Grid>
+</Window>

@@ -1,0 +1,32 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.NumberFormats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:EntityFramework="clr-namespace:Tempo2012.EntityFramework;assembly=Tempo2012.EntityFramework"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Числови формати" Height="300" Width="300">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Text="Лева" Margin="10,5,10,5" Width="100"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Lv,Mode=TwoWay}" Margin="10,5,10,5" Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Text="Валута" Margin="10,5,10,5" Width="100"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Val,Mode=TwoWay}" Margin="10,5,10,5" Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Text="Валутен курс" Margin="10,5,10,5" Width="100"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Kurs,Mode=TwoWay}" Margin="10,5,10,5" Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Text="Количество" Margin="10,5,10,5" Width="100"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Kol,Mode=TwoWay}" Margin="10,5,10,5" Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="0,30,0,0">
+            <CustomControls:TextBlockEx Text="Пример за формат с два знака след запетая" Margin="10,5,10,5" ></CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Text="0.00" Margin="10,5,10,5" ></CustomControls:TextBlockEx>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+            <Button Content="Запази" Margin="150,2,10,5"  IsDefault="True" Click="Button_Click"></Button>
+            <Button Content="Отказ" Margin="10,2,10,5"  IsCancel="True"></Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

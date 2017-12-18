@@ -1,0 +1,89 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.TreeManagerViewDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:e="clr-namespace:Tempo2012.UI.WPF.Extenders"
+             xmlns:local="clr-namespace:Tempo2012.UI.WPF.TemplateSelector"
+             mc:Ignorable="d" 
+             x:Name="_this" 
+             d:DesignHeight="800" d:DesignWidth="800"  KeyDown="_this_KeyDown" VerticalAlignment="Stretch">
+    <!--<UserControl.Resources>
+        <ResourceDictionary Source="CompactStyle.xaml" />
+    </UserControl.Resources>-->
+    <Window.Resources>
+
+        <l:AccToColorConvertor x:Key="AccToColorConvertor" />
+        <l:AccToIconConvertor x:Key="AccToIconConvertor" />
+        <HierarchicalDataTemplate x:Key="AccTemplate" ItemsSource="{Binding SubAccs}" >
+            
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding CurrAcc,Converter={StaticResource AccToIconConvertor}}"></Image>
+                <TextBlock Text="{Binding CurrAcc}"  MouseDown="TextBlock_MouseDown">
+                </TextBlock>
+                
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        
+
+       
+
+
+        
+
+        
+    </Window.Resources>
+ 
+    
+    <Window.InputBindings>
+        <KeyBinding Key="F2" Command="{Binding Path=DataContext.AddCommand}" />
+        <KeyBinding Key="F3" Command="{Binding Path=DataContext.UpdateCommand}" />
+        <KeyBinding Key="F6" Command="{Binding Path=DataContext.ViewCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding Path=DataContext.DeleteCommand}" />
+    </Window.InputBindings>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+            <Button TabIndex="21" Content="Избери" Margin="10,5,10,2" IsDefault="True" Click="Button_Click"></Button>
+            <Button Grid.Column="1" TabIndex="22" Content="Откажи" Margin="10,5,10,2" IsCancel="True"></Button></StackPanel>
+        </Grid>
+
+       
+            <e:ExtendTree Grid.Row="1" x:Name="tvSuppliers" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"    
+                      ItemsSource="{Binding Tree}" 
+                      ItemTemplate="{StaticResource AccTemplate}"
+                      SelectedItem_="{Binding ElementName=_this, Path=CurrentAccount,Mode=TwoWay}"
+                      SelectedItemChanged="tvSuppliers_SelectedItemChanged"
+                      
+                      >
+
+
+                <e:ExtendTree.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </e:ExtendTree.ItemContainerStyle>
+
+
+            </e:ExtendTree>
+            
+
+    </Grid>
+</Window>

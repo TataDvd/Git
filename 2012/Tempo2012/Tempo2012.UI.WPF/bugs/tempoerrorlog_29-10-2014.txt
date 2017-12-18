@@ -1,0 +1,25 @@
+
+Log Entry : 
+10/29/2014 08:56:56
+Error Message:Unable to load DLL 'fbembed': This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem. (Exception from HRESULT: 0x800736B1)
+__________________________
+
+Log Entry : 
+10/29/2014 09:02:07
+Error Message:Unable to load DLL 'fbembed': This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem. (Exception from HRESULT: 0x800736B1)
+__________________________
+
+Log Entry : 
+10/29/2014 09:03:15
+Error Message:Unable to load DLL 'fbembed': This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem. (Exception from HRESULT: 0x800736B1)
+__________________________
+
+Log Entry : 
+10/29/2014 09:04:39
+Error Message:Unable to load DLL 'fbembed': This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem. (Exception from HRESULT: 0x800736B1)
+__________________________
+
+Log Entry : 
+10/29/2014 09:04:41
+Error Message:Unable to load DLL 'fbembed': This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem. (Exception from HRESULT: 0x800736B1)
+__________________________

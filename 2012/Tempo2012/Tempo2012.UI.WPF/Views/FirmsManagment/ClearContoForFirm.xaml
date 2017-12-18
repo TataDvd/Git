@@ -1,0 +1,64 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.FirmsManagment.ClearContoForFirm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="Изтриване на контировки за фирма" Height="300" Width="572" x:Name="_this">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+           
+        </Grid.ColumnDefinitions>
+        <DataGrid  ItemsSource="{Binding AllFirms}" 
+                       SelectedItem="{Binding CurrentFirmaWraper,Mode=TwoWay}" 
+                       AutoGenerateColumns="False" 
+                       IsReadOnly="True"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       Width="500"
+                       Margin="10,10,10,10" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Фирма" Binding="{Binding Name}" Width="250"/>
+                <DataGridTextColumn Header="БУЛСТАТ" Binding="{Binding Bulstad}" Width="100"/>
+                <DataGridTextColumn Header="ДДС номер" Binding="{Binding DDSnum}" Width="100"/>
+                <!--<DataGridTextColumn Header="RequiredDate" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Binding="{Binding City}" Header="Град:" />
+                    <DataGridTextColumn Binding="{Binding Zip}" Header="ПК" />
+                    <DataGridTextColumn Binding="{Binding Country}" Header="Държава" />
+                    <DataGridTextColumn Binding="{Binding Address}" Header="Адрес" />
+                    <DataGridTextColumn Binding="{Binding Telefon}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding Presentor}" Header="Представляващ" />
+                    <DataGridTextColumn Binding="{Binding NameBoss}" Header="Управител" />
+                    <DataGridTextColumn Binding="{Binding Names}" Header="Имена" />
+                    <DataGridTextColumn Binding="{Binding EGN}" Header="ЕГН" />
+                    <DataGridTextColumn Binding="{Binding Tel}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="Име" />
+                    <DataGridTextColumn Binding="{Binding SurName}" Header="Второ име" />
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия" />-->
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
+                <customControls:TextBlockEx Margin="10,5,10,2">За фирма</customControls:TextBlockEx>
+                <customControls:TextBlockEx Margin="10,5,10,2" Text="{Binding Path=CurrentFirmaWraper.Name}"></customControls:TextBlockEx>
+            </StackPanel>
+            <Button Grid.Row="1" Grid.Column="0" TabIndex="20" Grid.ColumnSpan="2" Content="Избери период за изтриване" Margin="10,5,10,2" IsDefault="True" Command="{Binding AddNewCommand}"></Button>
+            <Button Grid.Row="1" Grid.Column="2" TabIndex="21" Content="Изтрий" Margin="10,5,10,2" IsDefault="True" Command="{Binding AddCommand}"></Button>
+            <Button Grid.Row="1" Grid.Column="3" TabIndex="22" Content="Откажи" Margin="10,5,10,2" IsCancel="True"></Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,533 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Dialogs.MainAcc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views" 
+        xmlns:local="clr-namespace:Tempo2012.UI.WPF.TemplateSelector"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" x:Name="_this" 
+        KeyDown="_this_KeyDown"
+        Title="{Binding Path=Title}" Height="800" Width="900" MinHeight="800" MinWidth="800"  Top="0" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <l:FromEnumToRadio x:Key="enumBooleanConverter" />
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+        <l:LevConvertor x:Key="lv"/>
+        <l:ValConvertor x:Key="val"></l:ValConvertor>
+        <l:KolConvertor x:Key="kol"></l:KolConvertor>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style TargetType="{x:Type CustomControls:TextBoxEx}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="Main">
+            <GroupBox Grid.Row="1" Header="Сметка" HorizontalAlignment="Stretch"  
+                      Name="groupAccount" VerticalAlignment="Top" 
+                      IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Национален сметкоплан" 
+                           Visibility="{Binding Path=ShowMain,Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="10,5,10,2"/>
+                    <ComboBox Grid.Row="0" Grid.Column="2"
+                          TabIndex="1"        
+                          Grid.ColumnSpan="4" Margin="10,5,10,2" 
+                          ItemsSource="{Binding ElementName=_this,
+                          Path=DataContext.AllNationalAccounts}"
+                          SelectionChanged="ComboBox_SelectionChanged" 
+                                  Text="{Binding Path=Txt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Visibility="{Binding Path=ShowMain,Converter={StaticResource BooleanToVisibilityConverter}}"
+                          IsEnabled="{Binding Path=EnableInsert}" IsEditable="true"/>
+                    <CustomControls:TextBlockEx  Margin="10,5,10,2" Grid.Row="1" Grid.Column="0" Text="Сметка" />
+                    <CustomControls:TextBoxEx x:Name="accountnum" Grid.Row="1" Grid.Column="1"  
+                                                  Text="{Binding Path=Num,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Margin="10,5,10,2" 
+                                                  TabIndex="2"
+                         IsEnabled="False"/>
+                    <CustomControls:TextBoxEx x:Name="accountname" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Text="{Binding Path=NameMain,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"  Margin="10,5,10,2"/>
+                    <CustomControls:TextBlockEx Grid.Row="2" Grid.Column="0" Text="Салдо" Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="Подсметки" Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Text="Сметка" Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" Text="Общо" Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="1" Text="Дебит" Margin="10,5,0,5" />
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" Text="Кредит" Margin="10,5,0,5" TextAlignment="Left"/>
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="3" Text="Дебит" Margin="10,5,0,5" />
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="4" Text="Кредит" Margin="10,5,0,5" TextAlignment="Left"/>
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="5" Text="Дебит" Margin="10,5,0,5" />
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="6" Text="Кредит" Margin="10,5,0,5" TextAlignment="Left"/>
+
+                    <CustomControls:TextBlockEx Grid.Row="4" Grid.Column="0" Text="Лева" Margin="10,5,0,5" />
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="1" Text="{Binding Path=CurrentAccount.SubSaldoDL,Converter={StaticResource lv}}" 
+                              Margin="10,5,10,2"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="2"
+                          Text="{Binding Path=CurrentAccount.SubSaldoKL,Converter={StaticResource lv}}"
+                          Margin="10,5,0,5"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="3" 
+                          Text="{Binding Path=CurrentAccount.SaldoDL,Converter={StaticResource lv}}" 
+                          Margin="10,5,10,2"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="4"
+                          Text="{Binding Path=CurrentAccount.SaldoKL,Converter={StaticResource lv}}"
+                          Margin="10,5,0,5"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="5" 
+                          Text="{Binding Path=CurrentAccount.TotalSaldoDL,Mode=OneWay,Converter={StaticResource lv}}" 
+                          Margin="10,5,10,2"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="6"
+                                  Text="{Binding Path=CurrentAccount.TotalSaldoKL,Mode=OneWay,Converter={StaticResource lv}}"
+                                  Margin="10,5,0,5"
+                                  Width="100"
+                                  HorizontalAlignment="Left"
+                                  IsEnabled="False"/>
+                    <CustomControls:TextBlockEx Grid.Row="5" Grid.Column="0" Text="Валута" Margin="10,5,0,5" Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="1" Text="{Binding Path=CurrentAccount.SubSaldoDV,Converter={StaticResource val}}" 
+                                      Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                      Margin="10,5,10,2"
+                                      Width="100"
+                                      HorizontalAlignment="Left"
+                                      IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="2" Text="{Binding Path=CurrentAccount.SubSaldoKV,Converter={StaticResource val}}" 
+                                      Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                      Margin="10,5,10,2"
+                                      Width="100"
+                                      HorizontalAlignment="Left"
+                                      IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="3" Text="{Binding Path=CurrentAccount.SaldoDV,Converter={StaticResource val}}"
+                                   Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,10,2"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="4"
+                              Text="{Binding Path=CurrentAccount.SaldoKV,Converter={StaticResource val}}"
+                              Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,0,5"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="5" Text="{Binding Path=CurrentAccount.TotalSaldoDV,Mode=OneWay,Converter={StaticResource val}}" 
+                                  Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Margin="10,5,10,2"
+                                  Width="100"
+                                  HorizontalAlignment="Left"
+                                  IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="6"
+                                  Text="{Binding Path=CurrentAccount.TotalSaldoKV,Mode=OneWay,Converter={StaticResource val}}"
+                                  Margin="10,5,0,5"
+                                  Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Width="100"
+                                  HorizontalAlignment="Left"
+                                  IsEnabled="False"/>
+                    <CustomControls:TextBlockEx Grid.Row="6" Grid.Column="0" Text="Количество" Margin="10,5,0,5" Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="1" Text="{Binding Path=CurrentAccount.SubSaldoDK,Converter={StaticResource kol}}" 
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,10,2"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="2"
+                              Text="{Binding Path=CurrentAccount.SubSaldoKK,Converter={StaticResource kol}}"
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,0,5"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="3" Text="{Binding Path=CurrentAccount.SaldoDK,Converter={StaticResource kol}}" 
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,10,2"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+
+
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="4"
+                              Text="{Binding Path=CurrentAccount.SaldoKK,Converter={StaticResource kol}}"
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,0,5"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+
+
+
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="5" Text="{Binding Path=CurrentAccount.TotalSaldoDK,Mode=OneWay,Converter={StaticResource kol}}" 
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,10,2"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="6"
+                              Text="{Binding Path=CurrentAccount.TotalSaldoKK,Mode=OneWay,Converter={StaticResource kol}}"
+                                  Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Margin="10,5,0,5"
+                              Width="100"
+                              HorizontalAlignment="Left"
+                              IsEnabled="False"/>
+
+                </Grid>
+            </GroupBox>
+        </DataTemplate>
+        <DataTemplate x:Key="Sub">
+            <GroupBox Grid.Row="1" Header="Подсметка" HorizontalAlignment="Stretch"  Name="groupAccount" VerticalAlignment="Top" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CustomControls:TextBlockEx Text="Основна сметка"  Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Column="1" Text="{Binding Path=ParentNum}" Margin="10,5,0,5" Grid.ColumnSpan="3" />
+                    <CustomControls:TextBlockEx Grid.Row="1" Text="Подсметка"  Margin="10,5,0,5"/>
+                    <CustomControls:TextBoxEx x:Name="accountnum" Grid.Row="1" Grid.Column="1"  Text="{Binding Path=SubNum,Mode=TwoWay}"   IsEnabled="{Binding Path=EnableInsert}" Margin="10,5,0,5" />
+                    <CustomControls:TextBoxEx x:Name="accountname" Grid.Row="1" Grid.Column="2" Text="{Binding Path=NameMain,Mode=TwoWay}"  Grid.ColumnSpan="3" Margin="10,5,0,5"/>
+                    <CustomControls:TextBlockEx Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Text="Начално салдо" Margin="10,5,0,5"  />
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="1" Text="Дебит" Margin="10,5,0,5"  />
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" Text="Кредит" Margin="10,5,0,5" />
+                    <CustomControls:TextBlockEx Grid.Row="4" Grid.Column="0" Text="Лева"  Margin="10,5,0,5" />
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="1" Text="{Binding Path=CurrentAccount.SaldoDL,Converter={StaticResource lv}}" 
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False" Margin="10,5,0,5"/>
+                    <CustomControls:TextBoxEx  Grid.Row="4" Grid.Column="2"
+                          Text="{Binding Path=CurrentAccount.SaldoKL,Converter={StaticResource lv}}"
+                          Margin="10,5,0,5"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False" />
+
+
+
+                    <CustomControls:TextBlockEx Grid.Row="5" Grid.Column="0" Text="Валута"  Margin="10,5,0,5" Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="1" Margin="10,5,0,5"
+                          Text="{Binding Path=CurrentAccount.SaldoDV,Converter={StaticResource val}}" 
+                          Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="5" Grid.Column="2" Margin="10,5,0,5"
+                          Text="{Binding Path=CurrentAccount.SaldoKV,Converter={StaticResource val}}"
+                          Visibility="{Binding Path=ValutaVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+
+
+                    <CustomControls:TextBlockEx Grid.Row="6" Grid.Column="0" 
+                               Text="Количество" Margin="10,5,0,5"
+                               Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                               />
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="1" 
+                          Text="{Binding Path=CurrentAccount.SaldoDК,Converter={StaticResource kol}}" 
+                          Margin="10,5,0,5"
+                          Width="100"
+                          Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"    
+                          HorizontalAlignment="Left"
+                          IsEnabled="False"/>
+                    <CustomControls:TextBoxEx  Grid.Row="6" Grid.Column="2"
+                          Text="{Binding Path=CurrentAccount.SaldoKК,Converter={StaticResource kol}}"
+                          Visibility="{Binding Path=ColVisible,Converter={StaticResource BooleanToVisibilityConverter}}"    
+                          Margin="10,5,0,5"
+                          Width="100"
+                          HorizontalAlignment="Left"
+                          IsEnabled="False" />
+
+                </Grid>
+            </GroupBox>
+        </DataTemplate>
+        <local:MainAccTemplateSelecor
+                    Main="{StaticResource Main}" 
+                    Sub="{StaticResource Sub}"
+                   x:Key="MainAccTemplateSelecor" />
+
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F2" Command="{Binding Path=DataContext.AddCommand}" />
+        <KeyBinding Key="F3" Command="{Binding Path=DataContext.UpdateCommand}" />
+        <KeyBinding Key="F6" Command="{Binding Path=DataContext.ViewCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding Path=DataContext.DeleteCommand}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="450"/>
+
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="Команди" VerticalAlignment="Bottom" Margin="10,0,10,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="27,5,33,5" Click="Button_Click_2" IsDefault="True" IsEnabled="{Binding Path=IsValid}" Focusable="False">F2 Запис</Button>
+                <Button Grid.Column="2" Margin="30,5,30,5" IsCancel="True" Focusable="False">Изход</Button>
+                <!--<Button Grid.Column="3"  Margin="10,5,10,5" Click="ButtonBase_OnClick" Content="Затвори" />-->
+            </Grid>
+        </GroupBox>
+        <ContentPresenter Grid.Row="1" 
+                              ContentTemplateSelector="{StaticResource MainAccTemplateSelecor}"
+                              Content="{Binding}"
+                              x:Name="submain" Margin="10,5,10,5">
+        </ContentPresenter>
+        <GroupBox Grid.Row="2" Header="Характеристики на сметка" HorizontalAlignment="Stretch"  Name="groupAccount1" 
+                      VerticalAlignment="Top" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Margin="10,5,10,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0" Header="Тип сметка" HorizontalAlignment="Stretch"  Name="groupAccount11" VerticalAlignment="Top" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsActive}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Активна</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1"  IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsPasiv}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Активно пасивна</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=TypeAccountEnumIn,
+                            Mode=TwoWay,Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsActivePasiv}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Пасивна</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="0" Grid.Column="1" IsChecked="{Binding ElementName=_this,
+                            Path=DataContext.TypeAccountEnumIn,Mode=TwoWay,
+                            Converter={StaticResource enumBooleanConverter},
+                            ConverterParameter=IsTranzitiv}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Транзитивна</CustomControls:TextBoxEx>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="1"  Header="Ниво сметка" HorizontalAlignment="Stretch"  Name="groupAccount12" VerticalAlignment="Top" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableInsert}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton HorizontalContentAlignment="Left" IsChecked="{Binding ElementName=_this,Path=DataContext.LevelAccountIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsSintetic}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Синтетично</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Name="IsAnalitic" IsChecked="{Binding ElementName=_this,Path=DataContext.LevelAccountIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsAnalitic}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Аналитично</CustomControls:TextBoxEx>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="2" Header="Тип салдо" HorizontalAlignment="Stretch"  Name="groupAccount13" VerticalAlignment="Top" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsCompens}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Нормализирано</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeSaldoIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsExpand}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Разгънато</CustomControls:TextBoxEx>
+                        </RadioButton>
+
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="3" Header="Опции" HorizontalAlignment="Stretch"  Name="groupAccount14" VerticalAlignment="Top" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <RadioButton IsChecked="{Binding ElementName=_this,Path=DataContext.TypeAccountExIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsNormal}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Нормална</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="0" Grid.Column="1" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeAccountExIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsBujest}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Бюджетна</CustomControls:TextBoxEx>
+                        </RadioButton>
+                        <RadioButton Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding ElementName=_this,Path=DataContext.TypeAccountExIn,Mode=TwoWay,Converter={StaticResource enumBooleanConverter},ConverterParameter=IsOwn}">
+                            <CustomControls:TextBoxEx IsEnabled="False" Margin="0,5,10,2">Собствени средства</CustomControls:TextBoxEx>
+                        </RadioButton>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox  Grid.Row="3"
+                     
+                      Header="Данни за аналитично ниво" 
+                      Visibility="{Binding ElementName=_this,Path=DataContext.IsAnalitic,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Grid.RowSpan="2"  HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Top" Height="350"    
+                       >
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="151"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Text="Вид аналитична сметка" Margin="10,5,10,2" />
+
+                <ComboBox Margin="10,5,10,5" Grid.Column="1"
+                              ItemsSource="{Binding AllAnaliticalAccount}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding CurrentAllAnaliticalAccount,Mode=TwoWay}" 
+                              IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableInsert}"/>
+                <!--<TextBlockEx Margin="10" 
+                               DataContext="{Binding Path=CurrentAllAnaliticalAccount}"
+                               Text="{Binding Path=Id}" />-->
+
+                <CustomControls:TextBlockEx Grid.Column="2" Grid.Row="0" Text="Тип аналитична сметка" Margin="10,5,10,2" />
+
+                <ComboBox Grid.Column="3"  Grid.Row="0" IsEnabled="False"
+                          ItemsSource="{Binding AllAnaliticTypes}" 
+                          Margin="10,5,10,5"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding CurrentAllTypeAccount,Mode=TwoWay}"/>
+
+
+
+                <DataGrid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Path=SelectedAnaliticalTypeFields}" 
+                          AutoGenerateColumns="False" IsReadOnly="True"  Height="100" Margin="0,1,10,31" Grid.RowSpan="2">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Поле" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Тип" Binding="{Binding FieldType}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <GroupBox Grid.Row="2" Header="Връзка с номенклатура" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  IsEnabled="{Binding ElementName=_this,Path=DataContext.IsAnalitic}" 
+                          Grid.ColumnSpan="4" Height="200" Margin="0,0,0,1" Grid.RowSpan="2"
+                          >
+                    <DataGrid Name="Mapper" 
+                          ItemsSource="{Binding SelectedAnaliticalFields,Mode=TwoWay}"
+                          SelectedItem="{Binding CurrentSelectedAnaliticalField, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          IsEnabled="True"
+                          IsReadOnly="True"
+                          MouseDoubleClick="DataGrid_MouseDoubleClick"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"   Height="155">
+                        <!--IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits}"-->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Поле" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Тип" Binding="{Binding FieldType}" />
+                            <DataGridTemplateColumn Header="Свържи с">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+
+                                        <Button Click="Button_Click_3" Content="Свържи"/>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Header="Номенклатура" Binding="{Binding NameLookUp}" />
+                            <!--<DataGridTextColumn Header="Свързано Поле" Binding="{Binding NameFieldLookUp}"/>-->
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+
+                                        <Button Click="Button_Click" Content="Изтрий"/>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </GroupBox>
+
+            </Grid>
+
+        </GroupBox>
+
+
+
+
+    </Grid>
+</Window>

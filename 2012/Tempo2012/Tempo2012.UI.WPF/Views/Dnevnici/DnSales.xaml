@@ -1,0 +1,20 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dnevnici.DnSales"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Дневник Продажби" Height="129" Width="617">
+    <Grid>
+        <StackPanel>
+       
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx  Margin="10,5,10,5" >За месец</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Month,Mode=TwoWay}" Width="50" Margin="10,5,10,5"></CustomControls:TextBoxEx>
+            <CustomControls:TextBlockEx  Margin="10,5,10,5" >Година</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Text="{Binding Year,Mode=TwoWay}" Width="50" Margin="10,5,10,5"></CustomControls:TextBoxEx>
+        </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Продажби Печат" Margin="10,5,10,5" Command="{Binding AddCommand}"></Button>
+                <Button Content="Продажби Файл" Margin="10,5,10,5" Command="{Binding AddNewCommand}"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

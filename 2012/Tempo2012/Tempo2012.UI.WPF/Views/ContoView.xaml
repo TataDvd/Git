@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.ContoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:inteli="clr-namespace:dragonz.actb.control;assembly=dragonz.actb"
+             mc:Ignorable="d" 
+             x:Name="_this" KeyDown="_this_KeyDown"
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+    </UserControl.Resources>
+    
+    <Grid>
+       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Картон за осчетоводняване" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="Bold" DataContext="{Binding CurrentConto,Mode=TwoWay}">
+        <Grid Grid.Row="1" Height="120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Дата на документа" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Номер на документа" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=NumberObject,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Папка" />
+                <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding Path=Folder,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Оборот" />
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=Oborot,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <DatePicker Grid.Column="1" Height="25" HorizontalAlignment="Left" Margin="10,5,0,2" Name="datePicker1" Width="115" SelectedDate="{Binding Path=Data,Mode=TwoWay}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Дебит" Grid.Column="0" Grid.Row="2" DataContext="{Binding CurrentConto,Mode=TwoWay}">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Дебит сметка" />
+                <inteli:AutoCompleteTextBox x:Name="kreditsmetka"  Grid.Row="0" Grid.Column="1" Text="{Binding Path=DebitAccount,Mode=TwoWay}" Margin="10,5,10,2"/>
+                    <!--ItemsSource="{Binding ElementName=_this,Path=DataContext.AllNationalAccounts}"/-->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Основание" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Bulstad,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Забележка " />
+                <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding Path=Name,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Номер на клон" />
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=Bulstad,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <DataGrid Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding ElementName=_this,Path=DataContext.CurrentCartotecaDebit,Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Аналитични полета дебит" Binding="{Binding Path=TitleValue}"/>
+                        <DataGridTextColumn Header="Стойност" Binding="{Binding Path=Value}"/>
+                        
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Кредит" Grid.Column="1" Grid.Row="2" DataContext="{Binding CurrentConto,Mode=TwoWay}">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Kредит сметка"/>
+                <inteli:AutoCompleteTextBox x:Name="debitsmetka" Grid.Row="0" Grid.Column="1"  Text="{Binding Path=Name,Mode=TwoWay}" Margin="10,5,10,2"/>
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Вид документ"/>
+                <ComboBox Grid.Row="1" Grid.Column="1"  Text="{Binding Path=CreditAccount,Mode=TwoWay}" Margin="10,5,10,2" ItemsSource="{Binding ElementName=_this,Path=DataContext.TypeDocuments}" DisplayMemberPath="Name"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата на фактурата"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Картотека кредит"/>
+                <TextBox Grid.Row="3" Grid.Column="1"  Text="{Binding Path=Name,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Данни кредит"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=Bulstad,Mode=TwoWay}" Margin="10,5,10,2"/>
+                <DatePicker Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="10,5,0,2" Name="datePicker2" VerticalAlignment="Top" Width="115" SelectedDate="{Binding Path=DataInvoise}"/>
+                <DataGrid Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding ElementName=_this,Path=DataContext.CurrentCartotecaCredit,Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Аналитични полета кредит" Binding="{Binding Path=TitleValue}"/>
+                        <DataGridTextColumn Header="Стойност" Binding="{Binding Path=Value}"/>
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+            <DataGrid  ItemsSource="{Binding AllConto}" SelectedItem="{Binding CurrentConto,Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Сметка" Binding="{Binding Bulstad}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Data}"/>
+                    <DataGridTextColumn Header="Оборот" Binding="{Binding Oborot}"/>
+                    <DataGridTextColumn Binding="{Binding Folder}" Header="Папка" />
+                    <DataGridTextColumn Binding="{Binding Reason}" Header="Причина" />
+                    <DataGridTextColumn Binding="{Binding Note}" Header="Бележка" />
+                    <DataGridTextColumn Binding="{Binding DataInvoise}" Header="Дата на фактура" />
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

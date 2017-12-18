@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ArrayOfLookUpSpecific xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LookUpSpecific>
+    <Id>1</Id>
+    <Name>Фактура</Name>
+    <CodetId>01</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>2</Id>
+    <Name>Дебитно известие</Name>
+    <CodetId>02</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>3</Id>
+    <Name>Кредитно известие</Name>
+    <CodetId>03</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>4</Id>
+    <Name>Митническа декларация</Name>
+    <CodetId>07</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>5</Id>
+    <Name>Протокол или друг документ</Name>
+    <CodetId>09</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>6</Id>
+    <Name>Отчет за извършени продажби</Name>
+    <CodetId>81</CodetId>
+  </LookUpSpecific>
+  <LookUpSpecific>
+    <Id>7</Id>
+    <Name>Отчет за извършени продажби спец.ред</Name>
+    <CodetId>82</CodetId>
+  </LookUpSpecific>
+ </ArrayOfLookUpSpecific>

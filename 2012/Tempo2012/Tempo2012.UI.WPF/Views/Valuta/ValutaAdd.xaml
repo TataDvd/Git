@@ -1,0 +1,32 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Valuta.ValutaAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="Не е намерен курс за дата и вид валута" 
+         Name="_this" Width="370" Height="180" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <Window.Resources>
+        
+        <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+        
+    </Window.Resources>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Margin="10,10,10,5" Width="80">Вид Валута</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Margin="10,10,10,5" Width="80" Text="{Binding CodeValuta}"></CustomControls:TextBlockEx>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Margin="10,10,10,5"  Width="80">Дата</CustomControls:TextBlockEx>
+            <CustomControls:TextBlockEx Margin="10,10,10,5"  Width="80" Text="{Binding Date,StringFormat=\{0:d\}}"></CustomControls:TextBlockEx>
+           
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <CustomControls:TextBlockEx Margin="10,10,10,5"  Width="80">Курс</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Margin="10,10,10,5"  Width="80" Text="{Binding Kurs,Mode=TwoWay,Converter={StaticResource kurs},UpdateSourceTrigger=LostFocus}" KeyDown="UIElement_OnKeyDown"></CustomControls:TextBoxEx>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="215,10,10,5" Click="Button_Click" Content="Добави" x:Name="Bu"></Button>
+            <Button Margin="5,10,10,5" IsCancel="True" Width="45">Отказ</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.LookupManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             x:Name="_this" 
+             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="180" xmlns:my="clr-namespace:Tempo2012.EntityFramework.Models;assembly=Tempo2012.EntityFramework">
+    <UserControl.Resources>
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+        <CollectionViewSource x:Key="firmModelViewSource" d:DesignSource="{d:DesignInstance my:FirmModel, CreateList=True}" />
+    </UserControl.Resources>
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        <ComboBox TabIndex="1" Grid.Row="1"  
+                  Text="{Binding Path=Name}" 
+                  ItemsSource="{Binding Lookups}" 
+                  DisplayMemberPath="Name" 
+                  Margin="50,5,50,5" 
+                  SelectedItem="{Binding Lookup}"/>
+        <ScrollViewer  Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+            <dg2d:DataGrid2D Name="dataGrid2D"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             IsReadOnly="True"
+                             ItemsSource="{Binding}"
+                             SelectedIndex="{Binding Path=CurrentRowIndex,Mode=OneWayToSource}"
+                             SelectionUnit="FullRow">
+            </dg2d:DataGrid2D>
+
+        </ScrollViewer>
+        
+    </Grid>
+</UserControl>

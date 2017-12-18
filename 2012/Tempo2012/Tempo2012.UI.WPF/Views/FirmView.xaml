@@ -1,0 +1,232 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.FirmView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:viewModels="clr-namespace:Tempo2012.UI.WPF.ViewModels"
+             xmlns:jas="clr-namespace:Tempo2012.UI.WPF.Validators"
+             x:Name="_this" KeyDown="_this_KeyDown"
+             MinWidth="650">
+             <!--<UserControl.Resources>
+        <ResourceDictionary Source="CompactStyle.xaml"/>
+    </UserControl.Resources>-->
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModels:FirmViewModel}">
+            <v:FirmView/>
+        </DataTemplate>
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <TextBlock Foreground="Red" FontSize="16">!</TextBlock>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+         
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+         </Grid.RowDefinitions>
+        <GroupBox Grid.Row="1" Header="Основни данни" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Фирма" Width="70" />
+                <TextBox TabIndex="0" Text="{Binding Path=Name,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="21,5,10,2" MaxLength="50" Grid.Column="1" />
+                <TextBlock Grid.Column="2" Text="Данъчен Номер" />
+                <TextBox Grid.Column="3" Text="{Binding Path=Bulstad,Mode=OneWay}" Margin="10,5,10,2"  IsEnabled="false"/>
+                <TextBlock Grid.Column="4" Text="Бустад" />
+                <TextBox Grid.Column="5"  Text="{Binding Path=DDSnum,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" TabIndex="2" MaxLength="13" Grid.ColumnSpan="2"  />    
+                <TextBlock  Grid.Row="3" Grid.Column="4" Text="Представляващ" />
+
+                <TextBox Grid.Row="3" Grid.Column="5" TabIndex="9" Text="{Binding Path=Presentor}" Margin="10,5,10,2"/>
+                <ComboBox Grid.Row="3" Grid.Column="6" TabIndex="10" 
+                              ItemsSource="{Binding ElementName=_this,Path=DataContext.YesNo}"
+                              DisplayMemberPath="Name" 
+                              SelectedValue="{Binding Path=PresentorYN,Mode=TwoWay}"
+                              SelectedValuePath="Id"
+                              Margin="10,5,10,2"/>
+                 
+                    
+                
+                
+                <TextBlock Grid.Row="1" Text="Град" Width="70" />
+                <ComboBox Name="_city" TabIndex="3" Grid.Row="1" ItemsSource="{Binding ElementName=_this,Path=DataContext.Cities}" 
+                          Margin="21,5,10,2" SelectedValue="{Binding Path=City,Mode=TwoWay}" SelectedValuePath="Id" Grid.Column="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                <TextBlock Text="{Binding Path=Zip}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding ElementName=_city,Path=SelectedItem.Zip}" Margin="10,5,10,2"  IsEnabled="false"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="ПК" />
+                <!--<TextBox TabIndex="4" Grid.Row="1" Grid.Column="3"  Margin="10,5,10,2">
+                    <TextBox.Text>
+                        <Binding Path="Zip" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <jas:RegexValidationRule
+                              RegexText="[0-9]{4}$"
+                              ErrorMessage="Невалиден пощенски код (Пример: 2460)"
+                              RegexOptions="IgnoreCase"
+                              />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>-->
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="Държава" />
+                <ComboBox 
+                    TabIndex="5"
+                    Grid.Row="1"
+                    Grid.Column="5"
+                    ItemsSource="{Binding ElementName=_this,Path=DataContext.Countries}"
+                    DisplayMemberPath="Name" Margin="10,5,10,2"
+                    SelectedValue="{Binding Path=Country,Mode=TwoWay}"
+                    SelectedValuePath="Id" Grid.ColumnSpan="2">
+                </ComboBox>
+                
+                <TextBlock Grid.Row="2" Text="Адрес" Width="70" />
+                <TextBox TabIndex="6" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Path=Address}" Grid.Column="1" Margin="10,5,10,2"/>
+                <TextBlock Grid.Row="2" Grid.Column="4" Text="Телефон" />
+                <TextBox TabIndex="7" Grid.Row="2" Grid.Column="5"  Text="{Binding Path=Telefon}" Margin="10,5,10,2" Grid.ColumnSpan="2" />
+                <TextBlock Grid.Row="3" Text="Управител" Width="70" />
+                <TextBox TabIndex="8" Grid.Row="3" Text="{Binding Path=NameBoss}" Margin="10,5,10,2" Grid.Column="1" Grid.ColumnSpan="3"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Данни за представляващия" Grid.Row="2" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+               <Grid  HorizontalAlignment="Stretch">
+                   <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Имена" />
+                <TextBox TabIndex="11" Grid.Row="0" Grid.Column="1"   Text="{Binding Path=Names}" Margin="10,5,10,2" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="ЕГН" />
+                <TextBox x:Name="firstNameTxt" TabIndex="12" Grid.Row="0" Grid.Column="3" Margin="10,5,10,2" MaxLength="10" >
+                    <TextBox.Text>
+                        <Binding Path="EGN" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged" >
+                            
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Телефон:" />
+                <TextBox TabIndex="13" Grid.Row="1" Grid.Column="1"  Text="{Binding Path=Tel}" Margin="10,5,10,2" MaxLength="20"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Име" />
+                <TextBox TabIndex="14" Grid.Row="2" Grid.Column="1"   Text="{Binding Path=FirstName}" Margin="10,5,10,2" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Презиме" />
+                <TextBox TabIndex="15" Grid.Row="2" Grid.Column="3"   Text="{Binding Path=SurName}" Margin="10,5,10,2" />
+                <TextBlock Grid.Row="2" Grid.Column="4" Text="Фамилия" />
+                <TextBox TabIndex="16" Grid.Row="2" Grid.Column="5"   Text="{Binding Path=LastName}" Margin="10,5,10,2" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Град:" />
+                <ComboBox TabIndex="17" Grid.Row="3" Name="_city1"
+                          Grid.Column="1"
+                          ItemsSource="{Binding ElementName=_this,Path=DataContext.Cities2}"
+                          Margin="10,5,10,2"
+                          SelectedValue="{Binding Path=City1,Mode=TwoWay}"
+                          SelectedValuePath="Id"
+                          >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                <TextBlock Text="{Binding Path=Zip}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="ПК" />
+                <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding ElementName=_city1,Path=SelectedItem.Zip}" Margin="10,5,10,2"  IsEnabled="false"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес" />
+                <TextBox TabIndex="19" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="7" Text="{Binding Path=Address2}" Margin="10,5,10,2" />
+             </Grid>
+        </GroupBox>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+            <DataGrid  ItemsSource="{Binding AllFirms}" 
+                       SelectedItem="{Binding CurrentFirma}" 
+                       AutoGenerateColumns="False"
+                       IsReadOnly="True" 
+                       IsManipulationEnabled="False"> <!--IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Фирма" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Бустаt" Binding="{Binding Bulstad}"/>
+                    <DataGridTextColumn Header="ДДС номер" Binding="{Binding DDSnum}"/>
+                    <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                    <!--<DataGridTextColumn Binding="{Binding City}" Header="Град:" />
+                    <DataGridTextColumn Binding="{Binding Zip}" Header="ПК" />
+                    <DataGridTextColumn Binding="{Binding Country}" Header="Държава" />
+                    <DataGridTextColumn Binding="{Binding Address}" Header="Адрес" />
+                    <DataGridTextColumn Binding="{Binding Telefon}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding Presentor}" Header="Представляващ" />
+                    <DataGridTextColumn Binding="{Binding NameBoss}" Header="Управител" />
+                    <DataGridTextColumn Binding="{Binding Names}" Header="Имена" />
+                    <DataGridTextColumn Binding="{Binding EGN}" Header="ЕГН" />
+                    <DataGridTextColumn Binding="{Binding Tel}" Header="Телефон" />
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="Име" />
+                    <DataGridTextColumn Binding="{Binding SurName}" Header="Презиме" />
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия" />-->
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

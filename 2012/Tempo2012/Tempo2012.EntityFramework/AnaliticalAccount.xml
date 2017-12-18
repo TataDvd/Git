@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ArrayOfAnaliticalAccount xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AnaliticalAccount>
+    <Id>1</Id>
+    <Name>Аналитична сметка</Name>
+    <TypeID>1</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>2</Id>
+    <Name>Аналитична сметка с валута</Name>
+    <TypeID>2</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>3</Id>
+    <Name>Дълготрайни активи</Name>
+    <TypeID>1</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>4</Id>
+    <Name>Материали</Name>
+    <TypeID>5</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>5</Id>
+    <Name>Материаали с валута</Name>
+    <TypeID>6</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>6</Id>
+    <Name>Контрагенти</Name>
+    <TypeID>1</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>7</Id>
+    <Name>Контрагенти с валута</Name>
+    <TypeID>2</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>8</Id>
+    <Name>Контрагенти с падеж</Name>
+    <TypeID>3</TypeID>
+  </AnaliticalAccount>
+  <AnaliticalAccount>
+    <Id>9</Id>
+    <Name>Контрагенти с валута и с падеж</Name>
+    <TypeID>4</TypeID>
+  </AnaliticalAccount>
+</ArrayOfAnaliticalAccount>

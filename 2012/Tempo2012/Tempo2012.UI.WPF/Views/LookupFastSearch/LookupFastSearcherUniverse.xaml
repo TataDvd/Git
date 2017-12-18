@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.LookupFastSearch.LookupFastSearcherUniverse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             xmlns:DataGrid2DLibrary="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary" mc:Ignorable="d" KeyboardNavigation.TabNavigation="Once"
+              xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             >
+    <UserControl.Resources>
+        <l:ValidityToColor x:Key="vtoc"/>
+    </UserControl.Resources>
+   <Grid Margin="20,0,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+         </Grid.ColumnDefinitions>
+        <CustomControls:TextBlockEx  Margin="10,5,10,5" Text="{Binding Name}"  Grid.Column="0" ></CustomControls:TextBlockEx>
+        <CustomControls:TextBoxExAuto Width="100" x:Name="searcher" Grid.Column="1"  
+                                  KeyDown="searcher_KeyDown" 
+                                  Margin="10,5,10,5" 
+                                  TabIndex="{Binding TabIndex}" 
+                                  Background="Beige" 
+                                  TextChanged="searcher_TextChanged" 
+                                  Visibility="Hidden" 
+                                  PreviewKeyDown="searcher_PreviewKeyDown" LostFocus="Searcher_OnLostFocus"></CustomControls:TextBoxExAuto>
+        <CustomControls:TextBoxEx Width="100" x:Name="visior" Grid.Column="1"  Margin="10,5,10,5"  
+                                  Text="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                  Background="{Binding Value,Converter={StaticResource vtoc}}"     
+                                  KeyDown="visior_KeyDown" 
+                                  TabIndex="{Binding TabIndex}"
+                                  Visibility="Visible" 
+                                  TextChanged="Visior_OnTextChanged" LostFocus="Visior_OnLostFocus" PreviewKeyDown="visior_PreviewKeyDown"></CustomControls:TextBoxEx>
+        <CustomControls:TextBlockEx  Text="{Binding Lookupval,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="2"  Margin="10,5,10,5"></CustomControls:TextBlockEx>
+        <Popup IsOpen="False" x:Name="popi" PlacementTarget="{Binding ElementName=searcher}" 
+            Placement="Top" Width="350">
+            <Border Background="White">
+                <DataGrid2DLibrary:DataGrid2D Grid.Row="1"
+                             Name="dg"
+                             VerticalScrollBarVisibility="Auto" 
+                             HorizontalScrollBarVisibility="Auto"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields, Mode=TwoWay}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             SelectedItem="{Binding SelectedItem}"
+                             SelectionUnit="FullRow"
+                             SelectionMode = "Single"  
+                             CanUserAddRows="False"                 
+                             PreviewKeyDown="dg_PreviewKeyDown" MouseDoubleClick="dg_MouseDoubleClick">
+
+
+                </DataGrid2DLibrary:DataGrid2D>
+            </Border>
+        </Popup>
+        <Button Margin="10,5,10,5" Grid.Column="3" Click="ButtonBase_OnClick" CommandParameter="{Binding}" Focusable="False" Visibility="{Binding IsShowNew}">
+            <TextBlock Text="Нов" FontSize="10" ></TextBlock>
+        </Button>
+    </Grid>
+</UserControl>

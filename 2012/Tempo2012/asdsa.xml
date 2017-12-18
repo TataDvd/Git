@@ -1,0 +1,790 @@
+<UserControl x:Class="Tempo2012.UI.WPF.Views.ContoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:inteli="clr-namespace:dragonz.actb.control;assembly=dragonz.actb"
+             xmlns:local="clr-namespace:Tempo2012.UI.WPF.TemplateSelector"
+             xmlns:control="clr-namespace:Tempo2012.UI.WPF.PaggingControlProject"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" 
+             xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+             xmlns:Framework="clr-namespace:Tempo2012.UI.WPF.Views.Framework" mc:Ignorable="d" 
+             x:Name="_this" KeyDown="_this_KeyDown"
+             d:DesignHeight="1100" d:DesignWidth="1300">
+	<UserControl.Resources>
+		<Style TargetType="{x:Type control:PaggingControl}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type control:PaggingControl}">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<!--<ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>-->
+							</Grid.ColumnDefinitions>
+
+							<Button Name="PART_FirstPageButton" Content="&lt;&lt;" Grid.Column="0"/>
+							<Button Name="PART_PreviousPageButton" Content="&lt;" Grid.Column="1"/>
+							<Button Name="PART_NextPageButton" Content="&gt;" Grid.Column="2"/>
+							<Button Name="PART_LastPageButton" Content="&gt;&gt;" Grid.Column="3"/>
+							<TextBlock Text="????????" Grid.Column="4"/>
+							<TextBox Name="PART_PageTextBox" Grid.Column="5"/>
+							<TextBlock Text=" ?? " Grid.Column="6"/>
+							<TextBlock Text="{Binding TotalPages, RelativeSource={RelativeSource TemplatedParent}}" Grid.Column="7"/>
+							<!--<TextBlock Text="???? ??????" Grid.Column="8"/>
+
+                            <ComboBox Name="PART_PageSizesCombobox" Grid.Column="9"/>-->
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<l:AccToVisibleConvertor x:Key="AccToVisibleConvertor"/>
+		<l:LevConvertor x:Key="lv"/>
+		<l:ValConvertor x:Key="val"/>
+		<l:KolConvertor x:Key="kol"/>
+		<l:KursConvertor x:Key="kurs"/>
+		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="Margin" Value="0,8" />
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="True">
+					<Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+					<Setter Property="Validation.ErrorTemplate">
+						<Setter.Value>
+							<ControlTemplate>
+								<DockPanel>
+									<Border BorderBrush="Red" BorderThickness="1" >
+										<AdornedElementPlaceholder/>
+									</Border>
+									<TextBlock Foreground="Red" FontSize="16">!</TextBlock>
+								</DockPanel>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+		<l:BoolToOpositeBoolConverter x:Key="invertor"/>
+		<l:FromEnumToString x:Key="etostr"/>
+		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<l:BooleanToColorConvertor x:Key="btoc"/>
+		<l:BooleanToImageConvertor x:Key="btoi"/>
+		<l:DateToStringConverter x:Key="dtos"/>
+		<DataTemplate x:Key="StringTemplate">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="150"/>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="20"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Grid.Column="0" Text="{Binding  Name}" Width="120"/>
+				<TextBox Margin="10,5,10,5"
+                         Grid.Column="1"
+                         Text="{Binding  Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         Width="150"                 
+                />
+				<!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" Foreground="{Binding Path=IsValid,Converter={StaticResource btoc}}"/>-->
+
+
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="DTemplate">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="100"/>
+					<!--<ColumnDefinition Width="20"></ColumnDefinition>-->
+
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"/>
+				<CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+
+                                   />
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"/>
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"/>
+				<!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="?Template">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="100"/>
+					<!--<ColumnDefinition Width="20"></ColumnDefinition>-->
+
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"/>
+				<CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+
+                                   />
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"/>
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"/>
+				<!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="ValTemplate">
+
+			<Framework:Valuta DataContext="{Binding}" ValutaChanged="Valuta_ValutaChanged">
+			</Framework:Valuta>
+			<!--<Grid Margin="20,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="20"></ColumnDefinition>
+
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></TextBlock>
+                <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding Value,Mode=TwoWay,Converter={StaticResource val}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          Foreground="{Binding IsValid,Converter={StaticResource btoc}}"
+                          DataType="decimal" 
+                                             
+                                   />
+                <TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"></TextBlock>
+                <TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource kurs}}" Width="120"></TextBlock>
+               
+
+
+            </Grid>-->
+		</DataTemplate>
+		<DataTemplate x:Key="KolTemplate">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="100"/>
+					<ColumnDefinition Width="20"/>
+
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"/>
+				<CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource kol}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+
+                                   />
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"/>
+				<TextBlock Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource kol}}" Width="120"/>
+				<!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="LookUpTemplate">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="150"/>
+					<ColumnDefinition Width="200"/>
+
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Text="{Binding Name}"/>
+				<!--<ComboBox Margin="10,5,10,5" Grid.Column="1" ItemsSource="{Binding LookUp}" DisplayMemberPath="Key" IsSynchronizedWithCurrentItem="True" Text="{Binding Key,Mode=TwoWay}"/>
+                    <ComboBox Margin="10,5,10,5" Grid.Column="2" ItemsSource="{Binding LookUp}" DisplayMemberPath="Value" IsSynchronizedWithCurrentItem="True" Text="{Binding Value,Mode=TwoWay}"/>-->
+				<ComboBox Margin="10,5,10,5" 
+                          Grid.Column="1"
+                          ItemsSource="{Binding LookUp,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" DisplayMemberPath="Key"
+                          SelectedItem="{Binding SelectedLookupItem,Mode=TwoWay}" 
+                          Text="{Binding Value,Mode=TwoWay}" 
+                          SelectionChanged="ComboBox_SelectionChanged"/>
+				<ComboBox Margin="10,5,10,5" Grid.Column="2" ItemsSource="{Binding LookUp,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" DisplayMemberPath="Value"  SelectedItem="{Binding SelectedLookupItem,Mode=TwoWay}"/>
+
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="DateTemplate">
+			<Grid Margin="20,0,20,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="20"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="10,5,10,5" Text="{Binding Name}" Width="120"/>
+				<DatePicker Margin="10,5,10,5" Width="160" Grid.Column="1" SelectedDate="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+				<!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+			</Grid>
+		</DataTemplate>
+		<local:ItemDataTemplateSelecor
+              IntTemplate="{StaticResource StringTemplate}" 
+              StringTemplate="{StaticResource StringTemplate}" 
+              LookUpTemplate="{StaticResource  LookUpTemplate}"
+              DateTemplate="{StaticResource DateTemplate}"
+              MoneyTemplate="{StaticResource StringTemplate}"
+              DTemplate="{StaticResource DTemplate}"
+              KTemplate="{StaticResource ?Template}"  
+              KolTemplate="{StaticResource KolTemplate}"
+              ValTemplate="{StaticResource ValTemplate}"   
+            x:Key="ItemDataTemplateSelecor" />
+
+	</UserControl.Resources>
+	<!--<Border>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">-->
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="auto"/>
+			<!--<RowDefinition Height="100"></RowDefinition>-->
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+
+		</Grid.ColumnDefinitions>
+		<Grid Grid.Row="0" Grid.ColumnSpan="4">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="90"/>
+				</Grid.RowDefinitions>
+
+				<v:CommandBar  x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+				<GroupBox Grid.Row="1" Header="???" 
+                                  Visibility="{Binding Path=IsDdsVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="60"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+
+							<ColumnDefinition />
+							<ColumnDefinition Width="250" />
+						</Grid.ColumnDefinitions>
+						<StackPanel Grid.Row="0" Grid.Column="0" Margin="10,0,10,0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+							<StackPanel Orientation="Horizontal"  >
+								<CheckBox  
+                                      IsChecked="{Binding Path=IsSales}"
+                                      Margin="10,7,10,5"
+                                      TabIndex="-1" Width="250">
+                                      ?????? ???????? ? ??????? ????????
+								</CheckBox>
+								<TextBlock Grid.Row="0" Grid.Column="3" Text="??????" Margin="10,5,10,2" />
+								<!--<TextBlock Grid.Row="0" Grid.Column="3" Text="??????" Margin="10,5,10,2" Visibility="{Binding Path=IsDealVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+								<inteli:AutoCompleteTextBox Width="80" Grid.Row="0" Grid.Column="4" Margin="10,5,10,2" ItemsSource="{Binding VopsSales}" Text="{Binding VopSales,Mode=TwoWay}" 
+                                                     TabIndex="0" />
+								<ComboBox   SelectedItem="{Binding CurrItemDdsDnevSales,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250" 
+                                            Margin="10,5,10,5" 
+                                            ItemsSource="{Binding ElementName=_this,Path=DataContext. ItemsDdsDnevSales}" 
+                                            DisplayMemberPath="Name"
+
+                          />
+
+
+
+								<Button Content="??????? ????????" Margin="10,5,10,5" Click="Button_Click_1" Visibility="{Binding Path=EnableUpdate,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal"  >
+								<!--<TextBlock Grid.Row="0" Grid.Column="0" Text="????????" Margin="10,5,10,2"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1"  
+                                          SelectedItem="{Binding CurrentTypeOperation,Mode=TwoWay}" 
+                                          Margin="10,5,10,5" 
+                                          ItemsSource="{Binding TypeOperation}"
+                                          DisplayMemberPath="Name"
+                                          IsSynchronizedWithCurrentItem="True" TabIndex="-2" />-->
+
+								<CheckBox  
+                                      IsChecked="{Binding Path=IsPurchases}"
+                                      Margin="10,7,10,5"
+                                      TabIndex="-1" Width="250">
+                                     ?????? ???????? ? ??????? ???????
+								</CheckBox>
+								<TextBlock Grid.Row="0" Grid.Column="3" Text="??????" Margin="10,5,10,2"/>
+								<inteli:AutoCompleteTextBox Width="80" Grid.Row="0" Grid.Column="4" Margin="10,5,10,2" ItemsSource="{Binding VopsPurchases}" Text="{Binding VopPurchases,Mode=TwoWay}" 
+                                                     TabIndex="0" />
+								<ComboBox Grid.Row="0" Grid.Column="5"  SelectedItem="{Binding CurrItemDdsDnevPurchases,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250" 
+                          Margin="10,5,10,5" 
+                          ItemsSource="{Binding ItemsDdsDnevPurchases}" DisplayMemberPath="Name"
+                          Grid.ColumnSpan="2"
+
+                          />
+
+
+								<Button Content="??????? ???????" Margin="10,5,10,5" Click="Button_Click_2" Width="115"  Visibility="{Binding Path=EnableUpdate,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+							</StackPanel>
+
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
+							<CheckBox  IsChecked="{Binding Path=IsDds}"
+                                           Margin="10,7,10,5"
+                                           TabIndex="-1">
+                                ? ???
+							</CheckBox>
+							<CheckBox Grid.Row="0"
+                                          Grid.Column="2" 
+                                          IsChecked="{Binding Path=IsDdsInclude}"
+                                          Margin="10,7,10,5"
+                                          TabIndex="-1">
+                                ??????? ???
+							</CheckBox>
+						</StackPanel>
+						<!--Visibility="{Binding Path=HasDnev,Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                <Button Command="{Binding PurchaseCommand}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableUpdate}" Margin="10,5,10,2">?????? ? ????????</Button>
+                <Button Command="{Binding SellsCommand}" Grid.Row="1" Grid.Column="2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableUpdate}" Margin="10,5,10,2">?????? ? ???????</Button>-->
+					</Grid>
+				</GroupBox>
+			</Grid>
+		</Grid>
+		<GroupBox Header="?????? ?? ???????????????" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="Bold" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="50"/>
+
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180" MinWidth="150"/>
+					<ColumnDefinition MinWidth="150" Width="*"/>
+					<ColumnDefinition Width="150" MinWidth="150"/>
+					<ColumnDefinition MinWidth="150" Width="*"/>
+
+					<ColumnDefinition Width="150" MinWidth="150"/>
+					<ColumnDefinition MinWidth="150" Width="*"/>
+				</Grid.ColumnDefinitions>
+
+
+
+				<StackPanel Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6"> 
+					<TextBlock Grid.Column="0" Text="???????? No:" Margin="10,5,10,2" Width="160" TextAlignment="Right" Padding="3,3,3,3"/>
+					<TextBox TabIndex="3" Grid.Column="1" Text="{Binding Path=DocId,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" Margin="10,5,10,2"  Width="115" HorizontalAlignment="Left" Padding="3,3,3,3"/>         
+					<TextBlock  Text="????? No:" Margin="10,5,10,2" Padding="3,3,3,3" Width="66"/>
+					<TextBox Text="{Binding Path=Folder,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Margin="5,5,10,2" TabIndex="4" Padding="3,3,3,3" Width="36"/>
+
+					<TextBlock  Text="????? No:" Margin="10,5,10,2" Padding="3,3,3,3" Width="74" TextAlignment="Right"/>
+					<TextBox Text="{Binding Path=NumberObject,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Margin="10,5,10,2" TabIndex="5" Padding="3,3,3,3" Width="50"/>
+					<TextBlock  Text="????? No:" Margin="472,5,4,2" Padding="3,3,3,3" Width="61" />
+					<TextBlock Text="{Binding Path=Index}" Margin="0,5,10,2" Width="52" Padding="3,3,3,3"/>
+				</StackPanel> 
+				<StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="6">
+					<TextBlock  Text="???? ?a ??????????????:" Margin="10,5,10,2" Width="160" TextAlignment="Right" Padding="3,3,3,3"/>
+					<DatePicker TabIndex="5" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
+                                Name="datePicker1" 
+                                Width="115" 
+                                SelectedDate="{Binding Path=Data,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                Behavior:SelectedDateSyncBehavior.SyncText="True"
+                                />
+					<TextBlock  Text="???? ?a ?????????:" Margin="10,5,10,2" Width="120" Padding="3,3,3,3" />
+					<DatePicker Height="25" HorizontalAlignment="Left" Margin="10,5,10,2"
+                                Name="datePicker2" 
+                            SelectedDate="{Binding Path=DataInvoise,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"  TabIndex="6" Width="115"
+                             Behavior:SelectedDateSyncBehavior.SyncText="True"   
+                           />
+					<TextBlock 
+                          Padding="3,3,3,3" HorizontalAlignment="Right"
+                           Text="?????????:" 
+                           Margin="10,5,10,2"
+                            />
+					<ComboBox Width="200" IsEditable="true"
+                          Text="{Binding Path=Reason,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" 
+                          Margin="10,5,10,2" 
+                          ItemsSource="{Binding Path=Osnovanie,UpdateSourceTrigger=LostFocus}" TabIndex="8" Padding="3,3,3,3"/>
+					<TextBlock Text="?????????" Margin="10,5,10,2"  Padding="3,3,3,3"/>
+					<ComboBox  Width="200"
+                          Text="{Binding Path=Note,Mode=TwoWay}" 
+                          Margin="10,5,10,2" 
+                          ItemsSource="{Binding Path=Notes}" 
+                          IsEditable="True" TabIndex="8" Padding="3,3,3,3"/>
+				</StackPanel>        
+
+				<TextBlock Grid.Row="3" Grid.Column="2" 
+                                   Text="?????? ? ????" 
+                                   Margin="9,30,11,0"
+                                   FontFamily="Arial" FontSize="14" FontWeight="Bold"/>
+				<CustomControls:MaskTextBox 
+                            Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                            Grid.Row="3" 
+                            Grid.Column="3" 
+                            Text="{Binding Path=Oborot,Mode=TwoWay,Converter={StaticResource lv}}" 
+                            Margin="10,30,0,0" 
+                            Width="100" 
+                            HorizontalAlignment="Left"
+                            DataType="decimal"
+                            FontFamily="Arial" FontSize="14" FontWeight="Bold" TabIndex="9" />
+
+				<!--<TextBlock Grid.Row="3" Grid.Column="6" Text="?????? ??? ??????" Margin="10,5,10,2" Visibility="{Binding IsValutna,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBox Grid.Row="3" Grid.Column="7" Text="{Binding Path=OborotValuta,Mode=TwoWay}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" Visibility="{Binding IsValutna,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="8" Text="??????????" Margin="10,5,10,2" Visibility="{Binding IsKol,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBox Grid.Row="3" Grid.Column="9" Text="{Binding Path=OborotKol,Mode=TwoWay}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" Visibility="{Binding IsKol,Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+
+
+
+
+
+				<!--<TextBox Grid.Row="5" Grid.Column="1"  Text="{Binding Path=Note,Mode=TwoWay}" Margin="10,5,10,2"/>-->
+
+
+
+
+
+			</Grid>
+		</GroupBox>
+		<GroupBox Header="?????" Grid.Column="0" Grid.Row="2" >
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+
+					<RowDefinition Height="*" MinHeight="160"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="75"/>
+				</Grid.ColumnDefinitions>
+				<StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="????? ??????" Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+
+					<!--<inteli:AutoCompleteTextBox x:Name="kreditsmetka"  Grid.Row="0" Grid.Column="1" Margin="10,5,10,2" KeyDown="kreditsmetka_KeyDown"
+                                            Text="{Binding Path=DAccountsModel}"/>-->
+					<!--ItemsSource="{Binding ElementName=_this,Path=DataContext.AllNationalAccounts}"/-->
+
+					<!--<ComboBox  
+                                IsEditable="true"
+                                ItemsSource="{Binding Path=AllAccountsD}"
+                                DisplayMemberPath="Num"
+                                SelectedItem="{Binding Path=DAccountsModel,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"
+                                IsSynchronizedWithCurrentItem="True"
+                                Margin="10,5,10,2" 
+                                Width="50"
+                                SelectionChanged="ComboBox_SelectionChanged_2"/>-->
+					<TextBox Text="{Binding Path=DAccountsModel.Num}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" KeyDown="debitsmetka_KeyDown" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" TabIndex="16" />
+					<TextBlock Visibility="{Binding Path=IsSubDVisible,Converter={StaticResource BooleanToVisibilityConverter}}">/</TextBlock>
+					<TextBox Text="{Binding Path=DAccountsModel.SubNum}" 
+                             Margin="10,5,10,2" Width="100" 
+                             HorizontalAlignment="Left" 
+                             Visibility="{Binding Path=IsSubDVisible,Converter={StaticResource BooleanToVisibilityConverter}}" KeyDown="TextBox_KeyDown_1"
+                             IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" TabIndex="17" />
+					<!--<ComboBox  
+                                IsEditable="true"
+                                Margin="10,5,10,2" 
+                                ItemsSource="{Binding Path=AllSubContoD}"
+                                SelectedItem="{Binding Path=DAccountsModel,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"
+                                Visibility="{Binding Path=IsSubDVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                IsSynchronizedWithCurrentItem="True"
+                                DisplayMemberPath="SubNum"
+                                Width="50"
+                                
+                         />-->
+
+					<Button Grid.Row="0" Grid.Column="2" Click="Button_Click" Margin="0,5,0,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">...</Button>
+
+
+				</StackPanel>
+				<Button  Margin="0,5,10,5" 
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick"
+                         CommandParameter="{Binding DAccountsModel}"
+                         Content="???????" 
+                         Visibility="{Binding DAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                        />
+				<TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                           Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" 
+                           Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+				<!--<StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3"  Margin="10,5,10,2" DataContext="{Binding Path=DAccountsModel}">
+                    <TextBlock  Margin="10,5,10,2">??????? ?????: </TextBlock>
+                    <TextBlock  Margin="10,5,10,2" Text="{Binding Path=BeginSaldoL}"></TextBlock>
+                    <TextBlock  Margin="10,5,10,2">?????? ?????: </TextBlock>
+                    <TextBlock  Margin="10,5,10,2" Text="{Binding Path=EndSaldoL}"></TextBlock>
+                </StackPanel>-->
+
+				<Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#FF210505" BorderThickness="2" CornerRadius="2" Margin="20,20,20,20">
+					<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+						<ItemsControl  ItemsSource="{Binding ElementName=_this, Path=DataContext.ItemsDebit}" 
+                                       ItemTemplateSelector="{StaticResource ItemDataTemplateSelecor}" 
+                                       IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+						</ItemsControl>
+					</ScrollViewer>
+				</Border>
+			</Grid>
+		</GroupBox>
+		<GroupBox Header="??????" Grid.Column="1" Grid.Row="2" >
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="75"/>
+				</Grid.ColumnDefinitions>
+
+				<!--<inteli:AutoCompleteTextBox x:Name="debitsmetka" Grid.Row="0" Grid.Column="1"  Margin="10,5,10,2" KeyDown="debitsmetka_KeyDown" 
+                                            Text="{Binding Path=CAccountsModel}"/>-->
+				<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Grid.ColumnSpan="3">
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="K????? ??????" Margin="10,5,10,2"/>
+					<!--<ComboBox  
+                                IsEditable="true"
+                                ItemsSource="{Binding Path=AllAccountsK}"
+                                DisplayMemberPath="Num"
+                                SelectedItem="{Binding Path=CAccountsModel,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"
+                                Margin="10,5,10,2" 
+                                Width="50"
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectionChanged="ComboBox_SelectionChanged"/>-->
+					<TextBox Text="{Binding Path=CAccountsModel.Num}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" KeyDown="kreditsmetka_KeyDown" TabIndex="18" />
+					<TextBlock Visibility="{Binding Path=IsSubKVisible,Converter={StaticResource BooleanToVisibilityConverter}}">/</TextBlock>
+					<TextBox Text="{Binding Path=CAccountsModel.SubNum}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" Visibility="{Binding Path=IsSubKVisible,Converter={StaticResource BooleanToVisibilityConverter}}" KeyDown="TextBox_KeyDown" TabIndex="19" />
+					<!--<ComboBox  
+                                IsEditable="true"
+                                Margin="10,5,10,2" 
+                                ItemsSource="{Binding Path=AllSubContoK}"
+                                SelectedItem="{Binding Path=CAccountsModel,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}"
+                                DisplayMemberPath="SubNum"
+                                Width="50"
+                                IsSynchronizedWithCurrentItem="True"
+                                Visibility="{Binding Path=IsSubKVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                         />--> <Button Grid.Row="0" Grid.Column="2" Click="Button_Click1"  Margin="0,5,0,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">...</Button>
+
+				</StackPanel>
+				<Button  Margin="0,5,10,5" 
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick"
+                         CommandParameter="{Binding CAccountsModel}"
+                         Content="???????" 
+                         Visibility="{Binding CAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         Foreground="BlueViolet"
+                         IsEnabled="True"
+                         />
+				<TextBlock Grid.Row="1" 
+                         Grid.Column="0"
+                         Grid.ColumnSpan="3" Text="{Binding Path=CAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=LostFocus}" 
+                         Margin="10,5,10,2"
+                        />
+				<!--<StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3"  Margin="10,5,10,2" DataContext="{Binding Path=CAccountsModel}">
+                    <TextBlock  Margin="10,5,10,2">??????? ?????:</TextBlock>
+                    <TextBlock  Margin="10,5,10,2" Text="{Binding Path=BeginSaldoL}"></TextBlock>
+                    <TextBlock  Margin="10,5,10,2">?????? ?????:</TextBlock>
+                    <TextBlock  Margin="10,5,10,2" Text="{Binding Path=EndSaldoL}"></TextBlock>
+                </StackPanel>-->
+
+				<Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#FF210505" BorderThickness="2" CornerRadius="2" Margin="20,20,20,20">
+					<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+						<ItemsControl  ItemsSource="{Binding ElementName=_this, Path=DataContext.ItemsCredit}" ItemTemplateSelector="{StaticResource ItemDataTemplateSelecor}" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+						</ItemsControl>
+					</ScrollViewer>
+				</Border>
+			</Grid>
+		</GroupBox>
+		<!--ItemsSource="{Binding ItemsSource, ElementName=pageControl, Mode=OneWay, UpdateSourceTrigger=LostFocus}" IsReadOnly="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"-->
+		<DataGrid  ItemsSource="{Binding ItemsSource, ElementName=pageControl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  
+                   SelectedItem="{Binding CurrentWraperConto,Mode=TwoWay}"
+                   SelectionUnit="FullRow"
+                   SelectionMode = "Single"
+                   x:Name="myDataGridEvtCode"
+                   Grid.Row="5" Grid.ColumnSpan="2"
+                       AutoGenerateColumns="False" 
+                       IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                       ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                    IsReadOnly="True"
+                    Margin="10,2,10,2"
+                    PreviewKeyUp="DataGrid_KeyDown"  
+                    AlternatingRowBackground="Gainsboro"
+                    AlternationCount="2">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="?????" Binding="{Binding NomId}"/>
+				<DataGridTemplateColumn  >
+					<DataGridTemplateColumn.HeaderTemplate >
+						<DataTemplate>
+							<StackPanel>
+
+								<TextBlock>?????</TextBlock>
+								<TextBlock>????????</TextBlock>
+
+
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.HeaderTemplate>
+
+					<DataGridTemplateColumn.CellTemplate >
+						<DataTemplate>
+
+							<TextBlock Text="{Binding DocId}" FontWeight="Bold"/>
+
+
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn  >
+					<DataGridTemplateColumn.HeaderTemplate >
+						<DataTemplate>
+							<StackPanel>
+
+								<TextBlock>???? ??</TextBlock>
+								<TextBlock>???????.</TextBlock>
+
+
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.HeaderTemplate>
+
+					<DataGridTemplateColumn.CellTemplate >
+						<DataTemplate>
+
+							<TextBlock Text="{Binding Data}" FontWeight="Bold"/>
+
+
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="??????" Binding="{Binding Oborot,Converter={StaticResource lv}}" FontWeight="Bold" >
+					<DataGridTextColumn.ElementStyle>
+						<Style TargetType="{x:Type TextBlock}">
+							<Setter Property="HorizontalAlignment" Value="Right" />
+						</Style>
+					</DataGridTextColumn.ElementStyle>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="?????" Binding="{Binding DName,Mode=TwoWay}"/>
+
+				<DataGridTextColumn Header="??????" Binding="{Binding CName,Mode=TwoWay}"/>
+				<DataGridTextColumn Binding="{Binding Reason}" Header="?????????" />
+
+
+				<DataGridTemplateColumn>
+					<DataGridTemplateColumn.HeaderTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock>?????? ??????</TextBlock>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Width="50">Dt</TextBlock>
+									<TextBlock Width="50">Kt</TextBlock>
+								</StackPanel>
+
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.HeaderTemplate>
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Width="50" Text="{Binding Val,Converter={StaticResource lv}}"/>
+								<TextBlock Width="50" Text="{Binding ValK,Converter={StaticResource lv}}"/>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+				<DataGridTemplateColumn>
+					<DataGridTemplateColumn.HeaderTemplate>
+						<DataTemplate>
+							<StackPanel>
+								<TextBlock>?????? ??????????</TextBlock>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Width="50">Dt</TextBlock>
+									<TextBlock Width="50">Kt</TextBlock>
+								</StackPanel>
+
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.HeaderTemplate>
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Width="50" Text="{Binding Kol,Converter={StaticResource lv}}"/>
+								<TextBlock Width="50" Text="{Binding KolK,Converter={StaticResource lv}}"/>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="????? ???????" Binding="{Binding DDetails,Mode=TwoWay}"/>
+				<DataGridTextColumn Header="?????? ???????" Binding="{Binding CDetails,Mode=TwoWay}"/>
+				<DataGridTextColumn Binding="{Binding Folder}" Header="?????" />
+
+				<DataGridTextColumn Binding="{Binding Note}" Header="?????????" />
+				<DataGridTextColumn Binding="{Binding DataInvoise}" Header="???? ?? ?????????" />
+				<DataGridTextColumn Binding="{Binding Dnevnik}" Header="???????"/>
+			</DataGrid.Columns>
+		</DataGrid>
+		<control:PaggingControl x:Name="pageControl" Grid.Row="4" Height="25"
+                              PageContract="{Binding}" 
+                              IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits,Converter={StaticResource invertor}}"
+                              Margin="10,2,10,2"         
+                             >
+			<control:PaggingControl.PageSizes>
+				<sys:UInt32>10</sys:UInt32>
+				<sys:UInt32>20</sys:UInt32>
+			</control:PaggingControl.PageSizes>
+		</control:PaggingControl>
+	</Grid>
+	<!--</ScrollViewer>
+    </Border>-->
+</UserControl>

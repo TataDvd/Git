@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8DB230B-18A7-4A7D-A964-1309E5938581}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TempoTest</RootNamespace>
+    <AssemblyName>TempoTest</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartDll\NUnit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.mocks, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartDll\NUnit\nunit.mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="pnunit.framework">
+      <HintPath>..\ThirdPartDll\NUnit\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExportBuilderTest\DbField.cs" />
+    <Compile Include="LoadConfigManagerTest.cs" />
+    <Compile Include="DeklarviewModelTest.cs" />
+    <Compile Include="ExportBuilderTest\CitiesInput.cs" />
+    <Compile Include="ExportBuilderTest\ContoReader.cs" />
+    <Compile Include="ExportBuilderTest\contr.cs" />
+    <Compile Include="ExportBuilderTest\ExportBuilderInput.cs" />
+    <Compile Include="ExportBuilderTest\ExportBuilderTest.cs" />
+    <Compile Include="ExportBuilderTest\InporterNa.cs" />
+    <Compile Include="ExportBuilderTest\Na.cs" />
+    <Compile Include="ExportBuilderTest\Sity.cs" />
+    <Compile Include="KlientsImport\Import.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateBuilderTest\MathParserTest.cs" />
+    <Compile Include="Test References\TestForViewModels\ContoViewModelTests.cs" />
+    <Compile Include="Test References\TestForViewModels\FakeDataContect.cs" />
+    <Compile Include="Test References\TestForViewModels\ReportMenuProviderTest.cs" />
+    <Compile Include="TestForContragentProvider\ContragentProviderTest.cs" />
+    <Compile Include="Users Test\UsersTest.cs" />
+    <Compile Include="WhereClauseItemsTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\Tempo2012.UI.WPF.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoCompleteTextBox\dragonz.actb.csproj">
+      <Project>{89BC47C7-F14D-46C5-8B9B-0DB90CE2AC42}</Project>
+      <Name>dragonz.actb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataGrid2DTest\DataGrid2DLibrary\DataGrid2DLibrary.csproj">
+      <Project>{7D76D9E7-AF25-4AA5-995B-E1A526F192EA}</Project>
+      <Name>DataGrid2DLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interpretator\Interpretator.csproj">
+      <Project>{aa55a7c1-7dc6-4256-885a-4b488ad43fe4}</Project>
+      <Name>Interpretator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportBuilder\ReportBuilder.csproj">
+      <Project>{29990691-8EFA-45D3-A70B-D5F862221018}</Project>
+      <Name>ReportBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemplateGenerator\TemplateGenerator.csproj">
+      <Project>{dbc1e486-257a-42d9-b914-3fe5684f6414}</Project>
+      <Name>TemplateGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tempo2012.EntityFramework\Tempo2012.EntityFramework.csproj">
+      <Project>{0CCDB4CC-FF4A-421B-8593-B5EBD005D9B4}</Project>
+      <Name>Tempo2012.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tempo2012.UI.WPF\Tempo2012.UI.WPF.csproj">
+      <Project>{F08860F4-6841-450A-8BEA-16C6BF9C9B01}</Project>
+      <Name>Tempo2012.UI.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Virtualization\Virtualization.csproj">
+      <Project>{363C0FB2-C861-4DC1-857C-C708C82080B9}</Project>
+      <Name>Virtualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPF.MDI\WPF.MDI.csproj">
+      <Project>{BE1ED569-5E0B-4DF0-8964-33AD2AAE4C4A}</Project>
+      <Name>WPF.MDI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

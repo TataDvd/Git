@@ -1,0 +1,47 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.TetkaView.FacturaContragentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             mc:Ignorable="d" 
+             Height="500" Width="800" Name="_this">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+           
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <customControls:TextBlockEx Text="{Binding Title}" Grid.Row="0" Margin="10,5,10,5"></customControls:TextBlockEx>
+        <customControls:TextBlockEx Text="{Binding Ns}" Grid.Row="1" Margin="10,5,10,5"></customControls:TextBlockEx>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding AllMovement}" 
+                       AutoGenerateColumns="False"
+                       IsReadOnly="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      IsManipulationEnabled="False"
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Left" 
+                      Margin="10,5,10,5"
+                      AlternatingRowBackground="Gainsboro"
+                      AlternationCount="2"
+                  >
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фактура Н" Binding="{Binding NInvoise}" Width="150"/>
+                <DataGridTextColumn Header="Контрагент" Binding="{Binding NameContragent}" Width="150"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Data}" Width="150"/>
+                <DataGridTextColumn Header="Оборот Дебит" Binding="{Binding Od}" Width="150"/>
+                <DataGridTextColumn Header="Оборот Кредит" Binding="{Binding Oc}" Width="150"/>
+                
+                
+            </DataGrid.Columns>
+        </DataGrid>
+        <customControls:TextBlockEx Text="{Binding Ks}" Grid.Row="3" Margin="10,5,10,5"></customControls:TextBlockEx>
+    </Grid>
+</Window>

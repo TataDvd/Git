@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.CommandBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <l:FromEnumToString x:Key="etostr"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" TabIndex="21"  
+                Command="{Binding Path=DataContext.AddCommand}"
+                Margin="10,5,10,2" 
+                Visibility="{Binding Path=DataContext.DisebleInsert,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="{Binding Path=DataContext.TitleInsert}" />
+        </Button>
+        <Button Grid.Column="2" TabIndex="22"  
+                Command="{Binding Path=DataContext.UpdateCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.DisebleUpdate,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F3 Редактиране"/>
+        </Button>
+        <Button Grid.Column="3" TabIndex="23"  
+                Command="{Binding Path=DataContext.DeleteCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowDelete,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F4 Изтриване"/>
+        </Button>
+        <Button Grid.Column="1" TabIndex="24" 
+                Command="{Binding Path=DataContext.SaveCommand}"
+                Margin="10,5,10,2" 
+                Visibility="{Binding Path=DataContext.EnableInsert,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                Click="Button_Click"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F2 Запис" />
+        </Button>
+        <Button Grid.Column="2" TabIndex="24" 
+                Command="{Binding Path=DataContext.SaveCommand}"
+                Margin="10,5,10,2" 
+                Visibility="{Binding Path=DataContext.EnableUpdate,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                Click="Button_Click"         
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F3 Потвърди" />
+        </Button>
+        <Button Grid.Column="2" TabIndex="24" 
+                Command="{Binding Path=DataContext.SaveWithRepeatCommand}"
+                Margin="10,5,10,2" 
+                Visibility="{Binding Path=DataContext.EnableInsert,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                Click="Button_Click"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F3 Запис повт."/>
+        </Button>
+        <!--<Button Grid.Column="4"  TabIndex="25" Content="F5 Търсене" 
+                Command="{Binding Path=DataContext.SearchCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowSearch,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                ></Button>-->
+        <Button Grid.Column="4"  TabIndex="30" 
+                Command="{Binding Path=DataContext.CancelCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="{Binding Path=DataContext.EnableEdits}"
+                Visibility="{Binding Path=DataContext.IsShowView,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F5 Разглеждане"/>
+        </Button>
+        <Button Grid.Column="5"  TabIndex="30" 
+                Command="{Binding Path=DataContext.AddNewCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Visibility="{Binding Path=DataContext.IsShowAddNew,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="F8 Нова сметка"/>
+        </Button>
+        <Button Grid.Column="6"  TabIndex="30" 
+                Command="{Binding Path=DataContext.ReportCommand}"
+                Margin="10,5,10,2" 
+                IsEnabled="true"
+                Visibility="{Binding Path=DataContext.IsShowReport,Converter={StaticResource BooleanToVisibilityConverter}}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="Справка" />
+        </Button>
+        <Button Grid.Column="8"  TabIndex="26" 
+                Command="{Binding Path=DataContext.MoveFirstCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="|&lt;&lt;"/>
+        </Button>
+        <Button Grid.Column="9"  TabIndex="27" 
+                Command="{Binding Path=DataContext.MovePreviusCommand}" 
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text=" &lt;&lt;"/>
+        </Button>
+        <Button Grid.Column="10"
+                TabIndex="28" 
+                Command="{Binding Path=DataContext.MoveNextCommand}" Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="&gt;&gt;"/> 
+        </Button>
+        <Button Grid.Column="11"
+                TabIndex="29" 
+                Command="{Binding Path=DataContext.MoveLastCommand}"
+                Margin="10,5,10,2"
+                Visibility="{Binding Path=DataContext.IsShowNavigation,Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsEnabled="{Binding Path=DataContext.DisebleInsert}"
+                Focusable="False"
+                >
+            <TextBlock FontSize="13.0" FontWeight="Bold" Text="&gt;&gt;|" />
+        </Button>
+        <StackPanel  Grid.Column="7" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="10,5,10,2">
+            <TextBlock FontSize="16.0"  Background="Yellow" TextAlignment="Right" Text="{Binding Path=DataContext.Mode,Converter={StaticResource etostr}}" Margin="5,2,5,2" Foreground="MediumVioletRed" FontWeight="Bold"></TextBlock>
+        </StackPanel>
+            
+
+    </Grid>
+</UserControl>

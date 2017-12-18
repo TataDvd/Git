@@ -1,0 +1,16 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Dialogs.SearchForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="SearchForm" Height="327" Width="824">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CustomControls:TextBlockEx Text="Дума за търсене" Width="100"></CustomControls:TextBlockEx> 
+                <CustomControls:TextBoxEx Width="100" KeyDown="TextBox_KeyDown" x:Name="txt"/>
+                <CustomControls:TextBlockEx Text=" в колона " Width="100"></CustomControls:TextBlockEx>
+                <ComboBox ItemsSource="{Binding Colection}" Width="100" x:Name="kol" ></ComboBox>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding Items}"  ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="rez" ></DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

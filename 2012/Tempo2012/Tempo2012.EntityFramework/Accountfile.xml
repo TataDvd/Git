@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<ArrayOfAccountsModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AccountsModel>
+    <Id>1</Id>
+    <Num>101</Num>
+    <SubNum>1</SubNum>
+    <AnaliticalNum>5</AnaliticalNum>
+    <PartidNum>0</PartidNum>
+    <NameMain>Собствен капитал</NameMain>
+    <NameMainEng>Own capital</NameMainEng>
+    <NameSub>Магазин</NameSub>
+    <NameSubEng>For Sale</NameSubEng>
+    <TypeAccount>1</TypeAccount>
+    <LevelAccount>2</LevelAccount>
+    <TypeSaldo>1</TypeSaldo>
+    <FirmaId>1</FirmaId>
+  </AccountsModel>
+  <AccountsModel>
+    <Id>1</Id>
+    <Num>109</Num>
+    <SubNum>1</SubNum>
+    <AnaliticalNum>5</AnaliticalNum>
+    <PartidNum>0</PartidNum>
+    <NameMain>Отбиви(сконто),свързани с капитал               </NameMain>
+    <NameMainEng>Own capital</NameMainEng>
+    <NameSub>kontrol</NameSub>
+    <NameSubEng>For Sale</NameSubEng>
+    <TypeAccount>1</TypeAccount>
+    <LevelAccount>2</LevelAccount>
+    <TypeSaldo>1</TypeSaldo>
+    <FirmaId>1</FirmaId>
+  </AccountsModel>
+  <AccountsModel>
+    <Id>1</Id>
+    <Num>702</Num>
+    <SubNum>1</SubNum>
+    <AnaliticalNum>1</AnaliticalNum>
+    <PartidNum>0</PartidNum>
+    <NameMain>Приходи от продажби на продукция                </NameMain>
+    <NameMainEng>Own capital</NameMainEng>
+    <NameSub>тест</NameSub>
+    <NameSubEng>For Sale</NameSubEng>
+    <TypeAccount>2</TypeAccount>
+    <LevelAccount>2</LevelAccount>
+    <TypeSaldo>1</TypeSaldo>
+    <FirmaId>1</FirmaId>
+  </AccountsModel>
+  <AccountsModel>
+    <Id>1</Id>
+    <Num>703</Num>
+    <SubNum>1</SubNum>
+    <AnaliticalNum>1</AnaliticalNum>
+    <PartidNum>0</PartidNum>
+    <NameMain>Приходи от продажби на услуги               </NameMain>
+    <NameMainEng>Own capital</NameMainEng>
+    <NameSub>тест</NameSub>
+    <NameSubEng>For Sale</NameSubEng>
+    <TypeAccount>2</TypeAccount>
+    <LevelAccount>2</LevelAccount>
+    <TypeSaldo>1</TypeSaldo>
+    <FirmaId>1</FirmaId>
+  </AccountsModel>
+  <AccountsModel>
+    <Id>1</Id>
+    <Num>705</Num>
+    <SubNum>1</SubNum>
+    <AnaliticalNum>1</AnaliticalNum>
+    <PartidNum>0</PartidNum>
+    <NameMain>Приходи от финансирания                           </NameMain>
+    <NameMainEng>Own capital</NameMainEng>
+    <NameSub>тест</NameSub>
+    <NameSubEng>For Sale</NameSubEng>
+    <TypeAccount>2</TypeAccount>
+    <LevelAccount>2</LevelAccount>
+    <TypeSaldo>1</TypeSaldo>
+    <FirmaId>1</FirmaId>
+  </AccountsModel>
+</ArrayOfAccountsModel>

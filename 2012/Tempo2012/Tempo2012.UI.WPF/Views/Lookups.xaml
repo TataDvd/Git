@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.Lookups"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary" x:Name="_this">
+    <UserControl.Resources>
+         <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <TextBlock Foreground="Red" FontSize="16">!</TextBlock>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="185" />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Номенклатурa" FontSize="14" FontWeight="Bold" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Име" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Описание" />
+
+
+
+            <TextBox Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Path=EnableEdits}" 
+                     Text="{Binding Path=Title,
+                     Mode=TwoWay, UpdateSourceTrigger= PropertyChanged,
+                     NotifyOnValidationError=True, ValidatesOnDataErrors=True,
+                     ValidatesOnExceptions =True}"
+                     Width="250" MaxLength="30"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top" />
+            <TextBox Grid.Column="1" Grid.Row="2" IsEnabled="{Binding Path=EnableEdits}" 
+                     Text="{Binding Path=Description,Mode=TwoWay}"
+                     Width="250" MaxLength="200"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" />
+        </Grid>
+        <Grid Height="auto" Width="auto" Grid.Row="2">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" ></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="2"
+                    Margin="30,20,30,20">
+            <TextBlock TextAlignment="Left">Всички полета</TextBlock>
+                <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <DataGrid  ItemsSource="{Binding Path=NomenclatureFields}" SelectedItem="{Binding Path=CurrentLookUpSpecificField,Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True">
+                       <DataGrid.Columns>
+                            <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding DbField}"/>
+                            <!--<DataGridTemplateColumn Header="Премести">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content=">" Command="{Binding Path=MoveSelectedLeftCommand ,ElementName=_this}"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+                
+        </StackPanel>
+        <StackPanel Grid.Column="1" Width="30" Margin="0,70">
+                <Button Content="&lt;" Command="{Binding Path=MoveSelectedLeftCommand}"></Button>
+                <Button Content="&lt;&lt;" Command="{Binding Path=MoveAllLeftCommand}"></Button>
+                <Button Content=">" Command="{Binding Path=MoveSelectedRightCommand}"></Button>
+            <Button Content=">>" Command="{Binding Path=MoveAllRightCommand}"></Button>
+                
+        </StackPanel>
+            
+        <StackPanel Grid.Column="0"
+                    Margin="30,20,30,20">
+            <TextBlock TextAlignment="Left">Избрани полета</TextBlock>
+                <ScrollViewer Grid.Row="3" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <DataGrid  ItemsSource="{Binding Path=NomenclatureFieldsSelected}" SelectedItem="{Binding Path=CurrentLookUpSpecificFieldSelected,Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <!--<DataGridTemplateColumn Header="Премести">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="&lt;" Command="{Binding ElementName=_this,Path=DataContext.MoveSelectedRightCommand}"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+                            <DataGridTextColumn Header="Име" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding DbField}"/>
+                            
+                            <DataGridTemplateColumn Header="Задължително">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=IsNull,Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                          
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+               
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2"  Orientation="Horizontal" Height="30"></StackPanel>
+    </Grid>
+    </Grid>
+</UserControl>

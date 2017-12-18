@@ -1,0 +1,137 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.SaldosAnalitic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+        xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" Title="{Binding Title}" Height="820" Width="1000"
+        x:Name="_this">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Gesture="F2" Command="{Binding AddCommand}" />
+        <KeyBinding Gesture="F3" Command="{Binding UpdateCommand}" />
+        <KeyBinding Gesture="F6" Command="{Binding ViewCommand}" />
+        <KeyBinding Gesture="F4" Command="{Binding DeleteCommand}" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <v:CommandBar  x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2">
+            <CustomControls:TextBlockEx Margin="15,5,10,5" Width="200">Общо салдо лева дебит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="15,5,10,5"
+                       Text="{Binding SumaLvD}"
+                       IsEnabled="False"
+                       Width="100"></CustomControls:TextBoxEx>
+            <CustomControls:TextBlockEx Margin="25,5,20,5" Width="200">Общо салдо лева кредит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="25,5,20,5" Text="{Binding SumaLvK,Mode=TwoWay,StringFormat=0.00}"
+                                       MinWidth="{Binding MinWidth}"
+                                      
+                                       IsEnabled="False"
+                                       MaxLength="{Binding Length}"  Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2" Visibility="{Binding Path=IsVal,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <CustomControls:TextBlockEx Margin="15,5,10,5" Width="200">Общо салдо валута дебит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="15,5,10,5"
+                       Text="{Binding SumaVD}"
+                       IsEnabled="False"
+                       Width="100"></CustomControls:TextBoxEx>
+            <CustomControls:TextBlockEx Margin="25,5,20,5" Width="200">Общо салдо валута кредит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="25,5,20,5" Text="{Binding SumaVK}"
+                                       MinWidth="{Binding MinWidth}"
+                                      
+                                       IsEnabled="False"
+                                       MaxLength="{Binding Length}"  Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Width="auto" Grid.ColumnSpan="2" Visibility="{Binding Path=IsCol,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <CustomControls:TextBlockEx Margin="15,5,10,5" Width="200">Общо салдо количество дебит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="15,5,10,5"
+                       Text="{Binding SumaKD,Mode=TwoWay,StringFormat=0.0000}"
+                       IsEnabled="False"
+                       Width="100"></CustomControls:TextBoxEx>
+            <CustomControls:TextBlockEx Margin="25,5,20,5" Width="200">Общо салдо количество кредит</CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx   Margin="25,5,20,5" Text="{Binding SumaKK}"
+                                       MinWidth="{Binding MinWidth}"
+                                      
+                                       IsEnabled="False"
+                                       MaxLength="{Binding Length}"  Width="100"></CustomControls:TextBoxEx>
+        </StackPanel>
+        <Grid Grid.Row="5" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition></RowDefinition> 
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <CustomControls:TextBlockEx Margin="15,5,10,5">Салда по сметката</CustomControls:TextBlockEx>
+            <GroupBox Header="Филтри" Grid.Row="1" Margin="15,0,10,0">
+
+            
+            <ItemsControl ItemsSource="{Binding Filters}" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal">
+                           
+                        </StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        
+                            <StackPanel Orientation="Horizontal" Margin="10,5,10,2">
+                                <StackPanel Orientation="Vertical">
+                                    <CustomControls:TextBlockEx Margin="10,5,10,2" Text="{Binding FilterName}" FontSize="9"></CustomControls:TextBlockEx>
+                                    <TextBox Margin="10,5,10,2"
+                                     Width="100"
+                                     Text="{Binding FilterWord,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Tag="{Binding}"
+                                     KeyDown="TextBox_KeyDown"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"
+                                     FontSize="9"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </GroupBox>
+            <dg2d:DataGrid2D
+                             Grid.Row="2" 
+                             Name="dataGrid2D"
+                             Margin="15,0,10,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Contents}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             SelectedIndex="{Binding Path=CurrentRowIndex,Mode=OneWayToSource}"
+                             SelectionUnit="FullRow"
+                             IsReadOnly="True" 
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            >
+            </dg2d:DataGrid2D>
+            <StackPanel  Orientation="Horizontal" Grid.Row="3">
+                <Button Margin="10,5,10,2" Command="{Binding MoveFirstPageCommand}" >|&lt;&lt;</Button>
+                <Button Margin="10,5,10,2" Command="{Binding MovePreviusPageCommand}" >&lt;&lt;</Button>
+                <CustomControls:TextBlockEx Margin="10,2,10,2" Text="Страници"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Margin="10,2,10,2" Text="{Binding FromToPages}" Width="100" ></CustomControls:TextBlockEx>
+                <Button Margin="10,5,10,2" Command="{Binding MoveNextPageCommand}" >&gt;&gt;</Button>
+                <Button Margin="10,5,10,2" Command="{Binding MoveLastPageCommand}" >&gt;&gt;|</Button>
+            </StackPanel>
+        </Grid>
+
+
+
+    </Grid>
+</Window>

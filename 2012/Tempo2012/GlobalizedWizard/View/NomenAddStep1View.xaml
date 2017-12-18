@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="GlobalizedWizard.View.NomenAddStep1View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" >
+            <UserControl.Resources>
+    <ControlTemplate x:Key="validationTemplate">
+        <DockPanel>
+            <TextBlock Margin="5,0,5,0" Foreground="Red" FontSize="16" VerticalAlignment="Center" Text="*" ToolTip="{Binding ElementName=errorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+            <AdornedElementPlaceholder x:Name="errorAdorner" />
+        </DockPanel>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource validationTemplate}" />
+    </Style>
+
+    </UserControl.Resources>
+
+    <StackPanel Margin="11">
+        <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10" Padding="10" Height="236">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Номенклатурa" FontSize="14" FontWeight="Bold" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Име" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Описание" />
+
+
+
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=NomenclatureWizardModel.Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Width="150" MaxLength="30" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Path=NomenclatureWizardModel.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, StringFormat=\{0:D\}}" Width="150" MaxLength="200" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </Grid>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Margin="0,11,0,0" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Помощ" FontSize="14" FontWeight="Bold" />
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Име на номеклатури" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=UIValidationErrorUserMessages}" TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+
+    </StackPanel>
+</UserControl>
