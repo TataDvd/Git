@@ -1554,7 +1554,7 @@ namespace Tempo2012.EntityFramework
                     obor.Contagent = contr;
                     obor.OK = decimal.Parse(dbman.DataReader["credit"].ToString());
                     obor.OKV = decimal.Parse(dbman.DataReader["creditval"].ToString());
-                    obor.OKK = decimal.Parse(dbman.DataReader["creditcol"].ToString());
+                    obor.OKK = decimal.Parse(dbman.DataReader["creditkol"].ToString());
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
                     gruper.Add(obor);
@@ -1595,7 +1595,7 @@ namespace Tempo2012.EntityFramework
                     obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
                     obor.NSK = decimal.Parse(dbman.DataReader["credit"].ToString());
                     obor.NSKV = decimal.Parse(dbman.DataReader["creditval"].ToString());
-                    obor.NSKK = decimal.Parse(dbman.DataReader["creditcol"].ToString());
+                    obor.NSKK = decimal.Parse(dbman.DataReader["creditkol"].ToString());
                     obor.Contagent = contr;
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
@@ -1695,14 +1695,14 @@ namespace Tempo2012.EntityFramework
                                     if (Math.Abs(sd) > Math.Abs(sc))
                                     {
                                         itemp.KSD = sd - sc;
-                                        itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
-                                        itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
+                                        itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
+                                        itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                     }
                                     else
                                     {
                                         itemp.KSK = sc - sd;
-                                        itemp.KSKV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
-                                        itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.OKK);
+                                        itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
+                                        itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
                                     }
                                     var row1 = new List<string>();
                                     row1.Add(itemp.ToShortString());
@@ -1742,7 +1742,11 @@ namespace Tempo2012.EntityFramework
                                                           {
                                                               Code = gcs.Key.Code,
                                                               BeginSaldoCredit = gcs.Sum(x => x.BeginSaldoCredit),
-                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit)
+                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit),
+                                                              BeginSaldoDebitValuta=gcs.Sum(x=>x.BeginSaldoDebitValuta),
+                                                              BeginSaldoCreditValuta=gcs.Sum(x=>x.BeginSaldoCreditValuta),
+                                                              BeginSaldoCreditKol=gcs.Sum(x=>x.BeginSaldoCreditKol),
+                                                              BeginSaldoDebitKol=gcs.Sum(x=>x.BeginSaldoDebitKol)
                                                           });
                             olditemid = item.Id;
                             olditem = item;
@@ -1767,8 +1771,8 @@ namespace Tempo2012.EntityFramework
                         if (Math.Abs(item.NSD + nsd) > Math.Abs(item.NSK + nsc))
                         {
                             item.NSD = (item.NSD + nsd) - (item.NSK + nsc);
-                            item.KSDV = (item.NSDV + item.ODV) - (item.NSKV + item.ODV);
-                            item.KSDK = (item.NSDK + item.ODK) - (item.NSKK + item.ODK);
+                            item.KSDV = (item.NSDV + item.ODV) - (item.NSKV + item.OKV);
+                            item.KSDK = (item.NSDK + item.ODK) - (item.NSKK + item.OKK);
                             item.NSK = 0;
                             item.NSKV = 0;
                             item.NSKK = 0;
@@ -1776,8 +1780,8 @@ namespace Tempo2012.EntityFramework
                         else
                         {
                             item.NSK = (item.NSK + nsc) - (item.NSD + nsd);
-                            item.KSKV = (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
-                            item.KSKK = (item.NSKK + item.OKK) - (item.NSDK + item.OKK);
+                            item.KSKV = (item.NSKV + item.OKV) - (item.NSDV + item.ODV);
+                            item.KSKK = (item.NSKK + item.OKK) - (item.NSDK + item.ODK);
                             item.NSD = 0;
                             item.NSDK = 0;
                             item.NSDV = 0;
@@ -1787,14 +1791,14 @@ namespace Tempo2012.EntityFramework
                         if (Math.Abs(sdebit) > Math.Abs(scredit))
                         {
                             item.KSD = sdebit - scredit;
-                            item.KSDV= (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
-                            item.KSDK = (item.NSKK + item.ODK) - (item.NSKK + item.ODK);
+                            item.KSDV= (item.NSKV + item.ODV) - (item.NSKV + item.OKV);
+                            item.KSDK = (item.NSKK + item.ODK) - (item.NSKK + item.OKK);
                         }
                         else
                         {
                             item.KSK = scredit - sdebit;
-                            item.KSKV = (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
-                            item.KSKK = (item.NSKK + item.ODK) - (item.NSKK + item.ODK);
+                            item.KSKV = (item.NSKV + item.OKV) - (item.NSDV + item.ODV);
+                            item.KSKK = (item.NSKK + item.OKK) - (item.NSDK + item.ODK);
                         }
                         //if (sm.TypeAccount == 1)
                         //{
@@ -1859,7 +1863,7 @@ namespace Tempo2012.EntityFramework
                             if (Math.Abs(itemp.NSD + d) > Math.Abs(itemp.NSK + c))
                             {
                                 itemp.NSD = (itemp.NSD + d) - (itemp.NSK + c);
-                                itemp.NSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                itemp.NSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
                                 itemp.NSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                 itemp.NSK = 0;
                                 itemp.NSKV = 0;
@@ -1879,14 +1883,14 @@ namespace Tempo2012.EntityFramework
                             if (Math.Abs(sd) > Math.Abs(sc))
                             {
                                 itemp.KSD = sd - sc;
-                                itemp.KSDV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
-                                itemp.KSDK = (itemp.NSKK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
+                                itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
+                                itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                             }
                             else
                             {
                                 itemp.KSK = sc - sd;
-                                itemp.KSKV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
-                                itemp.KSKK = (itemp.NSKK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
+                                itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
+                                itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
                             }
                             
                             var row1 = new List<string>();
@@ -1932,7 +1936,11 @@ namespace Tempo2012.EntityFramework
                                                           {
                                                               Code = gcs.Key.Code,
                                                               BeginSaldoCredit = gcs.Sum(x => x.BeginSaldoCredit),
-                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit)
+                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit),
+                                                              BeginSaldoDebitValuta = gcs.Sum(x => x.BeginSaldoDebitValuta),
+                                                              BeginSaldoCreditValuta = gcs.Sum(x => x.BeginSaldoCreditValuta),
+                                                              BeginSaldoCreditKol = gcs.Sum(x => x.BeginSaldoCreditKol),
+                                                              BeginSaldoDebitKol = gcs.Sum(x => x.BeginSaldoDebitKol)
                                                           });
                             var ss = string.Format("SELECT a.ACCOUNTS_ID,a.LOOKUP_ID, a.FIELDLOOKUP_ID FROM MAPACCTOLOOKUP a where a.FIELDLOOKUP_ID = 28 and a.ACCOUNTS_ID = {0}", currentacc.Id);
                             var dbman1 = new DBManager(DataProvider.Firebird);
@@ -1977,22 +1985,34 @@ namespace Tempo2012.EntityFramework
                                 if (Math.Abs(itemp.NSD + d) > Math.Abs(itemp.NSK + c))
                                 {
                                     itemp.NSD = (itemp.NSD + d) - (itemp.NSK + c);
+                                    itemp.NSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKV);
+                                    itemp.NSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.ODK);
                                     itemp.NSK = 0;
+                                    itemp.NSKV = 0;
+                                    itemp.NSKK = 0;
                                 }
                                 else
                                 {
                                     itemp.NSK = (itemp.NSK + c) - (itemp.NSD + d);
+                                    itemp.NSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
+                                    itemp.NSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
                                     itemp.NSD = 0;
+                                    itemp.NSDV = 0;
+                                    itemp.NSDK = 0;
                                 }
                                 var sd = itemp.NSD + itemp.OD;
                                 var sc = itemp.NSK + itemp.OK;
                                 if (Math.Abs(sd) > Math.Abs(sc))
                                 {
                                     itemp.KSD = sd - sc;
+                                    itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
+                                    itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                 }
                                 else
                                 {
                                     itemp.KSK = sc - sd;
+                                    itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSKK + itemp.ODK);
+                                    itemp.KSKV= (itemp.NSKV + itemp.OKV) - (itemp.NSKV + itemp.ODV);
                                 }
                                 var row1 = new List<string>();
                                 row1.Add(itemp.ToShortString());
@@ -2087,27 +2107,33 @@ namespace Tempo2012.EntityFramework
                                 decimal c = 0;
                                 d = it.BeginSaldoDebit;
                                 c = it.BeginSaldoCredit;
-                                if (Math.Abs(itemp.NSD + d) > Math.Abs(itemp.NSK + c))
+                                if (Math.Abs(d) > Math.Abs(d))
                                 {
-                                    itemp.NSD = (itemp.NSD + d) - (itemp.NSK + c);
-                                    itemp.NSK = 0;
+                                    itemp.KSD = d - c;
+                                    itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
+                                    itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                 }
                                 else
                                 {
-                                    itemp.NSK = (itemp.NSK + c) - (itemp.NSD + d);
-                                    itemp.NSD = 0;
+                                    itemp.KSK = c - d;
+                                    itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSKK + itemp.ODK);
+                                    itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSKV + itemp.ODV);
                                 }
                                 var sd = itemp.NSD + itemp.OD;
                                 var sc = itemp.NSK + itemp.OK;
                                 if (Math.Abs(sd) > Math.Abs(sc))
                                 {
                                     itemp.KSD = sd - sc;
+                                    itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.OKV);
+                                    itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                 }
                                 else
                                 {
                                     itemp.KSK = sc - sd;
+                                    itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSKK + itemp.ODK);
+                                    itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSKV + itemp.ODV);
                                 }
-                                    var row1 = new List<string>();
+                                var row1 = new List<string>();
                                     row1.Add(itemp.ToShortString());
                                     row1.Add(itemp.Name);
                                     row1.Add(itemp.numContagent.ToString());
@@ -2775,7 +2801,18 @@ namespace Tempo2012.EntityFramework
                 saldoAnaliticModel.VALUEMONEY = decimal.Parse(item[10]);
                 
             }
+            if (it.Name.Contains("Сума валута"))
+            {
+                saldoAnaliticModel.VALVAL = decimal.Parse(item[14]);
+                saldoAnaliticModel.VALVALD = decimal.Parse(item[15]);
 
+            }
+            if (it.Name.Contains("Количество"))
+            {
+                saldoAnaliticModel.VALKOLD = decimal.Parse(item[18]);
+                saldoAnaliticModel.VALKOLK = decimal.Parse(item[19]);
+
+            }
             return gr;
         }
 
