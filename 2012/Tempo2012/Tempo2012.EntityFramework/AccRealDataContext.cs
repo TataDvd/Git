@@ -51,6 +51,18 @@ namespace Tempo2012.EntityFramework
         public decimal OK;
         public decimal KSD;
         public decimal KSK;
+        public decimal NSDV;
+        public decimal NSKV;
+        public decimal ODV;
+        public decimal OKV;
+        public decimal KSDV;
+        public decimal KSKV;
+        public decimal NSDK;
+        public decimal NSKK;
+        public decimal ODK;
+        public decimal OKK;
+        public decimal KSDK;
+        public decimal KSKK;
         public string Contagent;
         public int numContagent;
 
@@ -1412,7 +1424,7 @@ namespace Tempo2012.EntityFramework
             }
             return result;
         }
-        internal static List<List<string>> GetOborotnaVedDetailed(DateTime ToDate, DateTime FromDate,int accid=-1)
+        internal static List<List<string>> GetOborotnaVedDetailed(DateTime From, DateTime To,int accid=-1)
         {
             var Allacc = new List<AccountsModel>(GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
             List<List<string>> result = new List<List<string>>();
@@ -1423,18 +1435,18 @@ namespace Tempo2012.EntityFramework
             {
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 string s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.DDETAILS,a.\"Oborot\" as debit,m.LOOKUP_ID FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.DDETAILS,a.\"Oborot\" as debit,a.OBOROTVALUTA as debitval,a.OBOROTKOL as debitcol,m.LOOKUP_ID FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"DebitAccount\" " +
                    "inner join MAPACCTOLOOKUP m on b.\"Id\"=m.ACCOUNTS_ID " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<='{4}.{5}.{6}' and m.ANALITIC_FIELD_ID=28 and b.\"LevelAccount\"=2{7} " +
                    "order by b.NUM,b.\"SubNum\"",
                     ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
-                    ToDate.Day,
-                    ToDate.Month,
-                    ToDate.Year,
-                    FromDate.Day,
-                    FromDate.Month,
-                    FromDate.Year,
+                    From.Day,
+                    From.Month,
+                    From.Year,
+                    To.Day,
+                    To.Month,
+                    To.Year,
                     accid == -1 ? ")" : string.Format(" and b.\"Id\"={0}) ", accid)
                    );
                 dbman.Open();
@@ -1455,6 +1467,8 @@ namespace Tempo2012.EntityFramework
                     obor.SubNum = dbman.DataReader["SubNum"].ToString();
                     obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
                     obor.OD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                    obor.ODV= decimal.Parse(dbman.DataReader["debitval"].ToString());
+                    obor.ODK = decimal.Parse(dbman.DataReader["debitcol"].ToString());
                     obor.Contagent = contr;
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
@@ -1464,7 +1478,7 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.DDETAILS,m.LOOKUP_ID,a.\"Oborot\" as debit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.DDETAILS,m.LOOKUP_ID,a.\"Oborot\" as debit,a.OBOROTVALUTA as debitval,a.OBOROTKOL as debitcol FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"DebitAccount\" " +
                    "inner join MAPACCTOLOOKUP m on b.\"Id\"=m.ACCOUNTS_ID " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<'{4}.{5}.{6}' and m.ANALITIC_FIELD_ID=28 and b.\"LevelAccount\"=2{7} " +
@@ -1472,10 +1486,10 @@ namespace Tempo2012.EntityFramework
                     ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                     1,
                     1,
-                    ToDate.Year,
-                    ToDate.Day,
-                    ToDate.Month,
-                    ToDate.Year,
+                    From.Year,
+                    From.Day,
+                    From.Month,
+                    From.Year,
                     accid == -1 ? ")" : string.Format(" and b.\"Id\"={0}) ", accid)
                    );
                 dbman.CloseReader();
@@ -1496,6 +1510,8 @@ namespace Tempo2012.EntityFramework
                     obor.SubNum = dbman.DataReader["SubNum"].ToString();
                     obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
                     obor.NSD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                    obor.NSDV = decimal.Parse(dbman.DataReader["debitval"].ToString());
+                    obor.NSDK = decimal.Parse(dbman.DataReader["debitcol"].ToString());
                     obor.Contagent = contr;
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
@@ -1504,18 +1520,18 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.CDETAILS,m.LOOKUP_ID,a.\"Oborot\" as credit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.CDETAILS,m.LOOKUP_ID,a.\"Oborot\" as credit,a.OBOROTVALUTAK as creditval,a.OBOROTKOLK as creditkol FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"CreditAccount\" " +
                    "inner join MAPACCTOLOOKUP m on b.\"Id\"=m.ACCOUNTS_ID " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<='{4}.{5}.{6}' and m.ANALITIC_FIELD_ID=28 and b.\"LevelAccount\"=2 {7}" +
                    "order by b.NUM,b.\"SubNum\"",
                     ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
-                    ToDate.Day,
-                    ToDate.Month,
-                    ToDate.Year,
-                    FromDate.Day,
-                    FromDate.Month,
-                    FromDate.Year,
+                    From.Day,
+                    From.Month,
+                    From.Year,
+                    To.Day,
+                    To.Month,
+                    To.Year,
                     accid == -1 ? ")" : string.Format(" and b.\"Id\"={0}) ", accid)
                    );
                 dbman.CloseReader();
@@ -1537,6 +1553,8 @@ namespace Tempo2012.EntityFramework
                     obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
                     obor.Contagent = contr;
                     obor.OK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                    obor.OKV = decimal.Parse(dbman.DataReader["creditval"].ToString());
+                    obor.OKK = decimal.Parse(dbman.DataReader["creditcol"].ToString());
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
                     gruper.Add(obor);
@@ -1544,7 +1562,7 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.CDETAILS,m.LOOKUP_ID,a.\"Oborot\" as credit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",a.CDETAILS,m.LOOKUP_ID,a.\"Oborot\" as credit,a.OBOROTVALUTAK as creditval,a.OBOROTKOLK as creditkol FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"CreditAccount\"" +
                    "inner join MAPACCTOLOOKUP m on b.\"Id\"=m.ACCOUNTS_ID " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<'{4}.{5}.{6}' and m.ANALITIC_FIELD_ID=28  and b.\"LevelAccount\"=2{7} " +
@@ -1552,10 +1570,10 @@ namespace Tempo2012.EntityFramework
                     ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                     1,
                     1,
-                    ToDate.Year,
-                    ToDate.Day,
-                    ToDate.Month,
-                    ToDate.Year,
+                    From.Year,
+                    From.Day,
+                    From.Month,
+                    From.Year,
                     accid == -1 ? ")" : string.Format(" and b.\"Id\"={0}) ", accid)
                    );
                 dbman.CloseReader();
@@ -1576,6 +1594,8 @@ namespace Tempo2012.EntityFramework
                     obor.SubNum = dbman.DataReader["SubNum"].ToString();
                     obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
                     obor.NSK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                    obor.NSKV = decimal.Parse(dbman.DataReader["creditval"].ToString());
+                    obor.NSKK = decimal.Parse(dbman.DataReader["creditcol"].ToString());
                     obor.Contagent = contr;
                     obor.numContagent = nomer;
                     obor.LookupId = int.Parse(dbman.DataReader["LOOKUP_ID"].ToString());
@@ -1601,6 +1621,14 @@ namespace Tempo2012.EntityFramework
                                   NSK = gcs.Sum(x => x.NSK),
                                   OD = gcs.Sum(x => x.OD),
                                   OK = gcs.Sum(x => x.OK),
+                                  NSDV = gcs.Sum(x => x.NSDV),
+                                  NSKV = gcs.Sum(x => x.NSKV),
+                                  ODV = gcs.Sum(x => x.ODV),
+                                  OKV = gcs.Sum(x => x.OKV),
+                                  NSDK = gcs.Sum(x => x.NSDK),
+                                  NSKK = gcs.Sum(x => x.NSKK),
+                                  ODK = gcs.Sum(x => x.ODK),
+                                  OKK = gcs.Sum(x => x.OKK),
                               };
 
                 int olditemid = -1;
@@ -1647,22 +1675,34 @@ namespace Tempo2012.EntityFramework
                                     if (Math.Abs(itemp.NSD + d) > Math.Abs(itemp.NSK + c))
                                     {
                                         itemp.NSD = (itemp.NSD + d) - (itemp.NSK + c);
+                                        itemp.NSDV= (itemp.NSDV + it.BeginSaldoDebitValuta) - (itemp.NSKV + it.BeginSaldoCreditValuta);
+                                        itemp.NSDK = (itemp.NSDK + it.BeginSaldoDebitKol) - (itemp.NSKK + it.BeginSaldoCreditKol);
                                         itemp.NSK = 0;
+                                        itemp.NSKV = 0;
+                                        itemp.NSKK = 0;
                                     }
                                     else
                                     {
                                         itemp.NSK = (itemp.NSK + c) - (itemp.NSD + d);
+                                        itemp.NSDV = (itemp.NSKV + it.BeginSaldoCreditValuta) - (itemp.NSDV + it.BeginSaldoDebitValuta);
+                                        itemp.NSDK = (itemp.NSKK + it.BeginSaldoCreditKol) - (itemp.NSDK + it.BeginSaldoDebitKol);
                                         itemp.NSD = 0;
+                                        itemp.NSDK = 0;
+                                        itemp.NSDV = 0;
                                     }
                                     var sd = itemp.NSD + itemp.OD;
                                     var sc = itemp.NSK + itemp.OK;
                                     if (Math.Abs(sd) > Math.Abs(sc))
                                     {
                                         itemp.KSD = sd - sc;
+                                        itemp.KSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                        itemp.KSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
                                     }
                                     else
                                     {
                                         itemp.KSK = sc - sd;
+                                        itemp.KSKV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                        itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.OKK);
                                     }
                                     var row1 = new List<string>();
                                     row1.Add(itemp.ToShortString());
@@ -1676,6 +1716,20 @@ namespace Tempo2012.EntityFramework
                                     row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+
+                                    row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+
+                                    row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                     result.Add(row1);
 
 
@@ -1713,22 +1767,34 @@ namespace Tempo2012.EntityFramework
                         if (Math.Abs(item.NSD + nsd) > Math.Abs(item.NSK + nsc))
                         {
                             item.NSD = (item.NSD + nsd) - (item.NSK + nsc);
+                            item.KSDV = (item.NSDV + item.ODV) - (item.NSKV + item.ODV);
+                            item.KSDK = (item.NSDK + item.ODK) - (item.NSKK + item.ODK);
                             item.NSK = 0;
+                            item.NSKV = 0;
+                            item.NSKK = 0;
                         }
                         else
                         {
                             item.NSK = (item.NSK + nsc) - (item.NSD + nsd);
+                            item.KSKV = (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
+                            item.KSKK = (item.NSKK + item.OKK) - (item.NSDK + item.OKK);
                             item.NSD = 0;
+                            item.NSDK = 0;
+                            item.NSDV = 0;
                         }
                         var sdebit = item.NSD + item.OD;
                         var scredit = item.NSK + item.OK;
                         if (Math.Abs(sdebit) > Math.Abs(scredit))
                         {
                             item.KSD = sdebit - scredit;
+                            item.KSDV= (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
+                            item.KSDK = (item.NSKK + item.ODK) - (item.NSKK + item.ODK);
                         }
                         else
                         {
                             item.KSK = scredit - sdebit;
+                            item.KSKV = (item.NSKV + item.ODV) - (item.NSKV + item.ODV);
+                            item.KSKK = (item.NSKK + item.ODK) - (item.NSKK + item.ODK);
                         }
                         //if (sm.TypeAccount == 1)
                         //{
@@ -1753,6 +1819,20 @@ namespace Tempo2012.EntityFramework
                         row.Add(item.OK.ToString(Vf.LevFormatUI));
                         row.Add(item.KSD.ToString(Vf.LevFormatUI));
                         row.Add(item.KSK.ToString(Vf.LevFormatUI));
+
+                        row.Add(item.NSDV.ToString(Vf.ValFormatUI));
+                        row.Add(item.NSKV.ToString(Vf.ValFormatUI));
+                        row.Add(item.ODV.ToString(Vf.ValFormatUI));
+                        row.Add(item.OKV.ToString(Vf.ValFormatUI));
+                        row.Add(item.KSDV.ToString(Vf.ValFormatUI));
+                        row.Add(item.KSKV.ToString(Vf.ValFormatUI));
+
+                        row.Add(item.NSDK.ToString(Vf.KolFormatUI));
+                        row.Add(item.NSKK.ToString(Vf.KolFormatUI));
+                        row.Add(item.ODK.ToString(Vf.KolFormatUI));
+                        row.Add(item.OKK.ToString(Vf.KolFormatUI));
+                        row.Add(item.KSDK.ToString(Vf.KolFormatUI));
+                        row.Add(item.KSKK.ToString(Vf.KolFormatUI));
                         result.Add(row);
                     }
                     var item1 = results.OrderBy(e => e.Num1).ThenBy(e => e.SubNum1).ThenBy(e => e.numContagent).Last();
@@ -1779,23 +1859,36 @@ namespace Tempo2012.EntityFramework
                             if (Math.Abs(itemp.NSD + d) > Math.Abs(itemp.NSK + c))
                             {
                                 itemp.NSD = (itemp.NSD + d) - (itemp.NSK + c);
+                                itemp.NSDV = (itemp.NSDV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                itemp.NSDK = (itemp.NSDK + itemp.ODK) - (itemp.NSKK + itemp.OKK);
                                 itemp.NSK = 0;
+                                itemp.NSKV = 0;
+                                itemp.NSKK = 0;
                             }
                             else
                             {
                                 itemp.NSK = (itemp.NSK + c) - (itemp.NSD + d);
+                                itemp.NSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
+                                itemp.NSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
                                 itemp.NSD = 0;
+                                itemp.NSDV = 0;
+                                itemp.NSDK = 0;
                             }
                             var sd = itemp.NSD + itemp.OD;
                             var sc = itemp.NSK + itemp.OK;
                             if (Math.Abs(sd) > Math.Abs(sc))
                             {
                                 itemp.KSD = sd - sc;
+                                itemp.KSDV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                itemp.KSDK = (itemp.NSKK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
                             }
                             else
                             {
                                 itemp.KSK = sc - sd;
+                                itemp.KSKV = (itemp.NSKV + itemp.ODV) - (itemp.NSKV + itemp.ODV);
+                                itemp.KSKK = (itemp.NSKK + itemp.ODK) - (itemp.NSKK + itemp.ODK);
                             }
+                            
                             var row1 = new List<string>();
                             row1.Add(itemp.ToShortString());
                             row1.Add(itemp.Name);
@@ -1808,6 +1901,20 @@ namespace Tempo2012.EntityFramework
                             row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
                             row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                             row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+
+                            row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                            row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                            row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                            row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                            row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                            row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+
+                            row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                            row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                            row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                            row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                            row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                            row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                             result.Add(row1);
                         }
                     }
@@ -1899,6 +2006,20 @@ namespace Tempo2012.EntityFramework
                                 row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
                                 row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                 row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+
+                                row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+
+                                row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                 result.Add(row1);
                             }
                         }
@@ -1938,7 +2059,11 @@ namespace Tempo2012.EntityFramework
                                                           {
                                                               Code = gcs.Key.Code,
                                                               BeginSaldoCredit = gcs.Sum(x => x.BeginSaldoCredit),
-                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit)
+                                                              BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit),
+                                                              BeginSaldoDebitValuta=gcs.Sum(x => x.BeginSaldoDebitValuta),
+                                                              BeginSaldoCreditValuta = gcs.Sum(x => x.BeginSaldoCreditValuta),
+                                                              BeginSaldoDebitKol = gcs.Sum(x => x.BeginSaldoDebitKol),
+                                                              BeginSaldoCreditKol = gcs.Sum(x => x.BeginSaldoCreditKol),
                                                           });
                           
                             foreach (var it in rezi)
@@ -1994,6 +2119,20 @@ namespace Tempo2012.EntityFramework
                                     row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+
+                                    row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                    row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+
+                                    row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                    row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                     result.Add(row1);
                                 
                             }
