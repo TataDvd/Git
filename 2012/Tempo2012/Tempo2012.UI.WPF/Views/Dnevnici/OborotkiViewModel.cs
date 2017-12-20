@@ -15,7 +15,19 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         {
             ToDate = DateTime.Now;
             FromDate = DateTime.Now.AddMonths(-1);
-            ReportItems= new List<ReportItem>{
+            //ReportItems= new List<ReportItem>{
+            //        new ReportItem{IsShow=true, Width=20, Name="Номер Сметка",Height=20},
+            //        new ReportItem{IsShow=true, Width=50, Name="Име на Сметка",Height=20},
+            //        new ReportItem{IsShow=true, Width=15, Name="Начално салдо дебит",Height=20,Sborno = true},
+            //        new ReportItem{IsShow=true, Width=15, Name="Начално салдо кредит",Height=20,Sborno = true},
+            //        new ReportItem{IsShow=true, Width=15, Name="Оборот дебит",Height=20,Sborno = true},
+            //        new ReportItem{IsShow=true, Width=15, Name="Оборот кредит",Height=20,Sborno = true},
+            //        new ReportItem{IsShow=true, Width=15, Name="Крайно салдо дебит",Height=20,Sborno = true},
+            //        new ReportItem{IsShow=true, Width=15, Name="Крайно салдо кредит",Height=20,Sborno = true}
+            //    };
+            //if (FullReport == 1)
+            //{
+                ReportItems = new List<ReportItem>{
                     new ReportItem{IsShow=true, Width=20, Name="Номер Сметка",Height=20},
                     new ReportItem{IsShow=true, Width=50, Name="Име на Сметка",Height=20},
                     new ReportItem{IsShow=true, Width=15, Name="Начално салдо дебит",Height=20,Sborno = true},
@@ -23,8 +35,21 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                     new ReportItem{IsShow=true, Width=15, Name="Оборот дебит",Height=20,Sborno = true},
                     new ReportItem{IsShow=true, Width=15, Name="Оборот кредит",Height=20,Sborno = true},
                     new ReportItem{IsShow=true, Width=15, Name="Крайно салдо дебит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Крайно салдо кредит",Height=20,Sborno = true}
+                    new ReportItem{IsShow=true, Width=15, Name="Крайно салдо кредит",Height=20,Sborno = true},
+                    new ReportItem{IsShow = true, Width = 15, Name = "НС дебит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "НС кредит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "Оборот дебит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "Оборот кредит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "КС дебит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "КС кредит валута", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "НС дебит количество", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "НС кредит количество", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "Оборот дебит количество", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "Оборот кредит количество", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "КС дебит количество", Height = 20, Sborno = true },
+                    new ReportItem{IsShow = true, Width = 15, Name = "КС кредит количество", Height = 20, Sborno = true },
                 };
+            //}
         }
         public void LoadSettings(string Path)
         {

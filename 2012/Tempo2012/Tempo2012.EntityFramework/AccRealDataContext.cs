@@ -1412,6 +1412,20 @@ namespace Tempo2012.EntityFramework
                         toadd.Add(r[8]);
                         toadd.Add(r[9]);
                         toadd.Add(r[10]);
+
+                        toadd.Add(r[11]);
+                        toadd.Add(r[12]);
+                        toadd.Add(r[13]);
+                        toadd.Add(r[14]);
+                        toadd.Add(r[15]);
+                        toadd.Add(r[16]);
+
+                        toadd.Add(r[17]);
+                        toadd.Add(r[18]);
+                        toadd.Add(r[19]);
+                        toadd.Add(r[20]);
+                        toadd.Add(r[21]);
+                        toadd.Add(r[22]);
                         result.Add(toadd);
                     }
                         
@@ -2476,7 +2490,7 @@ namespace Tempo2012.EntityFramework
             }
 
             var results = from p in gruper
-                          group p by new { p.Num, p.SubNum, p.Name, p.numContagent } into gcs
+                          group p by new { p.Num, p.SubNum, p.Name, p.numContagent} into gcs
                           select new OboronaVed()
                           {
                               Num = gcs.Key.Num,
