@@ -1469,7 +1469,7 @@ namespace Tempo2012.EntityFramework
                 {
                     int nomer = 0;
                     long id = long.Parse(dbman.DataReader["Id"].ToString());
-                    string contr = dbman.DataReader["DDETAILS"].ToString();
+                    string details = dbman.DataReader["DDETAILS"].ToString();
                     if (contr != null)
                     {
                         SetNomandFact(ref nomer, ref contr);
@@ -2817,14 +2817,14 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name.Contains("Сума валута"))
             {
-                saldoAnaliticModel.VALVAL = decimal.Parse(item[14]);
-                saldoAnaliticModel.VALVALD = decimal.Parse(item[15]);
+                saldoAnaliticModel.VALVAL = decimal.Parse(item[15]);
+                saldoAnaliticModel.VALVALD = decimal.Parse(item[16]);
 
             }
             if (it.Name.Contains("Количество"))
             {
-                saldoAnaliticModel.VALKOLD = decimal.Parse(item[18]);
-                saldoAnaliticModel.VALKOLK = decimal.Parse(item[19]);
+                saldoAnaliticModel.VALKOLD = decimal.Parse(item[21]);
+                saldoAnaliticModel.VALKOLK = decimal.Parse(item[22]);
 
             }
             return gr;
