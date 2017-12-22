@@ -531,8 +531,12 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_Click_15(object sender, RoutedEventArgs e)
         {
-             ClearContoForFirm clearConto=new ClearContoForFirm();
-            clearConto.ShowDialog();
+            if (PassDialog.Show())
+            {
+                 ClearContoForFirm clearConto = new ClearContoForFirm();
+                clearConto.ShowDialog();
+            }
+            
         }
 
         private void MenuItem_Click_16(object sender, RoutedEventArgs e)
@@ -573,13 +577,28 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_Click_20(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void MenuItem_Click_21(object sender, RoutedEventArgs e)
         {
-            ClearContoForFirm clearConto = new ClearContoForFirm();
-            clearConto.ShowDialog();
+            if (PassDialog.Show())
+            {
+                if (MessageBoxWrapper.Show("Предупреждение", "Сигурни ли сте че искате да изтриете всички контирания и дневници", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    var Rez = (DataContext as MainViewModel).Context.FbBatchExecution("EXECUTE PROCEDURE DELETEALLCONTO");
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                    if (Rez != "")
+                    {
+                        MessageBoxWrapper.Show("Възникна грешка при триене на контирания и дневници! " + Rez);
+                    }
+                    else
+                    {
+                         MessageBoxWrapper.Show("Успешно изтрити дневници и контирания");
+                    }
+                }
+            }
         }
 
         private void MenuItem_Click_22(object sender, RoutedEventArgs e)

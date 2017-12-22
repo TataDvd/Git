@@ -460,14 +460,14 @@
                         <MenuItem  Click="MenuItem_Click_15">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
-                                    <CustomControls:TextBlockEx Text="Изтриване на всички осчетоводявания" />
+                                    <CustomControls:TextBlockEx Text="Изтриване на всички осчетоводявания за период" />
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
                         <MenuItem  Click="MenuItem_Click_21">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
-                                    <CustomControls:TextBlockEx Text="Изтриване на осчетоводявания за период" />
+                                    <CustomControls:TextBlockEx Text="Изтриване на всички осчетоводявания" />
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>

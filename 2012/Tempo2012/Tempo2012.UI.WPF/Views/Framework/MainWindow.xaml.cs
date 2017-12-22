@@ -609,8 +609,11 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_Click_15(object sender, RoutedEventArgs e)
         {
-            ClearContoForFirm clearConto = new ClearContoForFirm();
-            clearConto.ShowDialog();
+            if (PassDialog.Show())
+            {
+                ClearContoForFirm clearConto = new ClearContoForFirm();
+                clearConto.ShowDialog();
+            }
         }
 
         private void MenuItem_Click_16(object sender, RoutedEventArgs e)

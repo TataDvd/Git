@@ -1469,7 +1469,7 @@ namespace Tempo2012.EntityFramework
                 {
                     int nomer = 0;
                     long id = long.Parse(dbman.DataReader["Id"].ToString());
-                    string details = dbman.DataReader["DDETAILS"].ToString();
+                    string contr = dbman.DataReader["DDETAILS"].ToString();
                     if (contr != null)
                     {
                         SetNomandFact(ref nomer, ref contr);
@@ -2700,7 +2700,16 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(60);
             if (et3)
             {
-                var list2 = GetOborotnaVedDetailed(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31));
+                //list2 = GetOborotnaVedDetailed(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31));
+                var list2 = new List<List<string>>();
+                var accold = new List<AccountsModel>(GetAllAccounts(firmaId, fromYear));
+                foreach (var a in accold)
+                {
+                    if (a.LevelAccount == 2)
+                    {
+                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a, true,false));
+                    }
+                }
                 bw.ReportProgress(80);
                 AccountsModel accforsaldo = null;
                 List<AnaliticalFields> accfields = null;
@@ -2708,14 +2717,13 @@ namespace Tempo2012.EntityFramework
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in list2)
                 {
-                    var a = decimal.Parse(item[9]);
-                    var b = decimal.Parse(item[8]);
-                    if (a == 0 && b== 0)
+                    var a = decimal.Parse(item[7]);
+                    if (a == 0 || item.Count!=12)
                     {
                         continue;
                     }
                     gr++;
-                    if (accforsaldo != null && accforsaldo.ShortName == string.Format("{0} {1}", item[0], item[1]))
+                    if (accforsaldo != null && accforsaldo.Short == item[11])
                     {
                         if (accfields != null)
                         {
@@ -2738,7 +2746,7 @@ namespace Tempo2012.EntityFramework
                     else
                     {
                         gr = 1;
-                        accforsaldo = acc.FirstOrDefault(e => e.ShortName == string.Format("{0} {1}", item[0], item[1]));
+                        accforsaldo = acc.FirstOrDefault(e => e.Short == item[11]);
                         if (accforsaldo!=null)
                         {
                             accfields = LoadAccFieldsMetaData(accforsaldo);
@@ -2776,6 +2784,380 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(100);
         }
 
+        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool WithContragentSum,bool OnlyContragent)
+        {
+            var items = new List<List<string>>();
+            var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
+            var AllMovementDebit = new List<InvoiseControl>();
+            var AllMovementCredit = new List<InvoiseControl>();
+            var AllMovementDebit1 = new List<InvoiseControl>();
+            var AllMovementCredit1 = new List<InvoiseControl>();
+            var _movements1 = new List<AccItemSaldo>();
+            var _movements = new List<AccItemSaldo>();
+            if (accountsModel.TypeAccount == 1)
+            {
+                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
+                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            }
+            else
+            {
+                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
+                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            }
+            foreach (InvoiseControl invoiseControl in AllMovementDebit)
+            {
+                var item = new AccItemSaldo();
+                item.NInvoise = invoiseControl.NInvoise;
+                item.NameContragent = invoiseControl.NameContragent;
+                item.Code = invoiseControl.CodeContragent;
+                item.Od = invoiseControl.Oborot;
+                item.Type = accountsModel.TypeAccount;
+                item.Folder = invoiseControl.Folder;
+                item.DocNumber = invoiseControl.DocNumber;
+                item.Reason = invoiseControl.Reason;
+                if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
+                var lc = AllMovementCredit.FirstOrDefault(
+                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
+                if (lc != null)
+                {
+
+                    item.Oc += lc.Oborot;
+                    if (item.Type == 2) item.Data = lc.DataInvoise;
+                    AllMovementCredit.Remove(lc);
+                }
+                _movements1.Add(item);
+
+            }
+            foreach (InvoiseControl invoiseControl in AllMovementCredit)
+            {
+                var item = new AccItemSaldo();
+                item.NInvoise = invoiseControl.NInvoise;
+                item.NameContragent = invoiseControl.NameContragent;
+                item.Code = invoiseControl.CodeContragent;
+                item.Oc = invoiseControl.Oborot;
+                item.Type = accountsModel.TypeAccount;
+                item.Data = invoiseControl.DataInvoise;
+                item.Folder = invoiseControl.Folder;
+                item.DocNumber = invoiseControl.DocNumber;
+                item.Reason = invoiseControl.Reason;
+                _movements1.Add(item);
+
+            }
+            foreach (AccItemSaldo accItemSaldo in _movements1)
+            {
+                var saldo =
+                    rezi.FirstOrDefault(
+                        m => m.Code == accItemSaldo.Code && m.NumInvoise == accItemSaldo.NInvoise);
+                if (saldo != null)
+                {
+                    accItemSaldo.Nsd = saldo.BeginSaldoDebit;
+                    accItemSaldo.Nsc = saldo.BeginSaldoCredit;
+                    rezi.Remove(saldo);
+                }
+            }
+            foreach (var item in rezi.OrderBy(e => e.Code))
+            {
+                var item1 = new AccItemSaldo();
+                item1.NInvoise = item.NumInvoise;
+                item1.NameContragent = item.NameContragent;
+                item1.Data = item.Date;
+                item1.Code = item.Code;
+                item1.Od = 0;
+                item1.Nsd = item.BeginSaldoDebit;
+                item1.Nsc = item.BeginSaldoCredit;
+                item1.Type = accountsModel.TypeAccount;
+                _movements1.Add(item1);
+            }
+
+            foreach (InvoiseControl invoiseControl in AllMovementDebit1)
+            {
+                var item = new AccItemSaldo();
+                item.NInvoise = invoiseControl.NInvoise;
+                item.NameContragent = invoiseControl.NameContragent;
+                item.Code = invoiseControl.CodeContragent;
+                item.Od = invoiseControl.Oborot;
+                item.Type = accountsModel.TypeAccount;
+                item.Folder = invoiseControl.Folder;
+                item.DocNumber = invoiseControl.DocNumber;
+                item.Reason = invoiseControl.Reason;
+                if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
+                var lc = AllMovementCredit1.FirstOrDefault(
+                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
+                if (lc != null)
+                {
+
+                    item.Oc += lc.Oborot;
+                    if (item.Type == 2) item.Data = lc.DataInvoise;
+                    AllMovementCredit1.Remove(lc);
+                }
+                _movements.Add(item);
+
+            }
+            foreach (InvoiseControl invoiseControl in AllMovementCredit1)
+            {
+                var item = new AccItemSaldo();
+                item.NInvoise = invoiseControl.NInvoise;
+                item.NameContragent = invoiseControl.NameContragent;
+                item.Code = invoiseControl.CodeContragent;
+                item.Oc = invoiseControl.Oborot;
+                item.Type = accountsModel.TypeAccount;
+                item.Data = invoiseControl.DataInvoise;
+                item.Folder = invoiseControl.Folder;
+                item.DocNumber = invoiseControl.DocNumber;
+                item.Reason = invoiseControl.Reason;
+                _movements.Add(item);
+
+            }
+            foreach (AccItemSaldo accItemSaldo in _movements)
+            {
+                var saldo =
+                    _movements1.FirstOrDefault(
+                        m => m.Code == accItemSaldo.Code && m.DocNumber == accItemSaldo.NInvoise);
+                if (saldo != null)
+                {
+                    accItemSaldo.Nsd = saldo.Ksd;
+                    accItemSaldo.Nsc = saldo.Ksc;
+                    _movements1.Remove(saldo);
+                }
+            }
+            foreach (var item in _movements1.OrderBy(e => e.Code))
+            {
+                var item1 = new AccItemSaldo();
+                item1.NInvoise = item.NInvoise;
+                item1.NameContragent = item.NameContragent;
+                item1.Code = item.Code;
+                item1.Od = 0;
+                item1.Nsd = item.Ksd;
+                item1.Nsc = item.Ksc;
+                item1.Type = accountsModel.TypeAccount;
+                item1.Data = item.Data;
+                _movements.Add(item1);
+            }
+            
+            string name = "";
+            string code = "";
+            string folder = "";
+            string reason = "";
+            string docnum = "";
+            bool first = true;
+
+            decimal sumansc = 0;
+            decimal sumaOc = 0;
+            decimal sumansd = 0;
+            decimal sumaOd = 0;
+            decimal sumansct = 0;
+            decimal sumaOct = 0;
+            decimal sumansdt = 0;
+            decimal sumaOdt = 0;
+            foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod))
+            {
+                List<string> row = new List<string>();
+                if (first)
+                {
+                    name = itemSaldo.NameContragent;
+                    code = itemSaldo.Code;
+                    first = false;
+                    folder = itemSaldo.Folder;
+                    reason = itemSaldo.Reason;
+                    docnum = itemSaldo.DocNumber;
+                }
+                else
+                {
+                    if (code != itemSaldo.Code && WithContragentSum)
+                    {
+                       
+                        List<string> rowTotal = new List<string>();
+                        if (!OnlyContragent)
+                        {
+                            rowTotal.Add("");
+                            rowTotal.Add("");
+
+                        }
+                        else
+                        {
+                            rowTotal.Add(code);
+                            rowTotal.Add(name);
+
+                        }
+                        rowTotal.Add("");
+                        rowTotal.Add(" Общо :");
+                        //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
+                        if (accountsModel.TypeAccount != 1)
+                        {
+                            var ks = sumansc + sumaOc - sumansd - sumaOd;
+                            var ns = sumansc - sumansd;
+                            rowTotal.Add(ns.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOc.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(ks.ToString(Vf.LevFormatUI));
+
+                        }
+                        else
+                        {
+                            var ks = sumansd + sumaOd - sumansc - sumaOc;
+                            var ns = sumansd - sumansc;
+                            rowTotal.Add(ns.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOc.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(ks.ToString(Vf.LevFormatUI));
+
+                        }
+                        if (!OnlyContragent)
+                        {
+                            rowTotal.Add("");
+                            rowTotal.Add("");
+                            rowTotal.Add("");
+                        }
+                        else
+                        {
+                            rowTotal.Add(folder);
+                            rowTotal.Add(docnum);
+                            rowTotal.Add(reason);
+
+                        }
+                        rowTotal.Add(accountsModel.Short);
+                        items.Add(rowTotal);
+                        
+                        sumansc = 0;
+                        sumansd = 0;
+                        sumaOc = 0;
+                        sumaOd = 0;
+                        name = itemSaldo.NameContragent;
+                        code = itemSaldo.Code;
+                        folder = itemSaldo.Folder;
+                        reason = itemSaldo.Reason;
+                        docnum = itemSaldo.DocNumber;
+
+                    }
+                }
+
+                sumansc += itemSaldo.Nsc;
+                sumansd += itemSaldo.Nsd;
+                sumaOc += itemSaldo.Oc;
+                sumaOd += itemSaldo.Od;
+                sumansct += itemSaldo.Nsc;
+                sumansdt += itemSaldo.Nsd;
+                sumaOct += itemSaldo.Oc;
+                sumaOdt += itemSaldo.Od;
+                //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
+                if (accountsModel.TypeAccount != 1)
+                {
+                    itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - itemSaldo.Nsd - itemSaldo.Od;
+                    itemSaldo.Ns = itemSaldo.Nsc - itemSaldo.Nsd;
+                }
+                else
+                {
+                    itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - itemSaldo.Nsc - itemSaldo.Oc;
+                    itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
+                }
+                if (!OnlyContragent)
+                {
+                    row.Add(itemSaldo.Code);
+                    row.Add(itemSaldo.NameContragent);
+                    row.Add(itemSaldo.NInvoise);
+                    row.Add(string.Format("{0}.{1}.{2}", itemSaldo.Data.Day.ToZeroString(2), itemSaldo.Data.Month.ToZeroString(2), itemSaldo.Data.Year.ToZeroString(4)));
+                    row.Add(itemSaldo.Ns.ToString(Vf.LevFormatUI));
+                    row.Add(itemSaldo.Od.ToString(Vf.LevFormatUI));
+                    row.Add(itemSaldo.Oc.ToString(Vf.LevFormatUI));
+                    row.Add(itemSaldo.Ks.ToString(Vf.LevFormatUI));
+                    row.Add(itemSaldo.Folder);
+                    row.Add(itemSaldo.DocNumber);
+                    row.Add(itemSaldo.Reason);
+                    row.Add(accountsModel.Short);
+                    items.Add(row);
+                }
+                //row.Add(itemSaldo.Ksc.ToString(Vf.LevFormatUI));
+
+
+            }
+            if (WithContragentSum)
+            {
+               
+                List<string> rowTotalLas = new List<string>();
+                if (!OnlyContragent)
+                {
+                    rowTotalLas.Add("");
+                    rowTotalLas.Add("");
+                }
+                else
+                {
+                    rowTotalLas.Add(code);
+                    rowTotalLas.Add(name);
+                }
+                rowTotalLas.Add("");
+                rowTotalLas.Add(" Общо :");
+                //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
+                if (accountsModel.TypeAccount != 1)
+                {
+                    var ks = sumansc + sumaOc - sumansd - sumaOd;
+                    var ns = sumansc - sumansd;
+                    rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOc.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(ks.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(folder);
+                    rowTotalLas.Add(docnum);
+                    rowTotalLas.Add(reason);
+                }
+                else
+                {
+                    var ks = sumansd + sumaOd - sumansc - sumaOc;
+                    var ns = sumansd - sumansc;
+                    rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOc.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(ks.ToString(Vf.LevFormatUI));
+
+                }
+                if (!OnlyContragent)
+                {
+                    rowTotalLas.Add("");
+                    rowTotalLas.Add("");
+                    rowTotalLas.Add("");
+                }
+                else
+                {
+                    rowTotalLas.Add(folder);
+                    rowTotalLas.Add(docnum);
+                    rowTotalLas.Add(reason);
+
+                }
+                items.Add(rowTotalLas);
+            }
+           
+            List<string> rowTotalLast = new List<string>();
+            rowTotalLast.Add("");
+            rowTotalLast.Add("");
+            rowTotalLast.Add("");
+            rowTotalLast.Add(" Общо :");
+            //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
+            if (accountsModel.TypeAccount != 1)
+            {
+                var ks = sumansct + sumaOct - (sumansdt + sumaOdt);
+                var ns = sumansct - (sumansdt);
+                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
+
+            }
+            else
+            {
+                var ks = sumansdt + sumaOdt - sumansct + sumaOct;
+                var ns = sumansdt - sumansct;
+                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
+                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
+            }
+            items.Add(rowTotalLast);
+            return items;
+        }
+
         private static int calc(AccountsModel accforsaldo, int gr, List<string> item, int sortorder, AnaliticalFields it, out SaldoAnaliticModel saldoAnaliticModel, out bool include)
         {
             saldoAnaliticModel = new SaldoAnaliticModel();
@@ -2797,8 +3179,8 @@ namespace Tempo2012.EntityFramework
             saldoAnaliticModel.SORTORDER = sortorder;
             if (it.Name == "Контрагент")
             {
-                saldoAnaliticModel.VALS = item[4];
-                saldoAnaliticModel.VAL = item[2];
+                saldoAnaliticModel.VALS = item[1];
+                saldoAnaliticModel.VAL = item[0];
             }
             if (it.Name.Contains("Дата"))
             {
@@ -2806,27 +3188,32 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name==("Номер фактура"))
             {
-                saldoAnaliticModel.VAL = "0";
+                saldoAnaliticModel.VAL = item[0];
             }
             include = true;
             if (it.Name.Contains("Сума лв."))
             {
-                saldoAnaliticModel.VALUED = decimal.Parse(item[9]);
-                saldoAnaliticModel.VALUEMONEY = decimal.Parse(item[10]);
-                
+                if (accforsaldo.TypeAccount != 1)
+                {
+                    saldoAnaliticModel.VALUED = decimal.Parse(item[7]);
+                }
+                else
+                {
+                    saldoAnaliticModel.VALUEMONEY = decimal.Parse(item[7]);
+                }
             }
-            if (it.Name.Contains("Сума валута"))
-            {
-                saldoAnaliticModel.VALVAL = decimal.Parse(item[15]);
-                saldoAnaliticModel.VALVALD = decimal.Parse(item[16]);
+            //if (it.Name.Contains("Сума валута"))
+            //{
+            //    saldoAnaliticModel.VALVAL = decimal.Parse(item[15]);
+            //    saldoAnaliticModel.VALVALD = decimal.Parse(item[16]);
 
-            }
-            if (it.Name.Contains("Количество"))
-            {
-                saldoAnaliticModel.VALKOLD = decimal.Parse(item[21]);
-                saldoAnaliticModel.VALKOLK = decimal.Parse(item[22]);
+            //}
+            //if (it.Name.Contains("Количество"))
+            //{
+            //    saldoAnaliticModel.VALKOLD = decimal.Parse(item[21]);
+            //    saldoAnaliticModel.VALKOLK = decimal.Parse(item[22]);
 
-            }
+            //}
             return gr;
         }
 
