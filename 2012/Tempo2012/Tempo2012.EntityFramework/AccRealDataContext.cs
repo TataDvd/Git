@@ -2796,16 +2796,16 @@ namespace Tempo2012.EntityFramework
             var _movements = new List<AccItemSaldo>();
             if (accountsModel.TypeAccount == 1)
             {
-                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
                 AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
                 AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             }
             else
             {
                 AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
-                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
                 AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             }
             foreach (InvoiseControl invoiseControl in AllMovementDebit)
@@ -3020,7 +3020,7 @@ namespace Tempo2012.EntityFramework
 
                         }
                         rowTotal.Add(accountsModel.Short);
-                        items.Add(rowTotal);
+                        //items.Add(rowTotal);
                         
                         sumansc = 0;
                         sumansd = 0;
@@ -3126,7 +3126,7 @@ namespace Tempo2012.EntityFramework
                     rowTotalLas.Add(reason);
 
                 }
-                items.Add(rowTotalLas);
+                //items.Add(rowTotalLas);
             }
            
             List<string> rowTotalLast = new List<string>();
@@ -3154,7 +3154,7 @@ namespace Tempo2012.EntityFramework
                 rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
                 rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
             }
-            items.Add(rowTotalLast);
+            //items.Add(rowTotalLast);
             return items;
         }
 
@@ -3188,12 +3188,12 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name==("Номер фактура"))
             {
-                saldoAnaliticModel.VAL = item[0];
+                saldoAnaliticModel.VAL = item[2];
             }
             include = true;
             if (it.Name.Contains("Сума лв."))
             {
-                if (accforsaldo.TypeAccount != 1)
+                if (accforsaldo.TypeAccount == 1)
                 {
                     saldoAnaliticModel.VALUED = decimal.Parse(item[7]);
                 }
