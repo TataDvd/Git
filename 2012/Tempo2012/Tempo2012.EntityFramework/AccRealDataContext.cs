@@ -2820,14 +2820,14 @@ namespace Tempo2012.EntityFramework
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
-                var lc = AllMovementCredit.FirstOrDefault(
-                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
-                if (lc != null)
+                var lc = AllMovementCredit.Where(
+                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise).ToList();
+                foreach (var lc1 in lc)
                 {
 
-                    item.Oc += lc.Oborot;
-                    if (item.Type == 2) item.Data = lc.DataInvoise;
-                    AllMovementCredit.Remove(lc);
+                    item.Oc += lc1.Oborot;
+                    if (item.Type == 2) item.Data = lc1.DataInvoise;
+                    AllMovementCredit.Remove(lc1);
                 }
                 _movements1.Add(item);
 
@@ -2885,14 +2885,14 @@ namespace Tempo2012.EntityFramework
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
-                var lc = AllMovementCredit1.FirstOrDefault(
-                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
-                if (lc != null)
+                var lc = AllMovementCredit1.Where(
+                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise).ToList();
+                foreach (var lc1 in lc)
                 {
 
-                    item.Oc += lc.Oborot;
-                    if (item.Type == 2) item.Data = lc.DataInvoise;
-                    AllMovementCredit1.Remove(lc);
+                    item.Oc += lc1.Oborot;
+                    if (item.Type == 2) item.Data = lc1.DataInvoise;
+                    AllMovementCredit1.Remove(lc1);
                 }
                 _movements.Add(item);
 
@@ -2937,7 +2937,26 @@ namespace Tempo2012.EntityFramework
                 item1.Data = item.Data;
                 _movements.Add(item1);
             }
-            
+
+            _movements = (from t in _movements
+                          group t by new { t.Code, t.NInvoise }
+                             into grp
+                          select new AccItemSaldo
+                          {
+                              Code = grp.Key.Code,
+                              NInvoise = grp.Key.NInvoise,
+                              Details = grp.First().Details,
+                              Type = grp.First().Type,
+                              Data = grp.Last().Data,
+                              Nsc = grp.Sum(t => t.Nsc),
+                              Nsd = grp.Sum(t => t.Nsc),
+                              Oc = grp.Sum(t => t.Oc),
+                              Od = grp.Sum(t => t.Od),
+                              Ksd = grp.Sum(t => t.Ksd),
+                              Ksc = grp.Sum(t => t.Ksc),
+                              NameContragent = grp.First().NameContragent
+                         }).ToList();
+            //
             string name = "";
             string code = "";
             string folder = "";
@@ -2953,6 +2972,7 @@ namespace Tempo2012.EntityFramework
             decimal sumaOct = 0;
             decimal sumansdt = 0;
             decimal sumaOdt = 0;
+            
             foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod))
             {
                 List<string> row = new List<string>();

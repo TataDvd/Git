@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Microsoft.Office.Interop.Excel;
 using Tempo2012.EntityFramework;
 
 namespace ReportBuilder
@@ -14,171 +13,171 @@ namespace ReportBuilder
     {
         public static void CreateWorkbook(IReportBuilder iReportBuilder)
         {
-            int rownumber = 1, columnNumber = 1;
+            //int rownumber = 1, columnNumber = 1;
 
-            var path = Path.Combine(Entrence.CurrentFirmaPathReport, iReportBuilder.Filename+DateTime.Now.ToString("ddMMyyyy")+".xls");
-            Microsoft.Office.Interop.Excel.Application xl = null;
-            Microsoft.Office.Interop.Excel._Workbook wb = null;
-            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
-            //VBIDE.VBComponent module = null;
-            bool SaveChanges = false;
-            try
-            {
+            //var path = Path.Combine(Entrence.CurrentFirmaPathReport, iReportBuilder.Filename+DateTime.Now.ToString("ddMMyyyy")+".xls");
+            //Microsoft.Office.Interop.Excel.Application xl = null;
+            //Microsoft.Office.Interop.Excel._Workbook wb = null;
+            //Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            ////VBIDE.VBComponent module = null;
+            //bool SaveChanges = false;
+            //try
+            //{
 
-                if (File.Exists(path)) { File.Delete(path); }
+            //    if (File.Exists(path)) { File.Delete(path); }
 
-                GC.Collect();
+            //    GC.Collect();
 
-                // Create a new instance of Excel from scratch
+            //    // Create a new instance of Excel from scratch
 
-                xl = new Microsoft.Office.Interop.Excel.Application();
-                xl.Visible = true;
-
-
-                // Add one workbook to the instance of Excel
-
-                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
-                wb.Sheets.Add(Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+            //    xl = new Microsoft.Office.Interop.Excel.Application();
+            //    xl.Visible = true;
 
 
+            //    // Add one workbook to the instance of Excel
+
+            //    wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+            //    wb.Sheets.Add(Missing.Value, Missing.Value, Missing.Value, Missing.Value);
 
 
-                // Get a reference to the one and only worksheet in our workbook
 
-                sheet = (Microsoft.Office.Interop.Excel._Worksheet)wb.ActiveSheet;
-                //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[0]);
-                if (iReportBuilder.Title != null)
-                {
-                    sheet.Cells[rownumber, columnNumber] = iReportBuilder.Title;
-                    rownumber = 5;
-                }
-                // Fill spreadsheet with sample data
-                var hedar = iReportBuilder.GetHeader();
-                GenFilter(iReportBuilder, hedar);
-                foreach (var item in hedar)
-                {
-                    sheet.Cells[rownumber, columnNumber] = item;
-                    rownumber++;
-                }
 
-                rownumber++;
-                int i = 0;
-                foreach (var footer in iReportBuilder.GetTitles())
-                {
+            //    // Get a reference to the one and only worksheet in our workbook
+
+            //    sheet = (Microsoft.Office.Interop.Excel._Worksheet)wb.ActiveSheet;
+            //    //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[0]);
+            //    if (iReportBuilder.Title != null)
+            //    {
+            //        sheet.Cells[rownumber, columnNumber] = iReportBuilder.Title;
+            //        rownumber = 5;
+            //    }
+            //    // Fill spreadsheet with sample data
+            //    var hedar = iReportBuilder.GetHeader();
+            //    GenFilter(iReportBuilder, hedar);
+            //    foreach (var item in hedar)
+            //    {
+            //        sheet.Cells[rownumber, columnNumber] = item;
+            //        rownumber++;
+            //    }
+
+            //    rownumber++;
+            //    int i = 0;
+            //    foreach (var footer in iReportBuilder.GetTitles())
+            //    {
                     
-                    if (iReportBuilder.ReportItems.ElementAt(i).IsShow)
-                    {
-                        sheet.Cells[rownumber, columnNumber] = footer;
-                        columnNumber++;
-                    }
-                    i++;
-                }
+            //        if (iReportBuilder.ReportItems.ElementAt(i).IsShow)
+            //        {
+            //            sheet.Cells[rownumber, columnNumber] = footer;
+            //            columnNumber++;
+            //        }
+            //        i++;
+            //    }
 
-                foreach (List<string> dList in iReportBuilder.GetItems())
-                {
-                    rownumber++;
-                    columnNumber = 1;
-                    i = 0;
-                    foreach (string s in dList)
-                    {
-                        if (iReportBuilder.ReportItems.ElementAt(i).IsShow)
-                        {
-                            sheet.Cells[rownumber, columnNumber] = s;
-                            columnNumber++;
-                        }
-                        i++;
-                    }
+            //    foreach (List<string> dList in iReportBuilder.GetItems())
+            //    {
+            //        rownumber++;
+            //        columnNumber = 1;
+            //        i = 0;
+            //        foreach (string s in dList)
+            //        {
+            //            if (iReportBuilder.ReportItems.ElementAt(i).IsShow)
+            //            {
+            //                sheet.Cells[rownumber, columnNumber] = s;
+            //                columnNumber++;
+            //            }
+            //            i++;
+            //        }
                     
-                }
+            //    }
 
                
 
-                columnNumber = 1;
-                rownumber++;
-                foreach (var footer in iReportBuilder.GetItems())
-                {
-                    foreach (var f in footer)
-                    {
-                        sheet.Cells[rownumber, columnNumber] = f;
-                        columnNumber++;
-                    }
+            //    columnNumber = 1;
+            //    rownumber++;
+            //    foreach (var footer in iReportBuilder.GetItems())
+            //    {
+            //        foreach (var f in footer)
+            //        {
+            //            sheet.Cells[rownumber, columnNumber] = f;
+            //            columnNumber++;
+            //        }
                     
-                }
+            //    }
 
-                columnNumber = 1;
-                rownumber++;
-                var futher = iReportBuilder.GetFuther();
-                if (futher != null)
-                {
-                    foreach (var footer in futher)
-                    {
-                        sheet.Cells[rownumber, columnNumber] = footer;
-                        columnNumber++;
-                    }
-                }
-                // set come column heading names
-
-
+            //    columnNumber = 1;
+            //    rownumber++;
+            //    var futher = iReportBuilder.GetFuther();
+            //    if (futher != null)
+            //    {
+            //        foreach (var footer in futher)
+            //        {
+            //            sheet.Cells[rownumber, columnNumber] = footer;
+            //            columnNumber++;
+            //        }
+            //    }
+            //    // set come column heading names
 
 
-                //// Let loose control of the Excel instance
-
-                //xl.Visible = false;
-                //xl.UserControl = false;
-
-                // Set a flag saying that all is well and it is ok to save our changes to a file.
-
-                SaveChanges = true;
-
-                //  Save the file to disk
-
-                wb.SaveAs(path, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
-                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
-                          false, false, null, null, null);
 
 
-            }
-            catch (Exception err)
-            {
-                String msg;
-                msg = "Error: ";
-                msg = String.Concat(msg, err.Message);
-                msg = String.Concat(msg, " Line: ");
-                msg = String.Concat(msg, err.Source);
+            //    //// Let loose control of the Excel instance
+
+            //    //xl.Visible = false;
+            //    //xl.UserControl = false;
+
+            //    // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+            //    SaveChanges = true;
+
+            //    //  Save the file to disk
+
+            //    wb.SaveAs(path, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+            //              null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+            //              false, false, null, null, null);
+
+
+            //}
+            //catch (Exception err)
+            //{
+            //    String msg;
+            //    msg = "Error: ";
+            //    msg = String.Concat(msg, err.Message);
+            //    msg = String.Concat(msg, " Line: ");
+            //    msg = String.Concat(msg, err.Source);
                 
-            }
-            finally
-            {
+            //}
+            //finally
+            //{
 
-                //try
-                //{
-                //    // Repeat xl.Visible and xl.UserControl releases just to be sure
-                //    // we didn't error out ahead of time.
+            //    //try
+            //    //{
+            //    //    // Repeat xl.Visible and xl.UserControl releases just to be sure
+            //    //    // we didn't error out ahead of time.
 
-                //    xl.Visible = true;
-                //    xl.UserControl = false;
-                //    // Close the document and avoid user prompts to save if our method failed.
-                //    //wb.Close(SaveChanges, null, null);
-                //    //xl.Workbooks.Close();
-                //}
-                //catch { }
+            //    //    xl.Visible = true;
+            //    //    xl.UserControl = false;
+            //    //    // Close the document and avoid user prompts to save if our method failed.
+            //    //    //wb.Close(SaveChanges, null, null);
+            //    //    //xl.Workbooks.Close();
+            //    //}
+            //    //catch { }
 
-                //// Gracefully exit out and destroy all COM objects to avoid hanging instances
-                //// of Excel.exe whether our method failed or not.
+            //    //// Gracefully exit out and destroy all COM objects to avoid hanging instances
+            //    //// of Excel.exe whether our method failed or not.
 
-                ////xl.Quit();
+            //    ////xl.Quit();
 
-                ////if (module != null) { Marshal.ReleaseComObject(module); }
-                //if (sheet != null) { Marshal.ReleaseComObject(sheet); }
-                //if (wb != null) { Marshal.ReleaseComObject(wb); }
-                //if (xl != null) { Marshal.ReleaseComObject(xl); }
+            //    ////if (module != null) { Marshal.ReleaseComObject(module); }
+            //    //if (sheet != null) { Marshal.ReleaseComObject(sheet); }
+            //    //if (wb != null) { Marshal.ReleaseComObject(wb); }
+            //    //if (xl != null) { Marshal.ReleaseComObject(xl); }
 
-                ////module = null;
-                //sheet = null;
-                //wb = null;
-                //xl = null;
-                //GC.Collect();
-            }
+            //    ////module = null;
+            //    //sheet = null;
+            //    //wb = null;
+            //    //xl = null;
+            //    //GC.Collect();
+            //}
         }
         public static void CreateWorkbookTxt(IReportBuilder iReportBuilder)
         {
