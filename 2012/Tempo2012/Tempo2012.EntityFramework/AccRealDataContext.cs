@@ -1413,19 +1413,19 @@ namespace Tempo2012.EntityFramework
                         toadd.Add(r[9]);
                         toadd.Add(r[10]);
 
-                        toadd.Add(r[11]);
-                        toadd.Add(r[12]);
-                        toadd.Add(r[13]);
-                        toadd.Add(r[14]);
-                        toadd.Add(r[15]);
-                        toadd.Add(r[16]);
+                        //toadd.Add(r[11]);
+                        //toadd.Add(r[12]);
+                        //toadd.Add(r[13]);
+                        //toadd.Add(r[14]);
+                        //toadd.Add(r[15]);
+                        //toadd.Add(r[16]);
 
-                        toadd.Add(r[17]);
-                        toadd.Add(r[18]);
-                        toadd.Add(r[19]);
-                        toadd.Add(r[20]);
-                        toadd.Add(r[21]);
-                        toadd.Add(r[22]);
+                        //toadd.Add(r[17]);
+                        //toadd.Add(r[18]);
+                        //toadd.Add(r[19]);
+                        //toadd.Add(r[20]);
+                        //toadd.Add(r[21]);
+                        //toadd.Add(r[22]);
                         result.Add(toadd);
                     }
                         
@@ -1731,19 +1731,19 @@ namespace Tempo2012.EntityFramework
                                     row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                                    row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                                    row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                     result.Add(row1);
 
 
@@ -1838,19 +1838,19 @@ namespace Tempo2012.EntityFramework
                         row.Add(item.KSD.ToString(Vf.LevFormatUI));
                         row.Add(item.KSK.ToString(Vf.LevFormatUI));
 
-                        row.Add(item.NSDV.ToString(Vf.ValFormatUI));
-                        row.Add(item.NSKV.ToString(Vf.ValFormatUI));
-                        row.Add(item.ODV.ToString(Vf.ValFormatUI));
-                        row.Add(item.OKV.ToString(Vf.ValFormatUI));
-                        row.Add(item.KSDV.ToString(Vf.ValFormatUI));
-                        row.Add(item.KSKV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.NSDV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.NSKV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.ODV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.OKV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.KSDV.ToString(Vf.ValFormatUI));
+                        //row.Add(item.KSKV.ToString(Vf.ValFormatUI));
 
-                        row.Add(item.NSDK.ToString(Vf.KolFormatUI));
-                        row.Add(item.NSKK.ToString(Vf.KolFormatUI));
-                        row.Add(item.ODK.ToString(Vf.KolFormatUI));
-                        row.Add(item.OKK.ToString(Vf.KolFormatUI));
-                        row.Add(item.KSDK.ToString(Vf.KolFormatUI));
-                        row.Add(item.KSKK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.NSDK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.NSKK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.ODK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.OKK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.KSDK.ToString(Vf.KolFormatUI));
+                        //row.Add(item.KSKK.ToString(Vf.KolFormatUI));
                         result.Add(row);
                     }
                     var item1 = results.OrderBy(e => e.Num1).ThenBy(e => e.SubNum1).ThenBy(e => e.numContagent).Last();
@@ -1920,19 +1920,19 @@ namespace Tempo2012.EntityFramework
                             row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                             row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                            row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                            row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                            row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                            row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                            row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                            row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                            //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                            row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                            row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                            row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                            row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                            row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                            row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                            //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                             result.Add(row1);
                         }
                     }
@@ -2041,19 +2041,19 @@ namespace Tempo2012.EntityFramework
                                 row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                 row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                                row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                                row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                                row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                                row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                                row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                                row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                                row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                                row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                                row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                                row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                                row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                                row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                 result.Add(row1);
                             }
                         }
@@ -2160,19 +2160,19 @@ namespace Tempo2012.EntityFramework
                                     row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
                                     row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                                    row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                                    row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                                    row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                                    row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                     result.Add(row1);
                                 
                             }
@@ -2790,24 +2790,56 @@ namespace Tempo2012.EntityFramework
             var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
             var AllMovementDebit = new List<InvoiseControl>();
             var AllMovementCredit = new List<InvoiseControl>();
-            var AllMovementDebit1 = new List<InvoiseControl>();
-            var AllMovementCredit1 = new List<InvoiseControl>();
+            //var AllMovementDebit1 = new List<InvoiseControl>();
+            //var AllMovementCredit1 = new List<InvoiseControl>();
             var _movements1 = new List<AccItemSaldo>();
             var _movements = new List<AccItemSaldo>();
             if (accountsModel.TypeAccount == 1)
             {
-                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
-                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-                AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                //AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
+                //AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             }
             else
             {
-                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
-                AllMovementDebit1 = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-                AllMovementCredit1 = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                //AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
+                //AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e => e.DataInvoise < FromDate));
+                AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+                AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             }
+            AllMovementDebit = (from t in AllMovementDebit
+                                group t by new { t.CodeContragent, t.NInvoise }
+                          into grp
+                                select new InvoiseControl
+                                {
+                                    CodeContragent = grp.Key.CodeContragent,
+                                    NInvoise = grp.Key.NInvoise,
+                                    Details = grp.First().Details,
+                                    Oborot = grp.Sum(e => e.Oborot),
+                                    DataInvoise = grp.Last().DataInvoise,
+                                    NameContragent = grp.First().NameContragent,
+                                    Folder = grp.First().Folder,
+                                    DocNumber = grp.First().DocNumber,
+                                    Reason= grp.First().Reason
+
+                                }).ToList();
+            AllMovementCredit = (from t in AllMovementCredit
+                                group t by new { t.CodeContragent, t.NInvoise }
+                         into grp
+                                select new InvoiseControl
+                                {
+                                    CodeContragent = grp.Key.CodeContragent,
+                                    NInvoise = grp.Key.NInvoise,
+                                    Details = grp.First().Details,
+                                    Oborot = grp.Sum(e => e.Oborot),
+                                    DataInvoise = grp.Last().DataInvoise,
+                                    NameContragent = grp.First().NameContragent,
+                                    Folder = grp.First().Folder,
+                                    DocNumber = grp.First().DocNumber,
+                                    Reason = grp.First().Reason
+
+                                }).ToList();
             foreach (InvoiseControl invoiseControl in AllMovementDebit)
             {
                 var item = new AccItemSaldo();
@@ -2873,308 +2905,36 @@ namespace Tempo2012.EntityFramework
                 _movements1.Add(item1);
             }
 
-            foreach (InvoiseControl invoiseControl in AllMovementDebit1)
-            {
-                var item = new AccItemSaldo();
-                item.NInvoise = invoiseControl.NInvoise;
-                item.NameContragent = invoiseControl.NameContragent;
-                item.Code = invoiseControl.CodeContragent;
-                item.Od = invoiseControl.Oborot;
-                item.Type = accountsModel.TypeAccount;
-                item.Folder = invoiseControl.Folder;
-                item.DocNumber = invoiseControl.DocNumber;
-                item.Reason = invoiseControl.Reason;
-                if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
-                var lc = AllMovementCredit1.Where(
-                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise).ToList();
-                foreach (var lc1 in lc)
-                {
-
-                    item.Oc += lc1.Oborot;
-                    if (item.Type == 2) item.Data = lc1.DataInvoise;
-                    AllMovementCredit1.Remove(lc1);
-                }
-                _movements.Add(item);
-
-            }
-            foreach (InvoiseControl invoiseControl in AllMovementCredit1)
-            {
-                var item = new AccItemSaldo();
-                item.NInvoise = invoiseControl.NInvoise;
-                item.NameContragent = invoiseControl.NameContragent;
-                item.Code = invoiseControl.CodeContragent;
-                item.Oc = invoiseControl.Oborot;
-                item.Type = accountsModel.TypeAccount;
-                item.Data = invoiseControl.DataInvoise;
-                item.Folder = invoiseControl.Folder;
-                item.DocNumber = invoiseControl.DocNumber;
-                item.Reason = invoiseControl.Reason;
-                _movements.Add(item);
-
-            }
-            foreach (AccItemSaldo accItemSaldo in _movements)
-            {
-                var saldo =
-                    _movements1.FirstOrDefault(
-                        m => m.Code == accItemSaldo.Code && m.DocNumber == accItemSaldo.NInvoise);
-                if (saldo != null)
-                {
-                    accItemSaldo.Nsd = saldo.Ksd;
-                    accItemSaldo.Nsc = saldo.Ksc;
-                    _movements1.Remove(saldo);
-                }
-            }
-            foreach (var item in _movements1.OrderBy(e => e.Code))
-            {
-                var item1 = new AccItemSaldo();
-                item1.NInvoise = item.NInvoise;
-                item1.NameContragent = item.NameContragent;
-                item1.Code = item.Code;
-                item1.Od = 0;
-                item1.Nsd = item.Ksd;
-                item1.Nsc = item.Ksc;
-                item1.Type = accountsModel.TypeAccount;
-                item1.Data = item.Data;
-                _movements.Add(item1);
-            }
-
-            _movements = (from t in _movements
-                          group t by new { t.Code, t.NInvoise }
-                             into grp
-                          select new AccItemSaldo
-                          {
-                              Code = grp.Key.Code,
-                              NInvoise = grp.Key.NInvoise,
-                              Details = grp.First().Details,
-                              Type = grp.First().Type,
-                              Data = grp.Last().Data,
-                              Nsc = grp.Sum(t => t.Nsc),
-                              Nsd = grp.Sum(t => t.Nsc),
-                              Oc = grp.Sum(t => t.Oc),
-                              Od = grp.Sum(t => t.Od),
-                              Ksd = grp.Sum(t => t.Ksd),
-                              Ksc = grp.Sum(t => t.Ksc),
-                              NameContragent = grp.First().NameContragent
-                         }).ToList();
-            //
-            string name = "";
-            string code = "";
-            string folder = "";
-            string reason = "";
-            string docnum = "";
-            bool first = true;
-
-            decimal sumansc = 0;
-            decimal sumaOc = 0;
-            decimal sumansd = 0;
-            decimal sumaOd = 0;
-            decimal sumansct = 0;
-            decimal sumaOct = 0;
-            decimal sumansdt = 0;
-            decimal sumaOdt = 0;
             
-            foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod))
+
+            foreach (AccItemSaldo itemSaldo in _movements1.OrderBy(m => m.Cod))
             {
                 List<string> row = new List<string>();
-                if (first)
-                {
-                    name = itemSaldo.NameContragent;
-                    code = itemSaldo.Code;
-                    first = false;
-                    folder = itemSaldo.Folder;
-                    reason = itemSaldo.Reason;
-                    docnum = itemSaldo.DocNumber;
-                }
-                else
-                {
-                    if (code != itemSaldo.Code && WithContragentSum)
-                    {
-                       
-                        List<string> rowTotal = new List<string>();
-                        if (!OnlyContragent)
-                        {
-                            rowTotal.Add("");
-                            rowTotal.Add("");
-
-                        }
-                        else
-                        {
-                            rowTotal.Add(code);
-                            rowTotal.Add(name);
-
-                        }
-                        rowTotal.Add("");
-                        rowTotal.Add(" Общо :");
-                        //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
-                        if (accountsModel.TypeAccount != 1)
-                        {
-                            var ks = sumansc + sumaOc - sumansd - sumaOd;
-                            var ns = sumansc - sumansd;
-                            rowTotal.Add(ns.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(sumaOc.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(ks.ToString(Vf.LevFormatUI));
-
-                        }
-                        else
-                        {
-                            var ks = sumansd + sumaOd - sumansc - sumaOc;
-                            var ns = sumansd - sumansc;
-                            rowTotal.Add(ns.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(sumaOc.ToString(Vf.LevFormatUI));
-                            rowTotal.Add(ks.ToString(Vf.LevFormatUI));
-
-                        }
-                        if (!OnlyContragent)
-                        {
-                            rowTotal.Add("");
-                            rowTotal.Add("");
-                            rowTotal.Add("");
-                        }
-                        else
-                        {
-                            rowTotal.Add(folder);
-                            rowTotal.Add(docnum);
-                            rowTotal.Add(reason);
-
-                        }
-                        rowTotal.Add(accountsModel.Short);
-                        //items.Add(rowTotal);
-                        
-                        sumansc = 0;
-                        sumansd = 0;
-                        sumaOc = 0;
-                        sumaOd = 0;
-                        name = itemSaldo.NameContragent;
-                        code = itemSaldo.Code;
-                        folder = itemSaldo.Folder;
-                        reason = itemSaldo.Reason;
-                        docnum = itemSaldo.DocNumber;
-
-                    }
-                }
-
-                sumansc += itemSaldo.Nsc;
-                sumansd += itemSaldo.Nsd;
-                sumaOc += itemSaldo.Oc;
-                sumaOd += itemSaldo.Od;
-                sumansct += itemSaldo.Nsc;
-                sumansdt += itemSaldo.Nsd;
-                sumaOct += itemSaldo.Oc;
-                sumaOdt += itemSaldo.Od;
-                //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
-                    itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - itemSaldo.Nsd - itemSaldo.Od;
+                    itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - (itemSaldo.Nsd + itemSaldo.Od);
                     itemSaldo.Ns = itemSaldo.Nsc - itemSaldo.Nsd;
                 }
                 else
                 {
-                    itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - itemSaldo.Nsc - itemSaldo.Oc;
+                    itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - (itemSaldo.Nsc + itemSaldo.Oc);
                     itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
                 }
-                if (!OnlyContragent)
-                {
-                    row.Add(itemSaldo.Code);
-                    row.Add(itemSaldo.NameContragent);
-                    row.Add(itemSaldo.NInvoise);
-                    row.Add(string.Format("{0}.{1}.{2}", itemSaldo.Data.Day.ToZeroString(2), itemSaldo.Data.Month.ToZeroString(2), itemSaldo.Data.Year.ToZeroString(4)));
-                    row.Add(itemSaldo.Ns.ToString(Vf.LevFormatUI));
-                    row.Add(itemSaldo.Od.ToString(Vf.LevFormatUI));
-                    row.Add(itemSaldo.Oc.ToString(Vf.LevFormatUI));
-                    row.Add(itemSaldo.Ks.ToString(Vf.LevFormatUI));
-                    row.Add(itemSaldo.Folder);
-                    row.Add(itemSaldo.DocNumber);
-                    row.Add(itemSaldo.Reason);
-                    row.Add(accountsModel.Short);
-                    items.Add(row);
-                }
-                //row.Add(itemSaldo.Ksc.ToString(Vf.LevFormatUI));
-
+                row.Add(itemSaldo.Code);
+                row.Add(itemSaldo.NameContragent);
+                row.Add(itemSaldo.NInvoise);
+                row.Add(string.Format("{0}.{1}.{2}", itemSaldo.Data.Day.ToZeroString(2), itemSaldo.Data.Month.ToZeroString(2), itemSaldo.Data.Year.ToZeroString(4)));
+                row.Add(itemSaldo.Ns.ToString(Vf.LevFormatUI));
+                row.Add(itemSaldo.Od.ToString(Vf.LevFormatUI));
+                row.Add(itemSaldo.Oc.ToString(Vf.LevFormatUI));
+                row.Add(itemSaldo.Ks.ToString(Vf.LevFormatUI));
+                row.Add(itemSaldo.Folder);
+                row.Add(itemSaldo.DocNumber);
+                row.Add(itemSaldo.Reason);
+                row.Add(accountsModel.Short);
+                items.Add(row);
 
             }
-            if (WithContragentSum)
-            {
-               
-                List<string> rowTotalLas = new List<string>();
-                if (!OnlyContragent)
-                {
-                    rowTotalLas.Add("");
-                    rowTotalLas.Add("");
-                }
-                else
-                {
-                    rowTotalLas.Add(code);
-                    rowTotalLas.Add(name);
-                }
-                rowTotalLas.Add("");
-                rowTotalLas.Add(" Общо :");
-                //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
-                if (accountsModel.TypeAccount != 1)
-                {
-                    var ks = sumansc + sumaOc - sumansd - sumaOd;
-                    var ns = sumansc - sumansd;
-                    rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(sumaOc.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(ks.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(folder);
-                    rowTotalLas.Add(docnum);
-                    rowTotalLas.Add(reason);
-                }
-                else
-                {
-                    var ks = sumansd + sumaOd - sumansc - sumaOc;
-                    var ns = sumansd - sumansc;
-                    rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(sumaOc.ToString(Vf.LevFormatUI));
-                    rowTotalLas.Add(ks.ToString(Vf.LevFormatUI));
-
-                }
-                if (!OnlyContragent)
-                {
-                    rowTotalLas.Add("");
-                    rowTotalLas.Add("");
-                    rowTotalLas.Add("");
-                }
-                else
-                {
-                    rowTotalLas.Add(folder);
-                    rowTotalLas.Add(docnum);
-                    rowTotalLas.Add(reason);
-
-                }
-                //items.Add(rowTotalLas);
-            }
-           
-            List<string> rowTotalLast = new List<string>();
-            rowTotalLast.Add("");
-            rowTotalLast.Add("");
-            rowTotalLast.Add("");
-            rowTotalLast.Add(" Общо :");
-            //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
-            if (accountsModel.TypeAccount != 1)
-            {
-                var ks = sumansct + sumaOct - (sumansdt + sumaOdt);
-                var ns = sumansct - (sumansdt);
-                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
-
-            }
-            else
-            {
-                var ks = sumansdt + sumaOdt - sumansct + sumaOct;
-                var ns = sumansdt - sumansct;
-                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
-            }
-            //items.Add(rowTotalLast);
             return items;
         }
 

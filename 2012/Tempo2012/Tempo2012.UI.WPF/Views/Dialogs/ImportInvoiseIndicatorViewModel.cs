@@ -52,8 +52,8 @@ namespace Tempo2012.UI.WPF.Views
             sm500 = AllAccounts.FirstOrDefault(e => e.Num == 500 && e.SubNum == 0);
             sm410_1 = AllAccounts.FirstOrDefault(e => e.Num == 410 && e.SubNum == 1);
             sm701 = AllAccounts.FirstOrDefault(e => e.Num == 701 && e.SubNum == 0);
-            sm703 = AllAccounts.FirstOrDefault(e => e.Num == 703 && e.SubNum == 0);
-            sm709 = AllAccounts.FirstOrDefault(e => e.Num == 709 && e.SubNum == 0);
+            sm703 = AllAccounts.FirstOrDefault(e => e.Num == 702 && e.SubNum == 0);
+            sm709 = AllAccounts.FirstOrDefault(e => e.Num == 702 && e.SubNum == 0);
             ddssmetka = AllAccounts.FirstOrDefault(e => e.Short == Entrence.DdsSmetkaK);
             KindDocLookup = new List<LookUpSpecific>(Context.GetAllDocTypes());
             TypeDocuments = new List<LookUpSpecific>(Context.GetAllDocTypes());
