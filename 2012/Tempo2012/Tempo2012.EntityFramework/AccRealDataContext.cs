@@ -2643,7 +2643,7 @@ namespace Tempo2012.EntityFramework
             }
             return sFieldses;
         }
-        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3, BackgroundWorker bw)
+        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4, BackgroundWorker bw)
         {
             if (et1)
             {
@@ -2707,7 +2707,7 @@ namespace Tempo2012.EntityFramework
                 {
                     if (a.LevelAccount == 2)
                     {
-                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a, true,false));
+                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4));
                     }
                 }
                 bw.ReportProgress(80);
@@ -2731,14 +2731,8 @@ namespace Tempo2012.EntityFramework
                             foreach (var it in accfields)
                             {
                                 SaldoAnaliticModel saldoAnaliticModel;
-                                bool include;
-                                gr = calc(accforsaldo, gr, item, sortorder, it, out saldoAnaliticModel, out include);
-                                if (include)
-                                {
-                                    NewMethod(sb, saldoAnaliticModel);
-
-                                    //SaveMovement(saldoAnaliticModel);
-                                }
+                                gr = calc(accforsaldo, gr, item, sortorder, it, out saldoAnaliticModel, et4);
+                                NewMethod(sb, saldoAnaliticModel);
                                 sortorder++;
                             }
                         }
@@ -2756,13 +2750,8 @@ namespace Tempo2012.EntityFramework
                                 foreach (var it in accfields)
                                 {
                                     SaldoAnaliticModel saldoAnaliticModel;
-                                    bool include;
-                                    gr = calc(accforsaldo, gr, item, sortorder, it, out saldoAnaliticModel, out include);
-                                    if (include)
-                                    {
-                                        NewMethod(sb, saldoAnaliticModel);
-                                        //SaveMovement(saldoAnaliticModel);
-                                    }
+                                    gr = calc(accforsaldo, gr, item, sortorder, it, out saldoAnaliticModel, et4);
+                                    NewMethod(sb, saldoAnaliticModel);
                                     sortorder++;
                                 }
                             }
@@ -2784,7 +2773,7 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(100);
         }
 
-        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool WithContragentSum,bool OnlyContragent)
+        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0)
         {
             var items = new List<List<string>>();
             var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
@@ -2808,38 +2797,89 @@ namespace Tempo2012.EntityFramework
                 AllMovementDebit = new List<InvoiseControl>(GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
                 AllMovementCredit = new List<InvoiseControl>(GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             }
-            AllMovementDebit = (from t in AllMovementDebit
-                                group t by new { t.CodeContragent, t.NInvoise }
-                          into grp
-                                select new InvoiseControl
-                                {
-                                    CodeContragent = grp.Key.CodeContragent,
-                                    NInvoise = grp.Key.NInvoise,
-                                    Details = grp.First().Details,
-                                    Oborot = grp.Sum(e => e.Oborot),
-                                    DataInvoise = grp.Last().DataInvoise,
-                                    NameContragent = grp.First().NameContragent,
-                                    Folder = grp.First().Folder,
-                                    DocNumber = grp.First().DocNumber,
-                                    Reason= grp.First().Reason
+            if (po0)
+            {
+                rezi = (from t in rezi
+                        group t by new { t.Code }
+                      into gr
+                        select new SaldoFactura
+                        {
+                            Code = gr.Key.Code,
+                            NumInvoise="0",
+                            BeginSaldoCredit=gr.Sum(e=>e.BeginSaldoCredit),
+                            BeginSaldoDebit = gr.Sum(e => e.BeginSaldoDebit),
+                            NameContragent=gr.First().NameContragent,
+                        }
+                      ).ToList();
+                AllMovementDebit = (from t in AllMovementDebit
+                                    group t by new { t.CodeContragent}
+                              into grp
+                                    select new InvoiseControl
+                                    {
+                                        CodeContragent = grp.Key.CodeContragent,
+                                        NInvoise = "0",
+                                        Details = grp.First().Details,
+                                        Oborot = grp.Sum(e => e.Oborot),
+                                        DataInvoise = grp.Last().DataInvoise,
+                                        NameContragent = grp.First().NameContragent,
+                                        Folder = grp.First().Folder,
+                                        DocNumber = grp.First().DocNumber,
+                                        Reason = grp.First().Reason,
 
-                                }).ToList();
-            AllMovementCredit = (from t in AllMovementCredit
-                                group t by new { t.CodeContragent, t.NInvoise }
-                         into grp
-                                select new InvoiseControl
-                                {
-                                    CodeContragent = grp.Key.CodeContragent,
-                                    NInvoise = grp.Key.NInvoise,
-                                    Details = grp.First().Details,
-                                    Oborot = grp.Sum(e => e.Oborot),
-                                    DataInvoise = grp.Last().DataInvoise,
-                                    NameContragent = grp.First().NameContragent,
-                                    Folder = grp.First().Folder,
-                                    DocNumber = grp.First().DocNumber,
-                                    Reason = grp.First().Reason
+                                    }).ToList();
+                AllMovementCredit = (from t in AllMovementCredit
+                                     group t by new { t.CodeContragent, t.NInvoise }
+                             into grp
+                                     select new InvoiseControl
+                                     {
+                                         CodeContragent = grp.Key.CodeContragent,
+                                         NInvoise = "0",
+                                         Details = grp.First().Details,
+                                         Oborot = grp.Sum(e => e.Oborot),
+                                         DataInvoise = grp.Last().DataInvoise,
+                                         NameContragent = grp.First().NameContragent,
+                                         Folder = grp.First().Folder,
+                                         DocNumber = grp.First().DocNumber,
+                                         Reason = grp.First().Reason
 
-                                }).ToList();
+                                     }).ToList();
+
+            }
+            else
+            {
+                AllMovementDebit = (from t in AllMovementDebit
+                                    group t by new { t.CodeContragent, t.NInvoise }
+                              into grp
+                                    select new InvoiseControl
+                                    {
+                                        CodeContragent = grp.Key.CodeContragent,
+                                        NInvoise = grp.Key.NInvoise,
+                                        Details = grp.First().Details,
+                                        Oborot = grp.Sum(e => e.Oborot),
+                                        DataInvoise = grp.Last().DataInvoise,
+                                        NameContragent = grp.First().NameContragent,
+                                        Folder = grp.First().Folder,
+                                        DocNumber = grp.First().DocNumber,
+                                        Reason = grp.First().Reason
+
+                                    }).ToList();
+                AllMovementCredit = (from t in AllMovementCredit
+                                     group t by new { t.CodeContragent, t.NInvoise }
+                             into grp
+                                     select new InvoiseControl
+                                     {
+                                         CodeContragent = grp.Key.CodeContragent,
+                                         NInvoise = grp.Key.NInvoise,
+                                         Details = grp.First().Details,
+                                         Oborot = grp.Sum(e => e.Oborot),
+                                         DataInvoise = grp.Last().DataInvoise,
+                                         NameContragent = grp.First().NameContragent,
+                                         Folder = grp.First().Folder,
+                                         DocNumber = grp.First().DocNumber,
+                                         Reason = grp.First().Reason
+
+                                     }).ToList();
+            }
             foreach (InvoiseControl invoiseControl in AllMovementDebit)
             {
                 var item = new AccItemSaldo();
@@ -2879,32 +2919,62 @@ namespace Tempo2012.EntityFramework
                 _movements1.Add(item);
 
             }
-            foreach (AccItemSaldo accItemSaldo in _movements1)
+            if (po0)
             {
-                var saldo =
-                    rezi.FirstOrDefault(
-                        m => m.Code == accItemSaldo.Code && m.NumInvoise == accItemSaldo.NInvoise);
-                if (saldo != null)
+                foreach (AccItemSaldo accItemSaldo in _movements1)
                 {
-                    accItemSaldo.Nsd = saldo.BeginSaldoDebit;
-                    accItemSaldo.Nsc = saldo.BeginSaldoCredit;
-                    rezi.Remove(saldo);
+                    var saldos =
+                        rezi.Where(
+                            m => m.Code == accItemSaldo.Code).ToList();
+                    foreach (var saldo in saldos)
+                    {
+                        accItemSaldo.Nsd += saldo.BeginSaldoDebit;
+                        accItemSaldo.Nsc += saldo.BeginSaldoCredit;
+                        rezi.Remove(saldo);
+                    }
+                }
+                foreach (var item in rezi.OrderBy(e => e.Code))
+                {
+                    var item1 = new AccItemSaldo();
+                    item1.NInvoise = item.NumInvoise;
+                    item1.NameContragent = item.NameContragent;
+                    item1.Data = item.Date;
+                    item1.Code = item.Code;
+                    item1.Od = 0;
+                    item1.Nsd = item.BeginSaldoDebit;
+                    item1.Nsc = item.BeginSaldoCredit;
+                    item1.Type = accountsModel.TypeAccount;
+                    _movements1.Add(item1);
                 }
             }
-            foreach (var item in rezi.OrderBy(e => e.Code))
+            else
             {
-                var item1 = new AccItemSaldo();
-                item1.NInvoise = item.NumInvoise;
-                item1.NameContragent = item.NameContragent;
-                item1.Data = item.Date;
-                item1.Code = item.Code;
-                item1.Od = 0;
-                item1.Nsd = item.BeginSaldoDebit;
-                item1.Nsc = item.BeginSaldoCredit;
-                item1.Type = accountsModel.TypeAccount;
-                _movements1.Add(item1);
+                foreach (AccItemSaldo accItemSaldo in _movements1)
+                {
+                    var saldo =
+                        rezi.FirstOrDefault(
+                            m => m.Code == accItemSaldo.Code && m.NumInvoise == accItemSaldo.NInvoise);
+                    if (saldo != null)
+                    {
+                        accItemSaldo.Nsd = saldo.BeginSaldoDebit;
+                        accItemSaldo.Nsc = saldo.BeginSaldoCredit;
+                        rezi.Remove(saldo);
+                    }
+                }
+                foreach (var item in rezi.OrderBy(e => e.Code))
+                {
+                    var item1 = new AccItemSaldo();
+                    item1.NInvoise = item.NumInvoise;
+                    item1.NameContragent = item.NameContragent;
+                    item1.Data = item.Date;
+                    item1.Code = item.Code;
+                    item1.Od = 0;
+                    item1.Nsd = item.BeginSaldoDebit;
+                    item1.Nsc = item.BeginSaldoCredit;
+                    item1.Type = accountsModel.TypeAccount;
+                    _movements1.Add(item1);
+                }
             }
-
             
 
             foreach (AccItemSaldo itemSaldo in _movements1.OrderBy(m => m.Cod))
@@ -2938,7 +3008,7 @@ namespace Tempo2012.EntityFramework
             return items;
         }
 
-        private static int calc(AccountsModel accforsaldo, int gr, List<string> item, int sortorder, AnaliticalFields it, out SaldoAnaliticModel saldoAnaliticModel, out bool include)
+        private static int calc(AccountsModel accforsaldo, int gr, List<string> item, int sortorder, AnaliticalFields it, out SaldoAnaliticModel saldoAnaliticModel,bool po0)
         {
             saldoAnaliticModel = new SaldoAnaliticModel();
             saldoAnaliticModel.ACCID = accforsaldo.Id;
@@ -2968,9 +3038,16 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name==("Номер фактура"))
             {
-                saldoAnaliticModel.VAL = item[2];
+                if (po0)
+                {
+                    saldoAnaliticModel.VAL = "0";
+                }
+                else
+                {
+                    saldoAnaliticModel.VAL = item[2];
+                }
             }
-            include = true;
+            
             if (it.Name.Contains("Сума лв."))
             {
                 if (accforsaldo.TypeAccount == 1)

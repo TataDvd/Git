@@ -383,9 +383,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetOborotnaVed(toDate,fromDate);
         }
 
-        public virtual  void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3, BackgroundWorker bw)
+        public virtual  void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4, BackgroundWorker bw)
         {
-            RealDataContext.CopyAccFromYtoY(firmaId, fromYear, toYear,et1,et2,et3,bw);
+            RealDataContext.CopyAccFromYtoY(firmaId, fromYear, toYear,et1,et2,et3,et4,bw);
         }
 
         public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false)

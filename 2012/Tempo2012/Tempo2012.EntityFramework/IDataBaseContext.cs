@@ -98,7 +98,7 @@ namespace Tempo2012.EntityFramework
         IEnumerable<Conto> GetPrevConto(int firmaId, ISearchAcc pSearcAcc);
         List<List<string>> GetOborotnaVed(DateTime toDate, DateTime fromDate);
         Dictionary<string, string> GetOborotnaVedTemplate(DateTime toDate, DateTime fromDate);
-        void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3, BackgroundWorker bw);
+        void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4, BackgroundWorker bw);
         IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false);
         IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false);
         AccSaldo GetSaldoAcc(int accId);

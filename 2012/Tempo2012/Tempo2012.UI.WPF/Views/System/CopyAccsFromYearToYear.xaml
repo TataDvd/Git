@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
-        Title="Годишно приключване" Height="260" Width="380" WindowStartupLocation="CenterOwner">
+        Title="Годишно приключване" Height="260" Width="520" WindowStartupLocation="CenterOwner">
     <Grid >
         <StackPanel>
             <StackPanel Orientation="Horizontal" Height="40">
@@ -23,9 +23,11 @@
             <StackPanel Orientation="Horizontal" Height="30" Margin="10,2,0,2">
                 <CustomControls:TextBlockEx Text="Етап 3 Изчисление на салда по партиди" Width="310"></CustomControls:TextBlockEx>
                 <CheckBox IsChecked="{Binding IsCalculateSaldoDetail}"></CheckBox>
+                <CustomControls:TextBlockEx Text=" обединени по факт. 0" Width="150"></CustomControls:TextBlockEx>
+                <CheckBox IsChecked="{Binding IsCalculateSaldoDetailZero}"></CheckBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <ProgressBar Width="320" Height="15" Margin="5,5,5,5" Value="{Binding CurrentProgress, Mode=OneWay}" Visibility="{Binding Visible}"></ProgressBar>
+                <ProgressBar Width="490" Height="15" Margin="5,5,5,5" Value="{Binding CurrentProgress, Mode=OneWay}" Visibility="{Binding Visible}"></ProgressBar>
              </StackPanel>
             <StackPanel Orientation="Horizontal"> 
             <Button Content="Старт" Margin="260,10,0,10" Command="{Binding CopyCommand}"></Button>
