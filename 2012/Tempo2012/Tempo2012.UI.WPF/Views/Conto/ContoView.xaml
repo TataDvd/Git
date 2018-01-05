@@ -418,6 +418,7 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -532,21 +533,21 @@
                             HorizontalAlignment="Left"
                             DataType="decimal"
                             FontFamily="Arial" FontSize="14" FontWeight="Bold" TabIndex="13" x:Name="Ob" LostFocus="UIElement_OnLostFocus"/>
-                <StackPanel Grid.Row="3" Grid.Column="4" Orientation="Horizontal">
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" 
                                    Text="Признак 1" 
                                    Margin="9,5,11,5"
                                    FontFamily="Arial" />
-                    <CustomControls:TextBoxEx Text="{Binding Path=Pr1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="2,5,10,5" TabIndex="14" Width="70"/>
+                    <CustomControls:TextBoxEx Text="{Binding Path=Pr1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="2,5,10,5" TabIndex="14" Width="250"/>
                 </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="5" Orientation="Horizontal">
+                <StackPanel Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" 
                                    Text="Признак 2" 
                                    Margin="9,5,11,5"
                                    FontFamily="Arial" />
-                    <CustomControls:TextBoxEx Text="{Binding Path=Pr2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="5,5,10,5" TabIndex="15"  Width="85"/>
+                    <CustomControls:TextBoxEx Text="{Binding Path=Pr2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="5,5,10,5" TabIndex="15"  Width="250"/>
                 </StackPanel>
-                <Grid Grid.Row="4" Grid.ColumnSpan="8">
+                <Grid Grid.Row="5" Grid.ColumnSpan="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
