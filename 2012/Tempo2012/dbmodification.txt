@@ -1,0 +1,77 @@
+UPDATE RDB$RELATION_FIELDS SET RDB$NULL_FLAG = NULL
+WHERE RDB$FIELD_NAME = 'ISUNIQUE' AND RDB$RELATION_NAME = 'syslookupsdetails';
+
+UPDATE RDB$RELATION_FIELDS SET RDB$NULL_FLAG = NULL
+WHERE RDB$FIELD_NAME = 'ISREQUARED' AND RDB$RELATION_NAME = 'syslookupsdetails';
+
+UPDATE RDB$RELATION_FIELDS SET RDB$NULL_FLAG = NULL
+WHERE RDB$FIELD_NAME = 'SORTORDER' AND RDB$RELATION_NAME = 'MOVEMENT';
+
+
+SET TERM ^ ;
+ALTER PROCEDURE DELETECONTO (
+    CONTOID Integer
+     )
+AS
+--DECLARE VARIABLE oborotld Decimal(18,4);
+--DECLARE VARIABLE oborotvd Decimal(18,4);  
+--DECLARE VARIABLE oborotkd Decimal(18,4);
+
+--DECLARE VARIABLE oborotlk Decimal(18,4);  
+--DECLARE VARIABLE oborotvk Decimal(18,4);
+--DECLARE VARIABLE oborotkk Decimal(18,4); 
+
+DECLARE VARIABLE acck Integer; 
+DECLARE VARIABLE accd Integer;
+DECLARE variable dnevId Integer; 
+DECLARE variable fId Integer;
+declare variable dat date; 
+BEGIN
+    select c."CreditAccount",c."DebitAccount",c."Date",c."FirmId" from "conto" c where c."Id"=:CONTOID into :acck,:accd,:dat,:fid;
+    delete from CONTOMOVEMENT cm where cm.CONTOID=:CONTOID;
+    delete from "conto" c where c."Id"=:CONTOID;
+    for select d.ID from DDSDNEV d where d.NOM=:CONTOID into :dnevId DO
+    begin 
+        delete from DDSDNEVTOFIELDS d where d.IDDDSDNEV=:dnevId;
+    end
+    delete from DDSDNEV d where d.NOM=:CONTOID;
+    --select sum(c."Oborot"),sum(c.OBOROTKOL),sum(c.OBOROTVALUTA) from "conto" c where c."CreditAccount"=:acck into :oborotlk,:oborotvk,:oborotkk;
+    --select sum(c."Oborot"),sum(c.OBOROTKOL),sum(c.OBOROTVALUTA) from "conto" c where c."DebitAccount"=:accd into :oborotld,:oborotvd,:oborotkd;
+    --if (:oborotld IS NULL) THEN oborotld=0;
+    --if (:oborotlk IS NULL) THEN oborotlk=0;
+    --if (:oborotvd IS NULL) THEN oborotvd=0;
+    --if (:oborotvk IS NULL) THEN oborotvk=0;
+    --if (:oborotkd IS NULL) THEN oborotkd=0;
+    --if (:oborotkk IS NULL) THEN oborotkk=0; 
+    --Update "accounts" a set a.OBOROTDK=:oborotkd,a.OBOROTDL=:oborotld,a.OBOROTDV=:oborotvd where a."Id"=:accd;
+    --Update "accounts" a set a.OBOROTKK=:oborotkk,a.OBOROTL=:oborotlk,a.OBOROTKV=:oborotvk where a."Id"=:acck;
+    --if (:ISPORNOM=1) THEN EXECUTE PROCEDURE SETPORNOM EXTRACT (month FROM dat),EXTRACT (year FROM dat),fId;
+    END^
+SET TERM ; ^
+
+
+GRANT EXECUTE
+ ON PROCEDURE DELETECONTO TO  SYSDBA;
+
+SET TERM ^ ;
+ALTER PROCEDURE DELETECONTOS (
+    FROMD Date,
+    TODATE Date,
+    FIRMAID Integer )
+AS
+DECLARE variable cId Integer; 
+BEGIN
+    for select c."Id" from "conto" c where c."Date">=:FROMD and c."Date"<=:TODATE and c."FirmId"=:FIRMAID into :cId DO
+    begin 
+        EXECUTE PROCEDURE DELETECONTO cId;
+    end 
+    suspend;
+END^
+SET TERM ; ^
+
+
+GRANT EXECUTE
+ ON PROCEDURE DELETECONTOS TO  SYSDBA;
+
+
+
