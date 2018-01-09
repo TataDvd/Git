@@ -1,0 +1,2 @@
+gbak -v -t -user SYSDBA -password "masterkey" -y E:\data\h2\tempo.log localhost:E:\data\h2\tempo2012.fdb E:\data\h2\tempo.fbk
+gbak -c -v -user SYSDBA -password masterkey E:\data\h2\tempo.fbk localhost:E:\data\h2\tempo2012new.fdb
