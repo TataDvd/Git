@@ -153,8 +153,8 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
             DateTime oldDateTimeF = Entrence.Mask.FromDate;
             DateTime oldDateTimeT = Entrence.Mask.ToDate;
             decimal sumadb = 0, sumacb = 0;
-            if (FromDate.Month > 1)
-            {
+            //if (FromDate.Month > 1)
+            //{
                 Entrence.Mask.ToDate = oldDateTimeF;
                 Entrence.Mask.FromDate = new DateTime(FromDate.Year, 1, 1);
                 contos = new List<Conto>(Context.GetAllContoOrfiltered(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, Entrence.Mask));
@@ -199,7 +199,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                         }
                     }
                 }
-            }
+            //}
             if (!fullsaldo)
             {
                 var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);

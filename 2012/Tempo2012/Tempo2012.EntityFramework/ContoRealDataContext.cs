@@ -332,9 +332,9 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Open();
                 dbman.BeginTransaction();
-                dbman.CreateParameters(2);
+                dbman.CreateParameters(1);
                 dbman.AddParameters(0, "@CONTOID", contoid);
-                dbman.AddParameters(1, "@ISPORNOM", 1);
+                //dbman.AddParameters(1, "@ISPORNOM", 1);
                 dbman.ExecuteNonQuery(CommandType.StoredProcedure, "DELETECONTO");
                 dbman.CommitTransaction();
             }
