@@ -543,7 +543,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             return blanka
                                         .Replace("@client", name)
-                                        .Replace("@ks", rowTotalLas.Last())
+                                        .Replace("@ns", rowTotalLas[2])
+                                        .Replace("@do", rowTotalLas[3])
+                                        .Replace("@ko", rowTotalLas[4])
+                                        .Replace("@ks", rowTotalLas[5])
                                         .Replace("@year", ToDate.Year.ToString() 
                                         .Replace("@firma",ConfigTempoSinglenton.GetInstance().CurrentFirma.Name))
                                         .Replace("@currentdate", string.Format("{0}/{1}/{2}",ConfigTempoSinglenton.GetInstance().WorkDate.Day

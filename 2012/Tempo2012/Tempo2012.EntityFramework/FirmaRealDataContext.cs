@@ -178,7 +178,7 @@ namespace Tempo2012.EntityFramework
                 }
                 s = "SELECT a.\"Id\", a.KONTRAGENT,a.BULSTAT, a.VAT, a.FIRMAID, a.\"Name\",cm.VALUENUM FROM \"nom_12\" a " +
                     "inner join CONTOMOVEMENT cm on cm.VALUENUM=a.KONTRAGENT " +
-                    "where a.LOOKUPID=12 and a.FIRMAID=" + Entrence.CurrentFirma.Id;
+                    "where cm.LOOKUPID=12 and a.FIRMAID=" + Entrence.CurrentFirma.Id;
                 dbman.CloseReader();
                 dbman.ExecuteReader(CommandType.Text, s);
                 while (dbman.DataReader.Read())
