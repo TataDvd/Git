@@ -213,5 +213,6 @@ namespace Tempo2012.EntityFramework.Models
 
         public virtual string Search { get; set;
         }
+        public DateTime DataInvoise { get; set; }
     }
 }

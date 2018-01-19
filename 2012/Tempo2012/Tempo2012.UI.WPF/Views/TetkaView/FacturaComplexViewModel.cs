@@ -541,17 +541,16 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
         private string ReplaceBlanka(string blanka, string name, List<string> rowTotalLas)
         {
-            return blanka
-                                        .Replace("@client", name)
-                                        .Replace("@ns", rowTotalLas[2])
-                                        .Replace("@do", rowTotalLas[3])
-                                        .Replace("@ko", rowTotalLas[4])
-                                        .Replace("@ks", rowTotalLas[5])
-                                        .Replace("@year", ToDate.Year.ToString() 
-                                        .Replace("@firma",ConfigTempoSinglenton.GetInstance().CurrentFirma.Name))
-                                        .Replace("@currentdate", string.Format("{0}/{1}/{2}",ConfigTempoSinglenton.GetInstance().WorkDate.Day
-                                                                                            ,ConfigTempoSinglenton.GetInstance().WorkDate.Month
-                                                                                            ,ConfigTempoSinglenton.GetInstance().WorkDate.Year)) ;
+            return blanka.Replace("@client", name)
+                         .Replace("@ns", rowTotalLas[2])
+                         .Replace("@do", rowTotalLas[3])
+                         .Replace("@ko", rowTotalLas[4])
+                         .Replace("@ks", rowTotalLas[5])
+                         .Replace("@year", ToDate.Year.ToString()) 
+                         .Replace("@firma",ConfigTempoSinglenton.GetInstance().CurrentFirma.Name)
+                         .Replace("@currentdate", string.Format("{0}/{1}/{2}",ConfigTempoSinglenton.GetInstance().WorkDate.Day
+                                                                             ,ConfigTempoSinglenton.GetInstance().WorkDate.Month
+                                                                             ,ConfigTempoSinglenton.GetInstance().WorkDate.Year));
 
         }
 
