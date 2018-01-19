@@ -2765,7 +2765,7 @@ namespace Tempo2012.EntityFramework
                     
                 }
                 bw.ReportProgress(95);
-                //FbBatchExecution(sb.ToString());
+                FbBatchExecution(sb.ToString());
                 bw.ReportProgress(98);
                 var path = Path.Combine(Entrence.CurrentFirmaPathReport, "export" + DateTime.Now.ToString("ddMMyyyy") + ".txt");
                 using (StreamWriter sw = new StreamWriter(path, false))
@@ -3019,7 +3019,7 @@ namespace Tempo2012.EntityFramework
             saldoAnaliticModel.ACCFIELDKEY = it.Id;
             saldoAnaliticModel.LOOKUPFIELDKEY = 0;
             saldoAnaliticModel.VAL = "";
-            var dat = item[2].Split('.');
+            var dat = item[3].Split('.');
             if (dat.Length > 2)
             {
                 saldoAnaliticModel.VALUEDATE = new DateTime(int.Parse(dat[2]), int.Parse(dat[1]), int.Parse(dat[0]));
