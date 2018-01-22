@@ -2688,7 +2688,6 @@ namespace Tempo2012.EntityFramework
                         {
                             accforsaldo.SaldoDL = decimal.Parse(item[6]);
                             accforsaldo.SaldoKL = decimal.Parse(item[7]);
-                            accforsaldo.DataInvoise = DateTime.Parse(item[9]);
                             string mess;
                             UpdateAccount(accforsaldo, false, null, out mess, toYear);
                         }
@@ -2824,7 +2823,7 @@ namespace Tempo2012.EntityFramework
                                         NInvoise = "0",
                                         Details = grp.First().Details,
                                         Oborot = grp.Sum(e => e.Oborot),
-                                        DataInvoise = grp.Last(e => e.DataInvoise != null && e.DataInvoise.Year > 1900).DataInvoise,
+                                        DataInvoise = grp.Where(e=>e.DataInvoise.Year>1980).Min(e => e.DataInvoise),
                                         NameContragent = grp.First().NameContragent,
                                         Folder = grp.First().Folder,
                                         DocNumber = grp.First().DocNumber,
@@ -2840,7 +2839,7 @@ namespace Tempo2012.EntityFramework
                                          NInvoise = "0",
                                          Details = grp.First().Details,
                                          Oborot = grp.Sum(e => e.Oborot),
-                                         DataInvoise = grp.Last(e=>e.DataInvoise!=null && e.DataInvoise.Year>1900).DataInvoise,
+                                         DataInvoise = grp.Where(e => e.DataInvoise.Year > 1980).Min(e => e.DataInvoise),
                                          NameContragent = grp.First().NameContragent,
                                          Folder = grp.First().Folder,
                                          DocNumber = grp.First().DocNumber,
@@ -2860,7 +2859,7 @@ namespace Tempo2012.EntityFramework
                                         NInvoise = grp.Key.NInvoise,
                                         Details = grp.First().Details,
                                         Oborot = grp.Sum(e => e.Oborot),
-                                        DataInvoise = grp.Last(e => e.DataInvoise != null && e.DataInvoise.Year > 1900).DataInvoise,
+                                        DataInvoise = grp.Where(e => e.DataInvoise.Year > 1980).Min(e => e.DataInvoise),
                                         NameContragent = grp.First().NameContragent,
                                         Folder = grp.First().Folder,
                                         DocNumber = grp.First().DocNumber,
@@ -2876,7 +2875,7 @@ namespace Tempo2012.EntityFramework
                                          NInvoise = grp.Key.NInvoise,
                                          Details = grp.First().Details,
                                          Oborot = grp.Sum(e => e.Oborot),
-                                         DataInvoise = grp.Last(e => e.DataInvoise != null && e.DataInvoise.Year > 1900).DataInvoise,
+                                         DataInvoise = grp.Where(e => e.DataInvoise.Year > 1980).Min(e => e.DataInvoise),
                                          NameContragent = grp.First().NameContragent,
                                          Folder = grp.First().Folder,
                                          DocNumber = grp.First().DocNumber,
