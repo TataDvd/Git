@@ -5015,6 +5015,10 @@ namespace Tempo2012.EntityFramework
                              "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
                              " where a.\"Id\"={0}",id);
                 int count=(int)dbman.ExecuteScalar(CommandType.Text, command);
+                for (var i = 0; i < count; i++)
+                {
+                    titles.Add(i.ToString());
+                }
                 bool change = false;
                 bool first = true;
                 bool firstrow = true;
@@ -5099,7 +5103,7 @@ namespace Tempo2012.EntityFramework
                         if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
                         if (firstrow)
                         {
-                            titles.Add(name);
+                            titles[chikiriki]=name;
                         }
                         chikiriki++;
                     }
@@ -5110,7 +5114,7 @@ namespace Tempo2012.EntityFramework
                 }
                 else
                 {
-                    return null;
+                    //return null;
                 }
             }
             catch (Exception ex)
