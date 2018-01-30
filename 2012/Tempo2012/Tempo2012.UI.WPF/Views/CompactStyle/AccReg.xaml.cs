@@ -135,24 +135,26 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
             {
-                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
-                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
-                reportMenuProvider.ShowDialog();
-                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
-                {
+                
+                    //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                    ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                    reportMenuProvider.ShowDialog();
+                    if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                    {
 
-                    var oldacc = Entrence.Mask.CreditAcc;
-                    var oldaccd = Entrence.Mask.DebitAcc;
-                    Entrence.Mask.CreditAcc = null;
-                    Entrence.Mask.DebitAcc = null;
-                    Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
-                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new ValutareportDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV,CodeClient=acc.CodeClient,Client=acc.Client});
-                    Entrence.Mask.CreditAcc = oldacc;
-                    Entrence.Mask.DebitAcc = oldaccd;
-                    rd.ShowDialog();
+                        var oldacc = Entrence.Mask.CreditAcc;
+                        var oldaccd = Entrence.Mask.DebitAcc;
+                        Entrence.Mask.CreditAcc = null;
+                        Entrence.Mask.DebitAcc = null;
+                        Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                        Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog rd = new ReportDialog(new ValutareportDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, CodeClient = acc.CodeClient, Client = acc.Client });
+                        Entrence.Mask.CreditAcc = oldacc;
+                        Entrence.Mask.DebitAcc = oldaccd;
+                        rd.ShowDialog();
 
-                }
+                    }
+                
 
                 //Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
             }
@@ -164,20 +166,25 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
             {
-                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
-                reportMenuProvider.ShowDialog();
-                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                SelectAccDialog acc1 = new SelectAccDialog();
+                acc1.ShowDialog();
+                if (acc1.DialogResult.HasValue && acc1.DialogResult.Value)
                 {
-                    var oldacc = Entrence.Mask.CreditAcc;
-                    var oldaccd = Entrence.Mask.DebitAcc;
-                    Entrence.Mask.CreditAcc = null;
-                    Entrence.Mask.DebitAcc = null;
-                    Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
-                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContr { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),ItemsDebit = acc.ItemsDebit });
-                    rd.ShowDialog();
-                    Entrence.Mask.CreditAcc = oldacc;
-                    Entrence.Mask.DebitAcc = oldaccd;
+                    ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                    reportMenuProvider.ShowDialog();
+                    if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                    {
+                        var oldacc = Entrence.Mask.CreditAcc;
+                        var oldaccd = Entrence.Mask.DebitAcc;
+                        Entrence.Mask.CreditAcc = null;
+                        Entrence.Mask.DebitAcc = null;
+                        Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                        Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContr { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc});
+                        rd.ShowDialog();
+                        Entrence.Mask.CreditAcc = oldacc;
+                        Entrence.Mask.DebitAcc = oldaccd;
+                    }
                 }
             }
         }
@@ -188,20 +195,25 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
             {
-                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
-                reportMenuProvider.ShowDialog();
-                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                SelectAccDialog acc1 = new SelectAccDialog();
+                acc1.ShowDialog();
+                if (acc1.DialogResult.HasValue && acc1.DialogResult.Value)
                 {
-                    var oldacc = Entrence.Mask.CreditAcc;
-                    var oldaccd = Entrence.Mask.DebitAcc;
-                    Entrence.Mask.CreditAcc = null;
-                    Entrence.Mask.DebitAcc = null;
-                    Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
-                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelDost { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit });
-                    rd.ShowDialog();
-                    Entrence.Mask.CreditAcc = oldacc;
-                    Entrence.Mask.DebitAcc = oldaccd;
+                    ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                    reportMenuProvider.ShowDialog();
+                    if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                    {
+                        var oldacc = Entrence.Mask.CreditAcc;
+                        var oldaccd = Entrence.Mask.DebitAcc;
+                        Entrence.Mask.CreditAcc = null;
+                        Entrence.Mask.DebitAcc = null;
+                        Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                        Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelDost { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc});
+                        rd.ShowDialog();
+                        Entrence.Mask.CreditAcc = oldacc;
+                        Entrence.Mask.DebitAcc = oldaccd;
+                    }
                 }
             }
         }

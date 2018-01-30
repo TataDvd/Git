@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tempo2012.EntityFramework.Models;
 using Tempo2012.UI.WPF.Models;
 
 namespace Tempo2012.UI.WPF.Views.Dialogs
@@ -22,6 +23,8 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
     {
         public ObservableCollection<SaldoItem> ItemsDebit { get; set; }
         public string Acc { get; set;}
+        public AccountsModel CurrentAcc { get; set; }
+
         public bool WithContragentSum { get { return accName.WithContragentSum;} }
 
         public bool ShowEx { get; set; }
@@ -41,6 +44,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         {
             DialogResult = true;
             Acc = accName.Text;
+            CurrentAcc = accName.Acc;
             ItemsDebit = accName.ItemsDebit;
             Close();
         }
@@ -51,7 +55,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             {
                 DialogResult = true;
                 Acc = accName.Text;
-                 
+                CurrentAcc = accName.Acc; 
                 Close();
             }
         }

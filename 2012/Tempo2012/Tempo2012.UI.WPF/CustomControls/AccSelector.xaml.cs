@@ -75,8 +75,15 @@ namespace Tempo2012.UI.WPF.CustomControls
             _Popup.IsOpen = true;
         }
 
-        
 
+        public AccountsModel Acc
+        {
+            get
+            {
+                if (vm.DAccountsModel != null) return vm.DAccountsModel;
+                return null;
+            }
+        }
         public string Text
         {
             get
