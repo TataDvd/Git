@@ -187,7 +187,17 @@ namespace Tempo2012.EntityFramework
                     if (delitem) { alList.RemoveAll(e => e[1] == cont); } else { alList.RemoveAll(e => e[0] == cont); }
                 }
                 dbman.CloseReader();
-
+                s = "SELECT a.\"Id\", a.KONTRAGENT,a.BULSTAT, a.VAT, a.FIRMAID, a.\"Name\",cm.VALUENUM FROM \"nom_12\" a " +
+                   "inner join MOVEMENT cm on cm.VALUENUM=a.KONTRAGENT " +
+                   "where cm.LOOKUPID=12 and a.FIRMAID=" + Entrence.CurrentFirma.Id;
+                dbman.CloseReader();
+                dbman.ExecuteReader(CommandType.Text, s);
+                while (dbman.DataReader.Read())
+                {
+                    var cont = dbman.DataReader["KONTRAGENT"].ToString();
+                    if (delitem) { alList.RemoveAll(e => e[1] == cont); } else { alList.RemoveAll(e => e[0] == cont); }
+                }
+                dbman.CloseReader();
             }
 
             catch (Exception ex)
