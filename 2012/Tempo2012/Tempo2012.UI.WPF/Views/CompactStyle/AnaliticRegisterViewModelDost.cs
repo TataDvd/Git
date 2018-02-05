@@ -204,8 +204,8 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             list.Add("| Параметри                   |    дебит           |        кредит      |");
             list.Add("-------------------------------------------------------------------------");
             //list.Add(string.Format("| Начални салда               |{0,15}|{1,15}|", CurrenAcc.TypeAccount == 1 ? BeginSaldoD.ToString(Vf.LevFormatUI) : "", CurrenAcc.TypeAccount == 2 ? BeginSaldoK.ToString(Vf.LevFormatUI) : ""));
-            list.Add(string.Format("| Начални салда  по сметка|{0,20}|{1,20}|", CurrenAcc.TypeAccount == 1 ? BeginSaldoD.ToString() : "", CurrenAcc.TypeAccount == 2 ? BeginSaldoK.ToString() : ""));
-            list.Add(string.Format(" {0} към {1}", CurrenAcc.ShortName, new DateTime(FromDate.Year, 1, 1)));
+            list.Add(string.Format("| Начални салдo  по сметка    |{0,20}|{1,20}|", CurrenAcc.TypeAccount == 1 ? (BeginSaldoD-BeginSaldoK).ToString() : "", CurrenAcc.TypeAccount == 2 ? (BeginSaldoK-BeginSaldoD).ToString() : ""));
+            list.Add(string.Format("| {0} към {1}", CurrenAcc.ShortName, new DateTime(FromDate.Year, 1, 1).ToShortDateString()));
             list.Add(string.Format("| Oбороти                     |{0,20}|{1,20}|", OborotsDebit, OborotsCredit));
             //list.Add(string.Format("| Сборове                     |{0,15}|{1,15}|", TotalD, TotalC));
             //list.Add(string.Format("| Крайни салда                |{0,15}|{1,15}|", CurrenAcc.TypeAccount == 1 ? KrainoSaldoD.ToString(Vf.LevFormatUI) : "", CurrenAcc.TypeAccount == 2 ? KrainoSaldoK.ToString(Vf.LevFormatUI) : ""));
