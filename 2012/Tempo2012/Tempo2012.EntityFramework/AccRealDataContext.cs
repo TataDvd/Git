@@ -5922,7 +5922,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.PORNOM,c.DOCNUM,c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.USERID,c.\"DebitAccount\",c.\"CreditAccount\",m.\"VALUE\",m.VALVAL,m.KURS,m.KURSM,m.KURSD,m.LOOKUPVAL,c.\"Reason\",c.\"Note\",lf.\"Name\",m.VALUEDATE FROM \"conto\" c" +
+                        "SELECT c.\"Id\",c.PORNOM,c.DOCNUM,c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.USERID,c.\"DebitAccount\",c.\"CreditAccount\",m.\"VALUE\",m.VALVAL,m.KURS,m.KURSM,m.KURSD,m.LOOKUPVAL,c.\"Reason\",c.\"Note\",c.PR1,c.PR2,lf.\"Name\",m.VALUEDATE FROM \"conto\" c" +
                         " inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"" +
                         " inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and m.ACCID={1} and \"Date\">='{2}.{3}.{4}' and \"Date\"<='{5}.{6}.{7}' and m.\"TYPE\"={8}) order by c.\"Id\" ",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
@@ -5960,6 +5960,8 @@ namespace Tempo2012.EntityFramework
                         c.Note = dbman.DataReader["Note"].ToString();
                         c.Reason = dbman.DataReader["Reason"].ToString();
                         c.PorNom = dbman.DataReader["PORNOM"].ToString();
+                        c.Pr1=dbman.DataReader["PR1"].ToString();
+                        c.Pr2=dbman.DataReader["PR2"].ToString();
                         result.Add(c);
                     }
                     if (nam == "Сума валута")

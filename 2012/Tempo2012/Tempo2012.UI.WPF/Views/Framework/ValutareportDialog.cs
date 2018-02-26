@@ -29,6 +29,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "курс. разл.", Width = 12});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "основание", Width = 30});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "забележка", Width = 20});
+            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "Признак 1", Width = 10 });
+            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "код", Width = 10});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "клиент", Width = 40});
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "потребител", Width = 12 });
@@ -106,6 +108,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item.Add("------------");
                     item.Add("------------");
                     item.Add("------------");
+                    item.Add("------------");
+                    item.Add("------------");
                     item.Add("-------------------------------------------------------");
                     item.Add("------------");
                     items.Add(item);
@@ -130,6 +134,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item.Add("");
                     items.Add(item);
                     item = new List<string>();
+                    item.Add("------------");
+                    item.Add("------------");
                     item.Add("------------");
                     item.Add("------------");
                     item.Add("------------");
@@ -171,6 +177,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 item2.Add(string.Format(Vf.LevFormat, co.KursDif));
                 item2.Add(co.Reason);
                 item2.Add(co.Note);
+                item2.Add(co.Pr1);
+                item2.Add(co.Pr2);
                 item2.Add(co.ClienCode);lastcode = co.ClienCode;
                 item2.Add(co.NameClient);lastname = co.NameClient;
                 item2.Add(co.User);
@@ -182,6 +190,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 
             }
             var item1 = new List<string>();
+            item1.Add("------------");
+            item1.Add("------------");
             item1.Add("------------");
             item1.Add("------------");
             item1.Add("------------");
@@ -216,12 +226,16 @@ namespace Tempo2012.UI.WPF.Views.Framework
             item1.Add(string.Format(Vf.LevFormat, sumavalddfm));
             item1.Add("");
             item1.Add("");
+            item1.Add("");
+            item1.Add("");
             item1.Add(lastcode);
             item1.Add(lastname);
             item1.Add("");
             item1.Add("");
             items.Add(item1);
             item1 = new List<string>();
+            item1.Add("------------");
+            item1.Add("------------");
             item1.Add("------------");
             item1.Add("------------");
             item1.Add("------------");

@@ -15,6 +15,9 @@
         public decimal KursDif { get; set; }
         public string Reason { get; set; }
         public string Note { get; set; }
+
+        public string Pr1 { get; set; }
+        public string Pr2 { get; set; }
         public ValutaControl Clone()
         {
             return (ValutaControl)this.MemberwiseClone();
