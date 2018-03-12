@@ -849,6 +849,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         private void UpdateValuta()
         {
+            if (Oborot == 0) return;
             foreach (var saldoItem in ItemsCredit)
             {
                 if (saldoItem.IsVal && saldoItem.ValueVal > 0)
@@ -2556,7 +2557,30 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             OnPropertyChanged("AllWrapedConto");
-            Visible = Visibility.Hidden;
+            Oborot = 0;
+            foreach (SaldoItem item in ItemsCredit)
+            {
+                if (item.Name == "Сума валута")
+                {
+                    item.ValueVal = 0;
+                }
+                item.OnePrice = 0;
+                item.ValueKol = 0;
+            } 
+
+            foreach (SaldoItem item in ItemsDebit)
+            {
+
+                if (item.Name == "Сума валута")
+                {
+                    item.ValueVal = 0;
+                }
+                item.OnePrice = 0;
+                item.ValueKol = 0;
+            }
+
+        
+        Visible = Visibility.Hidden;
             if (Mode == EditMode.View || Mode == EditMode.Edit)
             {
                 EnableGrid = true;
@@ -3198,10 +3222,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     
                     if (SaveConto())
                     {
+                        Oborot = 0;
                         DontChange = true;
                         ReloadRecords();
                         DontChange = false;
-                        Oborot = 0;
                         RefreshUI();
                         Second();
                         base.Add();
