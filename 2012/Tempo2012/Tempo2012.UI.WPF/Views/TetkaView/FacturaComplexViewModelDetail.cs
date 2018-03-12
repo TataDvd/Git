@@ -36,6 +36,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Папка", Width = 15, IsSuma = false });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Номер Документ", Width = 15, IsSuma = false });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Основание", Width = 30, IsSuma = false });
+            _reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 1", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             ReportItems = _reportItems;
         }
         public FacturaComplexViewModelDetail(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka,string contr = null, bool onlyContragent = false)
@@ -59,6 +61,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Папка", Width = 15, IsSuma = false });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Номер Документ", Width = 15, IsSuma = false });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Основание", Width = 30, IsSuma = false });
+            _reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 1", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             ReportItems = _reportItems;
             filter=null;
             if (contr != null)
@@ -223,6 +227,9 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.Pr1 = invoiseControl.Pr1;
+                item.Pr2 = invoiseControl.Pr2;
+                
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
                 var lc = AllMovementCredit.FirstOrDefault(
                         w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
@@ -248,6 +255,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.Pr1 = invoiseControl.Pr1;
+                item.Pr2 = invoiseControl.Pr2;
                 _movements1.Add(item);
 
             }
@@ -313,6 +322,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.Pr1 = invoiseControl.Pr1;
+                item.Pr2 = invoiseControl.Pr2;
                 _movements.Add(item);
 
             }
@@ -367,6 +378,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             string folder ="";
             string reason = "";
             string docnum = "";
+            string pr1 = "";
+            string pr2 = "";
             bool first = true;
 
             decimal sumansc = 0;
@@ -435,13 +448,16 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             rowTotal.Add("");
                             rowTotal.Add("");
                             rowTotal.Add("");
+                            rowTotal.Add("");
+                            rowTotal.Add("");
                         }
                         else
                         {
                             rowTotal.Add(folder);
                             rowTotal.Add(docnum);
                             rowTotal.Add(reason);
-
+                            rowTotal.Add(pr1);
+                            rowTotal.Add(pr2);
                         }
                         items.Add(rowTotal);
                         if (!OnlyContragent)
@@ -455,7 +471,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         folder = itemSaldo.Folder;
                         reason = itemSaldo.Reason;
                         docnum = itemSaldo.DocNumber;
-
+                        pr1 = itemSaldo.Pr1;
+                        pr2 = itemSaldo.Pr2;
                     }
                 }
 
@@ -491,6 +508,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     row.Add(itemSaldo.Folder);
                     row.Add(itemSaldo.DocNumber);
                     row.Add(itemSaldo.Reason);
+                    row.Add(itemSaldo.Pr1);
+                    row.Add(itemSaldo.Pr1);
                     items.Add(row);
                 }
                 //row.Add(itemSaldo.Ksc.ToString(Vf.LevFormatUI));
@@ -525,6 +544,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     rowTotalLas.Add(folder);
                     rowTotalLas.Add(docnum);
                     rowTotalLas.Add(reason);
+                    rowTotalLas.Add(pr1);
+                    rowTotalLas.Add(pr2);
                 }
                 else
                 {
@@ -541,13 +562,16 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     rowTotalLas.Add("");
                     rowTotalLas.Add("");
                     rowTotalLas.Add("");
+                    rowTotalLas.Add("");
+                    rowTotalLas.Add("");
                 }
                 else
                 {
                     rowTotalLas.Add(folder);
                     rowTotalLas.Add(docnum);
                     rowTotalLas.Add(reason);
-
+                    rowTotalLas.Add(pr1);
+                    rowTotalLas.Add(pr2);
                 }
                 items.Add(rowTotalLas);
             }
@@ -587,6 +611,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             "-----------------------------------",
                             "---------------------------------------------------------------------------------------",
                             "---------------------------------------------------------------------------------------",
+                            "-----------------------------------",
+                            "-----------------------------------",
                             "-----------------------------------",
                             "-----------------------------------",
                             "-----------------------------------",

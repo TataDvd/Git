@@ -3122,7 +3122,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,c.m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 dbman.Open();
@@ -3146,6 +3146,8 @@ namespace Tempo2012.EntityFramework
                     ic.Folder=dbman.DataReader["Folder"].ToString();
                     ic.DocNumber = dbman.DataReader["DOCNUM"].ToString();
                     ic.Reason=dbman.DataReader["Reason"].ToString();
+                    ic.Pr1=dbman.DataReader["PR1"].ToString();
+                    ic.Pr2=dbman.DataReader["PR2"].ToString();
                     if (ic.NameField == "Номер фактура")
                     {
                         ic.NInvoise = ic.VALUE;
@@ -3229,7 +3231,9 @@ namespace Tempo2012.EntityFramework
                              DataInvoise = grp.Max(t => t.DataInvoise),
                              Reason = grp.First().Reason,
                              Folder = grp.First().Folder,
-                             DocNumber = grp.First().DocNumber
+                             DocNumber = grp.First().DocNumber,
+                             Pr1 = grp.First().Pr1,
+                             Pr2 = grp.First().Pr2
                          });
             //foreach (var VARIABLE in query)
             //{
@@ -3304,7 +3308,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 dbman.Open();
@@ -3326,6 +3330,9 @@ namespace Tempo2012.EntityFramework
                     ic.Folder = dbman.DataReader["Folder"].ToString();
                     ic.DocNumber = dbman.DataReader["DOCNUM"].ToString();
                     ic.Reason = dbman.DataReader["Reason"].ToString();
+                    ic.Pr1 = dbman.DataReader["Pr1"].ToString();
+                    ic.Pr2 = dbman.DataReader["Pr2"].ToString();
+
                     if (ic.NameField == "Номер фактура")
                     {
                         ic.NInvoise = ic.VALUE;
@@ -3411,8 +3418,10 @@ namespace Tempo2012.EntityFramework
                              DataInvoise = grp.Max(t => t.DataInvoise),
                              Reason = grp.First().Reason,
                              Folder=grp.First().Folder,
-                             DocNumber=grp.First().DocNumber
-                     });
+                             DocNumber=grp.First().DocNumber,
+                             Pr1 = grp.First().Pr1,
+                             Pr2 = grp.First().Pr2
+                         });
             //foreach (var VARIABLE in query)
             //{
             //    result3.Add(new InvoiseControl

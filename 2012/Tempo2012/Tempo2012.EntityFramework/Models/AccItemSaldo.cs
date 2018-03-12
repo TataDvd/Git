@@ -71,7 +71,8 @@ namespace Tempo2012.EntityFramework.Models
         public string Folder { get; set; }
         public string DocNumber { get; set; }
         public string Reason { get; set; }
-
+        public string Pr1 { get; set; }
+        public string Pr2 { get; set; }
         public AccItemSaldo Clone()
         {
             return (AccItemSaldo)this.MemberwiseClone();

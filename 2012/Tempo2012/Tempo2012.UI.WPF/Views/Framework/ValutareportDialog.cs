@@ -60,29 +60,29 @@ namespace Tempo2012.UI.WPF.Views.Framework
         {
 
             List<List<string>> items = new List<List<string>>();
-            List<ValutaControl> contos =new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,CurrenAcc.Id,FromDate,ToDate,VidVal,1,CodeClient));
-            List<ValutaControl> contos1=new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
+            List<ValutaControl> contos = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 1, CodeClient));
+            List<ValutaControl> contos1 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
 
-            decimal sumad = 0,sumac = 0;
+            decimal sumad = 0, sumac = 0;
             decimal sumavald = 0, sumavalc = 0;
             decimal sumavalddf = 0, sumavalcdf = 0;
             decimal sumadm = 0;
             decimal sumavaldm = 0;
             decimal sumavalddfm = 0;
 
-            sumad =contos.Sum(e=>e.Oborot);
-            sumac=contos1.Sum(e=>e.Oborot);
-            sumavald=contos.Sum(e=>e.ValSum);
-            sumavalc=contos1.Sum(e=>e.ValSum);
-            sumavalddf = contos.Sum(e=>e.KursDif);
-            sumavalcdf = contos1.Sum(e=>e.KursDif);
+            sumad = contos.Sum(e => e.Oborot);
+            sumac = contos1.Sum(e => e.Oborot);
+            sumavald = contos.Sum(e => e.ValSum);
+            sumavalc = contos1.Sum(e => e.ValSum);
+            sumavalddf = contos.Sum(e => e.KursDif);
+            sumavalcdf = contos1.Sum(e => e.KursDif);
 
             string currec = "", oldrec = "";
-            string lastcode="", lastname="";
+            string lastcode = "", lastname = "";
             contos.AddRange(contos1);
             foreach (
                 var co in
-                    contos.OrderBy(e=>e.ClienCode))
+                    contos.OrderBy(e => e.ClienCode))
             {
                 if (oldrec == "")
                 {
@@ -92,26 +92,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 if (oldrec != currec)
                 {
                     var item = new List<string>();
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("-------------------------------------------------------");
-                    item.Add("------------");
+                    items.Add(NewMethod());
                     items.Add(item);
                     item = new List<string>();
                     item.Add("");
@@ -128,33 +109,14 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item.Add(string.Format(Vf.LevFormat, sumavalddfm));
                     item.Add("");
                     item.Add("");
+                    item.Add("");
+                    item.Add("");
                     item.Add(lastcode);
                     item.Add(lastname);
                     item.Add("");
                     item.Add("");
                     items.Add(item);
-                    item = new List<string>();
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("------------");
-                    item.Add("-------------------------------------------------------");
-                    item.Add("------------");
-                    items.Add(item);
+                    items.Add(NewMethod());
                     sumadm = 0;
                     sumavaldm = 0;
                     sumavalddfm = 0;
@@ -179,37 +141,18 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 item2.Add(co.Note);
                 item2.Add(co.Pr1);
                 item2.Add(co.Pr2);
-                item2.Add(co.ClienCode);lastcode = co.ClienCode;
-                item2.Add(co.NameClient);lastname = co.NameClient;
+                item2.Add(co.ClienCode); lastcode = co.ClienCode;
+                item2.Add(co.NameClient); lastname = co.NameClient;
                 item2.Add(co.User);
                 item2.Add(co.Id);
                 items.Add(item2);
                 sumadm += co.Oborot;
                 sumavaldm += co.ValSum;
                 sumavalddfm += co.KursDif;
-                
+
             }
             var item1 = new List<string>();
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("-------------------------------------------------------");
-            item1.Add("------------");
+            items.Add(NewMethod());
             items.Add(item1);
             item1 = new List<string>();
             item1.Add("");
@@ -233,204 +176,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             item1.Add("");
             item1.Add("");
             items.Add(item1);
-            item1 = new List<string>();
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("------------");
-            item1.Add("-------------------------------------------------------");
-            item1.Add("------------");
-            items.Add(item1);
-            //oldrec = "";
-            //contos =
-            //      new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal,2,CodeClient));
-           
-            //foreach (
-            //    var co in
-            //        contos.Where(
-            //            e =>
-            //                (e.DebitAccount == CurrenAcc.Id || e.CreditAccount == CurrenAcc.Id)).OrderBy(e=>e.ClienCode)
-            //    )
-
-
-            //{
-
-            //    if (oldrec == "")
-            //    {
-            //        oldrec = co.ClienCode;
-            //    }
-            //    currec = co.ClienCode;
-            //    if (oldrec != currec)
-            //    {
-            //        var item = new List<string>();
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("-------------------------------------------------------");
-            //        item.Add("------------");
-            //        items.Add(item);
-            //        item = new List<string>();
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add(string.Format(Vf.LevFormat, sumacm));
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add(string.Format(Vf.ValFormat, sumavalcm));
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add(string.Format(Vf.LevFormat, sumavalcdfm));
-            //        item.Add("");
-            //        item.Add("");
-            //        item.Add(lastcode);
-            //        item.Add(lastname);
-            //        item.Add("");
-            //        item.Add("");
-            //        items.Add(item);
-            //        item = new List<string>();
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("------------");
-            //        item.Add("-------------------------------------------------------");
-            //        item.Add("------------");
-            //        items.Add(item);
-            //        sumacm = 0;
-            //        sumavalcm = 0;
-            //        sumavalcdfm = 0;
-            //        oldrec = currec;
-            //    }
-            //    List<string> item2 = new List<string>();
-            //    item2.Add(co.PorNom);
-            //    item2.Add(co.DocNum);
-            //    item2.Add(co.Data);
-            //    item2.Add(co.Folder);
-            //    item2.Add(co.User);
-            //    item2.Add(string.Format(Vf.LevFormat, co.Oborot));
-            //    var dac = Allacc.FirstOrDefault(e => e.Id == co.DebitAccount);
-            //    if (dac != null) item2.Add(dac.Short);
-            //    dac = Allacc.FirstOrDefault(e => e.Id == co.CreditAccount);
-            //    if (dac != null) item2.Add(dac.Short);
-            //    item2.Add(string.Format(Vf.ValFormat, co.ValSum));
-            //    item2.Add(string.Format(Vf.KursFormat, co.Kurs));
-            //    item2.Add(string.Format(Vf.KursFormat, co.MainKurs));
-            //    item2.Add(string.Format(Vf.LevFormat, co.KursDif));
-            //    item2.Add(co.Reason);
-            //    item2.Add(co.Note);
-            //    item2.Add(co.ClienCode); lastcode = co.ClienCode;
-            //    item2.Add(co.NameClient); lastname = co.NameClient;
-            //    item2.Add(co.User);
-            //    item2.Add(co.Id);
-            //    items.Add(item2);
-            //    sumac += co.Oborot;
-            //        sumavalc += co.ValSum;
-            //        sumavalcdf += co.KursDif;
-            //    sumacm += co.Oborot;
-            //        sumavalcm += co.ValSum;
-            //        sumavalcdfm += co.KursDif;
-                
-            //}
-            //item1 = new List<string>();
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("-------------------------------------------------------");
-            //item1.Add("------------");
-            //items.Add(item1);
-            //item1 = new List<string>();
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add(string.Format(Vf.LevFormat, sumacm));
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add(string.Format(Vf.ValFormat, sumavalcm));
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add(string.Format(Vf.LevFormat, sumavalcdfm));
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //item1.Add("");
-            //items.Add(item1);
-            //item1 = new List<string>();
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("------------");
-            //item1.Add("-------------------------------------------------------");
-            //item1.Add("------------");
-            //items.Add(item1);
+            items.Add(NewMethod());
             decimal nsd = 0;
             decimal nsc = 0;
             decimal nsdv = 0;
@@ -438,9 +184,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
             if (FromDate.Month > 1)
             {
                 var begcontosd =
-                  new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year,1,1), FromDate.AddDays(-1), VidVal, 1,CodeClient));
+                  new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate.AddDays(-1), VidVal, 1, CodeClient));
                 var begcontosc =
-                  new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate.AddDays(-1), VidVal, 2,CodeClient));
+                  new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate.AddDays(-1), VidVal, 2, CodeClient));
                 nsd = begcontosd.Sum(e => e.Oborot);
                 nsc = begcontosc.Sum(e => e.Oborot);
                 nsdv = begcontosd.Sum(e => e.ValSum);
@@ -458,7 +204,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     BeginSaldoD = (nsd + CurrenAcc.BeginSaldoL) - (nsc);
                     BeginValSd = (nsdv + CurrenAcc.BeginSaldoV) - (nscv);
                 }
-               
+
             }
             if (CurrenAcc.TypeAccount == 2)
             {
@@ -468,7 +214,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     BeginValSc = CurrenAcc.BeginSaldoV;
                 }
                 else
-                { 
+                {
                     BeginSaldoK = (nsc + CurrenAcc.BeginSaldoL) - (nsd);
                     BeginValSc = (nscv + CurrenAcc.BeginSaldoV) - (nsdv);
                 }
@@ -479,9 +225,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
             Oborotsvalc = string.Format(Vf.ValFormat, sumavalc);
             Sumavald = string.Format(Vf.ValFormat, sumavald);
             Sumavalc = string.Format(Vf.ValFormat, sumavalc);
-            KursDifd=string.Format(Vf.LevFormat, sumavalddf);
-            KursDifc=string.Format(Vf.LevFormat, sumavalcdf);
-           
+            KursDifd = string.Format(Vf.LevFormat, sumavalddf);
+            KursDifc = string.Format(Vf.LevFormat, sumavalcdf);
+
 
             TotalD = CurrenAcc.TypeAccount == 1
                 ? string.Format(Vf.LevFormat, sumad + BeginSaldoD)
@@ -495,7 +241,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 KrainoSaldoDV = (sumavald + BeginValSd) - (sumavalc);
                 KrainoSaldoKV = 0;
                 Sad = string.Format(Vf.KursFormat, KrainoSaldoDV != 0 ? KrainoSaldoD / KrainoSaldoDV : 0);
-                Sak ="";
+                Sak = "";
             }
             if (CurrenAcc.TypeAccount == 2)
             {
@@ -506,6 +252,32 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 Sak = string.Format(Vf.KursFormat, KrainoSaldoKV != 0 ? KrainoSaldoK / KrainoSaldoKV : 0);
             }
             return items;
+        }
+
+        private static List<string> NewMethod()
+        {
+            List<string> item1 = new List<string>();
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("---------------------------------------------");
+            item1.Add("-------------------------------------------------------------------");
+            item1.Add("---------------------------------------------");
+            return item1;
         }
 
         public decimal KrainoSaldoK { get; set; }
