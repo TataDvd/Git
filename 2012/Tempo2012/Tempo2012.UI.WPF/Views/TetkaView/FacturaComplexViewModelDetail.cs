@@ -297,6 +297,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.Pr1 = invoiseControl.Pr1;
+                item.Pr2 = invoiseControl.Pr2;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
                 var lc = AllMovementCredit1.FirstOrDefault(
                         w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
@@ -401,6 +403,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     folder = itemSaldo.Folder;
                     reason = itemSaldo.Reason;
                     docnum = itemSaldo.DocNumber;
+                    pr1 = itemSaldo.Pr1;
+                    pr2 = itemSaldo.Pr2;
                 }
                 else
                 {
@@ -509,7 +513,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     row.Add(itemSaldo.DocNumber);
                     row.Add(itemSaldo.Reason);
                     row.Add(itemSaldo.Pr1);
-                    row.Add(itemSaldo.Pr1);
+                    row.Add(itemSaldo.Pr2);
                     items.Add(row);
                 }
                 //row.Add(itemSaldo.Ksc.ToString(Vf.LevFormatUI));

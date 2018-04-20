@@ -3122,7 +3122,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,c.m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 dbman.Open();
