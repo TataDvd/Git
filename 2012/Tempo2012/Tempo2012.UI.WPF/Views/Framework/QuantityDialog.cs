@@ -24,7 +24,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "дебит сметка", Width = 12});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "кредит сметка", Width = 12});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "количество", Width = 12, IsSuma = true});
-            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "средна цена", Width = 12});
+            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "Ед. цена", Width = 12});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "основание", Width = 30});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "забележка", Width = 20});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "код", Width = 10});
@@ -157,8 +157,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 if (dac != null) item2.Add(dac.Short);
                 dac = Allacc.FirstOrDefault(e => e.Id == co.CreditAccount);
                 if (dac != null) item2.Add(dac.Short);
-                item2.Add(string.Format(Vf.ValFormat, co.Quantity));
-                item2.Add(string.Format(Vf.KolFormat, co.SinglePrice));
+                item2.Add(string.Format(Vf.ValFormat, co.SinglePrice));
+                item2.Add(string.Format(Vf.KolFormat, co.Quantity));
                 item2.Add(co.Reason);
                 item2.Add(co.Note);
                 item2.Add(co.StockCode);lastcode = co.StockCode;

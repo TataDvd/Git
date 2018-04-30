@@ -37,9 +37,9 @@ namespace Tempo2012.EntityFramework
                                                           "f.\"PresentorYN\",f.\"SurName\",f.\"SurName\",f.\"Tel\",f.\"Telefon\",f.REGISERDDS,f.NA,c.\"Name\" as CITYNAME1," +
                                                           "c1.\"Zip\" as ZIP1,c1.\"Name\" as CITYNAME2,c1.\"Zip\" as ZIP2,co.\"Name\" as COUNTRYNAME "+
                                                           "from \"firm\" f "+
-                                                          "inner join \"cities\" c  on c.\"Id\"=f.\"City\" "+
-                                                          "inner join \"cities\" c1 on c1.\"Id\"=f.\"City2\" "+ 
-                                                          "inner join \"countries\" co on co.\"Id\"=f.\"Country\"");
+                                                          "LEFT OUTER JOIN \"cities\" c  on c.\"Id\"=f.\"City\" " +
+                                                          "LEFT OUTER JOIN \"cities\" c1 on c1.\"Id\"=f.\"City2\" " +
+                                                          "LEFT OUTER JOIN \"countries\" co on co.\"Id\"=f.\"Country\"");
                 while (dbman.DataReader.Read())
                 {
                     var firma = new FirmModel();
