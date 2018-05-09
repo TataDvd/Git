@@ -11,6 +11,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
 {
     public class ReportDebit:BaseViewModel, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         private string _accShortName;
         private List<AccountsModel> Allacc;
         

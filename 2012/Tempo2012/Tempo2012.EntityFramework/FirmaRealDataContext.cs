@@ -279,8 +279,8 @@ namespace Tempo2012.EntityFramework
                     }
                     if (nam == "Количество")
                     {
-                        c.SinglePrice = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
-                        c.Quantity = decimal.Parse(dbman.DataReader["KURS"].ToString());
+                        c.SinglePrice = decimal.Parse(dbman.DataReader["KURS"].ToString());
+                        c.Quantity = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
                        
                     }
                     if (nam == "Склад")

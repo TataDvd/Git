@@ -20,5 +20,7 @@ namespace ReportBuilder
         DateTime ToDate{ get; set;}
         void LoadSettings(string Path);
         void SaveSettings(string Path);
+
+        Dictionary<int, List<string>> Rowfoother { get; set;}
     }
 }

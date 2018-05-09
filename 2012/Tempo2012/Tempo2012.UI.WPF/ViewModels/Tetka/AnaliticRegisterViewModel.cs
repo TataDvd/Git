@@ -16,6 +16,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
 {
     public class AnaliticRegisterViewModel : BaseViewModel, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public AnaliticRegisterViewModel()
         {
             var reportItems = new List<ReportItem>();

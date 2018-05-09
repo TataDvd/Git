@@ -14,7 +14,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 {
     public class FacturaControlViewModel : BaseViewModel, IReportBuilder
     {
-       
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         private ContoViewModel cv;
         public FacturaControlViewModel(AccountsModel accountsModel, ContoViewModel contoView,bool withContragentSum,  bool onlyContragent=false, bool withpisma = false)
         {

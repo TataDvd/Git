@@ -17,7 +17,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 {
     public class LookupManagerViewModel:BaseViewModel,IReportBuilder
     {
-
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         private int _CurrentRowIndex;
         public int CurrentRowIndex
         {

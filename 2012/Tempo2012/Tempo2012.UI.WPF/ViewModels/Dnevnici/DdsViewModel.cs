@@ -20,6 +20,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
 {
     public class DdsViewModel : BaseViewModel, IReportBuilder, IDataErrorInfo
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public delegate void RefreshElement(object sender, DdsEventArgs e);
         public delegate void CancelSaveElement(object sender, DdsCancelEventArgs e);
 

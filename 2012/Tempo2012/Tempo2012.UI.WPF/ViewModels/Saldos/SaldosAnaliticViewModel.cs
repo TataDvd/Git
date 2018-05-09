@@ -699,6 +699,9 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
                 toDate = value;
             }
         }
+
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
+
         public List<List<string>> GetItems()
         {
             return AllSaldos;

@@ -1511,6 +1511,11 @@ namespace Tempo2012.EntityFramework
                             workSaldos.NameContragent = dbman.DataReader["VALS"].ToString();
                             workSaldos.Code= dbman.DataReader["VALUE"].ToString();
                         }
+                        if (name == "Номенклатурен номер")
+                        {
+                            workSaldos.NameMaterial = dbman.DataReader["VALS"].ToString();
+                            workSaldos.CodeMaterial = dbman.DataReader["VALUE"].ToString();
+                        }
                         if (name=="Дата на фактура")
                         {
                             workSaldos.Date = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());

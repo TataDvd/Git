@@ -20,5 +20,7 @@ namespace Tempo2012.EntityFramework
             return (SaldoFactura)MemberwiseClone();
         }
         public DateTime Date { get; set;}
+        public string NameMaterial { get; set; }
+        public string CodeMaterial { get; set; }
     }
 }

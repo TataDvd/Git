@@ -11,6 +11,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
 {
     public class OborotkiViewModel:BaseViewModel,IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public OborotkiViewModel() 
         {
             ToDate = DateTime.Now;

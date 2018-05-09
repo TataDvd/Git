@@ -301,6 +301,7 @@ namespace ReportBuilder
                 var it = iReportBuilder.GetItems();
                 if (it != null && it.Count > 0)
                 {
+                    var currentrow = 0;
                     foreach (List<string> dList in it)
                     {
                         i = 0;
@@ -339,9 +340,18 @@ namespace ReportBuilder
                             }
                             sb.Append("|");
                             sb.AppendLine();
+                            if (iReportBuilder.Rowfoother != null && iReportBuilder.Rowfoother.ContainsKey(currentrow))
+                            {
+                                foreach(var foother in iReportBuilder.Rowfoother[currentrow])
+                                {
+                                    sb.Append(foother);
+                                    sb.AppendLine();
+                                }
+                            }
                         }
+                        currentrow++;
                     }
-
+                    
                     Line(iReportBuilder, sb);
                     if (sborno)
                     {

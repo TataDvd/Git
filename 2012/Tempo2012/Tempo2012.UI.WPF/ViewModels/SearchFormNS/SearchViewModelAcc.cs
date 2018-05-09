@@ -20,6 +20,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
     [Serializable]
     public class SearchViewModelAcc : BaseViewModel, ISearchAcc, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public SearchViewModelAcc()
         {
             AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));

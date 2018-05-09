@@ -28,6 +28,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
     public delegate void SinkEvent(object sender, SinkEventArgs e);
     public partial class ContoViewModel : BaseViewModel, IDataErrorInfo, IReportBuilder, ISerchable, IItemsProvider<WraperConto> 
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public int _numberOfRecords = 5;
         //private BackgroundWorker bw = new BackgroundWorker();
         private int _currentItem;

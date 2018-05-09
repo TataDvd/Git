@@ -12,6 +12,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
 {
     public class ValutareportDialog : BaseViewModel, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public ValutareportDialog()
         {
             var reportItems = new List<ReportItem>();

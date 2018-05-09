@@ -14,8 +14,8 @@ namespace Tempo2012.UI.WPF.ViewModels.AccountManagment
 {
     public class ReportAccountsViewModel : BaseViewModel, IReportBuilder
     {
-        
 
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public ReportAccountsViewModel(): base()
         {
            

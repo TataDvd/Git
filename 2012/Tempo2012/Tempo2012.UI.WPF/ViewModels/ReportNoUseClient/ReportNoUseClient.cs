@@ -108,6 +108,7 @@ namespace Tempo2012.UI.WPF.ViewModels.AccountManagment
         }
 
         public IEnumerable<ReportItem> ReportItems { get; set;}
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
 
         public List<string> GetSubTitles()
         {

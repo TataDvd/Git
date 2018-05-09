@@ -15,6 +15,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
 {
     public class SearchViewModelWithAcc : BaseViewModel, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         private int vid;
 
         public SearchViewModelWithAcc()

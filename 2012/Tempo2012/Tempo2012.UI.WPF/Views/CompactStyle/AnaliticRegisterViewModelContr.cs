@@ -15,6 +15,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
 {
     internal class AnaliticRegisterViewModelContr : BaseViewModel, IReportBuilder
     {
+        public Dictionary<int, List<string>> Rowfoother { get; set; }
         public AnaliticRegisterViewModelContr()
         {
             var reportItems = new List<ReportItem>();
