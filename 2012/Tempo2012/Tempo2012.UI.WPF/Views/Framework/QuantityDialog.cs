@@ -90,18 +90,16 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         nskold = el1.BeginSaldoDebitKol;
                     }
                     var row = new List<string>();
-                    row.Add("");
                     row.Add("----------------------------------------------------------------------------------");
                     row.Add("|Сборно          |          л е в а              |           количества          |");
                     row.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
                     row.Add("----------------------------------------------------------------------------------");
                     row.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
                     row.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-                    row.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|               |{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
+                    row.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
                     row.Add($"|Крайни салда    |{((nsd + sumamd) - sumamc).ToString(Vf.LevFormatUI),15}|               |{((nskold + sumacolmd) - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
                     row.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
                     row.Add("----------------------------------------------------------------------------------");
-                    row.Add("");
                     Rowfoother.Add(currentrow-1,row);
                     sumamd = 0;
                     sumacolmd = 0;
@@ -149,18 +147,16 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 nsd = el.BeginSaldoDebit;
                 nskold = el.BeginSaldoDebitKol;
             }
-            row1.Add("");
-            row1.Add("----------------------------------------------------------------------------------");
+             row1.Add("----------------------------------------------------------------------------------");
             row1.Add("|Сборно          |          л е в а              |           количества          |");
             row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
             row1.Add("----------------------------------------------------------------------------------");
             row1.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
             row1.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-            row1.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|               |{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
+            row1.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
             row1.Add($"|Крайни салда    |{((nsd + sumamd) - sumamc).ToString(Vf.LevFormatUI),15}|               |{((nskold + sumacolmd) - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
             row1.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd+nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
             row1.Add("----------------------------------------------------------------------------------");
-            row1.Add("");
             Rowfoother.Add(currentrow-1, row1);
             decimal nsc = 0;
             decimal nsdv = 0;

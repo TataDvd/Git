@@ -342,17 +342,21 @@ namespace ReportBuilder
                             sb.AppendLine();
                             if (iReportBuilder.Rowfoother != null && iReportBuilder.Rowfoother.ContainsKey(currentrow))
                             {
-                                foreach(var foother in iReportBuilder.Rowfoother[currentrow])
+                                //Line(iReportBuilder, sb);
+                                foreach (var foother in iReportBuilder.Rowfoother[currentrow])
                                 {
                                     sb.Append(foother);
                                     sb.AppendLine();
                                 }
+                              
                             }
+                           
+                            
                         }
                         currentrow++;
                     }
-                    
-                    Line(iReportBuilder, sb);
+
+                    if (iReportBuilder.Rowfoother == null) Line(iReportBuilder, sb);
                     if (sborno)
                     {
                         i = 0;
