@@ -306,7 +306,7 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
-            if (v>0)
+            if (!string.IsNullOrWhiteSpace(codeMaterial))
             {
                 return result.Where(e => e.StockCode == codeMaterial);
             }
