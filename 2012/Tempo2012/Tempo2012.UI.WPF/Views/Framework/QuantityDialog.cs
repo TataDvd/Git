@@ -300,29 +300,29 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
         public List<string> GetFuther()
         {
-            //List<string> list = new List<string>();
-            //list.Add("--------------------------------------------------------------------");
-            //list.Add("| Параметри на сметката       |    дебит         |   кредит        |");
-            //list.Add("--------------------------------------------------------------------");
-            //list.Add(string.Format("| Начални салда               |{0,17}|{1,18}|",
-            //    CurrenAcc.TypeAccount == 1 ? BeginSaldoD.ToString(Vf.LevFormatUI) : "",
-            //    CurrenAcc.TypeAccount == 2 ? BeginSaldoK.ToString(Vf.LevFormatUI) : ""));
-            //list.Add(string.Format("| Oбороти                     |{0,17}|{1,18}|", OborotsDebit, OborotsCredit));
-            //list.Add(string.Format("| Сборове                     |{0,17}|{1,18}|", TotalD, TotalC));
-            //list.Add(string.Format("| Крайни салда                |{0,17}|{1,18}|",
-            //    CurrenAcc.TypeAccount == 1 ? KrainoSaldoD.ToString(Vf.LevFormatUI) : "",
-            //    CurrenAcc.TypeAccount == 2 ? KrainoSaldoK.ToString(Vf.LevFormatUI) : ""));
-            //list.Add("--------------------------------------------------------------------");
-            //list.Add("|Количество                   ||||||||||||||||||||||||||||||||||||||");
-            //list.Add("--------------------------------------------------------------------");
-            //list.Add(string.Format("| Начално  салдо              |{0,17}|{1,18}|",BeginValSd,BeginValSc));
-            //list.Add(string.Format("| Обороти                     |{0,17}|{1,18}|",Sumavald,Sumavalc)); 
-            //list.Add(string.Format("| Сборове                     |{0,17}|{1,18}|",TSumavald, TSumavalc)); 
-            //list.Add(string.Format("| Крайно салдо                |{0,17}|{1,18}|",KrainoSaldoDV.ToString(Vf.KolFormatUI), ""));
-            //list.Add(string.Format("| Средна цена                 |{0,17}|{1,18}|",Sad,""));
-            //list.Add("--------------------------------------------------------------------");
-            //return list;
-            return null;
+            List<string> list = new List<string>();
+            list.Add("--------------------------------------------------------------------");
+            list.Add("| Параметри на сметката       |    дебит         |   кредит        |");
+            list.Add("--------------------------------------------------------------------");
+            list.Add(string.Format("| Начални салда               |{0,17}|{1,18}|",
+                CurrenAcc.TypeAccount == 1 ? BeginSaldoD.ToString(Vf.LevFormatUI) : "",
+                CurrenAcc.TypeAccount == 2 ? BeginSaldoK.ToString(Vf.LevFormatUI) : ""));
+            list.Add(string.Format("| Oбороти                     |{0,17}|{1,18}|", OborotsDebit, OborotsCredit));
+            list.Add(string.Format("| Сборове                     |{0,17}|{1,18}|", TotalD, TotalC));
+            list.Add(string.Format("| Крайни салда                |{0,17}|{1,18}|",
+                CurrenAcc.TypeAccount == 1 ? KrainoSaldoD.ToString(Vf.LevFormatUI) : "",
+                CurrenAcc.TypeAccount == 2 ? KrainoSaldoK.ToString(Vf.LevFormatUI) : ""));
+            list.Add("--------------------------------------------------------------------");
+            list.Add("|Количество                   ||||||||||||||||||||||||||||||||||||||");
+            list.Add("--------------------------------------------------------------------");
+            list.Add(string.Format("| Начално  салдо              |{0,17}|{1,18}|", BeginValSd, BeginValSc));
+            list.Add(string.Format("| Обороти                     |{0,17}|{1,18}|", Sumavald, Sumavalc));
+            list.Add(string.Format("| Сборове                     |{0,17}|{1,18}|", TSumavald, TSumavalc));
+            list.Add(string.Format("| Крайно салдо                |{0,17}|{1,18}|", KrainoSaldoDV.ToString(Vf.KolFormatUI), ""));
+            list.Add(string.Format("| Средна цена                 |{0,17}|{1,18}|", Sad, ""));
+            list.Add("--------------------------------------------------------------------");
+            return list;
+            //return null;
         }
 
         public string Filename
