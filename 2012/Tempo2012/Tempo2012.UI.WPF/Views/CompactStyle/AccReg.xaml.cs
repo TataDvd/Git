@@ -220,7 +220,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
 
         private void MenuItem_Click_Quantity(object sender, RoutedEventArgs e)
         {
-            ChoiserValutaandAcc acc = new ChoiserValutaandAcc();
+            ChoiserMatAcc acc = new ChoiserMatAcc();
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
             {
@@ -236,7 +236,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                     Entrence.Mask.DebitAcc = null;
                     Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                     Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, KindStock = acc.CodeClient, Stock = acc.Client });
+                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material });
                     Entrence.Mask.CreditAcc = oldacc;
                     Entrence.Mask.DebitAcc = oldaccd;
                     rd.ShowDialog();

@@ -306,7 +306,10 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
-           
+            if (v>0)
+            {
+                return result.Where(e => e.StockCode == codeMaterial);
+            }
             return result;
         }
 

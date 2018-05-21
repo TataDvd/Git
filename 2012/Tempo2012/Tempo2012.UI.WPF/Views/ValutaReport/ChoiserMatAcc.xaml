@@ -1,0 +1,20 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.ValutaReport.ChoiserMatAcc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="Избери вид стока" 
+        Height="350" 
+        Width="600"
+        WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <StackPanel Orientation="Vertical">
+            <customControls:AccSelector x:Name="cccValuta" Margin="10,5,10,5" Height="280" TabIndex="1" />
+            
+        </StackPanel>
+       
+        <StackPanel Orientation="Horizontal">
+            <Button TabIndex="2" Content="Избери" Margin="10,5,10,2" Click="Do_OnClick" ></Button>
+            <Button Grid.Column="1" TabIndex="3" Content="Откажи" Margin="10,5,10,2" IsCancel="True"></Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

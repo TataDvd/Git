@@ -433,6 +433,9 @@
     <Compile Include="Views\Users\UserManager.xaml.cs">
       <DependentUpon>UserManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ValutaReport\ChoiserMatAcc.xaml.cs">
+      <DependentUpon>ChoiserMatAcc.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ValutaReport\ChoiserValutaandAcc.xaml.cs">
       <DependentUpon>ChoiserValutaandAcc.xaml</DependentUpon>
     </Compile>
@@ -809,6 +812,10 @@
     <Page Include="Views\Users\UserManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ValutaReport\ChoiserMatAcc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ValutaReport\ChoiserValutaandAcc.xaml">
       <SubType>Designer</SubType>
