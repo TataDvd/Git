@@ -853,14 +853,14 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             if (Oborot == 0) return;
             foreach (var saldoItem in ItemsCredit)
             {
-                if (saldoItem.IsVal && saldoItem.ValueVal > 0)
+                if (saldoItem.IsVal && saldoItem.ValueVal != 0)
                 {
                     saldoItem.ValueKurs = Oborot / saldoItem.ValueVal;
                 }
             }
             foreach (var saldoItem in ItemsDebit)
             {
-                if (saldoItem.IsVal && saldoItem.ValueVal > 0)
+                if (saldoItem.IsVal && saldoItem.ValueVal != 0)
                 {
                     saldoItem.ValueKurs = Oborot / saldoItem.ValueVal;
                 }

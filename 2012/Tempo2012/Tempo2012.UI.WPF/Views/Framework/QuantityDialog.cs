@@ -29,7 +29,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "основание", Width = 30});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "забележка", Width = 20});
             reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "код", Width = 10});
-            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "клиент", Width = 40});
+            reportItems.Add(new ReportItem {Height = 30, IsShow = true, Name = "материал", Width = 40});
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "потребител", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "транзакция", Width = 15});
             ReportItems = reportItems;
@@ -53,9 +53,68 @@ namespace Tempo2012.UI.WPF.Views.Framework
         {
             Rowfoother = new Dictionary<int, List<string>>();
             List<List<string>> items = new List<List<string>>();
+            var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+            List<QuantityModel> contosb = null;
+            List<QuantityModel> contos1b = null;
+            if (fromDate.Month > 1)
+            {
+                contosb = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 1, KindStock));
+                contos1b = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 2, KindStock));
+
+                if (contosb != null)
+                {
+                    var query = (from t in contosb
+                                 group t by new { t.StockCode }
+                              into grp
+                                 select new QuantityModel
+                                 {
+                                     StockCode = grp.Key.StockCode,
+                                     Oborot=grp.Sum(t => t.Oborot),
+                                     Quantity=grp.Sum(t=>t.Quantity)
+                                 }).ToList();
+                    foreach (var item in query)
+                    {
+                        if (rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode)!=null)
+                        {
+                            rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode).BeginSaldoDebit += item.Oborot;
+                            rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode).BeginSaldoDebitKol += item.Quantity;
+                        }
+                        else
+                        {
+                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode, BeginSaldoDebit = item.Oborot,BeginSaldoDebitKol=item.Quantity });
+                        }
+                    }
+                }
+                if (contos1b != null)
+                {
+                    var query = (from t in contos1b
+                                 group t by new { t.StockCode }
+                              into grp
+                                 select new QuantityModel
+                                 {
+                                     StockCode = grp.Key.StockCode,
+                                     Oborot = grp.Sum(t => t.Oborot),
+                                     Quantity = grp.Sum(t => t.Quantity)
+                                 }).ToList();
+                    foreach (var item in query)
+                    {
+                        if (rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode) != null)
+                        {
+                            rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode).BeginSaldoCredit += item.Oborot;
+                            rezi.FirstOrDefault(e => e.CodeMaterial == item.StockCode).BeginSaldoCreditKol += item.Quantity;
+                        }
+                        else
+                        {
+                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode, BeginSaldoCredit = item.Oborot,BeginSaldoCreditKol=item.Quantity});
+                        }
+                    }
+                }
+
+            }
             List<QuantityModel> contos =new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,CurrenAcc.Id,FromDate,ToDate,1,KindStock));
             List<QuantityModel> contos1=new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, 2, KindStock));
-            var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+
+           
             decimal sumad = 0,sumac = 0;
             decimal nsd = 0, nskold = 0;
             decimal sumamd = 0, sumamc = 0;
@@ -88,6 +147,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     {
                         nsd = el1.BeginSaldoDebit;
                         nskold = el1.BeginSaldoDebitKol;
+                        rezi.Remove(el1);
                     }
                     var row = new List<string>();
                     row.Add("----------------------------------------------------------------------------------");
@@ -144,10 +204,11 @@ namespace Tempo2012.UI.WPF.Views.Framework
             var el = rezi.FirstOrDefault(e => e.CodeMaterial == currec);
             if (el != null)
             {
-                nsd = el.BeginSaldoDebit;
-                nskold = el.BeginSaldoDebitKol;
+                nsd = el.BeginSaldoDebit-el.BeginSaldoCredit;
+                nskold = el.BeginSaldoDebitKol-el.BeginSaldoCreditKol;
+                rezi.Remove(el);
             }
-             row1.Add("----------------------------------------------------------------------------------");
+            row1.Add("----------------------------------------------------------------------------------");
             row1.Add("|Сборно          |          л е в а              |           количества          |");
             row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
             row1.Add("----------------------------------------------------------------------------------");
@@ -155,23 +216,91 @@ namespace Tempo2012.UI.WPF.Views.Framework
             row1.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
             row1.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
             row1.Add($"|Крайни салда    |{((nsd + sumamd) - sumamc).ToString(Vf.LevFormatUI),15}|               |{((nskold + sumacolmd) - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
-            row1.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd+nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+            row1.Add($"|Средна цена     |{((sumamd + nsd) / ((sumacolmd+nskold)!=0?(sumacolmd+nskold):1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
             row1.Add("----------------------------------------------------------------------------------");
             Rowfoother.Add(currentrow-1, row1);
+            if (string.IsNullOrWhiteSpace(KindStock))
+            {
+                foreach (var item in rezi)
+                {
+                    List<string> item2 = new List<string>();
+                    item2.Add("Само салдо");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit));
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol));
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(item.CodeMaterial);
+                    item2.Add(item.NameMaterial);
+                    item2.Add("");
+                    item2.Add("");
+                    items.Add(item2);
+                    sumamd += item.BeginSaldoDebit;
+                    sumacolmd += item.BeginSaldoDebitKol;
+                    currentrow++;
+                    row1 = new List<string>();
+                    row1.Add("----------------------------------------------------------------------------------");
+                    row1.Add("|Сборно          |          л е в а              |           количества          |");
+                    row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+                    row1.Add("----------------------------------------------------------------------------------");
+                    row1.Add($"|Начални салда   |{item.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
+                    row1.Add($"|Сборове         |{0,15}|{sumamc.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Крайни салда    |{item.BeginSaldoDebit,15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    row1.Add("----------------------------------------------------------------------------------");
+                    Rowfoother.Add(currentrow - 1, row1);
+                }
+            }
+            else
+            {
+                var item = rezi.FirstOrDefault(e => e.CodeMaterial == KindStock);
+                if (item != null)
+                {
+                    List<string> item2 = new List<string>();
+                    item2.Add("Само салдо");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit));
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol));
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add("");
+                    item2.Add(item.CodeMaterial);
+                    item2.Add(item.NameMaterial);
+                    item2.Add("");
+                    item2.Add("");
+                    items.Add(item2);
+                    sumamd += item.BeginSaldoDebit;
+                    sumacolmd += item.BeginSaldoDebitKol;
+                    currentrow++;
+                    row1 = new List<string>();
+                    row1.Add("----------------------------------------------------------------------------------");
+                    row1.Add("|Сборно          |          л е в а              |           количества          |");
+                    row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+                    row1.Add("----------------------------------------------------------------------------------");
+                    row1.Add($"|Начални салда   |{item.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
+                    row1.Add($"|Сборове         |{0,15}|{sumamc.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Крайни салда    |{item.BeginSaldoDebit,15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    row1.Add("----------------------------------------------------------------------------------");
+                    Rowfoother.Add(currentrow - 1, row1);
+                }
+            }
             decimal nsc = 0;
             decimal nsdv = 0;
             decimal nscv = 0;
-            if (FromDate.Month > 1)
-            {
-                var begcontosd =
-                  new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year,1,1), FromDate,  1,KindStock));
-                var begcontosc =
-                  new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 2,KindStock));
-                nsd = begcontosd.Sum(e => e.Oborot);
-                nsc = begcontosc.Sum(e => e.Oborot);
-                //nsdv = begcontosd.Sum(e => e.ValSum);
-                //nscv = begcontosc.Sum(e => e.ValSum);
-            }
             if (CurrenAcc.TypeAccount == 1)
             {
                 if (FromDate.Month == 1)
