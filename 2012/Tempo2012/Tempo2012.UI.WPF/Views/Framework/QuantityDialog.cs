@@ -145,8 +145,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     var el1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
                     if (el1!=null)
                     {
-                        nsd = el1.BeginSaldoDebit;
-                        nskold = el1.BeginSaldoDebitKol;
+                        nsd = el1.BeginSaldoDebit-el1.BeginSaldoCredit;
+                        nskold = el1.BeginSaldoDebitKol-el1.BeginSaldoCreditKol;
                         rezi.Remove(el1);
                     }
                     var row = new List<string>();
@@ -241,8 +241,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item2.Add("");
                     item2.Add("");
                     items.Add(item2);
-                    sumamd += item.BeginSaldoDebit;
-                    sumacolmd += item.BeginSaldoDebitKol;
+                    sumamd += item.BeginSaldoDebit-item.BeginSaldoCredit;
+                    sumacolmd += item.BeginSaldoDebitKol-item.BeginSaldoCreditKol;
                     currentrow++;
                     row1 = new List<string>();
                     row1.Add("----------------------------------------------------------------------------------");
