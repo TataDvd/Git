@@ -514,7 +514,7 @@ namespace Tempo2012.EntityFramework
                     {
                         saldo = item.Nsc - item.Nsd;
                     }
-                    newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
+                    //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
                     newrow.Add(saldo.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Od.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
