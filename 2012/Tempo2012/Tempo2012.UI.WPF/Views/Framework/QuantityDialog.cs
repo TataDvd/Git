@@ -51,6 +51,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
         public List<List<string>> GetItems()
         {
+            BeginSaldoD = 0;
+            BeginValSd = 0;
             Rowfoother = new Dictionary<int, List<string>>();
             List<List<string>> items = new List<List<string>>();
             var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
@@ -146,7 +148,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     if (el1!=null)
                     {
                         nsd = el1.BeginSaldoDebit-el1.BeginSaldoCredit;
+                        BeginSaldoD += nsd;
                         nskold = el1.BeginSaldoDebitKol-el1.BeginSaldoCreditKol;
+                        BeginValSd += nskold;
                         rezi.Remove(el1);
                     }
                     var row = new List<string>();
@@ -205,7 +209,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
             if (el != null)
             {
                 nsd = el.BeginSaldoDebit-el.BeginSaldoCredit;
+                BeginSaldoD += nsd;
                 nskold = el.BeginSaldoDebitKol-el.BeginSaldoCreditKol;
+                BeginValSd += nskold;
                 rezi.Remove(el);
             }
             row1.Add("----------------------------------------------------------------------------------");
@@ -224,15 +230,17 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 foreach (var item in rezi)
                 {
                     List<string> item2 = new List<string>();
+                    item2.Add("");
+                    item2.Add("");
                     item2.Add("Само салдо");
                     item2.Add("");
                     item2.Add("");
+                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit-item.BeginSaldoCredit));
+                    BeginSaldoD += item.BeginSaldoDebit - item.BeginSaldoCredit;
                     item2.Add("");
                     item2.Add("");
-                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit));
-                    item2.Add("");
-                    item2.Add("");
-                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol));
+                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol-item.BeginSaldoCreditKol));
+                    BeginValSd += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
                     item2.Add("");
                     item2.Add("");
                     item2.Add("");
@@ -269,10 +277,12 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item2.Add("");
                     item2.Add("");
                     item2.Add("");
-                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit));
+                    item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit-item.BeginSaldoCredit));
+                    BeginSaldoD += item.BeginSaldoDebit - item.BeginSaldoCredit;
                     item2.Add("");
                     item2.Add("");
-                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol));
+                    item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol-item.BeginSaldoCreditKol));
+                    BeginValSd += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
                     item2.Add("");
                     item2.Add("");
                     item2.Add("");
@@ -298,36 +308,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     Rowfoother.Add(currentrow - 1, row1);
                 }
             }
-            decimal nsc = 0;
-            decimal nsdv = 0;
-            decimal nscv = 0;
-            if (CurrenAcc.TypeAccount == 1)
-            {
-                if (FromDate.Month == 1)
-                {
-                    BeginSaldoD = CurrenAcc.BeginSaldoL;
-                    BeginValSd = CurrenAcc.BeginSaldoK;
-                }
-                else
-                {
-                    BeginSaldoD = (nsd + CurrenAcc.BeginSaldoL) - (nsc);
-                    BeginValSd = ((nsdv + CurrenAcc.BeginSaldoK) - (nscv));
-                }
-               
-            }
-            if (CurrenAcc.TypeAccount == 2)
-            {
-                if (FromDate.Month == 1)
-                {
-                    BeginSaldoK = CurrenAcc.BeginSaldoL;
-                    BeginValSc = CurrenAcc.BeginSaldoK;
-                }
-                else
-                { 
-                    BeginSaldoK = (nsc + CurrenAcc.BeginSaldoL) - (nsd);
-                    BeginValSc = ((nscv + CurrenAcc.BeginSaldoK) - (nsdv));
-                }
-            }
+            
+           
             OborotsDebit = string.Format(Vf.LevFormat, sumad);
             OborotsCredit = string.Format(Vf.LevFormat, sumac);
             Sumavald = string.Format(Vf.KolFormat, sumaquantityd);
