@@ -339,6 +339,7 @@
     <Compile Include="Views\Conto\ContoView.xaml.cs">
       <DependentUpon>ContoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Framework\ValutaExtendedDialog.cs" />
     <Compile Include="Views\Framework\SaldoView.xaml.cs">
       <DependentUpon>SaldoView.xaml</DependentUpon>
     </Compile>
