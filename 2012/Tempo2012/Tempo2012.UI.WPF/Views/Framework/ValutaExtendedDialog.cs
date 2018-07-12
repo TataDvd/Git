@@ -69,7 +69,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             if (fromDate.Month > 1 && !string.IsNullOrWhiteSpace(CodeClient))
             {
                 contosb = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, VidVal, 1, CodeClient)); 
-                contos1b = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, VidVal, 1, CodeClient)); 
+                contos1b = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, VidVal,2, CodeClient)); 
 
                 if (contosb != null)
                 {
