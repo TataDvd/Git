@@ -212,12 +212,12 @@ namespace Tempo2012.UI.WPF.Views.Framework
             }
             if (!string.IsNullOrWhiteSpace(CodeClient))
             {
-                var lsumad = contos.Where(e=>e.ClienCode==CodeClient).Sum(e => e.Oborot);
-                var lsumac = contos1.Where(e=>e.ClienCode==CodeClient).Sum(e => e.Oborot);
-                var lsumavald = contos.Where(e=>e.ClienCode==CodeClient).Sum(e => e.ValSum);
-                var lsumavalc = contos1.Where(e=>e.ClienCode==CodeClient).Sum(e => e.ValSum);
-                var lsumavalddf = contos.Where(e=>e.ClienCode==CodeClient).Sum(e => e.KursDif);
-                var lsumavalcdf = contos1.Where(e=>e.ClienCode==CodeClient).Sum(e => e.KursDif);
+                var lsumad = sumad;
+                var lsumac = sumac;
+                var lsumavald = sumavald;
+                var lsumavalc = sumavalc;
+                var lsumavalddf = sumavalddf;
+                var lsumavalcdf = sumavalcdf;
                 var saldo = rezi.FirstOrDefault(e => e.Code == CodeClient);
                 var lnsd = saldo !=null ? saldo.BeginSaldoDebit : 0;
                 var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
