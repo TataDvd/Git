@@ -97,7 +97,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 }
                 if (contos1b != null)
                 {
-                    var query = (from t in contos1b
+                    var query1 = (from t in contos1b
                                  group t by new { t.ClienCode }
                                  into grp
                                                 select new ValutaControl
@@ -106,16 +106,16 @@ namespace Tempo2012.UI.WPF.Views.Framework
                                                     Oborot = grp.Sum(t => t.Oborot),
                                                     ValSum = grp.Sum(t => t.ValSum)
                                                 }).ToList();
-                    foreach (var item in query)
+                    foreach (var item in query1)
                     {
-                        if (rezi.FirstOrDefault(e => e.CodeMaterial == item.ClienCode) != null)
+                        if (rezi.FirstOrDefault(e => e.Code == item.ClienCode) != null)
                         {
-                            rezi.FirstOrDefault(e => e.CodeMaterial == item.ClienCode).BeginSaldoCredit += item.Oborot;
-                            rezi.FirstOrDefault(e => e.CodeMaterial == item.ClienCode).BeginSaldoCreditKol += item.ValSum;
+                            rezi.FirstOrDefault(e => e.Code == item.ClienCode).BeginSaldoCredit += item.Oborot;
+                            rezi.FirstOrDefault(e => e.Code == item.ClienCode).BeginSaldoCreditValuta += item.ValSum;
                         }
                         else
                         {
-                            rezi.Add(new SaldoFactura { CodeMaterial = item.ClienCode, BeginSaldoCredit = item.Oborot, BeginSaldoCreditKol = item.ValSum });
+                            rezi.Add(new SaldoFactura { Code = item.ClienCode, BeginSaldoCredit = item.Oborot, BeginSaldoCreditValuta = item.ValSum });
                         }
                     }
                 }
@@ -223,6 +223,20 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
                 var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
                 var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
+                if (CurrenAcc.TypeAccount == 1)
+                {
+                    lnsd = lnsd - lnsc;
+                    lnsdv = lnsdv - lnscv;
+                    lnsc = 0;
+                    lnscv = 0;
+                }
+                else
+                {
+                    lnsc =  lnsc - lnsd;
+                    lnscv = lnscv - lnsdv;
+                    lnsd = 0;
+                    lnsdv = 0;
+                }
                 var lsbord = lnsd + lsumad;
                 var lsborc = lnsc + lsumac;
                 var lsbordv = lnsdv + lsumavald;
