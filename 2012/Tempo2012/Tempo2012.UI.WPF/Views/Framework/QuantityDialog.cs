@@ -145,13 +145,18 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 if (oldrec != currec)
                 {
                     var el1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
-                    if (el1!=null)
+                    if (el1 != null)
                     {
-                        nsd = el1.BeginSaldoDebit-el1.BeginSaldoCredit;
+                        nsd = el1.BeginSaldoDebit - el1.BeginSaldoCredit;
                         BeginSaldoD += nsd;
-                        nskold = el1.BeginSaldoDebitKol-el1.BeginSaldoCreditKol;
+                        nskold = el1.BeginSaldoDebitKol - el1.BeginSaldoCreditKol;
                         BeginValSd += nskold;
                         rezi.Remove(el1);
+                    }
+                    else
+                    {
+                        nsd = 0;
+                        nskold = 0;
                     }
                     var row = new List<string>();
                     row.Add("----------------------------------------------------------------------------------");
@@ -213,6 +218,11 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 nskold = el.BeginSaldoDebitKol-el.BeginSaldoCreditKol;
                 BeginValSd += nskold;
                 rezi.Remove(el);
+            }
+            else
+            {
+                nsd = 0;
+                nskold = 0;
             }
             row1.Add("----------------------------------------------------------------------------------");
             row1.Add("|Сборно          |          л е в а              |           количества          |");

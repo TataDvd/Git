@@ -264,7 +264,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 row1.Add($"|Начални салда   |{lnsd.ToString(Vf.LevFormatUI),15}|{lnsc.ToString(Vf.LevFormatUI),15}|{lnsdv.ToString(Vf.ValFormatUI),15}|{lnscv.ToString(Vf.ValFormatUI),15}|");
                 row1.Add($"|Oбороти         |{lsumad.ToString(Vf.LevFormatUI),15}|{lsumac.ToString(Vf.LevFormatUI),15}|{lsumavald.ToString(Vf.ValFormatUI),15}|{lsumavalc.ToString(Vf.ValFormatUI),15}|");
                 row1.Add($"|Сборове         |{lsbord.ToString(Vf.LevFormatUI),15}|{lsborc.ToString(Vf.LevFormatUI),15}|{lsbordv.ToString(Vf.ValFormatUI),15}|{lsborcv.ToString(Vf.ValFormatUI),15}|");
-                row1.Add($"|Крайни салда    |{lksd.ToString(Vf.LevFormatUI),15}|{lksc.ToString(Vf.LevFormatUI),15}|{lksdv.ToString(Vf.KolFormatUI),15}|{lkscv.ToString(Vf.KolFormatUI),15}|");
+                row1.Add($"|Крайни салда    |{lksd.ToString(Vf.LevFormatUI),15}|{lksc.ToString(Vf.LevFormatUI),15}|{lksdv.ToString(Vf.ValFormatUI),15}|{lkscv.ToString(Vf.ValFormatUI),15}|");
                 row1.Add("----------------------------------------------------------------------------------");
                 Rowfoother = new Dictionary<int, List<string>>();
                 Rowfoother.Add(currentrow + 3, row1);

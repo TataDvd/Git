@@ -2708,7 +2708,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         internal void UpdateValutenKurs(string vidvaluta)
         {
-            if (this.Mode == EditMode.Edit || this.Mode == EditMode.Add)
+            if (this.Mode == EditMode.Add)
             {
                 WorkValuta = vidvaluta;
                 decimal kursforaday = 0m;
