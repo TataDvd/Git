@@ -63,6 +63,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
             List<List<string>> items = new List<List<string>>();
             List<ValutaControl> contos = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 1, CodeClient));
             List<ValutaControl> contos1 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
+            List<ValutaControl> contos3 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 1, CodeClient));
+            List<ValutaControl> contos4 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
             List<ValutaControl> contosb = null;
             List<ValutaControl> contos1b = null;
             var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
@@ -137,11 +139,11 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
             string currec = "", oldrec = "";
             string lastcode = "", lastname = "";
-            contos.AddRange(contos1);
+            contos3.AddRange(contos4);
             int currentrow = 0;
             foreach (
                 var co in
-                    contos.OrderBy(e => e.ClienCode))
+                    contos3.OrderBy(e => e.ClienCode))
             {
                 if (oldrec == "")
                 {
@@ -179,13 +181,13 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     //sumadm = 0;
                     //sumavaldm = 0;
                     //sumavalddfm = 0; 
-                    var lsumad1        = contos.Where(e=>e.ClienCode==currec).Sum(e => e.Oborot);
-                    var lsumac1        =contos1.Where(e=>e.ClienCode==currec).Sum(e => e.Oborot);
-                    var lsumavald1     = contos.Where(e=>e.ClienCode==currec).Sum(e => e.ValSum);
-                    var lsumavalc1     =contos1.Where(e=>e.ClienCode==currec).Sum(e => e.ValSum);
-                    var lsumavalddf1   = contos.Where(e=>e.ClienCode==currec).Sum(e => e.KursDif);
-                    var lsumavalcdf1   =contos1.Where(e => e.ClienCode == currec).Sum(e => e.KursDif);
-                    var saldo1 = rezi.FirstOrDefault(e => e.Code == CodeClient);
+                    var lsumad1        = contos.Where(e=>e.ClienCode== oldrec).Sum(e => e.Oborot);
+                    var lsumac1        =contos1.Where(e=>e.ClienCode== oldrec).Sum(e => e.Oborot);
+                    var lsumavald1     = contos.Where(e=>e.ClienCode== oldrec).Sum(e => e.ValSum);
+                    var lsumavalc1     =contos1.Where(e=>e.ClienCode== oldrec).Sum(e => e.ValSum);
+                    var lsumavalddf1   = contos.Where(e=>e.ClienCode== oldrec).Sum(e => e.KursDif);
+                    var lsumavalcdf1   =contos1.Where(e => e.ClienCode == oldrec).Sum(e => e.KursDif);
+                    var saldo1 = rezi.FirstOrDefault(e => e.Code == oldrec);
                     var lnsd1 = saldo1 != null ? saldo1.BeginSaldoDebit : 0;
                     var lnsc1 = saldo1 != null ? saldo1.BeginSaldoCredit : 0;
                     var lnsdv1 = saldo1 != null ? saldo1.BeginSaldoDebitValuta : 0;
@@ -266,15 +268,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 sumavalddfm += co.KursDif;
                 currentrow++;
             }
-           
-                var lsumad = sumad;
-                var lsumac = sumac;
-                var lsumavald = sumavald;
-                var lsumavalc = sumavalc;
-                var lsumavalddf = sumavalddf;
-                var lsumavalcdf = sumavalcdf;
-                var saldo = rezi.FirstOrDefault(e => e.Code == CodeClient);
-                var lnsd = saldo !=null ? saldo.BeginSaldoDebit : 0;
+
+            var lsumad = contos.Where(e => e.ClienCode == currec).Sum(e => e.Oborot);
+            var lsumac = contos1.Where(e => e.ClienCode == currec).Sum(e => e.Oborot);
+            var lsumavald = contos.Where(e => e.ClienCode == currec).Sum(e => e.ValSum);
+            var lsumavalc = contos1.Where(e => e.ClienCode == currec).Sum(e => e.ValSum);
+            var lsumavalddf = contos.Where(e => e.ClienCode == currec).Sum(e => e.KursDif);
+            var lsumavalcdf = contos1.Where(e => e.ClienCode == currec).Sum(e => e.KursDif);
+            var saldo = rezi.FirstOrDefault(e => e.Code == currec);
+            var lnsd = saldo !=null ? saldo.BeginSaldoDebit : 0;
                 var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
                 var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
                 var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
