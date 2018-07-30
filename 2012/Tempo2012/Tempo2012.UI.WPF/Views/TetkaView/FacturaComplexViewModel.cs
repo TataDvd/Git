@@ -28,7 +28,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             var _reportItems = new List<ReportItem>();
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Код", Width = 10 });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Контрагент", Width = 50 });
-            // _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "ЗДДС", Width = 15});
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит ", Width = 15, IsSuma = true });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит", Width = 15, IsSuma = true });
@@ -49,6 +49,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             var _reportItems = new List<ReportItem>();
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Код", Width = 10 });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Контрагент", Width = 30 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "ЗДДС", Width = 15 });
             //_reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС Дебит ", Width = 15, IsSuma = true });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
             _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит ", Width = 15, IsSuma = true });
@@ -215,8 +216,36 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
                 AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             
-            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
-            
+                var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
+                int luki = 0;
+            if (AllMovementDebit1.Count > 0)
+            {
+                luki = AllMovementDebit1.Max(e => e.CID);
+            }
+            else
+            {
+                if (AllMovementCredit1.Count > 0)
+                {
+                    luki = AllMovementCredit1.Max(e => e.CID);
+                }
+                else
+                {
+                    if (AllMovementDebit.Count > 0)
+                    {
+                        luki = AllMovementDebit.Max(e => e.CID);
+                    }
+                    else if (AllMovementCredit.Count>0)
+                    {
+                        luki = AllMovementCredit.Max(e => e.CID);
+                    }
+                }
+            }
+            List<Dictionary<string,object>> lookup = null;
+            if (luki > 0)
+            {
+                var look = Context.GetLookup(luki);
+                lookup = Context.GetLookupDictionary(look.LookUpMetaData.Tablename, ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).ToList();
+            }
                 foreach (InvoiseControl invoiseControl in AllMovementDebit)
                 {
                     var item = new AccItemSaldo();
@@ -246,10 +275,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     item.NInvoise = invoiseControl.NInvoise;
                     item.NameContragent = invoiseControl.NameContragent;
                     item.Code = invoiseControl.CodeContragent;
-                    item.Oc = invoiseControl.Oborot;
+               
+                item.Oc = invoiseControl.Oborot;
                     item.Type = accountsModel.TypeAccount;
                     item.Data = invoiseControl.DataInvoise;
-
+                  
                     _movements1.Add(item);
 
                 }
@@ -321,6 +351,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NInvoise = invoiseControl.NInvoise;
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
+                
                 item.Oc = invoiseControl.Oborot;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
@@ -346,6 +377,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.NInvoise = item.NInvoise;
                 item1.NameContragent = item.NameContragent;
                 item1.Code = item.Code;
+                
                 item1.Od = 0;
                 item1.Data = item.Data;
                 item1.Nsd = item.Ksd;
@@ -368,6 +400,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             }
             string name = "";
             string code = "";
+            string zdds = "";
             bool first = true;
 
             decimal sumansc = 0;
@@ -390,6 +423,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     name = itemSaldo.NameContragent;
                     code = itemSaldo.Code;
+                    if (lookup != null)
+                    {
+                        var vat = lookup.FirstOrDefault(x => x.ContainsKey("VAT") && x["KONTRAGENT"].ToString() == itemSaldo.Code);
+                        if (vat != null)
+                        {
+                            zdds = vat["VAT"].ToString();
+                        }
+                    }
+                    else
+                    {
+                        zdds = "n/a";
+                    }
                     first = false;
                     
                 }
@@ -403,11 +448,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         {
                             rowTotal.Add("");
                             rowTotal.Add("");
+                            rowTotal.Add("");
                         }
                         else
                         {
                             rowTotal.Add(code);
                             rowTotal.Add(name);
+                            rowTotal.Add(zdds);
                         }
                         //rowTotal.Add("");
                         //rowTotal.Add(" Общо :");
@@ -446,6 +493,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         sumaOd = 0;
                         name = itemSaldo.NameContragent;
                         code = itemSaldo.Code;
+                        if (lookup != null)
+                        {
+                            var vat = lookup.FirstOrDefault(x => x.ContainsKey("VAT") && x["KONTRAGENT"].ToString() == code);
+                            if (vat != null)
+                            {
+                                zdds = vat["VAT"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            zdds = "n/a";
+                        }
                     }
                 }
                 
@@ -481,11 +540,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     rowTotalLas.Add("");
                     rowTotalLas.Add("");
+                    rowTotalLas.Add("");
                 }
                 else
                 {
                     rowTotalLas.Add(code);
                     rowTotalLas.Add(name);
+                    rowTotalLas.Add(zdds);
                 }
                 //rowTotalLas.Add("");
                 //rowTotalLas.Add(" Общо :");
@@ -525,9 +586,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             "-----------------------------------",
                             "-----------------------------------",
                             "-----------------------------------",
+                            "-----------------------------------",
                             "-----------------------------------"
                              });
             List<string> rowTotalLast = new List<string>();
+            rowTotalLast.Add("");
             rowTotalLast.Add("");
             rowTotalLast.Add(" Общо :");
             rowTotalLast.Add(totalns.ToString(Vf.LevFormatUI));

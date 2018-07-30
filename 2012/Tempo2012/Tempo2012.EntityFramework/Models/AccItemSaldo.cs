@@ -77,5 +77,6 @@ namespace Tempo2012.EntityFramework.Models
         {
             return (AccItemSaldo)this.MemberwiseClone();
         }
+        public string ZDDS { get; set; }
     }
 }

@@ -3155,6 +3155,7 @@ namespace Tempo2012.EntityFramework
                     if (ic.NameField == "Контрагент")
                     {
                         ic.CID = ic.LOOKUPID;
+
                         ic.CKEY = ic.LOOKUPFIELDKEY;
                         ic.CodeContragent = ic.VALUE;
                         ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
@@ -3210,6 +3211,7 @@ namespace Tempo2012.EntityFramework
                     if (ic1.NameField == "Контрагент")
                     {
                         ici.CodeContragent = ic1.CodeContragent;
+                        ici.CID = ic1.CID;
                     }
                 
 
@@ -3233,7 +3235,8 @@ namespace Tempo2012.EntityFramework
                              Folder = grp.First().Folder,
                              DocNumber = grp.First().DocNumber,
                              Pr1 = grp.First().Pr1,
-                             Pr2 = grp.First().Pr2
+                             Pr2 = grp.First().Pr2,
+                             CID=grp.Max().CID
                          });
             //foreach (var VARIABLE in query)
             //{

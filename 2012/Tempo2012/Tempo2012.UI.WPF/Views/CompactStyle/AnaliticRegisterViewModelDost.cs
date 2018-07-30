@@ -139,7 +139,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 item.Add(co.SumDds.ToString());
                 item.Add(co.Sum.ToString());
                 items.Add(item);
-                if (string.IsNullOrWhiteSpace(co.CDetails))
+                if (co.DebitAccount == CurrenAcc.Id)
                 {
                     sumad += co.Oborot;
                 }
