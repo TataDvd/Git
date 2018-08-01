@@ -3236,7 +3236,7 @@ namespace Tempo2012.EntityFramework
                              DocNumber = grp.First().DocNumber,
                              Pr1 = grp.First().Pr1,
                              Pr2 = grp.First().Pr2,
-                             CID=grp.Max().CID
+                             CID=grp.First().CID
                          });
             //foreach (var VARIABLE in query)
             //{
