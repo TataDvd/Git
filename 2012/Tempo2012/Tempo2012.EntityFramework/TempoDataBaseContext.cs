@@ -698,7 +698,10 @@ namespace Tempo2012.EntityFramework
         {
             return RealDataContext.GetDetailsContoToAccMat(id, typeAccount, filter);
         }
-
+        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccVal(int id, int typeAccount, string filter)
+        {
+            return RealDataContext.GetDetailsContoToAccVal(id, typeAccount, filter);
+        }
         public IEnumerable<Conto> GetAllContoOrfiltered(int firmaId, ISearchAcc pSearcAcc)
         {
             return RealDataContext.GetAllContoOrfiltered(firmaId,pSearcAcc);

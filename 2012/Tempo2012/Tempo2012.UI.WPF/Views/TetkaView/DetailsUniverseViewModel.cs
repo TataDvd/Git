@@ -93,6 +93,36 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 Fields = new List<List<string>>(_fields);
                 OnPropertyChanged("Fields");
             }
+            if (dAccountsModel.AnaliticalNum == 6)
+            {
+                var v = Context.GetDetailsContoToAccVal(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
+                _fields = new List<List<string>>();
+                if (v != null)
+                {
+                    foreach (var item in v)
+                    {
+                        _fields.Add(new List<string>(item));
+                    }
+                }
+                else
+                {
+                    var r = new List<string>();
+                    var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
+                    foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
+                    {
+                        r.Add(saldoAnaliticModel.Name);
+
+                    }
+                    r.Add("НС");
+                    r.Add("ОД");
+                    r.Add("ОК");
+                    r.Add("КС");
+                    r.Add("Дата");
+                    _fields.Add(r);
+                }
+                Fields = new List<List<string>>(_fields);
+                OnPropertyChanged("Fields");
+            }
             else
             {
                 var v = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);

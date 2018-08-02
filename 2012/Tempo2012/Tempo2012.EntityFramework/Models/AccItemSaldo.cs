@@ -17,6 +17,10 @@ namespace Tempo2012.EntityFramework.Models
         public decimal Od { get; set; }
         public decimal Oc { get; set; }
 
+        public decimal OVd { get; set; }
+        public decimal OVc { get; set; } 
+
+
         private decimal ksd;
         public decimal Ksd
         {
@@ -37,10 +41,30 @@ namespace Tempo2012.EntityFramework.Models
 
         }
 
-        private decimal _ksc;
+        private decimal ksdv;
+        public decimal Ksdv
+        {
+            set
+            {
+                ksdv = value;
+            }
+            get
+            {
+                if (Type == 1)
+                {
+                    decimal rez = Nsdv + Odv - Nscv - Ocv;
+                    ksdv = rez;
+
+                }
+                return ksdv;
+            }
+
+        }
+
+        
         private int cod;
         private string code;
-
+        private decimal _ksc;
         public decimal Ksc
         {
             get
@@ -57,6 +81,25 @@ namespace Tempo2012.EntityFramework.Models
             {
                 
                 _ksc = value;
+            }
+        }
+        private decimal _kscv;
+        public decimal Kscv
+        {
+            get
+            {
+                if (Type == 2)
+                {
+                    decimal rez = Nscv + Ocv - Nsdv - Odv;
+                    _kscv = rez;
+
+                }
+                return _kscv;
+            }
+            set
+            {
+
+                _kscv = value;
             }
         }
         public decimal Col { get; set;}
@@ -78,5 +121,11 @@ namespace Tempo2012.EntityFramework.Models
             return (AccItemSaldo)this.MemberwiseClone();
         }
         public string ZDDS { get; set; }
+        public decimal Nsdv { get;set; }
+        public decimal Odv { get;  set; }
+        public decimal Nscv { get;  set; }
+        public decimal Ocv { get;  set; }
+        public decimal Kurs { get;  set; }
+
     }
 }

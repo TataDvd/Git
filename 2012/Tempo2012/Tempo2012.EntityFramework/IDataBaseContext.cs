@@ -46,6 +46,7 @@ namespace Tempo2012.EntityFramework
         IEnumerable<LookUpMetaData> GetAllSysLookups();
         IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, string filter);
         IEnumerable<IEnumerable<string>> GetDetailsContoToAccMat(int id, int typeAccount, string filter);
+        IEnumerable<IEnumerable<string>> GetDetailsContoToAccVal(int id, int typeAccount, string filter);
         LookupModel GetSysLookup(int p);
         bool SaveAA(AnaliticalAccount CurrentAnaliticalAccount, IEnumerable<AnaliticalFields> CurrentFieldSelected);
         void UpdateAA(AnaliticalAccount CurrentAnaliticalAccount, IEnumerable<AnaliticalFields> CurrentFieldSelected);

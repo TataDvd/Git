@@ -707,7 +707,198 @@ namespace Tempo2012.EntityFramework
 
             return allConto;
         }
+        internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccVal(int id, int typeAccount, string filter)
+        {
+            List<AccItemSaldo> rez = new List<AccItemSaldo>();
+            List<List<string>> rez1 = new List<List<string>>();
+            List<string> titles = new List<string>();
+            decimal kurs = 0;
+            decimal val = 0;
+            
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            try
+            {
+                string s =
+                    string.Format(
+                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL,m.VALVAL,m.KURS FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
+                        ConfigTempoSinglenton.GetInstance().WorkDate.Year, id);
+                dbman.Open();
+                dbman.ExecuteReader(CommandType.Text, s);
+                string command =
+               string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
+                             " FROM \"accounts\" a " +
+                             "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
+                             "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
+                             "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
+                             "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
+                             "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
+                             " where a.\"Id\"={0}", id);
+                int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
+                bool change = false;
+                bool first = true;
+                bool firstrow = true;
+                bool ima = false;
+                AccItemSaldo row = new AccItemSaldo();
+                row.Type = typeAccount;
+                int oldid = 0, newid = 0;
+                int chikiriki = 0;
+                while (dbman.DataReader.Read())
+                {
+                    ima = true;
+                    newid = int.Parse(dbman.DataReader["Id"].ToString());
+                    if (first)
+                    {
+                        first = false;
+                        oldid = newid;
+                        int smetka = 0;
+                        if (int.TryParse(dbman.DataReader["DebitAccount"].ToString(), out smetka))
+                        {
+                            if (smetka == id)
+                            {
+                                row.IsDebit = true;
+                                row.Type = typeAccount;
+                                row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                row.Odv = val;
+                                row.Kurs = kurs;
+                            }
+                            else
+                            {
+                                row.Type = typeAccount;
+                                row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                row.OVc = val;
+                                row.Kurs = kurs;
+                            }
+                        }
+                    }
+                    if (oldid != newid)
+                    {
+                        change = true;
+                    }
+                    if (change)
+                    {
+                        if (firstrow)
+                        {
 
+                            firstrow = false;
+                        }
+                        rez.Add(row);
+                        row = new AccItemSaldo();
+                        oldid = newid;
+                        change = false;
+                        int smetka;
+                        if (int.TryParse(dbman.DataReader["DebitAccount"].ToString(), out smetka))
+                        {
+                            if (smetka == id)
+                            {
+                                row.IsDebit = true;
+                                row.Type = typeAccount;
+                                row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                row.Odv = val;
+                                row.Kurs = kurs;
+                            }
+                            else
+                            {
+                                row.Type = typeAccount;
+                                row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                row.OVc = val;
+                                row.Kurs = kurs;
+                            }
+                        }
+                        chikiriki = 0;
+                    }
+
+                    if (chikiriki <= count)
+                    {
+                        string name = dbman.DataReader["Name"].ToString();
+                        string value = dbman.DataReader["VALUE"].ToString();
+                        if (name == "Сума валута")
+                        {
+                            kurs= decimal.Parse(dbman.DataReader["KURS"].ToString());
+                            val = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
+                            
+                        }
+                        row.Details = string.Format("{0}|{1} ", row.Details, value);
+                        if (firstrow)
+                        {
+                            titles.Add(name);
+                        }
+                        chikiriki++;
+                    }
+                }
+                if (ima)
+                {
+                    rez.Add(row);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance().WriteLogError(ex.Message, "internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAcc(int id,int typ,string filter)");
+                dbman.RollBackTransaction();
+
+            }
+
+
+            finally
+            {
+                dbman.Dispose();
+            }
+
+            titles.Add("НС");
+            titles.Add("ОД");
+            titles.Add("ОК");
+            titles.Add("KС");
+            titles.Add("Курс");
+            titles.Add("НСВ");
+            titles.Add("ОВК");
+            titles.Add("ОВД");
+            titles.Add("КСВ");
+            //titles.Add("КС");
+            rez1.Add(titles);
+         
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                foreach (var item in rez.Where(e => e.Details != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
+                {
+                    var det = item.Details.Split('|');
+                    List<string> newrow = det.Skip(1).ToList();
+                    newrow.Add(item.Ns.ToString(Vf.LevFormatUI));
+                    newrow.Add(item.Od.ToString(Vf.LevFormatUI));
+                    newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
+                    newrow.Add(item.Ns.ToString(Vf.LevFormatUI));
+                    newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.Nscv.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.OVc.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.OVd.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.Kscv.ToString(Vf.ValFormatUI));
+                    rez1.Add(newrow);
+                }
+            }
+            else
+            {
+                foreach (var item in rez.OrderBy(e => e.Details))
+                {
+                    if (item.Details != null)
+                    {
+                        var det = item.Details.Split('|');
+                        List<string> newrow = det.Skip(1).ToList();
+                        newrow.Add(item.Od.ToString(Vf.LevFormatUI));
+                        newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
+                        newrow.Add(item.OVc.ToString(Vf.ValFormatUI));
+                        newrow.Add(item.OVd.ToString(Vf.ValFormatUI));
+                        newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
+                        rez1.Add(newrow);
+                    }
+                }
+            }
+            return rez1;
+        }
         internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccMat(int id, int typeAccount, string filter)
         {
             List<AccItemSaldo> rez = new List<AccItemSaldo>();
