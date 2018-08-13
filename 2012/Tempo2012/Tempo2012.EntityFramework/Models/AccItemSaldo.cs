@@ -109,6 +109,7 @@ namespace Tempo2012.EntityFramework.Models
 
         public DateTime Data { get; set;}
         public string Details { get; set; }
+        public string Fields { get; set; }
         public decimal Ns { get; set; }
         public decimal Ks { get; set; }
         public string Folder { get; set; }

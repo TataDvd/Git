@@ -1501,7 +1501,9 @@ namespace Tempo2012.EntityFramework
                     else
                     {
                         string name = dbman.DataReader["Name"].ToString();
+                        string lookup = dbman.DataReader["VALS"].ToString();
                         if (!name.Contains("Дата ")) workSaldos.Details=string.Format("{0}|{1} ", workSaldos.Details,dbman.DataReader["VALUE"]);
+                        workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Details, string.IsNullOrWhiteSpace(lookup)?dbman.DataReader["VALUE"]:dbman.DataReader["VALUE"]+"---"+lookup);
                         if (name=="Номер фактура")
                         {
                             workSaldos.NumInvoise = dbman.DataReader["VALUE"].ToString();

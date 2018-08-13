@@ -408,6 +408,8 @@ namespace Tempo2012.EntityFramework
                     {
                         string name = dbman.DataReader["Name"].ToString();
                         string value = dbman.DataReader["VALUE"].ToString();
+                        string lookup = dbman.DataReader["LOOKUPVAL"].ToString();
+                        row.Fields = string.Format("{0}|{1} ", row.Fields, string.IsNullOrWhiteSpace(lookup) ? value : value + "---" + lookup);
                         if (name == "Контрагент")
                         {
                             row.Code = value;
@@ -462,6 +464,7 @@ namespace Tempo2012.EntityFramework
                                  Details=grp.Key.Details,
                                  Type=grp.First().Type,
                                  Data=grp.Last().Data,
+                                 Fields=grp.Last().Fields,
                                  //Nsc=grp.Sum(t => t.Nsc),
                                  //Nsd = grp.Sum(t => t.Nsc),
                                  Oc = grp.Sum(t => t.Oc),
@@ -495,15 +498,16 @@ namespace Tempo2012.EntityFramework
                     item.Data = items.Date;
                     item.Type = typeAccount;
                     item.Details = items.Details;
+                    item.Fields = items.Fields;
                     query.Add(item);
                 }
             }
             //
             if (!string.IsNullOrWhiteSpace(filter))
             {
-                foreach (var item in query.Where(e => e.Details != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
+                foreach (var item in query.Where(e => e.Details != null && e.Fields!=null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
                 {
-                    var det = item.Details.Split('|');
+                    var det = item.Fields.Split('|');
                     List<string> newrow = det.Skip(1).ToList();
                     decimal saldo = 0;
                     if (item.Type == 1)
@@ -535,9 +539,9 @@ namespace Tempo2012.EntityFramework
             {
                 foreach (var item in query.OrderBy(e => e.Details))
                 {
-                    if (item.Details != null)
+                    if (item.Details != null && item.Fields!=null)
                     {
-                        var det = item.Details.Split('|');
+                        var det = item.Fields.Split('|');
                         List<string> newrow = det.Skip(1).ToList();
                         decimal saldo = 0;
                         if (item.Type == 1)
@@ -813,13 +817,15 @@ namespace Tempo2012.EntityFramework
                     {
                         string name = dbman.DataReader["Name"].ToString();
                         string value = dbman.DataReader["VALUE"].ToString();
+                        string lookup = dbman.DataReader["LOOKUPVAL"].ToString();
+                        row.Fields = string.Format("{0}|{1} ", row.Fields, string.IsNullOrWhiteSpace(lookup) ? value : value + "---" + lookup);
                         if (name == "Сума валута")
                         {
                             kurs= decimal.Parse(dbman.DataReader["KURS"].ToString());
                             val = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
                             
                         }
-                        row.Details = string.Format("{0}|{1} ", row.Details, value);
+                        if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
                         if (firstrow)
                         {
                             titles.Add(name);
@@ -865,7 +871,7 @@ namespace Tempo2012.EntityFramework
             {
                 foreach (var item in rez.Where(e => e.Details != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
                 {
-                    var det = item.Details.Split('|');
+                    var det = item.Fields.Split('|');
                     List<string> newrow = det.Skip(1).ToList();
                     newrow.Add(item.Ns.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Od.ToString(Vf.LevFormatUI));
@@ -886,7 +892,7 @@ namespace Tempo2012.EntityFramework
                 {
                     if (item.Details != null)
                     {
-                        var det = item.Details.Split('|');
+                        var det = item.Fields.Split('|');
                         List<string> newrow = det.Skip(1).ToList();
                         newrow.Add(item.Od.ToString(Vf.LevFormatUI));
                         newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
@@ -1004,11 +1010,14 @@ namespace Tempo2012.EntityFramework
                     {
                         string name = dbman.DataReader["Name"].ToString();
                         string value = dbman.DataReader["VALUE"].ToString();
+                        string lookup= dbman.DataReader["LOOKUPVAL"].ToString();
+                        row.Fields = string.Format("{0}|{1} ", row.Fields,string.IsNullOrWhiteSpace(lookup)?value:value+"---"+lookup);
                         if (name == "Количество")
                         {
                            Col=decimal.Parse(dbman.DataReader["VALVAL"].ToString());
                            EdC=decimal.Parse(dbman.DataReader["KURS"].ToString());
                         }
+                        
                         if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
                         if (firstrow)
                         {
@@ -1095,7 +1104,7 @@ namespace Tempo2012.EntityFramework
             {
                 foreach (var item in rez.Where(e => e.Details != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
                 {
-                    var det = item.Details.Split('|');
+                    var det = item.Fields.Split('|');
                     List<string> newrow = det.Skip(1).ToList();
                     //decimal saldo = 0;
                     //if (item.Type == 1)
@@ -1133,7 +1142,7 @@ namespace Tempo2012.EntityFramework
                 {
                     if (item.Details != null)
                     {
-                        var det = item.Details.Split('|');
+                        var det = item.Fields.Split('|');
                         List<string> newrow = det.Skip(1).ToList();
                         //decimal saldo = 0;
                         //if (item.Type == 1)

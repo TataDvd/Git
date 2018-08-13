@@ -15,6 +15,7 @@ namespace Tempo2012.EntityFramework
         public int LookupId { get; set; }
         public string Code { get; set; }
         public string Details { get; set; }
+        public string Fields { get; set; }
         public SaldoFactura Clone()
         {
             return (SaldoFactura)MemberwiseClone();

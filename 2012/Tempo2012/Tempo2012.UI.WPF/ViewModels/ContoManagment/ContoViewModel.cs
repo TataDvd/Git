@@ -3284,9 +3284,20 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             if (sv.SelectedRow != null)
             {
                 int i = 0;
+                string[] stringSeparators = new string[] { "---" };
                 foreach (var saldoItem in ItemsDebit)
                 {
-                    saldoItem.Value = sv.SelectedRow[i].Trim();
+                    var item = sv.SelectedRow[i].Trim();
+                    if (item.Contains("---"))
+                    {
+                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                        saldoItem.Value = spliti[0];
+                        saldoItem.Lookupval = spliti[1];
+                    }
+                    else
+                    {
+                        saldoItem.Value = item;
+                    }
                     i++;
                 }
             }
@@ -3310,10 +3321,21 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             sv.ShowDialog();
             if (sv.SelectedRow != null)
             {
+                string[] stringSeparators = new string[] { "---" };
                 int i = 0;
                 foreach (var saldoItem in ItemsCredit)
                 {
-                    saldoItem.Value = sv.SelectedRow[i].Trim();
+                    var item = sv.SelectedRow[i].Trim();
+                    if (item.Contains("---"))
+                    {
+                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                        saldoItem.Value = spliti[0];
+                        saldoItem.Lookupval = spliti[1];
+                    }
+                    else
+                    {
+                        saldoItem.Value = item;
+                    }
                     i++;
                 }
             }
