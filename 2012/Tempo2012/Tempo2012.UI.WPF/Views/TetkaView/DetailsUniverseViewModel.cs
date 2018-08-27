@@ -125,7 +125,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             //}
             //else
             //{
-                var v = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
+                var v = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount,dAccountsModel.Kol,dAccountsModel.Val, filter);
                 _fields = new List<List<string>>();
                 if (v != null)
                 {

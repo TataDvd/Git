@@ -61,15 +61,20 @@ namespace Tempo2012.EntityFramework
             try
             {
                 dbman.Open();
-                dbman.ExecuteReader(CommandType.Text,
-                                        string.Format(
-                                            "select * from \"accounts\" a left outer join \"lookups\" b on a.\"PartidNum\"=b.\"Id\" where a.\"FirmaId\"={0} and a.YY={1} order by a.NUM,a.\"SubNum\",a.\"AnaliticalNum\",a.\"PartidNum\"",
-                                            firmaID, year==-1?ConfigTempoSinglenton.GetInstance().WorkDate.Year:year));
+                string s = string.Format("select * from \"accounts\" a left outer join \"lookups\" b on a.\"PartidNum\"=b.\"Id\" "
+                    + " left outer join \"analiticalaccount\" aa on aa.\"Id\"=a.\"AnaliticalNum\""
+                    + " left outer join \"analiticalaccounttype\" aaa on aaa.\"Id\"=aa.\"TypeID\""
+                    + " where a.\"FirmaId\"={0} and a.YY={1} order by a.NUM,a.\"SubNum\",a.\"AnaliticalNum\",a.\"PartidNum\"",
+                       firmaID, year == -1 ? ConfigTempoSinglenton.GetInstance().WorkDate.Year : year);
+                       dbman.ExecuteReader(CommandType.Text,
+                                        s);
                 while (dbman.DataReader.Read())
                 {
                     int temp = 1;
                     int temp1 = 1;
                     int temp2 = 1;
+                    int kol = 0;
+                    int val = 0;
                     if (int.TryParse(dbman.DataReader["TypeAccount"].ToString(), out temp))
                     {
                         temp1 = temp;
@@ -78,7 +83,14 @@ namespace Tempo2012.EntityFramework
                     {
                         temp2 = temp;
                     }
-
+                    if (int.TryParse(dbman.DataReader["KOL"].ToString(), out temp))
+                    {
+                        kol = temp;
+                    }
+                    if (int.TryParse(dbman.DataReader["SV"].ToString(), out temp))
+                    {
+                        val = temp;
+                    }
                     allacc.Add(new AccountsModel
                                    {
                                        Id = int.Parse(dbman.DataReader["Id"].ToString()),
@@ -110,7 +122,9 @@ namespace Tempo2012.EntityFramework
                                        OborotDV = decimal.Parse(dbman.DataReader["OBOROTDV"].ToString()),
                                        OborotKK = decimal.Parse(dbman.DataReader["OBOROTKK"].ToString()),
                                        OborotKL = decimal.Parse(dbman.DataReader["OBOROTL"].ToString()),
-                                       OborotKV = decimal.Parse(dbman.DataReader["OBOROTKV"].ToString())
+                                       OborotKV = decimal.Parse(dbman.DataReader["OBOROTKV"].ToString()),
+                                       Kol=kol,
+                                       Val=val
                                    });
 
                 }
@@ -1485,25 +1499,29 @@ namespace Tempo2012.EntityFramework
                         {
                             workSaldos.BeginSaldoDebit=decimal.Parse(dbman.DataReader["VALUED"].ToString());
                             workSaldos.BeginSaldoCredit=decimal.Parse(dbman.DataReader["VALUEMONEY"].ToString());
+                            //workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Fields, workSaldos.BeginSaldoDebit - workSaldos.BeginSaldoCredit);
                         }
                         if (dbman.DataReader["NAMEENG"].ToString().Equals("COLICHESTVO"))
                         {
                             workSaldos.BeginSaldoDebitKol= decimal.Parse(dbman.DataReader["VALKOLD"].ToString());
                             workSaldos.BeginSaldoCreditKol=decimal.Parse(dbman.DataReader["VALKOLK"].ToString());
+                            //workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Fields, workSaldos.BeginSaldoDebitKol - workSaldos.BeginSaldoCreditKol);
                         }
                         if (dbman.DataReader["NAMEENG"].ToString().Equals("SUMAVALUTA"))
                         {
                             workSaldos.BeginSaldoDebitValuta=decimal.Parse(dbman.DataReader["VALVALD"].ToString());
                             workSaldos.BeginSaldoCreditValuta= decimal.Parse(dbman.DataReader["VALVALK"].ToString());
+                            //workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Fields, workSaldos.BeginSaldoDebitValuta - workSaldos.BeginSaldoCreditValuta);
                         }
-
+                        
+                       
                     }
                     else
                     {
                         string name = dbman.DataReader["Name"].ToString();
                         string lookup = dbman.DataReader["VALS"].ToString();
                         if (!name.Contains("Дата ")) workSaldos.Details=string.Format("{0}|{1} ", workSaldos.Details,dbman.DataReader["VALUE"]);
-                        workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Details, string.IsNullOrWhiteSpace(lookup)?dbman.DataReader["VALUE"]:dbman.DataReader["VALUE"]+"---"+lookup);
+                        workSaldos.Fields = string.Format("{0}|{1} ", workSaldos.Fields, string.IsNullOrWhiteSpace(lookup)?dbman.DataReader["VALUE"]:dbman.DataReader["VALUE"]+"---"+lookup);
                         if (name=="Номер фактура")
                         {
                             workSaldos.NumInvoise = dbman.DataReader["VALUE"].ToString();

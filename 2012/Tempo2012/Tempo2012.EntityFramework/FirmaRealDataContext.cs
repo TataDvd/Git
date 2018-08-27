@@ -313,7 +313,7 @@ namespace Tempo2012.EntityFramework
             return result;
         }
 
-        internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, string filter)
+        internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount,int kol,int val, string filter)
         {
             List<AccItemSaldo> rez = new List<AccItemSaldo>();
             List<List<string>> rez1 = new List<List<string>>();
@@ -329,16 +329,16 @@ namespace Tempo2012.EntityFramework
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, id);
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
-               // string command =
-               //string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
-               //              " FROM \"accounts\" a " +
-               //              "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
-               //              "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
-               //              "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
-               //              "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
-               //              "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
-               //              " where a.\"Id\"={0}", id);
-               // int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
+                string command =
+               string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
+                             " FROM \"accounts\" a " +
+                             "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
+                             "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
+                             "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
+                             "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
+                             "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
+                             " where a.\"Id\"={0}", id);
+                int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
                 bool change = false;
                 bool first = true;
                 bool firstrow = true;
@@ -346,7 +346,7 @@ namespace Tempo2012.EntityFramework
                 AccItemSaldo row = new AccItemSaldo();
                 row.Type = typeAccount;
                 int oldid = 0, newid = 0;
-                //int chikiriki = 0;
+                int chikiriki = 0;
                 while (dbman.DataReader.Read())
                 {
                     ima = true;
@@ -401,11 +401,11 @@ namespace Tempo2012.EntityFramework
                                 row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
                             }
                         }
-                        //chikiriki = 0;
+                        chikiriki = 0;
                     }
 
-                    //if (chikiriki < count)
-                    //{
+                    if (chikiriki < count)
+                    {
                         string name = dbman.DataReader["Name"].ToString();
                         string value = dbman.DataReader["VALUE"].ToString();
                         string lookup = dbman.DataReader["LOOKUPVAL"].ToString();
@@ -427,8 +427,8 @@ namespace Tempo2012.EntityFramework
                         {
                             titles.Add(name);
                         }
-                    //    chikiriki++;
-                    //}
+                        chikiriki++;
+                    }
                 }
                 if (ima)
                 {
@@ -451,7 +451,7 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
-             titles.Add("НС");
+            titles.Add("НС");
             titles.Add("ОД");
             titles.Add("ОК");
             titles.Add("КС");

@@ -689,9 +689,9 @@ namespace Tempo2012.EntityFramework
              return RealDataContext.GetAllContoQuantity(firmid,accid,fromDate,toDate,v, codeMaterial);
         }
 
-        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, string filter)
+        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount,int kol,int val, string filter)
         {
-            return RealDataContext.GetDetailsContoToAccUni(id,typeAccount,filter);
+            return RealDataContext.GetDetailsContoToAccUni(id,typeAccount,kol,val,filter);
         }
 
         public IEnumerable<IEnumerable<string>> GetDetailsContoToAccMat(int id, int typeAccount, string filter)
