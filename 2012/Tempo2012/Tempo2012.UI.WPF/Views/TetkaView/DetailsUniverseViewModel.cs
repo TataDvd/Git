@@ -177,11 +177,26 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     if (sum != null) element.Add(sum.Value.Trim());
                 }
                 int i = 0;
+                string[] stringSeparators = new string[] { "---" };
                 if (Tip == 1)
                 {
+
                     foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
                     {
-                        if (element != null) saldoItem.Value = element[i].Trim();
+
+                        if (element[i] != null)
+                        {
+                            if (element[i].Contains("---"))
+                            {
+                                var spliti = element[i].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                                saldoItem.Value = spliti[0];
+                                saldoItem.Lookupval = spliti[1];
+                            }
+                            else
+                            {
+                                saldoItem.Value = element[i].Trim();
+                            }
+                        }
                         i++;
                     }
                 }
@@ -189,7 +204,19 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     foreach (SaldoItem saldoItem in Cvm.ItemsCredit)
                     {
-                        if (element != null) saldoItem.Value = element[i].Trim();
+                        if (element[i] != null)
+                        {
+                            if (element[i].Contains("---"))
+                            {
+                                var spliti = element[i].Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                                saldoItem.Value = spliti[0];
+                                saldoItem.Lookupval = spliti[1];
+                            }
+                            else
+                            {
+                                saldoItem.Value = element[i].Trim();
+                            }
+                        }
                         i++;
                     }
                 }

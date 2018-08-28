@@ -17,8 +17,7 @@ namespace Tempo2012.EntityFramework.Models
         public decimal Od { get; set; }
         public decimal Oc { get; set; }
 
-        public decimal OVd { get; set; }
-        public decimal OVc { get; set; } 
+       
 
 
         private decimal ksd;
@@ -127,6 +126,10 @@ namespace Tempo2012.EntityFramework.Models
         public decimal Nscv { get;  set; }
         public decimal Ocv { get;  set; }
         public decimal Kurs { get;  set; }
+        public decimal Odk { get; set; }
+        public decimal Ock { get; set; }
 
+        public decimal Nsck { get;  set; }
+        public decimal Nsdk { get; set; }
     }
 }

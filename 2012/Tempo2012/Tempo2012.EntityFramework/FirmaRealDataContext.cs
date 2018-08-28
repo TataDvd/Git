@@ -324,7 +324,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, id);
                 dbman.Open();
@@ -363,11 +363,27 @@ namespace Tempo2012.EntityFramework
                                 row.IsDebit = true;
                                 row.Type = typeAccount;
                                 row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                if (kol == 1)
+                                {
+                                    row.Odk=decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
+                                }
+                                if (val == 1)
+                                {
+                                    row.Odv = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
+                                }
                             }
                             else
                             {
                                 row.Type = typeAccount;
                                 row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                if (kol == 1)
+                                {
+                                    row.Ock = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
+                                }
+                                if (val == 1)
+                                {
+                                    row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
+                                }
                             }
                         }
                     }
@@ -394,11 +410,27 @@ namespace Tempo2012.EntityFramework
                                 row.IsDebit = true;
                                 row.Type = typeAccount;
                                 row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                if (kol == 1)
+                                {
+                                    row.Odk = decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
+                                }
+                                if (val == 1)
+                                {
+                                    row.Odv = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
+                                }
                             }
                             else
                             {
                                 row.Type = typeAccount;
                                 row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                                if (kol == 1)
+                                {
+                                    row.Ock = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
+                                }
+                                if (val == 1)
+                                {
+                                    row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
+                                }
                             }
                         }
                         chikiriki = 0;
@@ -451,6 +483,20 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
+            if (val == 1)
+            {
+                titles.Add("НСВ");
+                titles.Add("ОДВ");
+                titles.Add("ОКВ");
+                titles.Add("КСВ");
+            }
+            if (kol == 1)
+            {
+                titles.Add("НСК");
+                titles.Add("ОДК");
+                titles.Add("ОКК");
+                titles.Add("КСК");
+            }
             titles.Add("НС");
             titles.Add("ОД");
             titles.Add("ОК");
@@ -465,12 +511,12 @@ namespace Tempo2012.EntityFramework
                                  Type=grp.First().Type,
                                  Data=grp.Last().Data,
                                  Fields=grp.Last().Fields,
-                                 //Nsc=grp.Sum(t => t.Nsc),
-                                 //Nsd = grp.Sum(t => t.Nsc),
+                                 Ock=grp.Sum(t => t.Ock),
+                                 Odk = grp.Sum(t => t.Odk),
                                  Oc = grp.Sum(t => t.Oc),
                                  Od = grp.Sum(t => t.Od),
-                                 //Ksd = grp.Sum(t => t.Ksd),
-                                 //Ksc = grp.Sum(t => t.Ksc),
+                                 Ocv = grp.Sum(t => t.Ocv),
+                                 Odv = grp.Sum(t => t.Odv),
                              }).ToList();
             //
             var rezi = GetAllAnaliticSaldos(id, Entrence.CurrentFirma.Id);
@@ -483,7 +529,11 @@ namespace Tempo2012.EntityFramework
                 {
                     accItemSaldo.Nsd = saldo.BeginSaldoDebit;
                     accItemSaldo.Nsc = saldo.BeginSaldoCredit;
-                }
+                    accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
+                    accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
+                    accItemSaldo.Nsdk=  saldo.BeginSaldoDebitKol;
+                    accItemSaldo.Nsck=  saldo.BeginSaldoCreditKol;
+                 }
             }
             foreach (var items in rezi)
             {
@@ -499,6 +549,10 @@ namespace Tempo2012.EntityFramework
                     item.Type = typeAccount;
                     item.Details = items.Details;
                     item.Fields = items.Fields;
+                    item.Nsdv = items.BeginSaldoDebitValuta;
+                    item.Nscv = items.BeginSaldoCreditValuta;
+                    item.Nsdk = items.BeginSaldoDebitKol;
+                    item.Nsck = items.BeginSaldoCreditKol;
                     query.Add(item);
                 }
             }
@@ -510,6 +564,62 @@ namespace Tempo2012.EntityFramework
                     var det = item.Fields.Split('|');
                     List<string> newrow = det.Skip(1).ToList();
                     decimal saldo = 0;
+                    decimal ksaldo = 0;
+                    if (val == 1)
+                    {
+                        saldo = 0;
+                        if (item.Type == 1)
+                        {
+                            saldo = item.Nsdv - item.Nscv;
+                        }
+                        else
+                        {
+                            saldo = item.Nscv - item.Nsdv;
+                        }
+                        //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
+                        newrow.Add(saldo.ToString(Vf.LevFormatUI));
+                        newrow.Add(item.Odv.ToString(Vf.LevFormatUI));
+                        newrow.Add(item.Ocv.ToString(Vf.LevFormatUI));
+                        ksaldo = 0;
+                        if (item.Type == 1)
+                        {
+                            ksaldo = (item.Nsdv + item.Odv) - (item.Nscv + item.Ocv);
+                        }
+                        else
+                        {
+                            ksaldo = (item.Nscv + item.Ocv) - (item.Nsdv + item.Odv);
+                        }
+                        newrow.Add(ksaldo.ToString(Vf.ValFormatUI));
+                    }
+                    if (kol == 1)
+                    {
+                         saldo = 0;
+                        if (item.Type == 1)
+                        {
+                            saldo = item.Nsdk - item.Nsck;
+                        }
+                        else
+                        {
+                            saldo = item.Nsck - item.Nsdk;
+                        }
+                        //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
+                        newrow.Add(saldo.ToString(Vf.KolFormatUI));
+                        newrow.Add(item.Odk.ToString(Vf.KolFormatUI));
+                        newrow.Add(item.Ock.ToString(Vf.KolFormatUI));
+                         ksaldo = 0;
+                        if (item.Type == 1)
+                        {
+                            ksaldo = (item.Nsdk + item.Odk) - (item.Nsck + item.Ock);
+                        }
+                        else
+                        {
+                            ksaldo = (item.Nsck + item.Ock) - (item.Nsdk + item.Odk);
+                        }
+                        newrow.Add(ksaldo.ToString(Vf.KolFormatUI));
+
+                    }
+                    saldo = 0;
+                    ksaldo = 0;
                     if (item.Type == 1)
                     {
                         saldo = item.Nsd - item.Nsc;
@@ -522,15 +632,14 @@ namespace Tempo2012.EntityFramework
                     newrow.Add(saldo.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Od.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
-                    decimal ksaldo = 0;
                     if (item.Type == 1)
                     {
-                        ksaldo = (item.Nsd +item.Od) - (item.Nsc + item.Oc);
+                        ksaldo = (item.Nsd + item.Od) - (item.Nsc + item.Oc);
                     }
                     else
                     {
-                        ksaldo = (item.Nsc + item.Oc) -(item.Nsd + item.Od);
-                    } 
+                        ksaldo = (item.Nsc + item.Oc) - (item.Nsd + item.Od);
+                    }
                     newrow.Add(ksaldo.ToString(Vf.LevFormatUI));
                     rez1.Add(newrow);
                 }
@@ -544,6 +653,60 @@ namespace Tempo2012.EntityFramework
                         var det = item.Fields.Split('|');
                         List<string> newrow = det.Skip(1).ToList();
                         decimal saldo = 0;
+                        decimal ksaldo = 0;
+                        if (val == 1)
+                        {
+                            saldo = 0;
+                            if (item.Type == 1)
+                            {
+                                saldo = item.Nsdv - item.Nscv;
+                            }
+                            else
+                            {
+                                saldo = item.Nscv - item.Nsdv;
+                            }
+                            //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
+                            newrow.Add(saldo.ToString(Vf.LevFormatUI));
+                            newrow.Add(item.Odv.ToString(Vf.LevFormatUI));
+                            newrow.Add(item.Ocv.ToString(Vf.LevFormatUI));
+                            ksaldo = 0;
+                            if (item.Type == 1)
+                            {
+                                ksaldo = (item.Nsdv + item.Odv) - (item.Nscv + item.Ocv);
+                            }
+                            else
+                            {
+                                ksaldo = (item.Nscv + item.Ocv) - (item.Nsdv + item.Odv);
+                            }
+                            newrow.Add(ksaldo.ToString(Vf.ValFormatUI));
+                        }
+                        if (kol == 1)
+                        {
+                            saldo = 0;
+                            if (item.Type == 1)
+                            {
+                                saldo = item.Nsdk - item.Nsck;
+                            }
+                            else
+                            {
+                                saldo = item.Nsck - item.Nsdk;
+                            }
+                            //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
+                            newrow.Add(saldo.ToString(Vf.LevFormatUI));
+                            newrow.Add(item.Odk.ToString(Vf.LevFormatUI));
+                            newrow.Add(item.Ock.ToString(Vf.LevFormatUI));
+                            ksaldo = 0;
+                            if (item.Type == 1)
+                            {
+                                ksaldo = (item.Nsdk + item.Odk) - (item.Nsck + item.Ock);
+                            }
+                            else
+                            {
+                                ksaldo = (item.Nsck + item.Ock) - (item.Nsdk + item.Odk);
+                            }
+                            newrow.Add(ksaldo.ToString(Vf.KolFormatUI));
+                        }
+                        saldo = 0;
                         if (item.Type == 1)
                         {
                             saldo = item.Nsd - item.Nsc;
@@ -556,7 +719,7 @@ namespace Tempo2012.EntityFramework
                         newrow.Add(saldo.ToString(Vf.LevFormatUI));
                         newrow.Add(item.Od.ToString(Vf.LevFormatUI));
                         newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
-                        decimal ksaldo = 0;
+                        ksaldo = 0;
                         if (item.Type == 1)
                         {
                             ksaldo = item.Nsd + item.Od - item.Nsc - item.Oc;
@@ -564,7 +727,7 @@ namespace Tempo2012.EntityFramework
                         else
                         {
                             ksaldo = item.Nsc + item.Oc - item.Nsd - item.Od;
-                        } 
+                        }
                         newrow.Add(ksaldo.ToString(Vf.LevFormatUI));
                         rez1.Add(newrow);
                     }
@@ -771,7 +934,7 @@ namespace Tempo2012.EntityFramework
                             {
                                 row.Type = typeAccount;
                                 row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                row.OVc = val;
+                                row.Ocv = val;
                                 row.Kurs = kurs;
                             }
                         }
@@ -806,7 +969,7 @@ namespace Tempo2012.EntityFramework
                             {
                                 row.Type = typeAccount;
                                 row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                row.OVc = val;
+                                row.Ocv = val;
                                 row.Kurs = kurs;
                             }
                         }
@@ -823,7 +986,6 @@ namespace Tempo2012.EntityFramework
                         {
                             kurs= decimal.Parse(dbman.DataReader["KURS"].ToString());
                             val = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
-                            
                         }
                         if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
                         if (firstrow)
@@ -879,8 +1041,8 @@ namespace Tempo2012.EntityFramework
                     newrow.Add(item.Ns.ToString(Vf.LevFormatUI));
                     newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
                     newrow.Add(item.Nscv.ToString(Vf.ValFormatUI));
-                    newrow.Add(item.OVc.ToString(Vf.ValFormatUI));
-                    newrow.Add(item.OVd.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.Ocv.ToString(Vf.ValFormatUI));
+                    newrow.Add(item.Odv.ToString(Vf.ValFormatUI));
                     newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
                     newrow.Add(item.Kscv.ToString(Vf.ValFormatUI));
                     rez1.Add(newrow);
@@ -896,8 +1058,8 @@ namespace Tempo2012.EntityFramework
                         List<string> newrow = det.Skip(1).ToList();
                         newrow.Add(item.Od.ToString(Vf.LevFormatUI));
                         newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
-                        newrow.Add(item.OVc.ToString(Vf.ValFormatUI));
-                        newrow.Add(item.OVd.ToString(Vf.ValFormatUI));
+                        newrow.Add(item.Ocv.ToString(Vf.ValFormatUI));
+                        newrow.Add(item.Odv.ToString(Vf.ValFormatUI));
                         newrow.Add(item.Kurs.ToString(Vf.ValFormatUI));
                         rez1.Add(newrow);
                     }
