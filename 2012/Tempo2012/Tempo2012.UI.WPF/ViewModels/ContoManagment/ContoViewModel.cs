@@ -3287,6 +3287,23 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 string[] stringSeparators = new string[] { "---" };
                 foreach (var saldoItem in ItemsDebit)
                 {
+                    if (saldoItem.Name == "Количествo")
+                    {
+                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        i++;
+                        continue;
+
+                    }
+                    if (saldoItem.Name == "Сума валута")
+                    {
+                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                        saldoItem.ValueVal=decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        i++;
+                        continue;
+                    }
                     var item = sv.SelectedRow[i].Trim();
                     if (item.Contains("---"))
                     {
@@ -3325,6 +3342,19 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 int i = 0;
                 foreach (var saldoItem in ItemsCredit)
                 {
+                    if (saldoItem.Name == "Количество")
+                    {
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 4];
+                        i++;
+                        continue;
+
+                    }
+                    if (saldoItem.Name == "Сума валута")
+                    {
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 4];
+                        i++;
+                        continue;
+                    }
                     var item = sv.SelectedRow[i].Trim();
                     if (item.Contains("---"))
                     {

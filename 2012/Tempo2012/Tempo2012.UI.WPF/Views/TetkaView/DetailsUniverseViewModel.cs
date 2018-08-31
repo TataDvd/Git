@@ -147,7 +147,20 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     r.Add("ОД");
                     r.Add("ОК");
                     r.Add("КС");
-                    r.Add("Дата");
+                if (dAccountsModel.Val == 1)
+                {
+                    r.Add("НСВ");
+                    r.Add("ОДВ");
+                    r.Add("ОКВ");
+                    r.Add("КСВ");
+                }
+                if (dAccountsModel.Kol == 1)
+                    {
+                        r.Add("НСК");
+                        r.Add("ОДК");
+                        r.Add("ОКК");
+                        r.Add("КСК");
+                    }
                     _fields.Add(r);
                 }
                 Fields = new List<List<string>>(_fields);
@@ -183,7 +196,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
                     foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
                     {
-
+                        if (saldoItem.Name == "Количество")
+                        {
+                            saldoItem.Value = element[element.Count-4];
+                            continue;
+                            
+                        }
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            saldoItem.Value = element[element.Count-4];
+                            continue;
+                        }
                         if (element[i] != null)
                         {
                             if (element[i].Contains("---"))
@@ -204,6 +227,19 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     foreach (SaldoItem saldoItem in Cvm.ItemsCredit)
                     {
+                        if (saldoItem.Name == "Количество")
+                        {
+                            saldoItem.Value = element[element.Count - 4];
+                            i++;
+                            continue;
+
+                        }
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            saldoItem.Value = element[element.Count - 4];
+                            i++;
+                            continue;
+                        }
                         if (element[i] != null)
                         {
                             if (element[i].Contains("---"))

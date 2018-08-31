@@ -598,7 +598,7 @@
                          Background="{x:Null}"
                          IsEnabled="True"
                          Foreground="BlueViolet"
-                         Focusable="False" Height="25" VerticalAlignment="Bottom"
+                         Focusable="False" Height="25" VerticalAlignment="Top"
                         />
                             <!--<Button   
                          Grid.Row="1" Grid.Column="2"
