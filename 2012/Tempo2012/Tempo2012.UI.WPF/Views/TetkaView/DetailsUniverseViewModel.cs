@@ -13,11 +13,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 {
     public class DetailsUniverseViewModel:BaseViewModel
     {
+        public const int PAGECOUNT = 20;
         private List<List<string>> _fields;
         private ContoViewModel Cvm;
         private decimal _suma;
         private int Tip;
         private string _title;
+        private int Count;
 
         public DetailsUniverseViewModel(EntityFramework.Models.AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
@@ -125,7 +127,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             //}
             //else
             //{
-                var v = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount,dAccountsModel.Kol,dAccountsModel.Val, filter);
+             List<List<string>> v = null;
+             Count = Context.GetDetailsContoToAccUniCount(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
+            if (Count < PAGECOUNT)
+            {
+                var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, 0, Count);
+                v = c.Select(i => i.ToList()).ToList();
+            }
+            else
+            {
+                var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, 0, PAGECOUNT);
+                v = c.Select(i => i.ToList()).ToList();
+            }
                 _fields = new List<List<string>>();
                 if (v != null)
                 {

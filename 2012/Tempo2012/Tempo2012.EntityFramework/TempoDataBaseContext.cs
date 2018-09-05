@@ -689,11 +689,14 @@ namespace Tempo2012.EntityFramework
              return RealDataContext.GetAllContoQuantity(firmid,accid,fromDate,toDate,v, codeMaterial);
         }
 
-        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount,int kol,int val, string filter)
+        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount,int kol,int val, string filter,int beg,int ofset)
         {
-            return RealDataContext.GetDetailsContoToAccUni(id,typeAccount,kol,val,filter);
+            return RealDataContext.GetDetailsContoToAccUni(id,typeAccount,kol,val,filter,beg,ofset);
         }
-
+        public int GetDetailsContoToAccUniCount(int id, int typeAccount, string filter)
+        {
+            return RealDataContext.GetDetailsContoToAccUniCount(id,typeAccount,filter);
+        }
         public IEnumerable<IEnumerable<string>> GetDetailsContoToAccMat(int id, int typeAccount, string filter)
         {
             return RealDataContext.GetDetailsContoToAccMat(id, typeAccount, filter);
