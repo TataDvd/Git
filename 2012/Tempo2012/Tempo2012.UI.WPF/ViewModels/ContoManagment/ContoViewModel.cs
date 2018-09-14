@@ -3268,18 +3268,25 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         internal void DoDetailsDebit(EditMode mode)
         {
             string filter = "";
+            string contofilter = "";
+            bool first = true;
             foreach (var saldoItem in ItemsDebit)
             {
                 if (!String.IsNullOrWhiteSpace(saldoItem.Value) && !saldoItem.Name.Contains("Дата "))
                 {
                     filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
+                    if (first && saldoItem.IsLookUp)
+                    {
+                        contofilter = string.Format("{0} - {1} {2} ", saldoItem.Name, saldoItem.Value, saldoItem.Lookupval);
+                        first = false;
+                    }
                 }
                 else
                 {
                     break;
                 }
             }
-           DetailsUniverse sv = new DetailsUniverse(DAccountsModel, filter,this,1,mode);
+           DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}",this,1,mode);
             sv.ShowDialog();
             if (sv.SelectedRow != null)
             {
@@ -3323,18 +3330,25 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         internal void DoDetailsCredit(EditMode mode)
         {
             string filter = "";
+            string contofilter = "";
+            bool first = true;
             foreach (var saldoItem in ItemsCredit)
             {
                 if (!String.IsNullOrWhiteSpace(saldoItem.Value))
                 {
                     filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
+                    if (first && saldoItem.IsLookUp)
+                    {
+                        contofilter = string.Format("{0} - {1} {2} ", saldoItem.Name, saldoItem.Value, saldoItem.Lookupval);
+                        first = false;
+                    }
                 }
                 else
                 {
                     break;
                 }
             }
-            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, filter,this,2,mode);
+            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}",this,2,mode);
             sv.ShowDialog();
             if (sv.SelectedRow != null)
             {

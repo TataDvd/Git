@@ -23,6 +23,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
         public DetailsUniverseViewModel(EntityFramework.Models.AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
+            
             if (mode == EditMode.Edit)
             {
                 IsEditMode = System.Windows.Visibility.Hidden;
@@ -34,111 +35,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             Title = "Детайли за " + dAccountsModel.ShortName;
             Tip = tip;
             Cvm = cvm;
-            //if (dAccountsModel.AnaliticalNum == 5)
-            //{
-            //    var v = Context.GetDetailsContoToAcc(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
-            //    _fields = new List<List<string>>();
-            //    if (v != null)
-            //    {
-            //        foreach (var item in v)
-            //        {
-            //            _fields.Add(new List<string>(item));
-            //        }
-            //    }
-            //    else
-            //    {
-            //        var r = new List<string>();
-            //        var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
-            //        foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
-            //        {
-            //            r.Add(saldoAnaliticModel.Name);
-
-            //        }
-            //        r.Add("НС");
-            //        r.Add("ОД");
-            //        r.Add("ОК");
-            //        r.Add("КС");
-            //        r.Add("Дата");
-            //        _fields.Add(r);
-            //    }
-            //    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != "0.00")); ;
-            //    OnPropertyChanged("Fields");
-            //}
-            //else
-            //if (dAccountsModel.AnaliticalNum == 3)
-            //{
-            //    var v = Context.GetDetailsContoToAccMat(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
-            //    _fields = new List<List<string>>();
-            //    if (v != null)
-            //    {
-            //        foreach (var item in v)
-            //        {
-            //            _fields.Add(new List<string>(item));
-            //        }
-            //    }
-            //    else
-            //    {
-            //        var r = new List<string>();
-            //        var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
-            //        foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
-            //        {
-            //            r.Add(saldoAnaliticModel.Name);
-
-            //        }
-            //        r.Add("НС");
-            //        r.Add("ОД");
-            //        r.Add("ОК");
-            //        r.Add("КС");
-            //        r.Add("Дата");
-            //        _fields.Add(r);
-            //    }
-            //    Fields = new List<List<string>>(_fields);
-            //    OnPropertyChanged("Fields");
-            //}
-            //if (dAccountsModel.AnaliticalNum == 6)
-            //{
-            //    var v = Context.GetDetailsContoToAccVal(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
-            //    _fields = new List<List<string>>();
-            //    if (v != null)
-            //    {
-            //        foreach (var item in v)
-            //        {
-            //            _fields.Add(new List<string>(item));
-            //        }
-            //    }
-            //    else
-            //    {
-            //        var r = new List<string>();
-            //        var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
-            //        foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
-            //        {
-            //            r.Add(saldoAnaliticModel.Name);
-
-            //        }
-            //        r.Add("НС");
-            //        r.Add("ОД");
-            //        r.Add("ОК");
-            //        r.Add("КС");
-            //        r.Add("Дата");
-            //        _fields.Add(r);
-            //    }
-            //    Fields = new List<List<string>>(_fields);
-            //    OnPropertyChanged("Fields");
-            //}
-            //else
-            //{
+            
              List<List<string>> v = null;
-             Count = Context.GetDetailsContoToAccUniCount(dAccountsModel.Id, dAccountsModel.TypeAccount, filter);
-            if (Count < PAGECOUNT)
-            {
-                var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, 0, Count);
-                v = c.Select(i => i.ToList()).ToList();
-            }
-            else
-            {
-                var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, 0, PAGECOUNT);
-                v = c.Select(i => i.ToList()).ToList();
-            }
+             var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter);
+             if (c!= null)v = c.Select(i => i.ToList()).ToList();
+            
+            
                 _fields = new List<List<string>>();
                 if (v != null)
                 {
@@ -178,7 +80,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 Fields = new List<List<string>>(_fields);
                 OnPropertyChanged("Fields");
-            //}
+            
            
         }
 

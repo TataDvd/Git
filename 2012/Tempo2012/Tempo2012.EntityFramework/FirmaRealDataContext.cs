@@ -313,32 +313,11 @@ namespace Tempo2012.EntityFramework
             return result;
         }
 
-        internal static int GetDetailsContoToAccUniCount(int id, int typeAccount, string filter)
+        
+        internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, int kol, int val, string filter)
         {
-            var dbman = new DBManager(DataProvider.Firebird);
-            dbman.ConnectionString = Entrence.ConnectionString;
-            int count = 0;
-            try
-            {
-                dbman.Open();
-                string s =
-                    string.Format(
-                        "SELECT COUNT(c.\"Id\") FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2})",
-                        ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
-                        ConfigTempoSinglenton.GetInstance().WorkDate.Year,
-                        id);
-                 count = (int)dbman.ExecuteScalar(CommandType.Text, s);
-            }
-            catch (Exception ex)
-            {
-                Logger.Instance().WriteLogError(ex.Message, "internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAcc(int id,int typ,string filter)");
-                dbman.RollBackTransaction();
-
-            }
-            return count;
-        }
-        internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, int kol, int val, string filter, int beg,int ofset)
-        {
+            var filti = filter.Split('#');
+            filter = filti[0];
             List<AccItemSaldo> rez = new List<AccItemSaldo>();
             List<List<string>> rez1 = new List<List<string>>();
             List<string> titles = new List<string>();
@@ -348,11 +327,19 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT FIRST {0} SKIP {1} c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={2} and c.\"Date\">='1.1.{3}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
-                        beg,
-                        ofset,
+                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
+                        "where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
-                        ConfigTempoSinglenton.GetInstance().WorkDate.Year, id);
+                        ConfigTempoSinglenton.GetInstance().WorkDate.Year,
+                        id);
+                if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
+                {
+                    s = s + $" AND (c.CDETAILS like '%{filti[1].Trim()}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\",m.SORTORDER";
+                }
+                else
+                {
+                    s = s + ") order by c.\"Id\",m.SORTORDER";
+                }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
                 string command =

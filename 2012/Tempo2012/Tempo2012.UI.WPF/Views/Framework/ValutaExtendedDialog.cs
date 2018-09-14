@@ -67,7 +67,20 @@ namespace Tempo2012.UI.WPF.Views.Framework
             List<ValutaControl> contos4 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
             List<ValutaControl> contosb = null;
             List<ValutaControl> contos1b = null;
-            var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+            var rezil = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+            var rezi= (from t in rezil
+                       group t by new { t.Code }
+                              into grp
+                       select new SaldoFactura
+                       {
+                           Code = grp.Key.Code,
+                           BeginSaldoCredit = grp.Sum(t => t.BeginSaldoCredit),
+                           BeginSaldoCreditValuta = grp.Sum(t => t.BeginSaldoCreditValuta),
+                           BeginSaldoDebit=grp.Sum(t=>t.BeginSaldoDebit),
+                           BeginSaldoDebitValuta=grp.Sum(t=>t.BeginSaldoDebitValuta),
+                           BeginSaldoDebitKol = grp.Sum(t => t.BeginSaldoDebitKol),
+                           BeginSaldoCreditKol = grp.Sum(t => t.BeginSaldoDebitKol),
+                       }).ToList();
             if (fromDate.Month > 1 && !string.IsNullOrWhiteSpace(CodeClient))
             {
                 contosb = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, VidVal, 1, CodeClient)); 
