@@ -204,6 +204,19 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
             if (!fullsaldo)
             {
                 var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+                rezi = new List<SaldoFactura>(from p in rezi
+                                              group p by new { p.Code } into gcs
+                                              select new SaldoFactura()
+                                              {
+                                                  Code = gcs.Key.Code,
+                                                  NameContragent=gcs.First(e=>!string.IsNullOrWhiteSpace(e.NameContragent)).NameContragent,
+                                                  BeginSaldoCredit = gcs.Sum(x => x.BeginSaldoCredit),
+                                                  BeginSaldoDebit = gcs.Sum(x => x.BeginSaldoDebit),
+                                                  BeginSaldoDebitValuta = gcs.Sum(x => x.BeginSaldoDebitValuta),
+                                                  BeginSaldoCreditValuta = gcs.Sum(x => x.BeginSaldoCreditValuta),
+                                                  BeginSaldoCreditKol = gcs.Sum(x => x.BeginSaldoCreditKol),
+                                                  BeginSaldoDebitKol = gcs.Sum(x => x.BeginSaldoDebitKol)
+                                              });
                 var saldo = rezi.FirstOrDefault(e => e.NameContragent == contr);
                 if (saldo != null)
                 {
