@@ -3356,16 +3356,20 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 int i = 0;
                 foreach (var saldoItem in ItemsCredit)
                 {
-                    if (saldoItem.Name == "Количество")
+                    if (saldoItem.Name == "Количествo")
                     {
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 4];
+                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
                         i++;
                         continue;
 
                     }
                     if (saldoItem.Name == "Сума валута")
                     {
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 4];
+                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                        saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
                         i++;
                         continue;
                     }
