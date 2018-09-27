@@ -113,13 +113,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     {
                         if (saldoItem.Name == "Количество")
                         {
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            saldoItem.ValueKol = decimal.Parse(element[element.Count - 5]);
                             saldoItem.Value = element[element.Count-4];
                             continue;
                             
                         }
                         if (saldoItem.Name == "Сума валута")
                         {
-                            saldoItem.Value = element[element.Count-4];
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
+                            saldoItem.Value = element[element.Count-5];
                             continue;
                         }
                         if (element[i] != null)
@@ -144,15 +148,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     {
                         if (saldoItem.Name == "Количество")
                         {
-                            saldoItem.Value = element[element.Count - 4];
-                            i++;
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            saldoItem.ValueKol = decimal.Parse(element[element.Count - 5]);
+                            saldoItem.Value = element[element.Count - 5];
                             continue;
 
                         }
                         if (saldoItem.Name == "Сума валута")
                         {
-                            saldoItem.Value = element[element.Count - 4];
-                            i++;
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
+                            saldoItem.Value = element[element.Count - 5];
+                            continue;
                             continue;
                         }
                         if (element[i] != null)
