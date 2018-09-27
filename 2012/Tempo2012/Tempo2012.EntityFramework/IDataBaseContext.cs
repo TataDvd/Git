@@ -40,6 +40,7 @@ namespace Tempo2012.EntityFramework
         bool DeleteRow(List<string> list, LookupModel lookupModel);
         bool DeleteAccount(int id);
         IEnumerable<MapAnanaliticAccToAnaliticField> GetAllConnectorTypeField();
+        List<List<string>> CheckSellsPurchases(DateTime fromDate, DateTime toDate, int kindDDS);
         List<List<string>> GetOborotnaVedDetail(DateTime fromDate, DateTime toDate, int id = -1);
         bool DeleteLookUp(LookUpMetaData lookUpMetaData);
         bool UpdateLookup(LookupModel lookUpMetaData);

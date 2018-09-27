@@ -1108,5 +1108,27 @@ namespace Tempo2012.UI.WPF
                 }
             }
         }
+
+        private void MenuItem_Click_37(object sender, RoutedEventArgs e)
+        {
+            ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+            reportMenuProvider.ShowDialog();
+            if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+            {
+                ReportDialog rd = new ReportDialog(new CheckSellsPurchases (reportMenuProvider.Vm.FromDate(),reportMenuProvider.Vm.ToDate(),1));
+                rd.ShowDialog();
+            }
+        }
+
+        private void MenuItem_Click_38(object sender, RoutedEventArgs e)
+        {
+            ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+            reportMenuProvider.ShowDialog();
+            if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+            {
+                ReportDialog rd = new ReportDialog(new CheckSellsPurchases(reportMenuProvider.Vm.FromDate(), reportMenuProvider.Vm.ToDate(), 2));
+                rd.ShowDialog();
+            }
+        }
     }
 }

@@ -235,6 +235,7 @@
     <Compile Include="Views\Dnevnici\DnSales.xaml.cs">
       <DependentUpon>DnSales.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dnevnici\CheckSellsPurchases.cs" />
     <Compile Include="Views\Dnevnici\OborotkiViewModelDetail.cs" />
     <Compile Include="Views\Dnevnici\OborotkiViewModel.cs" />
     <Compile Include="Views\FirebirdUpdater\FirebirdUpdater.xaml.cs">

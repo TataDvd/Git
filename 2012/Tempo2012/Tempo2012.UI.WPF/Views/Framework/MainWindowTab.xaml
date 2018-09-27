@@ -218,42 +218,65 @@
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_Click_8">
+                    <MenuItem>
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Дневник продажби"/>
+                                <CustomControls:TextBlockEx Text="Справки ДДС"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
+                        <MenuItem  Click="MenuItem_Click_7">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Дневник покупки"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_8">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Дневник продажби"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_9">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Декларация"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <!--<MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_17"/>-->
+                        <MenuItem  Click="MenuItem_Click_14">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="VIES-Декларация"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_16">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Генератор на всички файлове"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_37">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Проверка за дублирани фактури покупки"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_38">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Проверка за дублирани фактури продажби"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_Click_7">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Дневник покупки"/>
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
-                    </MenuItem>
-                    <MenuItem Click="MenuItem_Click_9">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Декларация"/>
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
-                    </MenuItem>
-                    <!--<MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_17"/>-->
-                    <MenuItem  Click="MenuItem_Click_14">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <CustomControls:TextBlockEx Text="VIES-Декларация"/>
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
-                    </MenuItem>
-                    <MenuItem Click="MenuItem_Click_16">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Генератор на всички файлове"/>
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
-                    </MenuItem>
+                   
+                    
                     <MenuItem Click="MenuItem_Click_10">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>

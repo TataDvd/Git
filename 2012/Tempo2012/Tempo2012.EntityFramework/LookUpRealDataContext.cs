@@ -717,6 +717,44 @@ namespace Tempo2012.EntityFramework
             }
             return true;
         }
+
+        internal static List<List<string>> CheckSellsPurchases(DateTime fromDate, DateTime toDate, int kindDDS)
+        {
+            List<List<string>> list = new List<List<string>>();
+            string command = string.Format("SELECT a.DOCN,a.NAMEKONTR,COUNT(a.DOCN) as CC FROM DDSDNEV a where a.KINDACTIVITY = {0} and a.DATADOC>='{1}.{2}.{3}' and a.DATADOC<='{4}.{5}.{6}' GROUP BY a.DOCN,a.NAMEKONTR having COUNT(a.DOCN) > 1"
+                ,kindDDS
+                ,fromDate.Day,fromDate.Month,fromDate.Year
+                ,toDate.Day, toDate.Month, toDate.Year);
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            try
+            {
+                dbman.Open();
+                dbman.ExecuteReader(CommandType.Text, command);
+                while (dbman.DataReader.Read())
+                {
+                    var row = new List<string>();
+                    row.Add(dbman.DataReader["DOCN"].ToString());
+                    row.Add(dbman.DataReader["NAMEKONTR"].ToString());
+                    row.Add(dbman.DataReader["CC"].ToString());
+                    list.Add(row);
+                    
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.Instance().WriteLogError(ex.Message, "public static IEnumerable<LookUpMetaData> GetSystemLookups()");
+            }
+
+            finally
+            {
+                dbman.Dispose();
+            }
+            return list;
+        
+    }
+
         public static IEnumerable<TableField> GetLookUpFields(int id)
         {
             string command =

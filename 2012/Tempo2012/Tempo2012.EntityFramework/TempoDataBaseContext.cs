@@ -711,5 +711,10 @@ namespace Tempo2012.EntityFramework
         {
             return RealDataContext.GetContosByContragent(id, fromDate, toDate, code,nom);
         }
+
+        public List<List<string>> CheckSellsPurchases(DateTime fromDate, DateTime toDate, int kindDDS)
+        {
+            return RealDataContext.CheckSellsPurchases(fromDate, toDate, kindDDS);
+        }
     }
 }
