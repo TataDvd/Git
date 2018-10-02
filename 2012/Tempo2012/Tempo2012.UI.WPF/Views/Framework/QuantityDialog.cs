@@ -123,7 +123,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             decimal sumacolmd = 0, sumacolmc = 0;
 
             sumad =contos.Sum(e=>e.Oborot);
-            sumac=contos1.Sum(e=>e.Oborot);
+            sumac =contos1.Sum(e=>e.Oborot);
             decimal sumaquantityd = contos.Sum(e=>e.Quantity);
             decimal sumaquantityc = contos1.Sum(e => e.Quantity);
             //decimal sumasinglepriced=contos1.Sum(e=>e.SinglePrice);
@@ -159,15 +159,17 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         nskold = 0;
                     }
                     var row = new List<string>();
+                    var sbor1 = nsd + sumamd;
+                    var sbork1 = nskold + sumacolmd;
                     row.Add("----------------------------------------------------------------------------------");
                     row.Add("|Сборно          |          л е в а              |           количества          |");
                     row.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
                     row.Add("----------------------------------------------------------------------------------");
                     row.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
                     row.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-                    row.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
-                    row.Add($"|Крайни салда    |{((nsd + sumamd) - sumamc).ToString(Vf.LevFormatUI),15}|               |{((nskold + sumacolmd) - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
-                    row.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    row.Add($"|Сборове         |{sbor1.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork1.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+                    row.Add($"|Крайни салда    |{(sbor1 - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork1 - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
+                    //row.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
                     row.Add("----------------------------------------------------------------------------------");
                     Rowfoother.Add(currentrow-1,row);
                     sumamd = 0;
@@ -224,15 +226,17 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 nsd = 0;
                 nskold = 0;
             }
+            var sbor = nsd + sumamd;
+            var sbork = nskold + sumacolmd;
             row1.Add("----------------------------------------------------------------------------------");
             row1.Add("|Сборно          |          л е в а              |           количества          |");
             row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
             row1.Add("----------------------------------------------------------------------------------");
             row1.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
             row1.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-            row1.Add($"|Сборове         |{(nsd + sumamd).ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{(nskold + sumacolmd).ToString(Vf.KolFormatUI),15}|               |");
-            row1.Add($"|Крайни салда    |{((nsd + sumamd) - sumamc).ToString(Vf.LevFormatUI),15}|               |{((nskold + sumacolmd) - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
-            row1.Add($"|Средна цена     |{((sumamd + nsd) / ((sumacolmd+nskold)!=0?(sumacolmd+nskold):1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+            row1.Add($"|Сборове         |{sbor.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+            row1.Add($"|Крайни салда    |{(sbor - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
+            //row1.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
             row1.Add("----------------------------------------------------------------------------------");
             Rowfoother.Add(currentrow-1, row1);
             if (string.IsNullOrWhiteSpace(KindStock))
@@ -271,7 +275,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
                     row1.Add($"|Сборове         |{0,15}|{sumamc.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|               |");
                     row1.Add($"|Крайни салда    |{item.BeginSaldoDebit,15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
-                    row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    //row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
                     row1.Add("----------------------------------------------------------------------------------");
                     Rowfoother.Add(currentrow - 1, row1);
                 }

@@ -725,6 +725,11 @@ namespace Tempo2012.EntityFramework
                 ,kindDDS
                 ,fromDate.Day,fromDate.Month,fromDate.Year
                 ,toDate.Day, toDate.Month, toDate.Year);
+            if (kindDDS==2)
+                command = string.Format("SELECT a.DOCN,COUNT(a.DOCN) as CC FROM DDSDNEV a where a.KINDACTIVITY = {0} and a.DATADOC>='{1}.{2}.{3}' and a.DATADOC<='{4}.{5}.{6}' GROUP BY a.DOCN having COUNT(a.DOCN) > 1"
+                , kindDDS
+                , fromDate.Day, fromDate.Month, fromDate.Year
+                , toDate.Day, toDate.Month, toDate.Year);
             var dbman = new DBManager(DataProvider.Firebird);
             dbman.ConnectionString = Entrence.ConnectionString;
             try
@@ -735,7 +740,14 @@ namespace Tempo2012.EntityFramework
                 {
                     var row = new List<string>();
                     row.Add(dbman.DataReader["DOCN"].ToString());
-                    row.Add(dbman.DataReader["NAMEKONTR"].ToString());
+                    if (kindDDS == 1)
+                    {
+                        row.Add(dbman.DataReader["NAMEKONTR"].ToString());
+                    }
+                    else
+                    {
+                        row.Add("");
+                    }
                     row.Add(dbman.DataReader["CC"].ToString());
                     list.Add(row);
                     
