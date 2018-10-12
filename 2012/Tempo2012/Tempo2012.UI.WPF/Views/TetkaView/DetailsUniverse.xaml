@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:dataGrid2DLibrary="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
-        Title="{Binding Title}" Height="600
-        " Width="800">
+        Title="{Binding Title}" Height="600" Width="1300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>

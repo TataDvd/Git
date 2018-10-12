@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using DataGrid2DLibrary;
+using Tempo2012.EntityFramework;
 using Tempo2012.EntityFramework.Models;
 using Tempo2012.UI.WPF.Models;
 using Tempo2012.UI.WPF.ViewModels;
@@ -20,10 +21,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         private int Tip;
         private string _title;
         private int Count;
+        AccountsModel Acc;
 
-        public DetailsUniverseViewModel(EntityFramework.Models.AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
+        public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
-            
+            Acc = dAccountsModel;
             if (mode == EditMode.Edit)
             {
                 IsEditMode = System.Windows.Visibility.Hidden;
@@ -78,10 +80,21 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     }
                     _fields.Add(r);
                 }
-                Fields = new List<List<string>>(_fields);
-                OnPropertyChanged("Fields");
+            if (dAccountsModel.Kol == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
+            }
+            else if (dAccountsModel.Val == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
+            }
+            else
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
+            }
+                
             
-           
+           OnPropertyChanged("Fields");
         }
 
         public string Title
@@ -121,7 +134,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         }
                         if (saldoItem.Name == "Сума валута")
                         {
-                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 5])*saldoItem.MainKurs;
                             saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
                             saldoItem.Value = element[element.Count-5];
                             continue;
@@ -156,11 +169,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         }
                         if (saldoItem.Name == "Сума валута")
                         {
-                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 5]) * saldoItem.MainKurs;
                             saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
                             saldoItem.Value = element[element.Count - 5];
                             continue;
-                            continue;
+                            
                         }
                         if (element[i] != null)
                         {
@@ -237,7 +250,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
         internal void Filter()
         {
-            Fields=new List<List<string>>(_fields.Where(e=>e[e.Count-1]!="0.00"));
+            if (Acc.Kol == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
+            }
+            else if (Acc.Val == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
+            }
+            else
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
+            }
             OnPropertyChanged("Fields");
         }
 
