@@ -240,15 +240,15 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
             } 
             OborotsDebit = string.Format(Vf.LevFormat, sumad);
             OborotsCredit = string.Format(Vf.LevFormat, sumac);
-            TotalD = CurrenAcc.TypeAccount == 1 ? string.Format(Vf.LevFormat, sumad + BeginSaldoD) : string.Format(Vf.LevFormat, sumad);
-            TotalC = CurrenAcc.TypeAccount == 2 ? string.Format(Vf.LevFormat, sumac + BeginSaldoK) : string.Format(Vf.LevFormat, sumac);
+            TotalD = CurrenAcc.TypeAccount == 1 ? string.Format(Vf.LevFormat, Math.Round(sumad,2) + Math.Round(BeginSaldoD,2)) : string.Format(Vf.LevFormat, sumad);
+            TotalC = CurrenAcc.TypeAccount == 2 ? string.Format(Vf.LevFormat, Math.Round(sumac,2) +  Math.Round(BeginSaldoK,2)) : string.Format(Vf.LevFormat, sumac);
             if (CurrenAcc.TypeAccount == 1)
             {
-                KrainoSaldoD = (sumad + BeginSaldoD) - (sumac);
+                KrainoSaldoD = (Math.Round(sumad, 2) + Math.Round(BeginSaldoD,2) - Math.Round(sumac,2));
             }
             if (CurrenAcc.TypeAccount == 2)
             {
-                KrainoSaldoK = (sumac + BeginSaldoK) - (sumad);
+                KrainoSaldoK = (Math.Round(sumac,2) + Math.Round(BeginSaldoK,2) - Math.Round(sumad,2));
             } 
             return items;
         }
