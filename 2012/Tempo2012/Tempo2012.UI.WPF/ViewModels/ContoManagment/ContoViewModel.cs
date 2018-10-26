@@ -833,9 +833,11 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 {
                     bool obchange = CurrentWraperConto.CurrentConto.Oborot != value;
                     CurrentWraperConto.CurrentConto.Oborot =value;
-                    //UpdateValuta();
-                    UpdateCol();
-                    if (obchange) OnOborotChange();
+                    if (!notupdated)
+                    {
+                        UpdateCol();
+                        if (obchange) OnOborotChange();
+                    }
                 }
                 OnPropertyChanged("Oborot");
             }
@@ -850,7 +852,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         private void UpdateValuta()
         {
-            if (Oborot == 0) return;
+            if (Oborot == 0 || notupdated) return;
             foreach (var saldoItem in ItemsCredit)
             {
                 if (saldoItem.IsVal && saldoItem.ValueVal != 0)
@@ -2708,6 +2710,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         internal void UpdateValutenKurs(string vidvaluta)
         {
+            if (notupdated) return;
             if (this.Mode == EditMode.Add)
             {
                 WorkValuta = vidvaluta;
@@ -3474,5 +3477,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 toDate = value;
             }
         }
+
+        public bool notupdated { get;  set; }
     }
 }

@@ -143,11 +143,11 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                 items.Add(item);
                 if (co.DebitAccount==CurrenAcc.Id)
                 {
-                    sumad += co.Oborot;
+                    sumad += Math.Round(co.Oborot,2);
                 }
                 else
                 {
-                    sumac += co.Oborot;
+                    sumac +=  Math.Round(co.Oborot,2);
                 }
                 
             }
@@ -172,11 +172,11 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                     {
                         if (co.DebitAccount == CurrenAcc.Id)
                         {
-                            sumadb += co.Oborot;
+                            sumadb += Math.Round(co.Oborot,2);
                         }
                         else
                         {
-                            sumacb += co.Oborot;
+                            sumacb += Math.Round(co.Oborot,2);
                         }
                     }
 
@@ -192,11 +192,12 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                     {
                         if (co.DebitAccount == CurrenAcc.Id)
                         {
-                            sumadb += co.Oborot;
+                            sumadb += Math.Round(co.Oborot,2);
+                           
                         }
                         else
                         {
-                            sumacb += co.Oborot;
+                            sumacb += Math.Round(co.Oborot,2);
                         }
                     }
                 }
@@ -232,11 +233,11 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
             }
             if (CurrenAcc.TypeAccount == 1)
             {
-                BeginSaldoD = (sumadb + CurrenAcc.BeginSaldoL) - (sumacb);
+                BeginSaldoD = (Math.Round(sumadb,2) + Math.Round(CurrenAcc.BeginSaldoL,2)) - (Math.Round(sumacb,2));
             }
             if (CurrenAcc.TypeAccount == 2)
             {
-                BeginSaldoK = (sumacb + CurrenAcc.BeginSaldoL) - (sumadb);
+                BeginSaldoK = (Math.Round(sumacb,2) +  Math.Round(CurrenAcc.BeginSaldoL,2)) - (Math.Round(sumadb,2));
             } 
             OborotsDebit = string.Format(Vf.LevFormat, sumad);
             OborotsCredit = string.Format(Vf.LevFormat, sumac);

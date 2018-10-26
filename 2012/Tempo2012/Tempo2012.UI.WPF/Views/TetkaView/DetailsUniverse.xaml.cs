@@ -65,12 +65,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             if (dg != null && dg.SelectedItems != null)
             {
-                foreach (var item in dg.SelectedItems)
-                {
+                
                     var detailsUniverseViewModel = DataContext as DetailsUniverseViewModel;
                     if (detailsUniverseViewModel != null)
-                        detailsUniverseViewModel.SaveConto(item);
-                }
+                        detailsUniverseViewModel.SaveContos(dg.SelectedItems);
+                
                 var detailsUniverseViewModel1 = DataContext as DetailsUniverseViewModel;
                 if (detailsUniverseViewModel1 != null)
                 {

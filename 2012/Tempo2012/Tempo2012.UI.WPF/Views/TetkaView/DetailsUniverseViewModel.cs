@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -97,6 +98,65 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
            OnPropertyChanged("Fields");
         }
 
+        internal void SaveContos(IList selectedItems)
+        {
+            decimal kurrazsum = 0;
+            Cvm.notupdated=true;
+            foreach (var item in selectedItems)
+            {
+               
+                kurrazsum+=SaveConto(item);
+
+            }
+            var AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
+            if (kurrazsum < 0)
+            {
+                var model = AllAccountsK.FirstOrDefault(e => e.Num == 624 && e.SubNum == 0);
+                if (model != null)
+                {
+                    Cvm.DAccountsModel = model;
+                    Cvm.Oborot = kurrazsum;
+                    foreach (SaldoItem saldoItem in Cvm.ItemsCredit)
+                    {
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            saldoItem.ValueVal = 0;
+                            saldoItem.Value = "0";
+                            saldoItem.ValueKurs = saldoItem.MainKurs;
+                            saldoItem.KursDif = 0;
+                        }
+
+                    }
+                    Cvm.SaveF4();
+                }
+            }
+            else if (kurrazsum > 0)
+            {
+                var model = AllAccountsK.FirstOrDefault(e => e.Num == 724 && e.SubNum == 0);
+                if (model != null)
+                {
+                    Cvm.DAccountsModel = Cvm.CAccountsModel;
+                    Cvm.ItemsDebit = Cvm.ItemsCredit;
+                    Cvm.CAccountsModel = model;
+                    Cvm.Oborot = kurrazsum;
+                    foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
+                    {
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            saldoItem.ValueVal = 0;
+                            saldoItem.Value = "0";
+                            saldoItem.ValueKurs = saldoItem.MainKurs;
+                            saldoItem.KursDif = 0;
+                        }
+
+                    }
+                    Cvm.SaveF4();
+                }
+            }
+
+            Cvm.notupdated = false;
+    }
+
         public string Title
         {
             get { return _title; }
@@ -106,8 +166,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         public List<List<string>> Fields { get; set;}
         public int CurrentRowIndex { get; set; }
 
-        internal void SaveConto(object item)
+        internal decimal SaveConto(object item)
         {
+            
+            decimal kurrazsum = 0;
             List<string> element = new List<string>();
             var citem = item as System.Data.DataRowView;
             if (citem != null)
@@ -128,15 +190,29 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         {
                             Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
                             saldoItem.ValueKol = decimal.Parse(element[element.Count - 5]);
-                            saldoItem.Value = element[element.Count-4];
+                            saldoItem.Value = element[element.Count - 4];
                             continue;
-                            
+
                         }
                         if (saldoItem.Name == "Сума валута")
                         {
-                            Cvm.Oborot = decimal.Parse(element[element.Count - 5])*saldoItem.MainKurs;
+                            Cvm.Oborot = decimal.Parse(element[element.Count - 1]);
                             saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
-                            saldoItem.Value = element[element.Count-5];
+                            saldoItem.ValueKurs = saldoItem.ValueVal != 0 ? Cvm.Oborot / saldoItem.ValueVal : 0;
+                            saldoItem.MainKurs = saldoItem.ValueVal != 0 ? Cvm.Oborot / saldoItem.ValueVal : 0;
+                            saldoItem.KursDif = 0;
+                            saldoItem.Value = element[element.Count - 5];
+                            foreach (var credititem in Cvm.ItemsCredit)
+                            {
+                                if (credititem.Name == "Сума валута")
+                                {
+                                    credititem.ValueVal = saldoItem.ValueVal;
+                                    credititem.ValueKurs = saldoItem.ValueKurs;
+                                    credititem.KursDif = credititem.ValueVal * (credititem.ValueKurs - credititem.MainKurs);
+                                    kurrazsum += credititem.KursDif;
+                                    //ВАЛ.СУМА * (КУРС - ОПОРЕН КУРС)
+                                }
+                            }
                             continue;
                         }
                         if (element[i] != null)
@@ -172,8 +248,9 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             Cvm.Oborot = decimal.Parse(element[element.Count - 5]) * saldoItem.MainKurs;
                             saldoItem.ValueVal = decimal.Parse(element[element.Count - 5]);
                             saldoItem.Value = element[element.Count - 5];
+
                             continue;
-                            
+
                         }
                         if (element[i] != null)
                         {
@@ -193,11 +270,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 if (element != null) Cvm.CurrentWraperConto.Oborot = Decimal.Parse(element[element.Count - 1]);
                 Cvm.SaveF4();
-               
+                
             }
-           
-
-           
+            return kurrazsum;
+      
             
         }
 
