@@ -83,7 +83,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             var grid = sender as DataGrid2D;
             var detailsUniverseViewModel = DataContext as DetailsUniverseViewModel;
-            if (detailsUniverseViewModel != null) detailsUniverseViewModel.Suma = 0;
+            if (detailsUniverseViewModel != null)
+            {
+                detailsUniverseViewModel.Suma = 0;
+                detailsUniverseViewModel.SumaVal = 0;
+            }
             if (grid != null && grid.SelectedItems != null)
             {
                 foreach (var item in grid.SelectedItems)
@@ -93,8 +97,16 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     {
                         Ref<string> sum = citem.Row.ItemArray[citem.Row.ItemArray.Length - 1] as Ref<string>;
                         if (detailsUniverseViewModel != null)
+                        {
                             if (sum != null) detailsUniverseViewModel.Suma += decimal.Parse(sum.Value);
+                            if (detailsUniverseViewModel.Acc.Kol > 0 || detailsUniverseViewModel.Acc.Val > 0)
+                            {
+                                Ref<string> valsum = citem.Row.ItemArray[citem.Row.ItemArray.Length - 5] as Ref<string>;
+                                if (valsum != null) detailsUniverseViewModel.SumaVal += decimal.Parse(valsum.Value);
+                            }
+                        }
                     }
+                    
                 }
             }
         }

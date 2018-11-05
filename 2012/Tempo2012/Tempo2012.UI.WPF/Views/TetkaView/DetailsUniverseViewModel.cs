@@ -19,10 +19,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         private List<List<string>> _fields;
         private ContoViewModel Cvm;
         private decimal _suma;
+        private decimal _sumaval;
         private int Tip;
         private string _title;
         private int Count;
-        AccountsModel Acc;
+        public AccountsModel Acc;
 
         public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
@@ -105,7 +106,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             foreach (var item in selectedItems)
             {
                
-                kurrazsum+=SaveConto(item);
+                kurrazsum+=Math.Round(SaveConto(item),2);
 
             }
             var AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
@@ -324,6 +325,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             set { _suma = value;OnPropertyChanged("Suma");}
         }
 
+        public decimal SumaVal
+        {
+            get { return _sumaval; }
+            set { _sumaval = value; OnPropertyChanged("SumaVal"); }
+        }
         internal void Filter()
         {
             if (Acc.Kol == 1)
