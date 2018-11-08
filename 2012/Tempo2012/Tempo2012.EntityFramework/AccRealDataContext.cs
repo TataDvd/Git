@@ -344,15 +344,16 @@ namespace Tempo2012.EntityFramework
                 var newid = dbman.ExecuteScalar(CommandType.Text,
                     "select gen_id(NEWANALITICALACC, 0) from rdb$database");
                 CurrentAnaliticalAccount.Id = ((long?) newid).GetValueOrDefault();
+                var i = 0;
                 foreach (var field in CurrentFieldSelected)
                 {
                     string commands =
                         string.Format(
                             "INSERT INTO \"conectoranaliticfield\" (\"AnaliticalNameID\",\"AnaliticalFieldId\",REQUIRED,SORTORDER) VALUES ({0},{1},{2},{3})",
                             CurrentAnaliticalAccount.Id,
-                            field.Id, field.Requared ? 1 : 0,field.SortOrder);
+                            field.Id, field.Requared ? 1 : 0,i);
                     dbman.ExecuteNonQuery(CommandType.Text, commands);
-
+                    i++;
                 }
                 dbman.CommitTransaction();
             }
@@ -389,15 +390,15 @@ namespace Tempo2012.EntityFramework
                 dbman.ExecuteNonQuery(CommandType.Text, Commands.UpdateAA);
                 dbman.ExecuteNonQuery(CommandType.Text,
                     string.Format(Commands.DeleteAAConector, CurrentAnaliticalAccount.Id));
-
+                var i = 0;
                 foreach (var field in CurrentFieldSelected)
                 {
                     string commands = string.Format(
                         "INSERT INTO \"conectoranaliticfield\" (\"AnaliticalNameID\",\"AnaliticalFieldId\",REQUIRED,SORTORDER) VALUES ({0},{1},{2},{3})",
                         CurrentAnaliticalAccount.Id,
-                        field.Id, field.Requared ? 1 : 0,field.SortOrder);
+                        field.Id, field.Requared ? 1 : 0,i);
                     dbman.ExecuteNonQuery(CommandType.Text, commands);
-
+                    i++;
                 }
                 dbman.CommitTransaction();
             }
