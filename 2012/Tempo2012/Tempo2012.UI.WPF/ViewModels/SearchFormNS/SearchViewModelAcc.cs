@@ -590,5 +590,19 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
         }
 
         public int TypeRep { get; private set; }
+
+        private string _debitmask;
+        public string DebitMask
+        {
+            get { return _debitmask; }
+            set { _debitmask = value; OnPropertyChanged("DebitMask"); }
+        }
+
+        private string _creditmask;
+        public string CreditMask
+        {
+            get { return _creditmask; }
+            set { _creditmask = value; OnPropertyChanged("CreditMask"); }
+        }
     }
 }

@@ -212,6 +212,7 @@ namespace Tempo2012.EntityFramework
             dbman.ConnectionString = Entrence.ConnectionString;
             try
             {
+                
                 dbman.Open();
                 StringBuilder sb = new StringBuilder();
                 sb.Append(string.Format("select First {0} SKIP {1} * from \"conto\" c",numberOfRecord,startingIndex));
@@ -230,9 +231,21 @@ namespace Tempo2012.EntityFramework
                     pSearcAcc.ToDate.Month,
                     pSearcAcc.ToDate.Year);
                 if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", pSearcAcc.NumDoc);
+                {
+                    string expresetion = "{0}";
+                    if (pSearcAcc.NumDoc.StartsWith("*"))
+                    {
+                        expresetion = string.Format("%{0}", expresetion);
+                    }
+                    if (pSearcAcc.NumDoc.EndsWith("*"))
+                    {
+                        expresetion = string.Format("{0}%", expresetion);
+                    }
+                    sb.AppendFormat(" AND DOCNUM LIKE "+ expresetion, pSearcAcc.NumDoc);
+                }
                 if (pSearcAcc.CreditAcc != null)
                 {
+
                     if (pSearcAcc.CreditAcc.Num > 0)
                         sb.AppendFormat(" AND a.NUM={0}", pSearcAcc.CreditAcc.Num);
                     if (pSearcAcc.CreditAcc.SubNum > -1)

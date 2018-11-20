@@ -1080,6 +1080,14 @@ namespace Tempo2012.EntityFramework
                     pSearcAcc.ToDate.Year);
                 if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
                     sb.AppendFormat(" AND DOCNUM='{0}'", pSearcAcc.NumDoc);
+                if (pSearcAcc.CreditMask != null)
+                {
+                    sb.Append(prepare(pSearcAcc.CreditMask, "A"));
+                }
+                if (pSearcAcc.DebitMask != null)
+                {
+                    sb.Append(prepare(pSearcAcc.DebitMask, "B"));
+                }
                 if (pSearcAcc.CreditAcc != null)
                 {
                     if (pSearcAcc.CreditAcc.Num > 0)
@@ -3859,6 +3867,14 @@ namespace Tempo2012.EntityFramework
                     pSearcAcc.ToDate.Year);
                 if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
                     sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", pSearcAcc.NumDoc);
+                if (pSearcAcc.CreditMask != null)
+                {
+                    sb.Append(prepare(pSearcAcc.CreditMask, "A"));
+                }
+                if (pSearcAcc.DebitMask != null)
+                {
+                    sb.Append(prepare(pSearcAcc.DebitMask, "B"));
+                }
                 if (pSearcAcc.CreditAcc != null)
                 {
                     if (pSearcAcc.CreditAcc.Num > 0)
@@ -5367,6 +5383,15 @@ namespace Tempo2012.EntityFramework
 
                 if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
                     sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
+                if (cSearchAcc.CreditMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.CreditMask,"A"));
+                }
+                if (cSearchAcc.DebitMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
+                }
+                
                 if (cSearchAcc.CreditAcc != null)
                 {
                     if (cSearchAcc.CreditAcc.Num > 0)
@@ -5483,6 +5508,62 @@ namespace Tempo2012.EntityFramework
             return allConto;
         }
 
+        private static string prepare(string creditMask,string allias)
+        {
+            string result = "";
+            var subcho = creditMask.Replace('*', ' ').Trim();
+            if (subcho.Length == 1)
+            {
+                 result = string.Format(" AND {0}.NUM>={1}00 AND {0}.NUM<={1}99", allias, subcho);
+            }
+            if (subcho.Length == 2)
+            {
+                 result = string.Format(" AND {0}.NUM>={1}0 AND {0}.NUM<={1}9", allias, subcho);
+            }
+            if (subcho.Length == 3)
+            {
+                result = string.Format(" AND {0}.NUM={1} AND {0}.NUM={1}", allias, subcho);
+            }
+            //    }
+            //    else
+            //    {
+            //        result = string.Format(" AND {0}.NUM={1}", allias, subcho);
+            //    }
+            //    if (splity[1].EndsWith("*"))
+            //    {
+            //        subcho = splity[1].Replace('*', ' ').Trim();
+            //        if (subcho.Length == 1)
+            //        {
+            //            result += string.Format(" AND {0}.\"SubNum\">={1}00 AND {0}.\"SubNum\"<={1}99", allias, subcho);
+            //        }
+            //        if (subcho.Length == 2)
+            //        {
+            //            result += string.Format(" AND {0}.\"SubNum\">{1}0 AND {0}.\"SubNum\"<{1}9", allias, subcho);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (creditMask.EndsWith("*"))
+            //    {
+            //        var subcho = creditMask.Replace('*', ' ').Trim();
+            //        if (subcho.Length == 1)
+            //        {
+            //            result = string.Format(" AND {0}.NUM>{1}00 AND {0}.NUM<{1}99", allias, subcho);
+            //        }
+            //        if (subcho.Length == 2)
+            //        {
+            //            result = string.Format(" AND {0}.NUM>{1}0 AND {0}.NUM<{1}9", allias, subcho);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        result = string.Format(" AND {0}.NUM={1}", allias, creditMask);
+            //    }
+            //}
+            return result;
+        }
+
         internal static IEnumerable<Conto> GetAllContoWithDdsAndNot(int firmaId, Interface.CSearchAcc cSearchAcc,string clnum,string nom)
         {
             List<Conto> allConto = new List<Conto>();
@@ -5514,6 +5595,14 @@ namespace Tempo2012.EntityFramework
 
                 if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
                     sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
+                if (cSearchAcc.CreditMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.CreditMask, "A"));
+                }
+                if (cSearchAcc.DebitMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
+                }
                 if (cSearchAcc.CreditAcc != null)
                 {
                     if (cSearchAcc.CreditAcc.Num > 0)
@@ -5778,6 +5867,14 @@ namespace Tempo2012.EntityFramework
 
                 if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
                     sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
+                if (cSearchAcc.CreditMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.CreditMask, "A"));
+                }
+                if (cSearchAcc.DebitMask != null)
+                {
+                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
+                }
                 if (cSearchAcc.CreditAcc != null)
                 {
                     if (cSearchAcc.CreditAcc.Num > 0)

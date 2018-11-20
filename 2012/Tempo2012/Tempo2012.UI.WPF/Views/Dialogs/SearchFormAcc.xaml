@@ -71,7 +71,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"></RowDefinition>
                         <RowDefinition Height="30"></RowDefinition>
-
                         <RowDefinition Height="*" MinHeight="160"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -83,6 +82,8 @@
                         <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Дебит сметка" Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
                         <CustomControls:TextBoxEx Text="{Binding Path=Debit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" KeyDown="TextBox_KeyDown" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" TabIndex="16" />
                         <Button Grid.Row="0" Grid.Column="2" Click="Button_Click" Margin="0,5,0,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">...</Button>
+                        <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Маска" Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+                        <CustomControls:TextBoxEx Text="{Binding Path=DebitMask,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="50" HorizontalAlignment="Left"  IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" TabIndex="16" />
                     </StackPanel>
                     <CustomControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                            Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
@@ -118,8 +119,9 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Grid.ColumnSpan="3">
                         <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Kредит сметка" Margin="10,5,10,2"/>
                         <CustomControls:TextBoxEx Text="{Binding Credit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="100" HorizontalAlignment="Left" KeyDown="TextBox_KeyDown_1" TabIndex="18" />
-
                         <Button Grid.Row="0" Grid.Column="2" Click="Button_Click_1"  Margin="0,5,0,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">...</Button>
+                        <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Маска" Margin="10,5,10,2"/>
+                        <CustomControls:TextBoxEx Text="{Binding CreditMask,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2" Width="50" HorizontalAlignment="Left" TabIndex="19" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
                     </StackPanel>
                     <CustomControls:TextBlockEx Grid.Row="1" 
                          Grid.Column="0"

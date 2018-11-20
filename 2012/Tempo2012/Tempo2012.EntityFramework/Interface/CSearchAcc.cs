@@ -35,9 +35,7 @@ namespace Tempo2012.EntityFramework.Interface
 
         public string Folder { get; set;}
 
-        public string Foleder { get; set; }
-
-        public byte TypeDate { get; set; }
+         public byte TypeDate { get; set; }
 
         public int Month { get; set;}
 
@@ -58,7 +56,8 @@ namespace Tempo2012.EntityFramework.Interface
         {
             get; set;
         }
-        
+        public string DebitMask{ get; set;}
+        public string CreditMask { get; set;}
 
         public override string ToString()
         {
@@ -135,10 +134,21 @@ namespace Tempo2012.EntityFramework.Interface
                     sb.AppendFormat(" {0} = {1} ", item.Name, item.Value);
                 }
             }
+            if (!string.IsNullOrWhiteSpace(DebitMask))
+            {
+                sb.AppendFormat(" Дебит сметка обхват={0}", DebitMask);
+                isused = true;
+            }
+            if (!string.IsNullOrWhiteSpace(CreditMask))
+            {
+                sb.AppendFormat(" Кредит сметка обхват={0}", CreditMask);
+                isused = true;
+            }
             if (!isused)
             {
                 sb.Append("*");
             }
+            
             return sb.ToString();
         }
     }

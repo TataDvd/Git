@@ -26,5 +26,8 @@ namespace Tempo2012.EntityFramework.Interface
         string PorNom { get; set; }
         string Id { get; set; }
         string UserId { get; set;}
+
+        string DebitMask { get; set; }
+        string CreditMask { get; set; }
     }
 }
