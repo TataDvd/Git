@@ -60,6 +60,8 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             CopyInterface(Entrence.Mask,this);
             if (Entrence.Mask.DebitAcc != null) _debit = Entrence.Mask.DebitAcc.ToString();
             if (Entrence.Mask.CreditAcc != null) _credit= Entrence.Mask.CreditAcc.ToString();
+            if (Entrence.Mask.DebitMask != null) _debit = Entrence.Mask.DebitMask;
+            if (Entrence.Mask.CreditMask != null) _credit = Entrence.Mask.CreditMask;
             Hrono = "Хронологичен регистър";
         }
         public void LoadSettings(string Path)
@@ -334,6 +336,11 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
         {
             get { return _debit; }
             set { _debit = value;
+                if (value.Contains('*'))
+                {
+                    DebitMask = value;
+                    DebitAcc = null;
+                }
                 DebitAcc=SetValue(value);
                 OnPropertyChanged("Debit");}
         }
@@ -347,7 +354,12 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             set
             {
                 _credit = value;
-                CreditAcc=SetValue(value);
+                if (value.Contains('*'))
+                {
+                    CreditMask = value;
+                    CreditAcc = null;
+                }
+                CreditAcc =SetValue(value);
                 OnPropertyChanged("Credit");
             }
         }

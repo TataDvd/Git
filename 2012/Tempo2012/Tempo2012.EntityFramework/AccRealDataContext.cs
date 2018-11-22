@@ -1078,88 +1078,11 @@ namespace Tempo2012.EntityFramework
                     pSearcAcc.ToDate.Day,
                     pSearcAcc.ToDate.Month,
                     pSearcAcc.ToDate.Year);
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM='{0}'", pSearcAcc.NumDoc);
-                if (pSearcAcc.CreditMask != null)
-                {
-                    sb.Append(prepare(pSearcAcc.CreditMask, "A"));
-                }
-                if (pSearcAcc.DebitMask != null)
-                {
-                    sb.Append(prepare(pSearcAcc.DebitMask, "B"));
-                }
-                if (pSearcAcc.CreditAcc != null)
-                {
-                    if (pSearcAcc.CreditAcc.Num > 0)
-                        sb.AppendFormat(" AND a.NUM={0}", pSearcAcc.CreditAcc.Num);
-                    if (pSearcAcc.CreditAcc.SubNum > -1)
-                        sb.AppendFormat(" AND a.\"SubNum\"={0}", pSearcAcc.CreditAcc.SubNum);
-                }
-                if (pSearcAcc.DebitAcc != null)
-                {
-                    if (pSearcAcc.DebitAcc.Num > 0)
-                        sb.AppendFormat(" AND b.NUM={0}", pSearcAcc.DebitAcc.Num);
-                    if (pSearcAcc.DebitAcc.SubNum > -1)
-                        sb.AppendFormat(" AND b.\"SubNum\"={0}", pSearcAcc.DebitAcc.SubNum);
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Note))
-                    sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", pSearcAcc.Note.ToUpper());
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Reason))
-                    sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", pSearcAcc.Reason.ToUpper());
-               
-                    if (pSearcAcc.CreditItems != null)
-                    {
-                        foreach (var item in pSearcAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                        {
-                            sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                        }
-                    }
-                    if (pSearcAcc.DebitItems != null)
-                    {
-                        foreach (var item in pSearcAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                        {
-                            sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                        }
-                    }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Ob))
-                {
-                    sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", pSearcAcc.Ob);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Folder))
-                {
-                    sb.AppendFormat(" AND c.FOLDER='{0}'", pSearcAcc.Folder);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr1))
-                {
-                    sb.AppendFormat(" AND c.PR1='{0}'", pSearcAcc.Pr1);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr2))
-                {
-                    sb.AppendFormat(" AND c.PR2='{0}'", pSearcAcc.Pr2);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.PorNom))
-                {
-                    sb.AppendFormat(" AND c.PORNOM='{0}'", pSearcAcc.PorNom);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Id))
-                {
-                    sb.AppendFormat(" AND c.\"Id\"='{0}'", pSearcAcc.Id);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.UserId))
-                {
-                    sb.AppendFormat(" AND c.USERID='{0}'", pSearcAcc.UserId);
-
-                }
+                GenerateWhereClause(pSearcAcc, sb);
                 sb.AppendFormat(" order by c.YEARR,c.MON,c.PORNOM");
                 string s = sb.ToString();
                 dbman.ExecuteReader(CommandType.Text, s);
-                LoadConto(allConto,dbman);
+                LoadConto(allConto, dbman);
             }
 
             catch (Exception ex)
@@ -1173,6 +1096,100 @@ namespace Tempo2012.EntityFramework
             }
 
             return allConto;
+        }
+
+        private static void GenerateWhereClause(ISearchAcc pSearcAcc, StringBuilder sb)
+        {
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
+                sb.AppendFormat(" AND DOCNUM='{0}'", pSearcAcc.NumDoc);
+            if (pSearcAcc.CreditMask != null)
+            {
+                sb.Append(prepare(pSearcAcc.CreditMask, "A"));
+            }
+            if (pSearcAcc.DebitMask != null)
+            {
+                sb.Append(prepare(pSearcAcc.DebitMask, "B"));
+            }
+            if (pSearcAcc.CreditAcc != null)
+            {
+                if (pSearcAcc.CreditAcc.Num > 0)
+                    sb.AppendFormat(" AND a.NUM={0}", pSearcAcc.CreditAcc.Num);
+                if (pSearcAcc.CreditAcc.SubNum > -1)
+                    sb.AppendFormat(" AND a.\"SubNum\"={0}", pSearcAcc.CreditAcc.SubNum);
+            }
+            if (pSearcAcc.DebitAcc != null)
+            {
+                if (pSearcAcc.DebitAcc.Num > 0)
+                    sb.AppendFormat(" AND b.NUM={0}", pSearcAcc.DebitAcc.Num);
+                if (pSearcAcc.DebitAcc.SubNum > -1)
+                    sb.AppendFormat(" AND b.\"SubNum\"={0}", pSearcAcc.DebitAcc.SubNum);
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Note))
+                sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", pSearcAcc.Note.ToUpper());
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Reason))
+                sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", pSearcAcc.Reason.ToUpper());
+
+            if (pSearcAcc.CreditItems != null)
+            {
+                foreach (var item in pSearcAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
+                {
+                    sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                }
+            }
+            if (pSearcAcc.DebitItems != null)
+            {
+                foreach (var item in pSearcAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
+                {
+                    sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Ob))
+            {
+                sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", pSearcAcc.Ob);
+
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Folder))
+            {
+                sb.AppendFormat(" AND c.FOLDER='{0}'", pSearcAcc.Folder);
+
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr1))
+            {
+                if (pSearcAcc.Pr1.Contains('*'))
+                {
+                    sb.AppendFormat(" AND c.PR1 like '{0}'", pSearcAcc.Pr1.Replace('*','%'));
+                }
+                else
+                {
+                    sb.AppendFormat(" AND c.PR1='{0}'", pSearcAcc.Pr1);
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr2))
+            {
+                if (pSearcAcc.Pr2.Contains('*'))
+                {
+                    sb.AppendFormat(" AND c.PR2 like '{0}'", pSearcAcc.Pr2.Replace('*', '%'));
+                }
+                else
+                {
+                    sb.AppendFormat(" AND c.PR2='{0}'", pSearcAcc.Pr2);
+                }
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.PorNom))
+            {
+                sb.AppendFormat(" AND c.PORNOM='{0}'", pSearcAcc.PorNom);
+
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.Id))
+            {
+                sb.AppendFormat(" AND c.\"Id\"='{0}'", pSearcAcc.Id);
+
+            }
+            if (!String.IsNullOrWhiteSpace(pSearcAcc.UserId))
+            {
+                sb.AppendFormat(" AND c.USERID='{0}'", pSearcAcc.UserId);
+
+            }
         }
 
         internal static List<List<string>> GetOborotnaVed(DateTime ToDate, DateTime FromDate)
@@ -3865,83 +3882,7 @@ namespace Tempo2012.EntityFramework
                     pSearcAcc.ToDate.Day,
                     pSearcAcc.ToDate.Month,
                     pSearcAcc.ToDate.Year);
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", pSearcAcc.NumDoc);
-                if (pSearcAcc.CreditMask != null)
-                {
-                    sb.Append(prepare(pSearcAcc.CreditMask, "A"));
-                }
-                if (pSearcAcc.DebitMask != null)
-                {
-                    sb.Append(prepare(pSearcAcc.DebitMask, "B"));
-                }
-                if (pSearcAcc.CreditAcc != null)
-                {
-                    if (pSearcAcc.CreditAcc.Num > 0)
-                        sb.AppendFormat(" AND a.NUM={0}", pSearcAcc.CreditAcc.Num);
-                    if (pSearcAcc.CreditAcc.SubNum > -1)
-                        sb.AppendFormat(" AND a.\"SubNum\"={0}", pSearcAcc.CreditAcc.SubNum);
-                }
-                if (pSearcAcc.DebitAcc != null)
-                {
-                    if (pSearcAcc.DebitAcc.Num > 0)
-                        sb.AppendFormat(" AND b.NUM={0}", pSearcAcc.DebitAcc.Num);
-                    if (pSearcAcc.DebitAcc.SubNum > -1)
-                        sb.AppendFormat(" AND b.\"SubNum\"={0}", pSearcAcc.DebitAcc.SubNum);
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Note))
-                    sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", pSearcAcc.Note.ToUpper());
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Reason))
-                    sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", pSearcAcc.Reason.ToUpper());
-                if (pSearcAcc.CreditItems != null)
-                {
-                    foreach (var item in pSearcAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (pSearcAcc.DebitItems != null)
-                {
-                    foreach (var item in pSearcAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Ob))
-                {
-                    sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", pSearcAcc.Ob);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Folder))
-                {
-                    sb.AppendFormat(" AND c.FOLDER='{0}'", pSearcAcc.Folder);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr1))
-                {
-                    sb.AppendFormat(" AND c.PR1='{0}'", pSearcAcc.Pr1);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Pr2))
-                {
-                    sb.AppendFormat(" AND c.PR2='{0}'", pSearcAcc.Pr2);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.PorNom))
-                {
-                    sb.AppendFormat(" AND c.PORNOM='{0}'", pSearcAcc.PorNom);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.Id))
-                {
-                    sb.AppendFormat(" AND c.\"Id\"='{0}'", pSearcAcc.Id);
-
-                }
-                if (!String.IsNullOrWhiteSpace(pSearcAcc.UserId))
-                {
-                    sb.AppendFormat(" AND c.USERID='{0}'", pSearcAcc.UserId);
-
-                }
+                GenerateWhereClause(pSearcAcc, sb);
                 string s = sb.ToString();
                 c = (int)dbman.ExecuteScalar(CommandType.Text, s);
                 //LoadConto(allConto);
@@ -5381,69 +5322,7 @@ namespace Tempo2012.EntityFramework
                 StringBuilder sb=new StringBuilder();
                 sb.Append(s);
 
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
-                if (cSearchAcc.CreditMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.CreditMask,"A"));
-                }
-                if (cSearchAcc.DebitMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
-                }
-                
-                if (cSearchAcc.CreditAcc != null)
-                {
-                    if (cSearchAcc.CreditAcc.Num > 0)
-                        sb.AppendFormat(" AND a.NUM={0}", cSearchAcc.CreditAcc.Num);
-                    if (cSearchAcc.CreditAcc.SubNum > -1)
-                        sb.AppendFormat(" AND a.\"SubNum\"={0}", cSearchAcc.CreditAcc.SubNum);
-                }
-                if (cSearchAcc.DebitAcc != null)
-                {
-                    if (cSearchAcc.DebitAcc.Num > 0)
-                        sb.AppendFormat(" AND b.NUM={0}", cSearchAcc.DebitAcc.Num);
-                    if (cSearchAcc.DebitAcc.SubNum > -1)
-                        sb.AppendFormat(" AND b.\"SubNum\"={0}", cSearchAcc.DebitAcc.SubNum);
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Note))
-                    sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", cSearchAcc.Note.ToUpper());
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Reason))
-                    sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", cSearchAcc.Reason.ToUpper());
-                if (cSearchAcc.CreditItems != null)
-                {
-                    foreach (var item in cSearchAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (cSearchAcc.DebitItems != null)
-                {
-                    foreach (var item in cSearchAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Ob))
-                {
-                    sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", cSearchAcc.Ob);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Folder))
-                {
-                    sb.AppendFormat(" AND c.FOLDER='{0}'", cSearchAcc.Folder);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr1))
-                {
-                    sb.AppendFormat(" AND c.PR1='{0}'", cSearchAcc.Pr1);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr2))
-                {
-                    sb.AppendFormat(" AND c.PR2='{0}'", cSearchAcc.Pr2);
-
-                }
+                GenerateWhereClause(cSearchAcc, sb);
                 sb.AppendFormat(" group by c.\"Id\",c.\"Oborot\",c.\"Reason\",c.\"Note\",c.\"DataInvoise\",c.\"NumberObject\",c.\"DebitAccount\",c.\"CreditAccount\",c.\"FirmId\",c.\"DocumentId\",c.DOCNUM,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTVALUTAK,c.OBOROTKOLK,c.FOLDER,c.\"Date\",c.ISDDSSALES,c.ISDDSPURCHASES,c.ISSALES,c.ISPURCHASES,c.VOPPURCHASES,c.VOPSALES,c.PORNOM,c.DDETAILS,c.CDETAILS,c.USERID,c.PR1,d.NAMEKONTR,d.CODEDOC,d.NZDDS,d.DOCN,d.DATAF");
                 s = sb.ToString();
                 dbman.ExecuteReader(CommandType.Text,s);
@@ -5524,6 +5403,14 @@ namespace Tempo2012.EntityFramework
             {
                 result = string.Format(" AND {0}.NUM={1} AND {0}.NUM={1}", allias, subcho);
             }
+            if (subcho.Length == 5)
+            {
+                result = string.Format(" {0}.\"SubNum\">={1}00 AND {0}.\"SubNum\"<={1}99", allias, subcho[4]);
+            }
+            if (subcho.Length == 6)
+            {
+                result = string.Format(" {0}.\"SubNum\">={1}0 AND {0}.\"SubNum\"<={1}9", allias, subcho[4]+subcho[5]);
+            }
             //    }
             //    else
             //    {
@@ -5592,69 +5479,7 @@ namespace Tempo2012.EntityFramework
                         );
                 StringBuilder sb = new StringBuilder();
                 sb.Append(s);
-
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
-                if (cSearchAcc.CreditMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.CreditMask, "A"));
-                }
-                if (cSearchAcc.DebitMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
-                }
-                if (cSearchAcc.CreditAcc != null)
-                {
-                    if (cSearchAcc.CreditAcc.Num > 0)
-                        sb.AppendFormat(" AND a.NUM={0}", cSearchAcc.CreditAcc.Num);
-                    if (cSearchAcc.CreditAcc.SubNum > -1)
-                        sb.AppendFormat(" AND a.\"SubNum\"={0}", cSearchAcc.CreditAcc.SubNum);
-                }
-                if (cSearchAcc.DebitAcc != null)
-                {
-                    if (cSearchAcc.DebitAcc.Num > 0)
-                        sb.AppendFormat(" AND b.NUM={0}", cSearchAcc.DebitAcc.Num);
-                    if (cSearchAcc.DebitAcc.SubNum > -1)
-                        sb.AppendFormat(" AND b.\"SubNum\"={0}", cSearchAcc.DebitAcc.SubNum);
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Note))
-                    sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", cSearchAcc.Note.ToUpper());
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Reason))
-                    sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", cSearchAcc.Reason.ToUpper());
-                if (cSearchAcc.CreditItems != null)
-                {
-                    foreach (var item in cSearchAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (cSearchAcc.DebitItems != null)
-                {
-                    foreach (var item in cSearchAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Ob))
-                {
-                    sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", cSearchAcc.Ob);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Folder))
-                {
-                    sb.AppendFormat(" AND c.FOLDER='{0}'", cSearchAcc.Folder);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr1))
-                {
-                    sb.AppendFormat(" AND c.PR1='{0}'", cSearchAcc.Pr1);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr2))
-                {
-                    sb.AppendFormat(" AND c.PR2='{0}'", cSearchAcc.Pr2);
-
-                }
+                GenerateWhereClause(cSearchAcc, sb);
                 sb.AppendFormat(" AND d.CLNUM='{0}' AND d.LOOKUPID='{1}'", clnum,nom);
                 s = sb.ToString();
                 dbman.ExecuteReader(CommandType.Text, s);
@@ -5865,68 +5690,7 @@ namespace Tempo2012.EntityFramework
                 StringBuilder sb = new StringBuilder();
                 sb.Append(s);
 
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.NumDoc))
-                    sb.AppendFormat(" AND DOCNUM LIKE '%{0}%'", cSearchAcc.NumDoc);
-                if (cSearchAcc.CreditMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.CreditMask, "A"));
-                }
-                if (cSearchAcc.DebitMask != null)
-                {
-                    sb.Append(prepare(cSearchAcc.DebitMask, "B"));
-                }
-                if (cSearchAcc.CreditAcc != null)
-                {
-                    if (cSearchAcc.CreditAcc.Num > 0)
-                        sb.AppendFormat(" AND a.NUM={0}", cSearchAcc.CreditAcc.Num);
-                    if (cSearchAcc.CreditAcc.SubNum > -1)
-                        sb.AppendFormat(" AND a.\"SubNum\"={0}", cSearchAcc.CreditAcc.SubNum);
-                }
-                if (cSearchAcc.DebitAcc != null)
-                {
-                    if (cSearchAcc.DebitAcc.Num > 0)
-                        sb.AppendFormat(" AND b.NUM={0}", cSearchAcc.DebitAcc.Num);
-                    if (cSearchAcc.DebitAcc.SubNum > -1)
-                        sb.AppendFormat(" AND b.\"SubNum\"={0}", cSearchAcc.DebitAcc.SubNum);
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Note))
-                    sb.AppendFormat(" AND UPPER(c.\"Note\") LIKE '%{0}%'", cSearchAcc.Note.ToUpper());
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Reason))
-                    sb.AppendFormat(" AND UPPER(c.\"Reason\") LIKE '%{0}%'", cSearchAcc.Reason.ToUpper());
-                if (cSearchAcc.CreditItems != null)
-                {
-                    foreach (var item in cSearchAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (cSearchAcc.DebitItems != null)
-                {
-                    foreach (var item in cSearchAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
-                    {
-                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
-                    }
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Ob))
-                {
-                    sb.AppendFormat(" AND c.\"NumberObject\" = '{0}'", cSearchAcc.Ob);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Folder))
-                {
-                    sb.AppendFormat(" AND c.FOLDER='{0}'", cSearchAcc.Folder);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr1))
-                {
-                    sb.AppendFormat(" AND c.PR1='{0}'", cSearchAcc.Pr1);
-
-                }
-                if (!String.IsNullOrWhiteSpace(cSearchAcc.Pr2))
-                {
-                    sb.AppendFormat(" AND c.PR2='{0}'", cSearchAcc.Pr2);
-
-                }
+                GenerateWhereClause(cSearchAcc, sb);
                 sb.AppendFormat(" order by c.YEARR,c.MON,c.PORNOM");
                 s = sb.ToString();
                 dbman.ExecuteReader(CommandType.Text, s);
