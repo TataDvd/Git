@@ -340,6 +340,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                 {
                     DebitMask = value;
                     DebitAcc = null;
+                    return;
                 }
                 DebitAcc=SetValue(value);
                 OnPropertyChanged("Debit");}
@@ -358,6 +359,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                 {
                     CreditMask = value;
                     CreditAcc = null;
+                    return;
                 }
                 CreditAcc =SetValue(value);
                 OnPropertyChanged("Credit");
