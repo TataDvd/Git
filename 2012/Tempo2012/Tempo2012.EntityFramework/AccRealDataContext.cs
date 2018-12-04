@@ -1133,14 +1133,28 @@ namespace Tempo2012.EntityFramework
             {
                 foreach (var item in pSearcAcc.CreditItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
                 {
-                    sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                    if (item.Value.Contains('*'))
+                    {
+                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - %' AND UPPER(c.\"CDETAILS\") LIKE '{1}'", item.Name.ToUpper(), item.Value.Replace('*','%').ToUpper());
+                    }
+                    else
+                    {
+                        sb.AppendFormat(" AND UPPER(c.\"CDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                    }
                 }
             }
             if (pSearcAcc.DebitItems != null)
             {
                 foreach (var item in pSearcAcc.DebitItems.Where(item => !String.IsNullOrWhiteSpace(item.Value)))
                 {
-                    sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                    if (item.Value.Contains('*'))
+                    {
+                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} -%' AND UPPER(c.\"DDETAILS\") LIKE '{1}'", item.Name.ToUpper(), item.Value.Replace('*','%').ToUpper());
+                    }
+                    else
+                    {
+                        sb.AppendFormat(" AND UPPER(c.\"DDETAILS\") LIKE '%{0} - {1} %'", item.Name.ToUpper(), item.Value.ToUpper());
+                    }
                 }
             }
             if (!String.IsNullOrWhiteSpace(pSearcAcc.Ob))
