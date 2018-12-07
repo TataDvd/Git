@@ -512,7 +512,10 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                 DebitItems = new ObservableCollection<INameValuePair>();
                 foreach (var saldoAnaliticModel in list)
                 {
-                    DebitItems.Add(new NameValuePair {Name = saldoAnaliticModel.Name});
+                    if (saldoAnaliticModel.Required)
+                    {
+                        DebitItems.Add(new NameValuePair { Name = saldoAnaliticModel.Name });
+                    }
                 }
                 OnPropertyChanged("DebitItems");
             }
@@ -538,7 +541,10 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                 CreditItems = new ObservableCollection<INameValuePair>();
                 foreach (var saldoAnaliticModel in list)
                 {
-                    CreditItems.Add(new NameValuePair {Name = saldoAnaliticModel.Name});
+                    if (saldoAnaliticModel.Required)
+                    {
+                        CreditItems.Add(new NameValuePair { Name = saldoAnaliticModel.Name });
+                    }
                 }
                 OnPropertyChanged("CreditItems");
             }
