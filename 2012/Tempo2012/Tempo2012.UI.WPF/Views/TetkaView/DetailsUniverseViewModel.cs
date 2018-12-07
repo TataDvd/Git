@@ -10,6 +10,7 @@ using Tempo2012.EntityFramework.Models;
 using Tempo2012.UI.WPF.Models;
 using Tempo2012.UI.WPF.ViewModels;
 using Tempo2012.UI.WPF.ViewModels.ContoManagment;
+using Tempo2012.UI.WPF.ViewModels.ContragenManager;
 
 namespace Tempo2012.UI.WPF.Views.TetkaView
 {
@@ -24,9 +25,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         private string _title;
         private int Count;
         public AccountsModel Acc;
-
+        public ObservableCollection<Filter> Filters { get; set; }
         public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
+            Filters = new ObservableCollection<Filter>();
             Acc = dAccountsModel;
             if (mode == EditMode.Edit)
             {

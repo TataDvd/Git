@@ -110,6 +110,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
             }
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 
     
