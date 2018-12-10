@@ -113,7 +113,31 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Enter)
+            {
+                var text = sender as TextBox;
+                if (text != null)
+                {
+                    var tag = text.Tag as ViewModels.ContragenManager.Filter;
+                    if (!string.IsNullOrWhiteSpace(tag.FilterWord)){
+                        int field = 0;
+                        foreach (var item in vm.Fields[0])
+                        {
+                            if (item == tag.FilterName)
+                            {
+                                vm.Fields = new List<List<string>>(vm.Fields.Where(ee => ee[field].Contains(tag.FilterWord) || ee[field] == tag.FilterName).ToList());
+                                vm.UpdateProperty();
+                            }
+                            field++;
+                        }
+                    }
+                    else
+                    {
+                        vm.All();
+                    }
+                }
+                
+            }
         }
     }
 

@@ -46,13 +46,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
              var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter);
              if (c!= null)v = c.Select(i => i.ToList()).ToList();
             
-            
+                
                 _fields = new List<List<string>>();
                 if (v != null)
                 {
                     foreach (var item in v)
                     {
                         _fields.Add(new List<string>(item));
+                    }
+                    foreach (var item in _fields[0])
+                    {
+                        Filters.Add(new ViewModels.ContragenManager.Filter { FilterName = item });
                     }
                 }
                 else
@@ -159,6 +163,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
             Cvm.notupdated = false;
     }
+
+        internal void UpdateProperty()
+        {
+            OnPropertyChanged("Fields");
+        }
 
         public string Title
         {
