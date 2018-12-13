@@ -25,5 +25,10 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             InitializeComponent();
             DataContext = vm;
         }
+        public DnPokupki(int year,int month)
+        {
+            InitializeComponent();
+            DataContext = new DnPurchasesViewModel(year,month);
+        }
     }
 }

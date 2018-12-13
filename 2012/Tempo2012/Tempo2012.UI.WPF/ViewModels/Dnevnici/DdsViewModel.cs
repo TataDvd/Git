@@ -580,7 +580,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
             }
             else
             {
-                ret.Add(String.Format("За месец            : {0} година {1}",Thread.CurrentThread.CurrentCulture.DateTimeFormat.MonthNames[ddsDnevnikModel.Month-1], ddsDnevnikModel.Year));
+                ret.Add(String.Format("За месец            : {0} година {1}",Thread.CurrentThread.CurrentCulture.DateTimeFormat.MonthNames[ddsDnevnikModel.ToDate.Month - 1], ddsDnevnikModel.ToDate.Year));
             }
             ret.Add(String.Format("Дата на извлечението: {0}",DateTime.Now.ToShortDateString()));
             ret.Add(String.Format("За фирма            : {0}",ConfigTempoSinglenton.GetInstance().CurrentFirma.Name));

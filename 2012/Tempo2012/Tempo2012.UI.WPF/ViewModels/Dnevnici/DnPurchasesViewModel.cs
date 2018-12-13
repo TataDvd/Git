@@ -18,6 +18,11 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
             _year = DateTime.Now.Year;
             _month = DateTime.Now.Month;
         }
+        public DnPurchasesViewModel(int year,int month)
+        {
+            _year =year;
+            _month = month;
+        }
         private int _year;
         public int Year
         {
