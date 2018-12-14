@@ -111,6 +111,8 @@ namespace Tempo2012.EntityFramework.Models
         public string Fields { get; set; }
         public decimal Ns { get; set; }
         public decimal Ks { get; set; }
+        public decimal Nsv { get; set; }
+        public decimal Ksv { get; set; }
         public string Folder { get; set; }
         public string DocNumber { get; set; }
         public string Reason { get; set; }
@@ -131,5 +133,7 @@ namespace Tempo2012.EntityFramework.Models
 
         public decimal Nsck { get;  set; }
         public decimal Nsdk { get; set; }
+        public string VidVal { get; set; }
+        public string VidValCode { get; set; }
     }
 }

@@ -2851,7 +2851,9 @@ namespace Tempo2012.EntityFramework
                             NumInvoise="0",
                             BeginSaldoCredit=gr.Sum(e=>e.BeginSaldoCredit),
                             BeginSaldoDebit = gr.Sum(e => e.BeginSaldoDebit),
-                            NameContragent=gr.First().NameContragent,
+                            BeginSaldoCreditValuta=gr.Sum(e=>e.BeginSaldoCreditValuta),
+                            BeginSaldoDebitValuta = gr.Sum(e => e.BeginSaldoDebitValuta),
+                            NameContragent =gr.First().NameContragent,
                         }
                       ).ToList();
                 AllMovementDebit = (from t in AllMovementDebit
@@ -2868,7 +2870,9 @@ namespace Tempo2012.EntityFramework
                                         Folder = grp.First().Folder,
                                         DocNumber = grp.First().DocNumber,
                                         Reason = grp.First().Reason,
-
+                                        VidVal=grp.First().VidVal,
+                                        VidValCode = grp.First().VidValCode,
+                                        OborotValuta = grp.Sum(t=>t.OborotValuta)
                                     }).ToList();
                 AllMovementCredit = (from t in AllMovementCredit
                                      group t by new { t.CodeContragent, t.NInvoise }
@@ -2883,8 +2887,10 @@ namespace Tempo2012.EntityFramework
                                          NameContragent = grp.First().NameContragent,
                                          Folder = grp.First().Folder,
                                          DocNumber = grp.First().DocNumber,
-                                         Reason = grp.First().Reason
-
+                                         Reason = grp.First().Reason,
+                                         VidVal = grp.First().VidVal,
+                                         VidValCode=grp.First().VidValCode,
+                                         OborotValuta = grp.Sum(t => t.OborotValuta)
                                      }).ToList();
 
             }
@@ -2903,8 +2909,10 @@ namespace Tempo2012.EntityFramework
                                         NameContragent = grp.First().NameContragent,
                                         Folder = grp.First().Folder,
                                         DocNumber = grp.First().DocNumber,
-                                        Reason = grp.First().Reason
-
+                                        Reason = grp.First().Reason,
+                                         VidVal = grp.First().VidVal,
+                                        VidValCode = grp.First().VidValCode,
+                                        OborotValuta = grp.Sum(t => t.OborotValuta)
                                     }).ToList();
                 AllMovementCredit = (from t in AllMovementCredit
                                      group t by new { t.CodeContragent, t.NInvoise }
@@ -2919,8 +2927,10 @@ namespace Tempo2012.EntityFramework
                                          NameContragent = grp.First().NameContragent,
                                          Folder = grp.First().Folder,
                                          DocNumber = grp.First().DocNumber,
-                                         Reason = grp.First().Reason
-
+                                         Reason = grp.First().Reason,
+                                          VidVal = grp.First().VidVal,
+                                         VidValCode = grp.First().VidValCode,
+                                         OborotValuta = grp.Sum(t => t.OborotValuta)
                                      }).ToList();
             }
             foreach (InvoiseControl invoiseControl in AllMovementDebit)
@@ -2930,10 +2940,13 @@ namespace Tempo2012.EntityFramework
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
                 item.Od = invoiseControl.Oborot;
+                item.Odv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.VidVal = invoiseControl.VidVal;
+                item.VidValCode = invoiseControl.VidValCode;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
                 var lc = AllMovementCredit.Where(
                         w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise).ToList();
@@ -2941,6 +2954,7 @@ namespace Tempo2012.EntityFramework
                 {
 
                     item.Oc += lc1.Oborot;
+                    item.Odv += lc1.OborotValuta;
                     if (item.Type == 2) item.Data = lc1.DataInvoise;
                     AllMovementCredit.Remove(lc1);
                 }
@@ -2954,11 +2968,14 @@ namespace Tempo2012.EntityFramework
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
                 item.Oc = invoiseControl.Oborot;
+                item.Ocv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
                 item.Folder = invoiseControl.Folder;
                 item.DocNumber = invoiseControl.DocNumber;
                 item.Reason = invoiseControl.Reason;
+                item.VidVal = invoiseControl.VidVal;
+                item.VidValCode = invoiseControl.VidValCode;
                 _movements1.Add(item);
 
             }
@@ -2986,6 +3003,8 @@ namespace Tempo2012.EntityFramework
                     item1.Od = 0;
                     item1.Nsd = item.BeginSaldoDebit;
                     item1.Nsc = item.BeginSaldoCredit;
+                    item1.Nsdv = item.BeginSaldoDebitValuta;
+                    item1.Nscv = item.BeginSaldoCreditValuta;
                     item1.Type = accountsModel.TypeAccount;
                     _movements1.Add(item1);
                 }
@@ -3014,6 +3033,8 @@ namespace Tempo2012.EntityFramework
                     item1.Od = 0;
                     item1.Nsd = item.BeginSaldoDebit;
                     item1.Nsc = item.BeginSaldoCredit;
+                    item1.Nsdv = item.BeginSaldoDebitValuta;
+                    item1.Nscv = item.BeginSaldoCreditValuta;
                     item1.Type = accountsModel.TypeAccount;
                     _movements1.Add(item1);
                 }
@@ -3033,6 +3054,16 @@ namespace Tempo2012.EntityFramework
                     itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - (itemSaldo.Nsc + itemSaldo.Oc);
                     itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
                 }
+                if (accountsModel.TypeAccount != 1)
+                {
+                    itemSaldo.Ksv = itemSaldo.Nscv + itemSaldo.Ocv - (itemSaldo.Nsdv + itemSaldo.Odv);
+                    itemSaldo.Nsv = itemSaldo.Nscv - itemSaldo.Nsdv;
+                }
+                else
+                {
+                    itemSaldo.Ksv = itemSaldo.Nsdv + itemSaldo.Odv - (itemSaldo.Nscv + itemSaldo.Ocv);
+                    itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
+                }
                 row.Add(itemSaldo.Code);
                 row.Add(itemSaldo.NameContragent);
                 row.Add(itemSaldo.NInvoise);
@@ -3044,6 +3075,9 @@ namespace Tempo2012.EntityFramework
                 row.Add(itemSaldo.Folder);
                 row.Add(itemSaldo.DocNumber);
                 row.Add(itemSaldo.Reason);
+                row.Add(itemSaldo.Ksv.ToString(Vf.ValFormatUI));
+                row.Add(itemSaldo.VidVal);
+                row.Add(itemSaldo.VidValCode);
                 row.Add(accountsModel.Short);
                 items.Add(row);
 
@@ -3110,12 +3144,17 @@ namespace Tempo2012.EntityFramework
                     saldoAnaliticModel.VALUEMONEY = decimal.Parse(item[7]);
                 }
             }
-            //if (it.Name.Contains("Сума валута"))
-            //{
-            //    saldoAnaliticModel.VALVAL = decimal.Parse(item[15]);
-            //    saldoAnaliticModel.VALVALD = decimal.Parse(item[16]);
+            if (it.Name == "Вид валута")
+            {
+                saldoAnaliticModel.VALS = item[13];
+                saldoAnaliticModel.VAL = item[12];
+            }
+            if (it.Name.Contains("Сума валута"))
+            {
+                saldoAnaliticModel.VALVAL = decimal.Parse(item[11]);
+                
 
-            //}
+            }
             //if (it.Name.Contains("Количество"))
             //{
             //    saldoAnaliticModel.VALKOLD = decimal.Parse(item[21]);
@@ -3200,6 +3239,15 @@ namespace Tempo2012.EntityFramework
                         ic.CodeContragent = ic.VALUE;
                         ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
                     }
+                    if (ic.NameField == "Вид валута")
+                    {
+                        ic.VidValCode = ic.VALUE;
+                        ic.VidVal = dbman.DataReader["LOOKUPVAL"].ToString();
+                    }
+                    if (ic.NameField == "Сума валута")
+                    {
+                        ic.OborotValuta =decimal.Parse(ic.VALUE);
+                    }
                     result.Add(ic);
                 }
 
@@ -3239,8 +3287,12 @@ namespace Tempo2012.EntityFramework
                 {
                     ici.NInvoise = ic1.NInvoise;
                 }
-               
-                    if (ic1.NameField != "Номер фактура")
+                if (ic1.VidVal != null)
+                {
+                    ici.VidVal = ic1.VidVal;
+                }
+                ici.OborotValuta += ic1.OborotValuta;
+                if (ic1.NameField != "Номер фактура")
                     {
                         ici.Details = string.Format("{0}|{1}-{2}", ici.Details, ic1.NameField, ic1.VALUE);
                     }
@@ -3274,6 +3326,8 @@ namespace Tempo2012.EntityFramework
                              Reason = grp.First().Reason,
                              Folder = grp.First().Folder,
                              DocNumber = grp.First().DocNumber,
+                             VidVal = grp.First().VidVal,
+                             OborotValuta = grp.Sum(t => t.OborotValuta),
                              Pr1 = grp.First().Pr1,
                              Pr2 = grp.First().Pr2,
                              CID=grp.First().CID
@@ -3351,7 +3405,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 dbman.Open();
@@ -3386,6 +3440,15 @@ namespace Tempo2012.EntityFramework
                         ic.CKEY = ic.LOOKUPFIELDKEY;
                         ic.CodeContragent = ic.VALUE;
                         ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                    }
+                    if (ic.NameField == "Вид валута")
+                    {
+                        ic.VidValCode = ic.VALUE;
+                        ic.VidVal = dbman.DataReader["LOOKUPVAL"].ToString();
+                    }
+                    if (ic.NameField == "Сума валута")
+                    {
+                        ic.OborotValuta = decimal.Parse(dbman.DataReader["VALVAL"].ToString());
                     }
                     result.Add(ic);
                 }
@@ -3423,6 +3486,7 @@ namespace Tempo2012.EntityFramework
                     ici = ic1.Clone();
                     old = newid;
                 }
+                ici.OborotValuta += ic1.OborotValuta;
                 if (ic1.NInvoise != null)
                 {
                     ici.NInvoise = ic1.NInvoise;
@@ -3461,7 +3525,9 @@ namespace Tempo2012.EntityFramework
                              DataInvoise = grp.Max(t => t.DataInvoise),
                              Reason = grp.First().Reason,
                              Folder=grp.First().Folder,
+                             VidVal=grp.First(e=>e.VidVal!=null).VidVal,
                              DocNumber=grp.First().DocNumber,
+                             OborotValuta=grp.Sum(t=>t.OborotValuta),
                              Pr1 = grp.First().Pr1,
                              Pr2 = grp.First().Pr2
                          });

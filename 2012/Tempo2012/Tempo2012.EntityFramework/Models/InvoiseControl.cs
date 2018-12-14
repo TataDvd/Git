@@ -9,6 +9,13 @@ namespace Tempo2012.EntityFramework.Models
     {
         public string Id { get; set;}
         public decimal Oborot { get; set;}
+        public decimal OborotValuta{ get; set; }
+        
+        public string VidValCode { get; set; }
+        public string VidVal { get; set; }
+        public decimal KolDebit { get; set; }
+        public decimal KolCredit { get; set; }
+        public string VidKol { get; set; }
         public DateTime DataInvoise { get; set;}
         public int LOOKUPFIELDKEY { get; set; }
         public int LOOKUPID{get; set; }
