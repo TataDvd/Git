@@ -2748,6 +2748,7 @@ namespace Tempo2012.EntityFramework
                 {
                     if (a.LevelAccount == 2)
                     {
+                        list2.Add(new List<string> { a.ShortName });
                         list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4));
                     }
                 }
@@ -2758,13 +2759,19 @@ namespace Tempo2012.EntityFramework
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in list2)
                 {
+                    if (item.Count<15)
+                    {
+                        sb.AppendFormat("--{0}", item[0].ToString());
+                        sb.AppendLine();
+                        continue;
+                    }
                     var a = decimal.Parse(item[7]);
-                    if (a == 0 || item.Count!=12)
+                    if (a == 0)
                     {
                         continue;
                     }
                     gr++;
-                    if (accforsaldo != null && accforsaldo.Short == item[11])
+                    if (accforsaldo != null && accforsaldo.Short == item[14])
                     {
                         if (accfields != null)
                         {
@@ -2782,7 +2789,7 @@ namespace Tempo2012.EntityFramework
                     {
                         
                         gr = 1;
-                        accforsaldo = acc.FirstOrDefault(e => e.Short == item[11]);
+                        accforsaldo = acc.FirstOrDefault(e => e.Short == item[14]);
                         if (accforsaldo!=null)
                         {
                             sb.AppendLine(string.Format("Delete from MOVEMENT m where m.ACCID={0};", accforsaldo.Id));
@@ -2954,7 +2961,7 @@ namespace Tempo2012.EntityFramework
                 {
 
                     item.Oc += lc1.Oborot;
-                    item.Odv += lc1.OborotValuta;
+                    item.Ocv += lc1.OborotValuta;
                     if (item.Type == 2) item.Data = lc1.DataInvoise;
                     AllMovementCredit.Remove(lc1);
                 }
@@ -2990,6 +2997,8 @@ namespace Tempo2012.EntityFramework
                     {
                         accItemSaldo.Nsd += saldo.BeginSaldoDebit;
                         accItemSaldo.Nsc += saldo.BeginSaldoCredit;
+                        accItemSaldo.Nsdv += saldo.BeginSaldoDebitValuta;
+                        accItemSaldo.Nscv += saldo.BeginSaldoCreditValuta;
                         rezi.Remove(saldo);
                     }
                 }
@@ -3020,6 +3029,8 @@ namespace Tempo2012.EntityFramework
                     {
                         accItemSaldo.Nsd = saldo.BeginSaldoDebit;
                         accItemSaldo.Nsc = saldo.BeginSaldoCredit;
+                        accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
+                        accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
                         rezi.Remove(saldo);
                     }
                 }
@@ -3146,13 +3157,19 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name == "Вид валута")
             {
-                saldoAnaliticModel.VALS = item[13];
-                saldoAnaliticModel.VAL = item[12];
+                saldoAnaliticModel.VAL = item[13];
+                saldoAnaliticModel.VALS = item[12];
             }
-            if (it.Name.Contains("Сума валута"))
+            if (it.Name.Contains("Сума вал"))
             {
-                saldoAnaliticModel.VALVAL = decimal.Parse(item[11]);
-                
+                if (accforsaldo.TypeAccount == 1)
+                {
+                    saldoAnaliticModel.VALVALD = decimal.Parse(item[11]);
+                }
+                else
+                {
+                    saldoAnaliticModel.VALVALK = decimal.Parse(item[11]);
+                }
 
             }
             //if (it.Name.Contains("Количество"))
@@ -3305,7 +3322,11 @@ namespace Tempo2012.EntityFramework
                         ici.CodeContragent = ic1.CodeContragent;
                         ici.CID = ic1.CID;
                     }
-                
+                if (ic1.NameField == "Вид валута")
+                {
+                    ici.VidVal = ic1.VidVal;
+                    ici.VidValCode = ic1.VidValCode;
+                }
 
             }
             result2.Add(ici);
@@ -3327,6 +3348,7 @@ namespace Tempo2012.EntityFramework
                              Folder = grp.First().Folder,
                              DocNumber = grp.First().DocNumber,
                              VidVal = grp.First().VidVal,
+                             VidValCode=grp.First().VidValCode,
                              OborotValuta = grp.Sum(t => t.OborotValuta),
                              Pr1 = grp.First().Pr1,
                              Pr2 = grp.First().Pr2,
@@ -3505,7 +3527,11 @@ namespace Tempo2012.EntityFramework
                         ici.CodeContragent = ic1.CodeContragent;
                         ici.NameContragent = ic1.NameContragent;
                     }
-                
+                if (ic1.NameField == "Вид валута")
+                {
+                    ici.VidVal = ic1.VidVal;
+                    ici.VidValCode = ic1.VidValCode;
+                }
 
             }
             result2.Add(ici);
@@ -3525,7 +3551,8 @@ namespace Tempo2012.EntityFramework
                              DataInvoise = grp.Max(t => t.DataInvoise),
                              Reason = grp.First().Reason,
                              Folder=grp.First().Folder,
-                             VidVal=grp.First(e=>e.VidVal!=null).VidVal,
+                             VidVal=grp.First().VidVal,
+                             VidValCode=grp.First().VidValCode,
                              DocNumber=grp.First().DocNumber,
                              OborotValuta=grp.Sum(t=>t.OborotValuta),
                              Pr1 = grp.First().Pr1,
