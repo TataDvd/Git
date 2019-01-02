@@ -546,6 +546,7 @@ namespace Tempo2012.EntityFramework
                     accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
                     accItemSaldo.Nsdk=  saldo.BeginSaldoDebitKol;
                     accItemSaldo.Nsck=  saldo.BeginSaldoCreditKol;
+                    rezi.Remove(saldo);
                  }
             }
             foreach (var items in rezi)
