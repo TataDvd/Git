@@ -481,7 +481,12 @@ namespace Tempo2012.EntityFramework
                 }
                 else
                 {
-                    return null;
+                    //return null;
+                    var atr = LoadAllAnaliticfields(id);
+                    foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
+                    {
+                        titles.Add(saldoAnaliticModel.Name);
+                    }
                 }
             }
             catch (Exception ex)

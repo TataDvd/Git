@@ -45,8 +45,6 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
              List<List<string>> v = null;
              var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter);
              if (c!= null)v = c.Select(i => i.ToList()).ToList();
-            
-                
                 _fields = new List<List<string>>();
                 if (v != null)
                 {
@@ -72,36 +70,35 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     r.Add("ОД");
                     r.Add("ОК");
                     r.Add("КС");
-                if (dAccountsModel.Val == 1)
-                {
-                    r.Add("НСВ");
-                    r.Add("ОДВ");
-                    r.Add("ОКВ");
-                    r.Add("КСВ");
-                }
-                if (dAccountsModel.Kol == 1)
+                    if (dAccountsModel.Val == 1)
                     {
-                        r.Add("НСК");
-                        r.Add("ОДК");
-                        r.Add("ОКК");
-                        r.Add("КСК");
+                        r.Add("НСВ");
+                        r.Add("ОДВ");
+                        r.Add("ОКВ");
+                        r.Add("КСВ");
                     }
+                    if (dAccountsModel.Kol == 1)
+                        {
+                            r.Add("НСК");
+                            r.Add("ОДК");
+                            r.Add("ОКК");
+                            r.Add("КСК");
+                        }
                     _fields.Add(r);
+                 }
+                if (dAccountsModel.Kol == 1)
+                {
+                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
                 }
-            if (dAccountsModel.Kol == 1)
-            {
-                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
-            }
-            else if (dAccountsModel.Val == 1)
-            {
-                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
-            }
-            else
-            {
-                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
-            }
-                
-            
+                else if (dAccountsModel.Val == 1)
+                {
+                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
+                }
+                else
+                {
+                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
+                }
+                         
            OnPropertyChanged("Fields");
         }
 
