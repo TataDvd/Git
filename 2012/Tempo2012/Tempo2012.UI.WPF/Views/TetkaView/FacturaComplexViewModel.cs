@@ -230,13 +230,23 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 else
                 {
-                    if (AllMovementDebit.Count > 0)
+                    if (rezi.Count > 0)
                     {
-                        luki = AllMovementDebit.Max(e => e.CID);
+                        luki = rezi.Max(e => e.LookupId);
                     }
-                    else if (AllMovementCredit.Count>0)
+                    else
                     {
-                        luki = AllMovementCredit.Max(e => e.CID);
+                        if (AllMovementCredit.Count > 0)
+                        {
+                            luki = AllMovementCredit.Max(e => e.CID);
+                        }
+                        else
+                        {
+                            if (AllMovementDebit.Count > 0)
+                            {
+                                luki = AllMovementDebit.Max(e => e.CID);
+                            }
+                        }
                     }
                 }
             }

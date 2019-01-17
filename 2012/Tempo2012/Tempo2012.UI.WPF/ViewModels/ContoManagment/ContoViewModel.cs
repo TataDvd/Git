@@ -1345,7 +1345,30 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     CurrentWraperConto.CurrentConto.Nd = Total;
                     CurrentWraperConto.CurrentConto.CartotecaCredit = Total;
                     SaveMainConto();
-                    addsecond = true; 
+                //hook for valutna razlika
+                foreach (SaldoItem currentsaldos in ItemsDebit)
+                {
+                    //if (currentsaldos.KursDif != 0)
+                    //{
+                    //    if ()
+                    //    var result = AllAccountsK.FirstOrDefault(e => e.Short == "604");
+                    //    if (result != null)
+                    //    {
+                    //        CAccountsModel = result;
+                    //        CurrentWraperConto.CurrentConto.CreditAccount = result.Id;
+                    //        CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
+                    //    }
+                    //}
+                }
+                foreach (SaldoItem currentsaldos in ItemsCredit)
+                {
+                    if (currentsaldos.KursDif != 0)
+                    {
+
+                    }
+                }
+                //
+                addsecond = true; 
                     
               }
             return result1;

@@ -1471,7 +1471,10 @@ namespace Tempo2012.EntityFramework
                 dbman.Open();
                 string command =
                     string.Format(
-                        "SELECT * FROM MOVEMENT a inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\" where accid={0} order by a.\"group\",a.SORTORDER",
+                        "SELECT * FROM MOVEMENT a " +
+                        "inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\"" +
+                        "left outer join MAPACCTOLOOKUP m on a.ACCID=m.ACCOUNTS_ID and a.ACCFIELDKEY=m.ANALITIC_FIELD_ID"+
+                        " where accid={0} order by a.\"group\",a.SORTORDER",
                         accid);
                 dbman.ExecuteReader(CommandType.Text, command);
                 //List<string> row = new List<string>();
@@ -1543,6 +1546,13 @@ namespace Tempo2012.EntityFramework
                         {
                             workSaldos.NameContragent = dbman.DataReader["VALS"].ToString();
                             workSaldos.Code= dbman.DataReader["VALUE"].ToString();
+                            var a = dbman.DataReader["LOOKUP_ID"].ToString();
+                            int b = 0;
+                            if (int.TryParse(a, out b))
+                            {
+                                workSaldos.LookupId = b;
+                            }
+                           
                         }
                         if (name == "Номенклатурен номер")
                         {
@@ -1583,7 +1593,10 @@ namespace Tempo2012.EntityFramework
                 dbman.Open();
                 string command =
                     string.Format(
-                        "SELECT * FROM MOVEMENT a inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\" where accid={0} and a.\"group\"={1} order by a.\"group\",a.SORTORDER",
+                        "SELECT * FROM MOVEMENT a " +
+                        "inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\"" +
+                       // "left outer join MAPACCTOLOOKUP m on a.ACCID=m.ACCOUNTS_ID and a.ACCFIELDKEY=m.ANALITIC_FIELD_ID"+
+                        "where accid={0} and a.\"group\"={1} order by a.\"group\",a.SORTORDER",
                         accid, groupid);
                 dbman.ExecuteReader(CommandType.Text, command);
 
@@ -1602,6 +1615,12 @@ namespace Tempo2012.EntityFramework
                     saldo.LOOKUPFIELDKEY =
                         int.Parse(dbman.DataReader["LOOKUPFIELDKEY"].ToString());
                     saldo.LOOKUPID = int.Parse(dbman.DataReader["LOOKUPID"].ToString());
+                    //int b = 0;
+                    //var a = dbman.DataReader["LOOKUP_ID"].ToString();
+                    //if (int.TryParse(a, out b))
+                    //{
+                    //    saldo.LOOKUPID = b;
+                    //}
                     saldo.VALUEDATE = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
                     saldo.VALUEMONEY = decimal.Parse(dbman.DataReader["VALUEMONEY"].ToString());
                     saldo.VALUENUM = int.Parse(dbman.DataReader["VALUENUM"].ToString());
