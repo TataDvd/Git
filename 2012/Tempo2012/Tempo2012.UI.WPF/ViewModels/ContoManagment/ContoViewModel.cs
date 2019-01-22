@@ -1345,31 +1345,66 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     CurrentWraperConto.CurrentConto.Nd = Total;
                     CurrentWraperConto.CurrentConto.CartotecaCredit = Total;
                     SaveMainConto();
+               
+                
                 //hook for valutna razlika
+                bool iskursuva = false;
+                bool iskursova2 = false;
+                decimal kurssuma = 0;
                 foreach (SaldoItem currentsaldos in ItemsDebit)
                 {
-                    //if (currentsaldos.KursDif != 0)
-                    //{
-                    //    if ()
-                    //    var result = AllAccountsK.FirstOrDefault(e => e.Short == "604");
-                    //    if (result != null)
-                    //    {
-                    //        CAccountsModel = result;
-                    //        CurrentWraperConto.CurrentConto.CreditAccount = result.Id;
-                    //        CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
-                    //    }
-                    //}
-                }
-                foreach (SaldoItem currentsaldos in ItemsCredit)
-                {
+                    
                     if (currentsaldos.KursDif != 0)
                     {
+                        kurssuma = currentsaldos.KursDif;
+                        iskursova2 = true;
+                        if (currentsaldos.KursDif < 0)
+                        {
+                            var result = AllAccountsK.FirstOrDefault(e => e.Short == "724");
+                            if (result != null)
+                            {
+                                CAccountsModel = result;
+                                CurrentWraperConto.CurrentConto.CreditAccount = result.Id;
+                                CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
+                            }
+                        }
+                        else
+                        {
+                            var result = AllAccountsK.FirstOrDefault(e => e.Short == "624");
+                            if (result != null)
+                            {
+                                CAccountsModel = DAccountsModel;
+                                CurrentWraperConto.CurrentConto.CreditAccount = CurrentWraperConto.CurrentConto.DebitAccount;
+                                iskursuva = true;
+                                DAccountsModel = result;
+                                CurrentWraperConto.CurrentConto.DebitAccount = result.Id;
+                                CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
+                            }
 
+                        }
                     }
                 }
-                //
-                addsecond = true; 
-                    
+                if (iskursuva)
+                {
+                    ItemsCredit = new ObservableCollection<SaldoItem>(ItemsDebit);
+                    ItemsDebit = new ObservableCollection<SaldoItem>();
+                }
+                if (!iskursova2)
+                {
+                    addsecond = true;
+                }  
+                else
+                {
+                    CurrentWraperConto.CurrentConto.Oborot = kurssuma;
+                    CurrentWraperConto.CurrentConto.OborotValutaD = 0;
+                    CurrentWraperConto.CurrentConto.OborotValutaK = 0;
+                    CurrentWraperConto.CurrentConto.OborotKolD = 0;
+                    CurrentWraperConto.CurrentConto.OborotKolK = 0;
+                    CurrentWraperConto.CurrentConto.DocumentId = Total + 1;
+                    CurrentWraperConto.CurrentConto.Nd = Total + 1;
+                    base.Add();
+                    RefreshUI();
+                }
               }
             return result1;
         }
