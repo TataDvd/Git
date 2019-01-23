@@ -1348,8 +1348,9 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                
                 
                 //hook for valutna razlika
-                bool iskursuva = false;
-                bool iskursova2 = false;
+                IsKursova = false;
+                var iskurs = false;
+                ObservableCollection<SaldoItem> prenos = new ObservableCollection<SaldoItem>();
                 decimal kurssuma = 0;
                 foreach (SaldoItem currentsaldos in ItemsDebit)
                 {
@@ -1357,7 +1358,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     if (currentsaldos.KursDif != 0)
                     {
                         kurssuma = currentsaldos.KursDif;
-                        iskursova2 = true;
+                        IsKursova = true;
                         if (currentsaldos.KursDif < 0)
                         {
                             var result = AllAccountsK.FirstOrDefault(e => e.Short == "724");
@@ -1365,7 +1366,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                             {
                                 CAccountsModel = result;
                                 CurrentWraperConto.CurrentConto.CreditAccount = result.Id;
-                                CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
+                                CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif*(-1);
+                                currentsaldos.MainKurs = currentsaldos.ValueKurs;
+                                currentsaldos.KursDif = 0;
+                                currentsaldos.ValueVal = CurrentWraperConto.CurrentConto.Oborot / currentsaldos.ValueKurs;
                             }
                         }
                         else
@@ -1373,38 +1377,25 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                             var result = AllAccountsK.FirstOrDefault(e => e.Short == "624");
                             if (result != null)
                             {
-                                CAccountsModel = DAccountsModel;
-                                CurrentWraperConto.CurrentConto.CreditAccount = CurrentWraperConto.CurrentConto.DebitAccount;
-                                iskursuva = true;
-                                DAccountsModel = result;
-                                CurrentWraperConto.CurrentConto.DebitAccount = result.Id;
+                                iskurs = true;
                                 CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
+                                currentsaldos.MainKurs = currentsaldos.ValueKurs;
+                                currentsaldos.KursDif = 0;
+                                currentsaldos.ValueVal = CurrentWraperConto.CurrentConto.Oborot / currentsaldos.ValueKurs;
+                                prenos = new ObservableCollection<SaldoItem>(ItemsDebit);
+                                CAccountsModel = DAccountsModel;
+                                DAccountsModel = result;
                             }
 
                         }
                     }
                 }
-                if (iskursuva)
+                if (iskurs)
                 {
-                    ItemsCredit = new ObservableCollection<SaldoItem>(ItemsDebit);
-                    ItemsDebit = new ObservableCollection<SaldoItem>();
+                    ItemsCredit = new ObservableCollection<SaldoItem>(prenos);
                 }
-                if (!iskursova2)
-                {
-                    addsecond = true;
-                }  
-                else
-                {
-                    CurrentWraperConto.CurrentConto.Oborot = kurssuma;
-                    CurrentWraperConto.CurrentConto.OborotValutaD = 0;
-                    CurrentWraperConto.CurrentConto.OborotValutaK = 0;
-                    CurrentWraperConto.CurrentConto.OborotKolD = 0;
-                    CurrentWraperConto.CurrentConto.OborotKolK = 0;
-                    CurrentWraperConto.CurrentConto.DocumentId = Total + 1;
-                    CurrentWraperConto.CurrentConto.Nd = Total + 1;
-                    base.Add();
-                    RefreshUI();
-                }
+                addsecond = true;
+                
               }
             return result1;
         }
@@ -2302,8 +2293,12 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     currentConto.KindDoc = CurrentWraperConto.CurrentConto.KindDoc;
                     currentConto.KD = CurrentWraperConto.CurrentConto.KD;
                 }
+                if (IsKursova)
+                {
+                    currentConto.Oborot = CurrentWraperConto.CurrentConto.Oborot;
+                }
             }
-            if (addsecond)
+            if (addsecond && !IsKursova)
             {
                 foreach (SaldoItem item in ItemsCredit)
                 {
@@ -2325,7 +2320,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         item.OnePrice = 0;
                         item.ValueKol = 0;
                     }
-                    
+
                     //item.Lookupval = "";
                 }
                 foreach (SaldoItem item in ItemsDebit)
@@ -2349,12 +2344,16 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         item.ValueKol = 0;
                     }
                 }
-              
+
             }
             else
             {
-                ItemsCredit = new ObservableCollection<SaldoItem>();
-                ItemsDebit = new ObservableCollection<SaldoItem>();
+                if (!IsKursova)
+                { 
+                    ItemsCredit = new ObservableCollection<SaldoItem>();
+                    ItemsDebit = new ObservableCollection<SaldoItem>();
+                }
+                
             }
             currentConto.FirmId = ConfigTempoSinglenton.GetInstance().CurrentFirma.Id;
             CurrentWraperConto = new WraperConto(currentConto);
@@ -2618,29 +2617,31 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             OnPropertyChanged("AllWrapedConto");
-            Oborot = 0;
-            foreach (SaldoItem item in ItemsCredit)
+            if (!IsKursova)
             {
-                if (item.Name == "Сума валута")
+                Oborot = 0;
+                foreach (SaldoItem item in ItemsCredit)
                 {
-                    item.ValueVal = 0;
+                    if (item.Name == "Сума валута")
+                    {
+                        item.ValueVal = 0;
+                    }
+                    item.OnePrice = 0;
+                    item.ValueKol = 0;
                 }
-                item.OnePrice = 0;
-                item.ValueKol = 0;
-            } 
 
-            foreach (SaldoItem item in ItemsDebit)
-            {
-
-                if (item.Name == "Сума валута")
+                foreach (SaldoItem item in ItemsDebit)
                 {
-                    item.ValueVal = 0;
+
+                    if (item.Name == "Сума валута")
+                    {
+                        item.ValueVal = 0;
+                    }
+                    item.OnePrice = 0;
+                    item.ValueKol = 0;
                 }
-                item.OnePrice = 0;
-                item.ValueKol = 0;
+
             }
-
-        
         Visible = Visibility.Hidden;
             if (Mode == EditMode.View || Mode == EditMode.Edit)
             {
@@ -3537,5 +3538,6 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         }
 
         public bool notupdated { get;  set; }
+        public bool IsKursova { get; private set; }
     }
 }
