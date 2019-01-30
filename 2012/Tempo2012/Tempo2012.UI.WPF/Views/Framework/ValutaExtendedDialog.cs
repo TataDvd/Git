@@ -323,7 +323,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             {
                 currentrow++;
                 List<string> item2 = new List<string>();
-                item2.Add("");
+                item2.Add("*****");
                 item2.Add("");
                 item2.Add("");
                 item2.Add("");

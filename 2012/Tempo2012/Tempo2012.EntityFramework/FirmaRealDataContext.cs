@@ -527,7 +527,7 @@ namespace Tempo2012.EntityFramework
                              {
                                  Details=grp.Key.Details,
                                  Type=grp.First().Type,
-                                 Data=grp.Last().Data,
+                                 Data=grp.Min(e=>e.Data),
                                  Fields=grp.Last().Fields,
                                  Ock=grp.Sum(t => t.Ock),
                                  Odk = grp.Sum(t => t.Odk),

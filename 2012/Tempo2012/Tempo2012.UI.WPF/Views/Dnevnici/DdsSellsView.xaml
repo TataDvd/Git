@@ -8,7 +8,7 @@
         KeyDown="DdsSellsView_OnKeyDown"
         Closing="_this_Closing"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None" >
+        WindowStyle="ToolWindow" >
     <Window.Resources>
         <l:LevConvertor x:Key="lv"/>
     </Window.Resources>
@@ -32,7 +32,7 @@
                     <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition Width="200"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CustomControls:TextBlockEx  Grid.ColumnSpan="4" Grid.Row="0" Text="{Binding Title}" Margin="10,5,10,2" ></CustomControls:TextBlockEx>
+                <!--<CustomControls:TextBlockEx  Grid.ColumnSpan="4" Grid.Row="0" Text="{Binding Title}" Margin="10,5,10,2" ></CustomControls:TextBlockEx>-->
                 <CustomControls:TextBlockEx  Grid.Row="1" Text="Документ N" Margin="10,5,10,2" ></CustomControls:TextBlockEx>
                 <CustomControls:TextBoxEx Grid.Row="1" Grid.Column="1"   Text="{Binding Path=DocID,Mode=TwoWay,ValidatesOnDataErrors=True}" Margin="10,5,10,2" TabIndex="1" x:Name="doki"/>
                 <CustomControls:TextBlockEx  Grid.Row="1" Grid.Column="2" Text="Дата на осчетоводяване" Margin="10,5,10,2"></CustomControls:TextBlockEx>

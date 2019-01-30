@@ -1369,7 +1369,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                                 CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif*(-1);
                                 currentsaldos.MainKurs = currentsaldos.ValueKurs;
                                 currentsaldos.KursDif = 0;
-                                currentsaldos.ValueVal = CurrentWraperConto.CurrentConto.Oborot / currentsaldos.ValueKurs;
+                                currentsaldos.ValueVal = 0;
                             }
                         }
                         else
@@ -1381,7 +1381,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                                 CurrentWraperConto.CurrentConto.Oborot = currentsaldos.KursDif;
                                 currentsaldos.MainKurs = currentsaldos.ValueKurs;
                                 currentsaldos.KursDif = 0;
-                                currentsaldos.ValueVal = CurrentWraperConto.CurrentConto.Oborot / currentsaldos.ValueKurs;
+                                currentsaldos.ValueVal = 0;
                                 prenos = new ObservableCollection<SaldoItem>(ItemsDebit);
                                 CAccountsModel = DAccountsModel;
                                 DAccountsModel = result;
@@ -3285,7 +3285,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     
                     if (SaveConto())
                     {
-                        Oborot = 0;
+                        if (!IsKursova) Oborot = 0;
                         DontChange = true;
                         ReloadRecords();
                         DontChange = false;

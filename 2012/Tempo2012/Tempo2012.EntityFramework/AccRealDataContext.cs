@@ -5220,7 +5220,7 @@ namespace Tempo2012.EntityFramework
                                  NInvoise = grp.Key.NInvoise,
                                  Details=grp.First().Details,
                                  Type=grp.First().Type,
-                                 Data=grp.Last().Data,
+                                 Data=grp.Min(e => e.Data),
                                  //Nsc=grp.Sum(t => t.Nsc),
                                  //Nsd = grp.Sum(t => t.Nsc),
                                  Oc = grp.Sum(t => t.Oc),

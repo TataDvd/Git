@@ -246,6 +246,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         private void UpdateRelatedDds()
         {
+            if (MessageBoxWrapper.Show("Запази стари стойности в дневник?", "Предупреждение", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+            {
+                return;
+            }
             bool haschange = false;
             DdsDnevnikModel ddsDnevnikModel = Context.LoadDenevnicItem(CurrentWraperConto.CurrentConto.Id, 1);
             ddsDnevnikModel.CodeDoc = Kd;
