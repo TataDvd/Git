@@ -273,10 +273,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
             var lsumavalddf = contos.Where(e => e.ClienCode == currec).Sum(e => e.KursDif);
             var lsumavalcdf = contos1.Where(e => e.ClienCode == currec).Sum(e => e.KursDif);
             var saldo = rezi.FirstOrDefault(e => e.Code == currec);
+            
             var lnsd = saldo !=null ? saldo.BeginSaldoDebit : 0;
                 var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
                 var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
                 var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
+            if (saldo != null)
+            {
+                rezi.Remove(saldo);
+            }
                 if (CurrenAcc.TypeAccount == 1)
                 {
                     lnsd = lnsd - lnsc;
@@ -323,6 +328,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 row1.Add("----------------------------------------------------------------------------------");
                 Rowfoother.Add(currentrow - 1, row1);
             }
+            
             foreach (var rez in rezi)
             {
                 currentrow++;
