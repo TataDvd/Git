@@ -34,6 +34,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "код", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "клиент", Width = 40 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "номер фактура", Width = 20 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата фактура", Width = 20 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "потребител", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "транзакция", Width = 15 });
             ReportItems = reportItems;
@@ -253,6 +255,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 item2.Add(co.Pr2);
                 item2.Add(co.ClienCode); lastcode = co.ClienCode;
                 item2.Add(co.NameClient); lastname = co.NameClient;
+                item2.Add(co.NInvoice); 
+                item2.Add(co.DInvoce); 
                 item2.Add(co.User);
                 item2.Add(co.Id);
                 items.Add(item2);
@@ -341,6 +345,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 item2.Add("");
                 item2.Add(rez.Code);
                 item2.Add(rez.NameContragent);
+                item2.Add(rez.NumInvoise);
+                item2.Add(rez.Date.ToShortDateString());
                 item2.Add("");
                 item2.Add("");
                 items.Add(item2);

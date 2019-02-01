@@ -5961,6 +5961,16 @@ namespace Tempo2012.EntityFramework
                         c.ClienCode = dbman.DataReader["VALUE"].ToString();
                         c.NameClient= dbman.DataReader["LOOKUPVAL"].ToString();
                     }
+                    if (nam == "Номер фактура")
+                    {
+                        c.NInvoice = dbman.DataReader["VALUE"].ToString();
+                       
+                    }
+                    if (nam == "Дата на фактура")
+                    {
+                        c.DInvoce = dbman.DataReader["VALUE"].ToString();
+                       
+                    }
                 }
             }
             catch (Exception ex)
