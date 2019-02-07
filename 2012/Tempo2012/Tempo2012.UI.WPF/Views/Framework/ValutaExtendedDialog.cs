@@ -362,8 +362,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
                 row1.Add("----------------------------------------------------------------------------------");
                 row1.Add($"|Начални салда   |{rez.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|{rez.BeginSaldoCredit.ToString(Vf.LevFormatUI),15}|{rez.BeginSaldoDebitValuta.ToString(Vf.ValFormatUI),15}|{rez.BeginSaldoCreditValuta.ToString(Vf.ValFormatUI),15}|");
-                row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{lsumac.ToString(Vf.LevFormatUI),15}|{lsumavald.ToString(Vf.ValFormatUI),15}|{lsumavalc.ToString(Vf.ValFormatUI),15}|");
-                row1.Add($"|Сборове         |{0.ToString(Vf.LevFormatUI),15}|{lsborc.ToString(Vf.LevFormatUI),15}|{lsbordv.ToString(Vf.ValFormatUI),15}|{lsborcv.ToString(Vf.ValFormatUI),15}|");
+                row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.ValFormatUI),15}|{0.ToString(Vf.ValFormatUI),15}|");
+                row1.Add($"|Сборове         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.ValFormatUI),15}|{0.ToString(Vf.ValFormatUI),15}|");
                 row1.Add($"|Крайни салда    |{rez.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|{rez.BeginSaldoCredit.ToString(Vf.LevFormatUI),15}|{rez.BeginSaldoDebitValuta.ToString(Vf.ValFormatUI),15}|{rez.BeginSaldoCreditValuta.ToString(Vf.ValFormatUI),15}|");
                 row1.Add("----------------------------------------------------------------------------------");
                 Rowfoother.Add(currentrow - 1, row1);

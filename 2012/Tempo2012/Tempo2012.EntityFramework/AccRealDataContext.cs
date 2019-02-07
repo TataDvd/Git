@@ -5933,7 +5933,8 @@ namespace Tempo2012.EntityFramework
                         c.Id = dbman.DataReader["Id"].ToString();
                         c.DocNum = dbman.DataReader["DOCNUM"].ToString();
                         c.Oborot = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                        c.Data = dbman.DataReader["DD"].ToString();
+                        DateTime d = DateTime.Parse(dbman.DataReader["DD"].ToString());
+                        c.Data = string.Format("{0}.{1}.{2}",d.Day,d.Month,d.Year);
                         c.Folder = dbman.DataReader["FOLDER"].ToString();
                         c.User = dbman.DataReader["USERID"].ToString();
                         c.CreditAccount = int.Parse(dbman.DataReader["CreditAccount"].ToString());

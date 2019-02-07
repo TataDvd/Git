@@ -871,6 +871,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         private void UpdateData()
         {
+            if (Mode == EditMode.Edit) return;
             foreach (var saldoItem in ItemsCredit)
             {
                 if (saldoItem.Name.Contains("Дата"))
