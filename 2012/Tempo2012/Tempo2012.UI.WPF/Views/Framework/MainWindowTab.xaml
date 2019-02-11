@@ -203,6 +203,13 @@
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_39">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент валута"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
                         <MenuItem  Click="MenuItem_Click_36">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
