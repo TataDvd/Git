@@ -34,7 +34,7 @@
                 </Grid.ColumnDefinitions>
                 <!--<CustomControls:TextBlockEx  Grid.ColumnSpan="4" Grid.Row="0" Text="{Binding Title}" Margin="10,5,10,2" ></CustomControls:TextBlockEx>-->
                 <CustomControls:TextBlockEx  Grid.Row="1" Text="Документ N" Margin="10,5,10,2" ></CustomControls:TextBlockEx>
-                <CustomControls:TextBoxEx Grid.Row="1" Grid.Column="1"   Text="{Binding Path=DocID,Mode=TwoWay,ValidatesOnDataErrors=True}" Margin="10,5,10,2" TabIndex="1" x:Name="doki"/>
+                <CustomControls:TextBoxEx Grid.Row="1" Grid.Column="1"   Text="{Binding Path=DocID,Mode=TwoWay,ValidatesOnDataErrors=True}" Margin="10,5,10,2" TabIndex="2" x:Name="doki"/>
                 <CustomControls:TextBlockEx  Grid.Row="1" Grid.Column="2" Text="Дата на осчетоводяване" Margin="10,5,10,2"></CustomControls:TextBlockEx>
                 <CustomControls:TextBoxEx Grid.Row="1"  Grid.Column="3"   Text="{Binding Path=Date,Mode=TwoWay,StringFormat={}{0:dd/MM/yyyy}}" IsEnabled="False" Margin="10,5,10,2"/>
                 <Button Grid.Row="2" Grid.Column="1" Margin="10,5,10,2" Click="Button_Click" Focusable="False" IsEnabled="{Binding Path=CanSaveDds}">F2-Запис</Button>
@@ -73,7 +73,7 @@
                               SelectedValuePath="Id"
                               Margin="10,5,10,2"/>-->
                     <CustomControls:TextBlockEx Grid.Row="1" Text="Дата на фактурата" Margin="10,5,10,2"></CustomControls:TextBlockEx>
-                    <DatePicker Grid.Row="1"  Grid.Column="1" TabIndex="2" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
+                    <DatePicker Grid.Row="1"  Grid.Column="1" TabIndex="1" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
                                 SelectedDate="{Binding Path=DataF,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 Behavior:SelectedDateSyncBehavior.SyncText="True"
                                 />

@@ -355,8 +355,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.Od = 0;
                 item1.Oc = 0;
                 item1.Data = item.Date;
-                item1.Nsd = item.BeginSaldoDebit;
-                item1.Nsc = item.BeginSaldoCredit;
+                item1.Nsd = item.BeginSaldoDebitValuta;
+                item1.Nsc = item.BeginSaldoCreditValuta;
                 item1.Type = accountsModel.TypeAccount;
                 _movements1.Add(item1);
             }
