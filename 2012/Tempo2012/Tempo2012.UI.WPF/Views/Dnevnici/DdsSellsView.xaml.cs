@@ -108,16 +108,25 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                     if ((e.OriginalSource as TextBoxEx).Name=="doki")
                     {
                         e.Handled = true;
-                        searchi.Focus();
+                        toki.Focus();
                         return;
                     }
                 }
-
+                
                 e.Handled = true;
                 if (uie != null)
                     uie.MoveFocus(
                         new TraversalRequest(
                             FocusNavigationDirection.Next));
+            }
+            if (e.Key == Key.Tab)
+            {
+                if (e.OriginalSource is System.Windows.Controls.Primitives.DatePickerTextBox)
+                {
+                    e.Handled = true;
+                    searchi.Focus();
+                    return;
+                }
             }
             if (e.Key == Key.F2)
             {

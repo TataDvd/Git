@@ -18,11 +18,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
     {
         public Dictionary<int, List<string>> Rowfoother { get; set; }
         private ContoViewModel cv;
-        public FacturaComplexViewModel(AccountsModel accountsModel, ContoViewModel contoView,bool withContragentSum,bool onlyContragent=false,bool withletter=false,bool isval=false)
+        public FacturaComplexViewModel(AccountsModel accountsModel, ContoViewModel contoView,bool withContragentSum,bool onlyContragent=false,bool withletter=false,bool isval=false,string kindValuta=null)
         {
             _movements = new List<AccItemSaldo>();
             this.IsVal = isval;
             this.accountsModel = accountsModel;
+            this.KindValuta = kindValuta;
             cv = contoView;
             this.WithContragentSum = withContragentSum;
             this.OnlyContragent = onlyContragent;
@@ -52,12 +53,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             ReportItems = _reportItems;
             this.withletter = withletter;
         }
-        public FacturaComplexViewModel(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka,string contr = null, bool onlyContragent = false, bool withletter = false, bool isval = false)
+        public FacturaComplexViewModel(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka,string contr = null, bool onlyContragent = false, bool withletter = false, bool isval = false,string kindvaluta=null)
         {
             _movements =new List<AccItemSaldo>();
             OnlyContragent = onlyContragent;
             cv = contoView;
             this.IsVal = isval;
+            this.KindValuta = kindvaluta;
             this.accountsModel = accountsModel;
             this.antetka = antetka;
             this.WithContragentSum = WithContragentSum;
@@ -256,8 +258,14 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
             AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-
-            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
+            if (KindValuta != null)
+            {
+                AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(e => e.VidValCode == KindValuta));
+                AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
+            }
+            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId,KindValuta);
             int luki = 0;
             if (AllMovementDebit1.Count > 0)
             {
@@ -361,7 +369,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _movements1.Add(item1);
             }
 
-            if (typerep == 1)
+            if (typerep == 1 && filter!=null)
             {
                 string contr = "";
                 var filt = filter.Split('|');
@@ -389,7 +397,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 if (lc != null)
                 {
 
-                    item.Oc += lc.Oborot;
+                    item.Oc += lc.OborotValuta;
                     if (item.Type == 2) item.Data = lc.DataInvoise;
                     AllMovementCredit1.Remove(lc);
                 }
@@ -437,7 +445,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _movements.Add(item1);
             }
 
-            if (typerep == 1)
+            if (typerep == 1 && filter!=null)
             {
                 string contr = "";
                 var filt = filter.Split('|');
@@ -669,8 +677,14 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
             AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-
-            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
+            if (KindValuta != null)
+            {
+                AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(e => e.VidValCode == KindValuta));
+                AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
+            }
+            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId,KindValuta);
             int luki = 0;
             if (AllMovementDebit1.Count > 0)
             {
@@ -774,7 +788,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _movements1.Add(item1);
             }
 
-            if (typerep == 1)
+            if (typerep == 1 && filter!=null)
             {
                 string contr = "";
                 var filt = filter.Split('|');
@@ -850,7 +864,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _movements.Add(item1);
             }
 
-            if (typerep == 1)
+            if (typerep == 1 && filter != null) 
             {
                 string contr = "";
                 var filt = filter.Split('|');
@@ -1111,7 +1125,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             get
             {
                 string b = "Справка Фактури обобщена за контрагент за сметка ";
-                if (this.IsVal)  b = "Справка Фактури обобщена за контрагент валута за сметка ";
+                if (this.IsVal)  b = "Справка Фактури обобщена за контрагент и валута за сметка ";
                 string a=b + this.accountsModel.ShortName;
                 if (typerep == 1)
                 {
@@ -1125,6 +1139,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         public bool WithContragentSum { get;  set; }
         public bool OnlyContragent { get; private set; }
         public bool IsVal { get; private set; }
+        public string KindValuta { get; private set; }
 
         public List<string> GetSubTitles()
         {

@@ -40,7 +40,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             _reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             ReportItems = _reportItems;
         }
-        public FacturaComplexViewModelDetail(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka,string contr = null, bool onlyContragent = false)
+        public FacturaComplexViewModelDetail(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka,string contr = null, bool onlyContragent = false,string kindval=null)
         {
             _movements =new List<AccItemSaldo>();
             OnlyContragent = onlyContragent;
@@ -363,7 +363,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             //AccInfo = accountsModel.ShortName;
             //AllMovement = new ObservableCollection<AccItemSaldo>(_movements);
             //}
-            if (typerep == 1)
+            if (typerep == 1 && filter!=null)
             {
                 string contr = "";
                 var filt = filter.Split('|');

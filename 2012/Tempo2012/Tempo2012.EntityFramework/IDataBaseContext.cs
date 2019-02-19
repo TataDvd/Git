@@ -113,7 +113,7 @@ namespace Tempo2012.EntityFramework
         void DeleteKurs(List<ValutaEntity> itemsfordelete);
         decimal? LoadKursForaDay(DateTime Data, string vidvaluta);
         List<List<string>> GetAllMovementsDetails(int p, int p_2, int p_3, out string sumalvk, out string sumalvd, out string sumalvdsub, out string sumalvksub);
-        List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid);
+        List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid,string kindValuta=null);
         bool DeleteAllConto(int firmaId);
         List<ViesRow> GetVies(int month, int year, Dictionary<string, string> declar);
         int GetAllContoCount(int id, int year, int mount);

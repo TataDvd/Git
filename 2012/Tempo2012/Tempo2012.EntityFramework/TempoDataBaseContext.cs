@@ -446,9 +446,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetAllMovementsDetail(p, p_2, p_3, out sumalvk,out sumalvd,out sumalvdsub,out sumalvksub);
         }
 
-        public virtual  List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid)
+        public virtual  List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid,string kindValuta=null)
         {
-            return RealDataContext.GetAllAnaliticSaldos(accid, firmid);
+            return RealDataContext.GetAllAnaliticSaldos(accid, firmid,kindValuta);
         }
 
         public virtual  bool DeleteAllConto(int firmaId)

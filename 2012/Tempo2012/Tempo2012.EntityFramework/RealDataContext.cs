@@ -1461,7 +1461,7 @@ namespace Tempo2012.EntityFramework
             return allmovement;
         }
 
-        public static List<SaldoFactura> GetAllAnaliticSaldos(int accid,int firmid)
+        public static List<SaldoFactura> GetAllAnaliticSaldos(int accid,int firmid, string kindValuta = null)
         {
             List<SaldoFactura> allmovement = new List<SaldoFactura>();
             var dbman = new DBManager(DataProvider.Firebird);
@@ -1563,6 +1563,11 @@ namespace Tempo2012.EntityFramework
                         {
                             workSaldos.Date = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
                         }
+                        if (name == "Вид Валута")
+                        {
+                            workSaldos.CodeValuta = dbman.DataReader["VALUE"].ToString();
+                            workSaldos.KindValuta = dbman.DataReader["VALS"].ToString();
+                        }
                     }
 
                 }
@@ -1580,7 +1585,8 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
-
+            if (kindValuta != null)
+                return allmovement.Where(e => e.KindValuta == kindValuta).ToList();
             return allmovement;
         }
         public static IEnumerable<SaldoAnaliticModel> GetCurrentMovements(int accid, int groupid)

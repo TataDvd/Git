@@ -23,5 +23,7 @@ namespace Tempo2012.EntityFramework
         public DateTime Date { get; set;}
         public string NameMaterial { get; set; }
         public string CodeMaterial { get; set; }
+        public string CodeValuta { get; internal set; }
+        public string KindValuta { get; internal set; }
     }
 }
