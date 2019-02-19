@@ -311,7 +311,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NInvoise = invoiseControl.NInvoise;
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
-                item.Od = invoiseControl.OborotValuta;
+                item.Odv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
@@ -321,7 +321,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 if (lc != null)
                 {
 
-                    item.Oc += lc.Oborot;
+                    item.Ocv += lc.OborotValuta;
                     if (item.Type == 2) item.Data = lc.DataInvoise;
                     AllMovementCredit.Remove(lc);
                 }
@@ -335,7 +335,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
 
-                item.Oc = invoiseControl.OborotValuta;
+                item.Ocv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
 
@@ -349,8 +349,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         m => m.Code == accItemSaldo.Code);
                 if (saldo != null)
                 {
-                    accItemSaldo.Nsd = saldo.BeginSaldoDebitValuta;
-                    accItemSaldo.Nsc = saldo.BeginSaldoCreditValuta;
+                    accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
+                    accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
                     rezi.Remove(saldo);
                 }
             }
@@ -360,11 +360,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.NInvoise = item.NumInvoise;
                 item1.NameContragent = item.NameContragent;
                 item1.Code = item.Code;
-                item1.Od = 0;
-                item1.Oc = 0;
+                item1.Odv = 0;
+                item1.Ocv = 0;
                 item1.Data = item.Date;
-                item1.Nsd = item.BeginSaldoDebitValuta;
-                item1.Nsc = item.BeginSaldoCreditValuta;
+                item1.Nsdv = item.BeginSaldoDebitValuta;
+                item1.Nscv = item.BeginSaldoCreditValuta;
                 item1.Type = accountsModel.TypeAccount;
                 _movements1.Add(item1);
             }
@@ -387,7 +387,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NInvoise = invoiseControl.NInvoise;
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
-                item.Od = invoiseControl.OborotValuta;
+                item.Odv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
@@ -397,7 +397,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 if (lc != null)
                 {
 
-                    item.Oc += lc.OborotValuta;
+                    item.Ocv += lc.OborotValuta;
                     if (item.Type == 2) item.Data = lc.DataInvoise;
                     AllMovementCredit1.Remove(lc);
                 }
@@ -411,7 +411,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NameContragent = invoiseControl.NameContragent;
                 item.Code = invoiseControl.CodeContragent;
 
-                item.Oc = invoiseControl.OborotValuta;
+                item.Ocv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
 
@@ -425,8 +425,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         m => m.Code == accItemSaldo.Code);
                 if (saldo != null)
                 {
-                    accItemSaldo.Nsd = saldo.Ksd;
-                    accItemSaldo.Nsc = saldo.Ksc;
+                    accItemSaldo.Nsdv = saldo.Ksdv;
+                    accItemSaldo.Nscv = saldo.Kscv;
                     _movements1.Remove(saldo);
                 }
             }
@@ -437,10 +437,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.NameContragent = item.NameContragent;
                 item1.Code = item.Code;
 
-                item1.Od = 0;
+                item1.Odv = 0;
                 item1.Data = item.Data;
-                item1.Nsd = item.Ksd;
-                item1.Nsc = item.Ksc;
+                item1.Nsdv = item.Ksdv;
+                item1.Nscv = item.Kscv;
                 item1.Type = accountsModel.TypeAccount;
                 _movements.Add(item1);
             }
@@ -567,28 +567,28 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     }
                 }
 
-                sumansc += itemSaldo.Nsc;
-                sumansd += itemSaldo.Nsd;
-                sumaOc += itemSaldo.Oc;
-                sumaOd += itemSaldo.Od;
-                sumaOct += itemSaldo.Oc;
-                sumaOdt += itemSaldo.Od;
+                sumansc += itemSaldo.Nscv;
+                sumansd += itemSaldo.Nsdv;
+                sumaOc += itemSaldo.Ocv;
+                sumaOd += itemSaldo.Odv;
+                sumaOct += itemSaldo.Ocv;
+                sumaOdt += itemSaldo.Odv;
                 //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
-                    itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - itemSaldo.Nsd - itemSaldo.Od;
-                    itemSaldo.Ns = itemSaldo.Nsc - itemSaldo.Nsd;
+                    itemSaldo.Ksv = itemSaldo.Nscv + itemSaldo.Ocv - itemSaldo.Nsdv - itemSaldo.Odv;
+                    itemSaldo.Nsv = itemSaldo.Nscv - itemSaldo.Nsdv;
                 }
                 else
                 {
-                    itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - itemSaldo.Nsc - itemSaldo.Oc;
-                    itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
+                    itemSaldo.Ksv = itemSaldo.Nsdv + itemSaldo.Odv - itemSaldo.Nscv - itemSaldo.Ocv;
+                    itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
                 }
 
-                totalns += itemSaldo.Ns;
-                totalks += itemSaldo.Ks;
-                totalod += itemSaldo.Od;
-                totalok += itemSaldo.Oc;
+                totalns += itemSaldo.Nsv;
+                totalks += itemSaldo.Ksv;
+                totalod += itemSaldo.Odv;
+                totalok += itemSaldo.Ocv;
 
             }
             if (WithContragentSum)

@@ -1563,7 +1563,7 @@ namespace Tempo2012.EntityFramework
                         {
                             workSaldos.Date = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
                         }
-                        if (name == "Вид Валута")
+                        if (name == "Вид валута")
                         {
                             workSaldos.CodeValuta = dbman.DataReader["VALUE"].ToString();
                             workSaldos.KindValuta = dbman.DataReader["VALS"].ToString();
@@ -1586,7 +1586,7 @@ namespace Tempo2012.EntityFramework
                 dbman.Dispose();
             }
             if (kindValuta != null)
-                return allmovement.Where(e => e.KindValuta == kindValuta).ToList();
+                return allmovement.Where(e => e.CodeValuta == kindValuta).ToList();
             return allmovement;
         }
         public static IEnumerable<SaldoAnaliticModel> GetCurrentMovements(int accid, int groupid)
