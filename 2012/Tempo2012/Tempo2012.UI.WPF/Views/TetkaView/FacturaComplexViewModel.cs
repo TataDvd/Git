@@ -254,10 +254,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 blanka = File.ReadAllText(Path.Combine(Entrence.CurrentFirmaPathTemplate, "Pismo.txt"));
             }
 
-            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise < FromDate));
-            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
+            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
+            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            if (KindValuta != null)
+            {
+                AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(e => e.VidValCode == KindValuta));
+                AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
+                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
+            }
             if (KindValuta != null)
             {
                 AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
@@ -266,6 +273,21 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
             }
             var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId,KindValuta);
+            if (typerep == 1 && filter != null)
+            {
+                string contr = "";
+                var filt = filter.Split('|');
+                if (filt.Length > 0)
+                {
+                    contr = filt[1].Trim();
+                    AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(w => w.CodeContragent == contr));
+                    AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(w => w.CodeContragent == contr));
+                    AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(w => w.CodeContragent == contr));
+                    AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(w => w.CodeContragent == contr));
+                    rezi = new List<SaldoFactura>(rezi.Where(t => t.NameContragent == contr));
+                }
+
+            }
             int luki = 0;
             if (AllMovementDebit1.Count > 0)
             {
@@ -369,18 +391,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _movements1.Add(item1);
             }
 
-            if (typerep == 1 && filter!=null)
-            {
-                string contr = "";
-                var filt = filter.Split('|');
-                if (filt.Length > 0)
-                {
-                    contr = filt[1].Trim();
-                    _movements1 = new List<AccItemSaldo>(_movements1.Where(w => w.Code == contr));
-
-                }
-
-            }
+           
             foreach (InvoiseControl invoiseControl in AllMovementDebit1)
             {
                 var item = new AccItemSaldo();
@@ -520,7 +531,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                         if (accountsModel.TypeAccount != 1)
                         {
-                            var ks = sumansc + sumaOc - sumansd - sumaOd;
+                            var ks = (sumansc + sumaOc) - (sumansd + sumaOd);
                             var ns = sumansc - sumansd;
                             rowTotal.Add(ns.ToString(Vf.LevFormatUI));
                             rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -533,7 +544,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         }
                         else
                         {
-                            var ks = sumansd + sumaOd - sumansc - sumaOc;
+                            var ks = (sumansd + sumaOd) - (sumansc + sumaOc);
                             var ns = sumansd - sumansc;
                             rowTotal.Add(ns.ToString(Vf.LevFormatUI));
                             rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -576,12 +587,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
-                    itemSaldo.Ksv = itemSaldo.Nscv + itemSaldo.Ocv - itemSaldo.Nsdv - itemSaldo.Odv;
+                    itemSaldo.Ksv = (itemSaldo.Nscv + itemSaldo.Ocv) - (itemSaldo.Nsdv + itemSaldo.Odv);
                     itemSaldo.Nsv = itemSaldo.Nscv - itemSaldo.Nsdv;
                 }
                 else
                 {
-                    itemSaldo.Ksv = itemSaldo.Nsdv + itemSaldo.Odv - itemSaldo.Nscv - itemSaldo.Ocv;
+                    itemSaldo.Ksv = (itemSaldo.Nsdv + itemSaldo.Odv) - (itemSaldo.Nscv + itemSaldo.Ocv);
                     itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
                 }
 
@@ -612,7 +623,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
-                    var ks = sumansc + sumaOc - sumansd - sumaOd;
+                    var ks = (sumansc + sumaOc) - (sumansd + sumaOd);
                     var ns = sumansc - sumansd;
                     rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
                     rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -626,7 +637,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 else
                 {
-                    var ks = sumansd + sumaOd - sumansc - sumaOc;
+                    var ks = (sumansd + sumaOd) - (sumansc + sumaOc);
                     var ns = sumansd - sumansc;
                     rowTotalLas.Add(ns.ToString(Vf.LevFormatUI));
                     rowTotalLas.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -939,7 +950,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                         if (accountsModel.TypeAccount != 1)
                         {
-                            var ks = sumansc + sumaOc - sumansd - sumaOd;
+                            var ks = (sumansc + sumaOc) - (sumansd + sumaOd);
                             var ns = sumansc - sumansd;
                             rowTotal.Add(ns.ToString(Vf.LevFormatUI));
                             rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -952,7 +963,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         }
                         else
                         {
-                            var ks = sumansd + sumaOd - sumansc - sumaOc;
+                            var ks = (sumansd + sumaOd) - (sumansc + sumaOc);
                             var ns = sumansd - sumansc;
                             rowTotal.Add(ns.ToString(Vf.LevFormatUI));
                             rowTotal.Add(sumaOd.ToString(Vf.LevFormatUI));
@@ -995,12 +1006,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
-                    itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - itemSaldo.Nsd - itemSaldo.Od;
+                    itemSaldo.Ks = (itemSaldo.Nsc + itemSaldo.Oc) - (itemSaldo.Nsd + itemSaldo.Od);
                     itemSaldo.Ns = itemSaldo.Nsc - itemSaldo.Nsd;
                 }
                 else
                 {
-                    itemSaldo.Ks = itemSaldo.Nsd + itemSaldo.Od - itemSaldo.Nsc - itemSaldo.Oc;
+                    itemSaldo.Ks = (itemSaldo.Nsd + itemSaldo.Od) - (itemSaldo.Nsc + itemSaldo.Oc);
                     itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
                 }
 
@@ -1129,8 +1140,16 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 string a=b + this.accountsModel.ShortName;
                 if (typerep == 1)
                 {
+                    if (KindValuta != null)
+                    {
+                        return a + "  " + antetka + " за тип валута " + KindValuta;
+                    }
                     return a + "  " + antetka;
                 }
+                if (KindValuta != null)
+                    {
+                        return a +" за тип валута " + KindValuta;
+                    }
                 return a;
             }
         }

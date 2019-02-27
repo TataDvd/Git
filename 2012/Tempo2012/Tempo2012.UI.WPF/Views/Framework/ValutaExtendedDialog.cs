@@ -69,7 +69,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             List<ValutaControl> contos4 = new List<ValutaControl>(Context.GetAllContoValuta(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, VidVal, 2, CodeClient));
             List<ValutaControl> contosb = null;
             List<ValutaControl> contos1b = null;
-            var rezil = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
+            var rezil = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId,VidVal);
             if (!string.IsNullOrWhiteSpace(CodeClient))
             {
                 rezil = rezil.Where(e => e.Code == CodeClient).ToList();

@@ -31,7 +31,7 @@ namespace Tempo2012.EntityFramework.Models
             {
                 if (Type==1)
                 {
-                    decimal rez = Nsd + Od - Nsc- Oc;
+                    decimal rez = (Nsd + Od) - (Nsc+ Oc);
                     ksd=rez;
                    
                 }
@@ -51,7 +51,7 @@ namespace Tempo2012.EntityFramework.Models
             {
                 if (Type == 1)
                 {
-                    decimal rez = Nsdv + Odv - Nscv - Ocv;
+                    decimal rez = (Nsdv + Odv) - (Nscv + Ocv);
                     ksdv = rez;
 
                 }
@@ -70,7 +70,7 @@ namespace Tempo2012.EntityFramework.Models
             {
                 if (Type == 2)
                 {
-                    decimal rez = Nsc + Oc - Nsd - Od;
+                    decimal rez = (Nsc + Oc) - (Nsd + Od);
                      _ksc=rez;
                     
                 }
@@ -89,7 +89,7 @@ namespace Tempo2012.EntityFramework.Models
             {
                 if (Type == 2)
                 {
-                    decimal rez = Nscv + Ocv - Nsdv - Odv;
+                    decimal rez = (Nscv + Ocv) - (Nsdv + Odv);
                     _kscv = rez;
 
                 }

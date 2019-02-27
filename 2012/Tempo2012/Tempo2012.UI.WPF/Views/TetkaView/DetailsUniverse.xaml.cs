@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using DataGrid2DLibrary;
 using Tempo2012.EntityFramework.Models;
 using Tempo2012.UI.WPF.ViewModels.ContoManagment;
+using Tempo2012.UI.WPF.Views.ReportManager;
 
 namespace Tempo2012.UI.WPF.Views.TetkaView
 {
@@ -138,6 +139,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReportDialog report = new ReportDialog(vm);
+            report.ShowDialog();
         }
     }
 

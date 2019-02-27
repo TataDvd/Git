@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using DataGrid2DLibrary;
+using ReportBuilder;
 using Tempo2012.EntityFramework;
 using Tempo2012.EntityFramework.Models;
 using Tempo2012.UI.WPF.Models;
@@ -14,7 +15,7 @@ using Tempo2012.UI.WPF.ViewModels.ContragenManager;
 
 namespace Tempo2012.UI.WPF.Views.TetkaView
 {
-    public class DetailsUniverseViewModel:BaseViewModel
+    public class DetailsUniverseViewModel:BaseViewModel,IReportBuilder
     {
         public const int PAGECOUNT = 20;
         private List<List<string>> _fields;
@@ -25,9 +26,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         private string _title;
         private int Count;
         public AccountsModel Acc;
+
+        public string Filt { get; private set; }
         public ObservableCollection<Filter> Filters { get; set; }
         public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode)
         {
+            var reportItems = new List<ReportItem>();
+            Filt = filter;
             Filters = new ObservableCollection<Filter>();
             Acc = dAccountsModel;
             if (mode == EditMode.Edit)
@@ -46,60 +51,73 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
              var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter);
              if (c!= null)v = c.Select(i => i.ToList()).ToList();
                 _fields = new List<List<string>>();
-                if (v != null)
+            if (v != null)
+            {
+                foreach (var item in v)
                 {
-                    foreach (var item in v)
-                    {
-                        _fields.Add(new List<string>(item));
-                    }
-                    foreach (var item in _fields[0])
-                    {
-                        Filters.Add(new ViewModels.ContragenManager.Filter { FilterName = item });
-                    }
+                    _fields.Add(new List<string>(item));
                 }
-                else
+                foreach (var item in _fields[0])
                 {
-                    var r = new List<string>();
-                    var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
-                    foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
-                    {
-                        r.Add(saldoAnaliticModel.Name);
-
-                    }
-                    r.Add("НС");
-                    r.Add("ОД");
-                    r.Add("ОК");
-                    r.Add("КС");
-                    if (dAccountsModel.Val == 1)
-                    {
-                        r.Add("НСВ");
-                        r.Add("ОДВ");
-                        r.Add("ОКВ");
-                        r.Add("КСВ");
-                    }
-                    if (dAccountsModel.Kol == 1)
-                        {
-                            r.Add("НСК");
-                            r.Add("ОДК");
-                            r.Add("ОКК");
-                            r.Add("КСК");
-                        }
-                    _fields.Add(r);
-                 }
+                    Filters.Add(new ViewModels.ContragenManager.Filter { FilterName = item });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = item, Width = 15 });
+                }
+            }
+            else
+            {
+                var r = new List<string>();
+                var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
+                foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
+                {
+                    r.Add(saldoAnaliticModel.Name);
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = saldoAnaliticModel.Name, Width = 15 });
+                }
+                r.Add("НС");
+                r.Add("ОД");
+                r.Add("ОК");
+                r.Add("КС");
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "НС", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОД", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОК", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "КС", Width = 10 });
+                if (dAccountsModel.Val == 1)
+                {
+                    r.Add("НСВ");
+                    r.Add("ОДВ");
+                    r.Add("ОКВ");
+                    r.Add("КСВ");
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "НСВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОДВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОКВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno = true, Name = "КСВ", Width = 10 });
+                }
                 if (dAccountsModel.Kol == 1)
                 {
-                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
+                    r.Add("НСК");
+                    r.Add("ОДК");
+                    r.Add("ОКК");
+                    r.Add("КСК");
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "НСК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОДК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno=true, Name = "ОКК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true,Sborno = true, Name = "КСК", Width = 10 });
                 }
-                else if (dAccountsModel.Val == 1)
-                {
-                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
-                }
-                else
-                {
-                    Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
-                }
-                         
-           OnPropertyChanged("Fields");
+                _fields.Add(r);
+            }
+            if (dAccountsModel.Kol == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
+            }
+            else if (dAccountsModel.Val == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
+            }
+            else
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
+            }
+            ReportItems = reportItems;
+            OnPropertyChanged("Fields");
         }
 
         internal void SaveContos(IList selectedItems)
@@ -338,6 +356,14 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             get { return _sumaval; }
             set { _sumaval = value; OnPropertyChanged("SumaVal"); }
         }
+
+        
+
+        public IEnumerable<ReportItem> ReportItems { get ; set; }
+        public DateTime FromDate { get  ; set ; }
+        public DateTime ToDate { get; set; }
+        public Dictionary<int, List<string>> Rowfoother { get ; set ; }
+
         internal void Filter()
         {
             if (Acc.Kol == 1)
@@ -360,5 +386,63 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             Fields=new List<List<string>>(_fields);
             OnPropertyChanged("Fields");
         }
+
+        public List<List<string>> GetItems()
+        {
+            return Fields;
+        }
+
+        public List<string> GetTitles()
+        {
+            return ReportItems.Select(reportItem => reportItem.Name).ToList();
+        }
+
+        public List<string> GetHeader()
+        {
+            List<string> list = new List<string>();
+            list.Add(string.Format("Детайли за сметка                 : {0}", Acc.Short));
+            list.Add(string.Format("Дата на извлечението      : {0}", DateTime.Now.ToShortDateString()));
+            list.Add(string.Format("за фирма                  : {0}",
+                ConfigTempoSinglenton.GetInstance().CurrentFirma.Name));
+            list.Add(string.Format("Счетоводител              : {0}", Config.CurrentUser.Name));
+            list.Add(string.Format("Филтър                    : {0}", Filt));
+            return list;
+        }
+
+        public List<string> GetFuther()
+        {
+            List<string> result = new List<string>();
+            return result;
+        }
+
+        public List<string> GetSubTitles()
+        {
+            return new List<string>();
+        }
+
+        public List<List<string>> GetTXTAntetka()
+        {
+            return new List<List<string>>();
+        }
+
+        public void LoadSettings(string Path)
+        {
+
+            ReportItems = SerializeUtil.DeserializeFromXML<List<ReportItem>>(Path);
+
+        }
+
+        public void SaveSettings(string Path)
+        {
+
+            SerializeUtil.SerializeToXML<List<ReportItem>>(Path, ReportItems);
+
+        }
+        public string Filename
+        {
+            get { return "detailsreport"; }
+        }
+
+        
     }
 }

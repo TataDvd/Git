@@ -798,12 +798,18 @@ namespace Tempo2012.UI.WPF
                 }
                 string contri = "";
                 string antetka = "";
+                string kindval = null;
                 foreach (SaldoItem item in acc.ItemsDebit)
                 {
                     if (item.Name == "Контрагент")
                     {
                         contri = item.Value;
                         antetka = string.Format(" за клиент  {0} - {1}", item.Value, item.Lookupval);
+                    }
+                    if (item.Name == "Вид валута")
+                    {
+                        kindval = item.Value;
+
                     }
 
                 }
@@ -813,7 +819,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, true);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, true,false,false,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -821,7 +827,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true,false,false,kindval);
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -1103,7 +1109,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, true,true);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, true,true,false,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -1111,7 +1117,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true,true);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true,true,false,kindval);
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -1175,7 +1181,7 @@ namespace Tempo2012.UI.WPF
                     if (item.Name == "Вид валута")
                     {
                         kindval = item.Value;
-                        antetka = string.Format("{0} за валута  {1} - {2}",antetka,item.Value, item.Lookupval);
+                        //antetka = string.Format("{0} за валута  {1} - {2}",antetka,item.Value, item.Lookupval);
                     }
                 }
                 ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
