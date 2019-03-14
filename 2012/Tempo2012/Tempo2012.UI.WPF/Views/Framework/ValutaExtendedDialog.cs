@@ -21,6 +21,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "папка", Width = 5 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "сч.", Width = 3 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "вид валута", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "оборот лева", Width = 12, IsSuma = true });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дебит сметка", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "кредит сметка", Width = 12 });
@@ -240,6 +241,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 item2.Add(co.Data);
                 item2.Add(co.Folder);
                 item2.Add(co.User);
+                item2.Add(co.KindVal);
                 item2.Add(string.Format(Vf.LevFormat, co.Oborot));
                 var dac = Allacc.FirstOrDefault(e => e.Id == co.DebitAccount);
                 if (dac != null) item2.Add(dac.Short);
@@ -334,6 +336,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 currentrow++;
                 List<string> item2 = new List<string>();
                 item2.Add("*****");
+                item2.Add("");
                 item2.Add("");
                 item2.Add("");
                 item2.Add("");
@@ -448,6 +451,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
         private static List<string> NewMethod()
         {
             List<string> item1 = new List<string>();
+            item1.Add("---------------------------------------------");
             item1.Add("---------------------------------------------");
             item1.Add("---------------------------------------------");
             item1.Add("---------------------------------------------");

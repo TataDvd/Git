@@ -5987,9 +5987,20 @@ namespace Tempo2012.EntityFramework
             }
             if (!string.IsNullOrWhiteSpace(codeclient))
             {
-                return result.Where(e => e.KindVal == vidval && e.ClienCode == codeclient);
+                if (!string.IsNullOrWhiteSpace(vidval))
+                {
+                    return result.Where(e => e.KindVal == vidval && e.ClienCode == codeclient);
+                }
+                else
+                {
+                    return result.Where(e=>e.ClienCode == codeclient);
+                }
             }
-            return result.Where(e=>e.KindVal==vidval);
+            if (!string.IsNullOrWhiteSpace(vidval))
+            {
+                return result.Where(e => e.KindVal == vidval);
+            }
+            return result;
         }
 
         internal static List<List<string>> GetUnusableClients(bool delitem)

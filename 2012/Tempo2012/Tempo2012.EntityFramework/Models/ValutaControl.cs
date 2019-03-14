@@ -35,8 +35,9 @@
 
         public string PorNom { get; set; }
         public string ClienCode { get; set; }
-        public string NameClient { get; internal set; }
-        public string NInvoice { get; internal set; }
-        public string DInvoce { get; internal set; }
+        public string NameClient { get;  set; }
+        public string NInvoice { get;  set; }
+        public string DInvoce { get;  set; }
+        
     }
 }
