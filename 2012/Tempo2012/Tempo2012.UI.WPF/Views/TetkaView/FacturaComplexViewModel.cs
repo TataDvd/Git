@@ -37,6 +37,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит Валута", Width = 15, IsSuma = true });
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит Валута", Width = 15, IsSuma = true });
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС Валута", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС", Width = 15, IsSuma = true });
             }
             else
             {
@@ -73,8 +77,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС Валута", Width = 15, IsSuma = true });
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит Валута", Width = 15, IsSuma = true });
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит Валута", Width = 15, IsSuma = true });
-                //_reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС Дебит ", Width = 15, IsSuma = true });
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС Валута", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит ", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит", Width = 15, IsSuma = true });
+                _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС", Width = 15, IsSuma = true });
             }
             else
             {
@@ -272,7 +279,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
                 AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
             }
-            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId,KindValuta);
+            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId, !string.IsNullOrWhiteSpace(KindValuta)?KindValuta:null);
             if (typerep == 1 && filter != null)
             {
                 string contr = "";
@@ -334,6 +341,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.NameContragent = invoiseControl.NameContragent;
                 item.VidValCode = invoiseControl.VidValCode;
                 item.Code = invoiseControl.CodeContragent;
+                item.Od = invoiseControl.Oborot;
                 item.Odv = invoiseControl.OborotValuta;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
@@ -345,6 +353,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
 
                     item.Ocv += lc.OborotValuta;
+                    item.Oc += lc.Oborot;
                     if (item.Type == 2) item.Data = lc.DataInvoise;
                     AllMovementCredit.Remove(lc);
                 }
@@ -359,6 +368,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Code = invoiseControl.CodeContragent;
                 item.VidValCode = invoiseControl.VidValCode;
                 item.Ocv = invoiseControl.OborotValuta;
+                item.Oc = invoiseControl.Oborot;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
 
@@ -374,6 +384,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
                     accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
+                    accItemSaldo.Nsc = saldo.BeginSaldoCredit;
+                    accItemSaldo.Nsd = saldo.BeginSaldoDebit;
                     rezi.Remove(saldo);
                 }
             }
@@ -386,9 +398,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.Code = item.Code;
                 item1.Odv = 0;
                 item1.Ocv = 0;
+                item1.Oc = 0;
+                item1.Od = 0;
                 item1.Data = item.Date;
                 item1.Nsdv = item.BeginSaldoDebitValuta;
                 item1.Nscv = item.BeginSaldoCreditValuta;
+                item1.Nsc = item.BeginSaldoCredit;
+                item1.Nsd = item.BeginSaldoDebit;
                 item1.Type = accountsModel.TypeAccount;
                 _movements1.Add(item1);
             }
@@ -402,6 +418,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.VidValCode = invoiseControl.VidValCode;
                 item.Code = invoiseControl.CodeContragent;
                 item.Odv = invoiseControl.OborotValuta;
+                item.Od = invoiseControl.Oborot;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
                 if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
@@ -412,6 +429,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
 
                     item.Ocv += lc.OborotValuta;
+                    item.Oc += lc.Oborot;
                     if (item.Type == 2) item.Data = lc.DataInvoise;
                     AllMovementCredit1.Remove(lc);
                 }
@@ -426,6 +444,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Code = invoiseControl.CodeContragent;
                 item.VidValCode = invoiseControl.VidValCode;
                 item.Ocv = invoiseControl.OborotValuta;
+                item.Oc = invoiseControl.Oborot;
                 item.Type = accountsModel.TypeAccount;
                 item.Data = invoiseControl.DataInvoise;
 
@@ -440,7 +459,9 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 if (saldo != null)
                 {
                     accItemSaldo.Nsdv = saldo.Ksdv;
+                    accItemSaldo.Nsd = saldo.Ksd;
                     accItemSaldo.Nscv = saldo.Kscv;
+                    accItemSaldo.Nsc = saldo.Ksc;
                     _movements1.Remove(saldo);
                 }
             }
@@ -453,9 +474,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item1.Code = item.Code;
 
                 item1.Odv = 0;
+                item1.Oc = 0;
                 item1.Data = item.Data;
                 item1.Nsdv = item.Ksdv;
                 item1.Nscv = item.Kscv;
+                item1.Nsd = item.Ksd;
+                item1.Nsc = item.Ksc;
                 item1.Type = accountsModel.TypeAccount;
                 _movements.Add(item1);
             }
@@ -482,15 +506,25 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             decimal sumaOc = 0;
             decimal sumansd = 0;
             decimal sumaOd = 0;
+            decimal sumanscv = 0;
+            decimal sumaOcv = 0;
+            decimal sumansdv = 0;
+            decimal sumaOdv = 0;
 
             decimal sumaOct = 0;
-
             decimal sumaOdt = 0;
+
+            decimal sumaOctv = 0;
+            decimal sumaOdtv = 0;
 
             decimal totalns = 0;
             decimal totalks = 0;
             decimal totalod = 0;
             decimal totalok = 0;
+            decimal totalnsv = 0;
+            decimal totalksv = 0;
+            decimal totalodv = 0;
+            decimal totalokv = 0;
             foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod))
             {
                 List<string> row = new List<string>();
@@ -549,6 +583,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             {
                                 savefile(name, ReplaceBlanka(blanka, name, rowTotal));
                             }
+                            var ksv = (sumanscv + sumaOcv) - (sumansdv + sumaOdv);
+                            var nsv= sumanscv - sumansdv;
+                            rowTotal.Add(nsv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOdv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOcv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(ksv.ToString(Vf.LevFormatUI));
                         }
                         else
                         {
@@ -562,6 +602,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                             {
                                 savefile(name, ReplaceBlanka(blanka, name, rowTotal));
                             }
+                            var ksv = (sumansdv + sumaOdv) - (sumanscv + sumaOcv);
+                            var nsv = sumansdv - sumanscv;
+                            rowTotal.Add(nsv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOdv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(sumaOcv.ToString(Vf.LevFormatUI));
+                            rowTotal.Add(ksv.ToString(Vf.LevFormatUI));
                         }
                         items.Add(rowTotal);
 
@@ -569,6 +615,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         sumansd = 0;
                         sumaOc = 0;
                         sumaOd = 0;
+                        sumanscv = 0;
+                        sumansdv = 0;
+                        sumaOcv = 0;
+                        sumaOdv = 0;
                         name = itemSaldo.NameContragent;
                         code = itemSaldo.Code;
                         vidvaluta = itemSaldo.VidValCode;
@@ -593,22 +643,36 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 sumaOd += itemSaldo.Odv;
                 sumaOct += itemSaldo.Ocv;
                 sumaOdt += itemSaldo.Odv;
+                sumanscv += itemSaldo.Nsc;
+                sumansdv += itemSaldo.Nsd;
+                sumaOcv += itemSaldo.Oc;
+                sumaOdv += itemSaldo.Od;
+                sumaOctv += itemSaldo.Oc;
+                sumaOdtv += itemSaldo.Od;
                 //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
                 if (accountsModel.TypeAccount != 1)
                 {
                     itemSaldo.Ksv = (itemSaldo.Nscv + itemSaldo.Ocv) - (itemSaldo.Nsdv + itemSaldo.Odv);
                     itemSaldo.Nsv = itemSaldo.Nscv - itemSaldo.Nsdv;
+                    itemSaldo.Ks = (itemSaldo.Nsc + itemSaldo.Oc) - (itemSaldo.Nsd + itemSaldo.Od);
+                    itemSaldo.Ns = itemSaldo.Nsc - itemSaldo.Nsd;
                 }
                 else
                 {
                     itemSaldo.Ksv = (itemSaldo.Nsdv + itemSaldo.Odv) - (itemSaldo.Nscv + itemSaldo.Ocv);
                     itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
+                    itemSaldo.Ks = (itemSaldo.Nsd + itemSaldo.Od) - (itemSaldo.Nsc + itemSaldo.Oc);
+                    itemSaldo.Ns = itemSaldo.Nsd - itemSaldo.Nsc;
                 }
 
                 totalns += itemSaldo.Nsv;
                 totalks += itemSaldo.Ksv;
                 totalod += itemSaldo.Odv;
                 totalok += itemSaldo.Ocv;
+                totalnsv += itemSaldo.Ns;
+                totalksv += itemSaldo.Ks;
+                totalodv += itemSaldo.Od;
+                totalokv += itemSaldo.Oc;
 
             }
             if (WithContragentSum)
@@ -644,7 +708,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     {
                         savefile(name, ReplaceBlanka(blanka, name, rowTotalLas));
                     }
-
+                    var ksv = (sumanscv + sumaOcv) - (sumansdv + sumaOdv);
+                    var nsv = sumanscv - sumansdv;
+                    rowTotalLas.Add(nsv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOdv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOcv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(ksv.ToString(Vf.LevFormatUI));
                 }
                 else
                 {
@@ -658,10 +727,20 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     {
                         savefile(name, ReplaceBlanka(blanka, name, rowTotalLas));
                     }
+                    var ksv = (sumansdv + sumaOdv) - (sumanscv + sumaOcv);
+                    var nsv = sumansdv - sumanscv;
+                    rowTotalLas.Add(nsv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOdv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(sumaOcv.ToString(Vf.LevFormatUI));
+                    rowTotalLas.Add(ksv.ToString(Vf.LevFormatUI));
                 }
                 items.Add(rowTotalLas);
             }
             items.Add(new List<string> {
+                            "-----------------------------------",
+                            "-----------------------------------",
+                            "-----------------------------------",
+                            "-----------------------------------",
                             "-----------------------------------",
                             "-----------------------------------",
                             "-----------------------------------",
@@ -680,6 +759,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             rowTotalLast.Add(totalod.ToString(Vf.LevFormatUI));
             rowTotalLast.Add(totalok.ToString(Vf.LevFormatUI));
             rowTotalLast.Add(totalks.ToString(Vf.LevFormatUI));
+            rowTotalLast.Add(totalnsv.ToString(Vf.LevFormatUI));
+            rowTotalLast.Add(totalodv.ToString(Vf.LevFormatUI));
+            rowTotalLast.Add(totalokv.ToString(Vf.LevFormatUI));
+            rowTotalLast.Add(totalksv.ToString(Vf.LevFormatUI));
             items.Add(rowTotalLast);
 
             return items;
@@ -708,7 +791,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
                 AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
             }
-            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId,KindValuta);
+            var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId, !string.IsNullOrWhiteSpace(KindValuta) ? KindValuta : null);
             int luki = 0;
             if (AllMovementDebit1.Count > 0)
             {
