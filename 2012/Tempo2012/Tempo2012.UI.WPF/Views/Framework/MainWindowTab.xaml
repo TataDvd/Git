@@ -228,6 +228,42 @@
                     <MenuItem>
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Справки материали"/>
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                        <MenuItem  Click="MenuItem_OnClick23">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка за Материали"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_25">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка материали обобщени по контрагент"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_39">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент материал"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        
+                        <MenuItem  Click="MenuItem_Click_33">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка материали с разбити плащания"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справки ДДС"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>

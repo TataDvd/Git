@@ -1099,5 +1099,139 @@ namespace Tempo2012.UI.WPF
                 }
             }
         }
+
+        private void MenuItem_Click_36(object sender, RoutedEventArgs e)
+        {
+            SelectAccDialog acc = new SelectAccDialog();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                var accountsModel = (DataContext as MainViewModel).Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).FirstOrDefault(p => p.Short == acc.Acc);
+                if (accountsModel == null)
+                {
+                    MessageBoxWrapper.Show("Не е намерена сметка с номер " + acc.Acc);
+                    return;
+                }
+                string contri = "";
+                string antetka = "";
+                string kindval = null;
+                foreach (SaldoItem item in acc.ItemsDebit)
+                {
+                    if (item.Name == "Контрагент")
+                    {
+                        contri = item.Value;
+                        antetka = string.Format(" за клиент  {0} - {1}", item.Value, item.Lookupval);
+                    }
+                    if (item.Name == "Вид валута")
+                    {
+                        kindval = item.Value;
+
+                    }
+
+                }
+                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                reportMenuProvider.ShowDialog();
+                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                {
+                    if (contri == "")
+                    {
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, true, true, false, kindval);
+                        f.FromDate = reportMenuProvider.Vm.FromDate();
+                        f.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog report = new ReportDialog(f);
+                        report.ShowDialog();
+                    }
+                    else
+                    {
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, true, false, kindval);
+                        ReportDialog report = new ReportDialog(f);
+                        f.FromDate = reportMenuProvider.Vm.FromDate();
+                        f.ToDate = reportMenuProvider.Vm.ToDate();
+                        report.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void MenuItem_Click_37(object sender, RoutedEventArgs e)
+        {
+            ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+            reportMenuProvider.ShowDialog();
+            if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+            {
+                ReportDialog rd = new ReportDialog(new CheckSellsPurchases(reportMenuProvider.Vm.FromDate(), reportMenuProvider.Vm.ToDate(), 1));
+                rd.ShowDialog();
+            }
+        }
+
+        private void MenuItem_Click_38(object sender, RoutedEventArgs e)
+        {
+            ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+            reportMenuProvider.ShowDialog();
+            if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+            {
+                ReportDialog rd = new ReportDialog(new CheckSellsPurchases(reportMenuProvider.Vm.FromDate(), reportMenuProvider.Vm.ToDate(), 2));
+                rd.ShowDialog();
+            }
+        }
+
+        private void MenuItem_Click_39(object sender, RoutedEventArgs e)
+        {
+            SelectAccDialog acc = new SelectAccDialog();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                var accountsModel = (DataContext as MainViewModel).Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).FirstOrDefault(p => p.Short == acc.Acc);
+                if (accountsModel == null)
+                {
+                    MessageBoxWrapper.Show("Не е намерена сметка с номер " + acc.Acc);
+                    return;
+                }
+                string contri = "";
+                string antetka = "";
+                string kindval = null;
+                foreach (SaldoItem item in acc.ItemsDebit)
+                {
+                    if (item.Name == "Контрагент")
+                    {
+                        contri = item.Value;
+                        if (contri == "")
+                        {
+                            antetka = "за всички клиенти";
+                        }
+                        else
+                        {
+                            antetka = string.Format(" за клиент  {0} - {1}", item.Value, item.Lookupval);
+                        }
+                    }
+                    if (item.Name == "Вид валута")
+                    {
+                        kindval = item.Value;
+                        //antetka = string.Format("{0} за валута  {1} - {2}",antetka,item.Value, item.Lookupval);
+                    }
+                }
+                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                reportMenuProvider.ShowDialog();
+                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                {
+                    if (contri == "")
+                    {
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, null, true, false, true, kindval);
+                        f.FromDate = reportMenuProvider.Vm.FromDate();
+                        f.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog report = new ReportDialog(f);
+                        report.ShowDialog();
+                    }
+                    else
+                    {
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, false, true, kindval);
+                        ReportDialog report = new ReportDialog(f);
+                        f.FromDate = reportMenuProvider.Vm.FromDate();
+                        f.ToDate = reportMenuProvider.Vm.ToDate();
+                        report.ShowDialog();
+                    }
+                }
+            }
+        }
     }
 }
