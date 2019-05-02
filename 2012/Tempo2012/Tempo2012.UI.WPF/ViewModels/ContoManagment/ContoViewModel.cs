@@ -2462,12 +2462,12 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         private string ValidateItemsDebit()
         {
-            return (from saldoItem in ItemsDebit where string.IsNullOrWhiteSpace(saldoItem.Value) where saldoItem.ValueVal == 0 && saldoItem.ValueKol==0 select "Невалидна стойност на поле " + saldoItem.Name).FirstOrDefault();
+            return (from saldoItem in ItemsDebit where string.IsNullOrWhiteSpace(saldoItem.Value) where !saldoItem.IsVal where !saldoItem.IsKol  select "Невалидна стойност на поле " + saldoItem.Name).FirstOrDefault();
         }
 
         private string ValidateItemsCredit()
         {
-            return (from saldoItem in ItemsCredit where string.IsNullOrWhiteSpace(saldoItem.Value) where saldoItem.ValueVal == 0 && saldoItem.ValueKol == 0 select "Невалидна стойност на поле " + saldoItem.Name).FirstOrDefault();
+            return (from saldoItem in ItemsCredit where string.IsNullOrWhiteSpace(saldoItem.Value) where !saldoItem.IsVal where !saldoItem.IsKol select "Невалидна стойност на поле " + saldoItem.Name).FirstOrDefault();
         }
 
         private string ValidateAcc(int accid)
