@@ -58,6 +58,10 @@ namespace Tempo2012.UI.WPF.Views.Framework
             var rezi = Context.GetAllAnaliticSaldos(CurrenAcc.Id, CurrenAcc.FirmaId);
             List<QuantityModel> contosb = null;
             List<QuantityModel> contos1b = null;
+            if (!string.IsNullOrWhiteSpace(KindStock))
+            {
+                rezi = rezi.Where(e => e.CodeMaterial == KindStock).ToList();
+            }
             if (fromDate.Month > 1)
             {
                 contosb = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 1, KindStock));
@@ -115,8 +119,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
             }
             List<QuantityModel> contos =new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,CurrenAcc.Id,FromDate,ToDate,1,KindStock));
             List<QuantityModel> contos1=new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, 2, KindStock));
+            List<QuantityModel> contos3 = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, 1, KindStock));
+            List<QuantityModel> contos4 = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, FromDate, ToDate, 2, KindStock));
 
-           
             decimal sumad = 0,sumac = 0;
             decimal nsd = 0, nskold = 0;
             decimal sumamd = 0, sumamc = 0;
@@ -130,11 +135,11 @@ namespace Tempo2012.UI.WPF.Views.Framework
             //decimal sumasinglepricec = contos1.Sum(e => e.SinglePrice);
             string currec = "", oldrec = "";
             string lastcode="", lastname="";
-            contos.AddRange(contos1);
+            contos3.AddRange(contos4);
             var currentrow = 0;
             foreach (
                 var co in
-                    contos.OrderBy(e=>e.StockCode))
+                    contos3.OrderBy(e=>e.StockCode))
             {
 
                 if (oldrec == "")
@@ -144,39 +149,97 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 currec = co.StockCode;
                 if (oldrec != currec)
                 {
-                    var el1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
-                    if (el1 != null)
+                    var lsumad1 = contos.Where(e => e.StockCode == oldrec).Sum(e => e.Oborot);
+                    var lsumac1 = contos1.Where(e => e.StockCode == oldrec).Sum(e => e.Oborot);
+                    var lsumavald1 = contos.Where(e => e.StockCode == oldrec).Sum(e => e.Quantity);
+                    var lsumavalc1 = contos1.Where(e => e.StockCode == oldrec).Sum(e => e.Quantity);
+                   var saldo1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
+                    if (saldo1 != null)
                     {
-                        nsd = el1.BeginSaldoDebit - el1.BeginSaldoCredit;
-                        BeginSaldoD += nsd;
-                        nskold = el1.BeginSaldoDebitKol - el1.BeginSaldoCreditKol;
-                        BeginValSd += nskold;
-                        rezi.Remove(el1);
+                        rezi.Remove(saldo1);
+                    }
+                    var lnsd1 = saldo1 != null ? saldo1.BeginSaldoDebit : 0;
+                    var lnsc1 = saldo1 != null ? saldo1.BeginSaldoCredit : 0;
+                    var lnsdv1 = saldo1 != null ? saldo1.BeginSaldoDebitKol : 0;
+                    var lnscv1 = saldo1 != null ? saldo1.BeginSaldoCreditKol : 0;
+                    if (CurrenAcc.TypeAccount == 1)
+                    {
+                        lnsd1 = lnsd1 - lnsc1;
+                        lnsdv1 = lnsdv1 - lnscv1;
+                        lnsc1 = 0;
+                        lnscv1 = 0;
                     }
                     else
                     {
-                        nsd = 0;
-                        nskold = 0;
+                        lnsc1 = lnsc1 - lnsd1;
+                        lnscv1 = lnscv1 - lnsdv1;
+                        lnsd1 = 0;
+                        lnsdv1 = 0;
                     }
-                    var row = new List<string>();
-                    var sbor1 = nsd + sumamd;
-                    var sbork1 = nskold + sumacolmd;
-                    row.Add("----------------------------------------------------------------------------------");
-                    row.Add("|Сборно          |          л е в а              |           количества          |");
-                    row.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
-                    row.Add("----------------------------------------------------------------------------------");
-                    row.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
-                    row.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-                    row.Add($"|Сборове         |{sbor1.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork1.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-                    row.Add($"|Крайни салда    |{(sbor1 - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork1 - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
-                    //row.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
-                    row.Add("----------------------------------------------------------------------------------");
-                    Rowfoother.Add(currentrow-1,row);
-                    sumamd = 0;
-                    sumacolmd = 0;
-                    sumamc = 0;
-                    sumacolmc = 0;
+                    var lsbord1 = lnsd1 + lsumad1;
+                    var lsborc1 = lnsc1 + lsumac1;
+                    var lsbordv1 = lnsdv1 + lsumavald1;
+                    var lsborcv1 = lnscv1 + lsumavalc1;
+                    decimal lksd1 = 0;
+                    decimal lksc1 = 0;
+                    decimal lksdv1 = 0;
+                    decimal lkscv1 = 0;
+                    if (CurrenAcc.TypeAccount == 1)
+                    {
+                        lksd1 = (lsumad1 + lnsd1) - (lsumac1 + lnsc1);
+                        lksdv1 = (lsumavald1 + lnsdv1) - (lsumavalc1 + lnsc1);
+                    }
+                    else
+                    {
+                        lksc1 = (lsumac1 + lnsc1) - (lsumad1 + lnsd1);
+                        lkscv1 = (lsumavalc1 + lnscv1) - (lsumavald1 + lnsdv1);
+                    }
+
+                    var row2 = new List<string>();
+                    row2.Add("----------------------------------------------------------------------------------");
+                    row2.Add("|Сборно          |          л е в а              |           количество          |");
+                    row2.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+                    row2.Add("----------------------------------------------------------------------------------");
+                    row2.Add($"|Начални салда   |{lnsd1.ToString(Vf.LevFormatUI),15}|{lnsc1.ToString(Vf.LevFormatUI),15}|{lnsdv1.ToString(Vf.ValFormatUI),15}|{lnscv1.ToString(Vf.ValFormatUI),15}|");
+                    row2.Add($"|Oбороти         |{lsumad1.ToString(Vf.LevFormatUI),15}|{lsumac1.ToString(Vf.LevFormatUI),15}|{lsumavald1.ToString(Vf.ValFormatUI),15}|{lsumavalc1.ToString(Vf.ValFormatUI),15}|");
+                    row2.Add($"|Сборове         |{lsbord1.ToString(Vf.LevFormatUI),15}|{lsborc1.ToString(Vf.LevFormatUI),15}|{lsbordv1.ToString(Vf.ValFormatUI),15}|{lsborcv1.ToString(Vf.ValFormatUI),15}|");
+                    row2.Add($"|Крайни салда    |{lksd1.ToString(Vf.LevFormatUI),15}|{lksc1.ToString(Vf.LevFormatUI),15}|{lksdv1.ToString(Vf.ValFormatUI),15}|{lkscv1.ToString(Vf.ValFormatUI),15}|");
+                    row2.Add("----------------------------------------------------------------------------------");
+                    Rowfoother.Add(currentrow - 1, row2);
                     oldrec = currec;
+                    //var el1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
+                    //if (el1 != null)
+                    //{
+                    //    nsd = el1.BeginSaldoDebit - el1.BeginSaldoCredit;
+                    //    BeginSaldoD += nsd;
+                    //    nskold = el1.BeginSaldoDebitKol - el1.BeginSaldoCreditKol;
+                    //    BeginValSd += nskold;
+                    //    rezi.Remove(el1);
+                    //}
+                    //else
+                    //{
+                    //    nsd = 0;
+                    //    nskold = 0;
+                    //}
+                    //var row = new List<string>();
+                    //var sbor1 = nsd + sumamd;
+                    //var sbork1 = nskold + sumacolmd;
+                    //row.Add("----------------------------------------------------------------------------------");
+                    //row.Add("|Сборно          |          л е в а              |           количества          |");
+                    //row.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+                    //row.Add("----------------------------------------------------------------------------------");
+                    //row.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
+                    //row.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+                    //row.Add($"|Сборове         |{sbor1.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork1.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+                    //row.Add($"|Крайни салда    |{(sbor1 - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork1 - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
+                    ////row.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    //row.Add("----------------------------------------------------------------------------------");
+                    //Rowfoother.Add(currentrow-1,row);
+                    //sumamd = 0;
+                    //sumacolmd = 0;
+                    //sumamc = 0;
+                    //sumacolmc = 0;
+                    //oldrec = currec;
                 }
                 List<string> item2 = new List<string>();
                 item2.Add(co.PorNom);
@@ -210,35 +273,96 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 }
                 currentrow++;
             }
-            
-            var row1 = new List<string>();
-            var el = rezi.FirstOrDefault(e => e.CodeMaterial == currec);
-            if (el != null)
+
+            //var row1 = new List<string>();
+            //var el = rezi.FirstOrDefault(e => e.CodeMaterial == currec);
+            //if (el != null)
+            //{
+            //    nsd = el.BeginSaldoDebit-el.BeginSaldoCredit;
+            //    BeginSaldoD += nsd;
+            //    nskold = el.BeginSaldoDebitKol-el.BeginSaldoCreditKol;
+            //    BeginValSd += nskold;
+            //    rezi.Remove(el);
+            //}
+            //else
+            //{
+            //    nsd = 0;
+            //    nskold = 0;
+            //}
+            //var sbor = nsd + sumamd;
+            //var sbork = nskold + sumacolmd;
+            //row1.Add("----------------------------------------------------------------------------------");
+            //row1.Add("|Сборно          |          л е в а              |           количества          |");
+            //row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+            //row1.Add("----------------------------------------------------------------------------------");
+            //row1.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
+            //row1.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+            //row1.Add($"|Сборове         |{sbor.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
+            //row1.Add($"|Крайни салда    |{(sbor - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
+            ////row1.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+            //row1.Add("----------------------------------------------------------------------------------");
+            //Rowfoother.Add(currentrow-1, row1);
+            var lsumad = contos.Where(e => e.StockCode == currec).Sum(e => e.Oborot);
+            var lsumac = contos1.Where(e => e.StockCode == currec).Sum(e => e.Oborot);
+            var lsumavald = contos.Where(e => e.StockCode == currec).Sum(e => e.Quantity);
+            var lsumavalc = contos1.Where(e => e.StockCode == currec).Sum(e => e.Quantity);
+           
+            var saldo = rezi.FirstOrDefault(e => e.CodeMaterial == currec);
+
+            var lnsd = saldo != null ? saldo.BeginSaldoDebit : 0;
+            var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
+            var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
+            var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
+            if (saldo != null)
             {
-                nsd = el.BeginSaldoDebit-el.BeginSaldoCredit;
-                BeginSaldoD += nsd;
-                nskold = el.BeginSaldoDebitKol-el.BeginSaldoCreditKol;
-                BeginValSd += nskold;
-                rezi.Remove(el);
+                rezi.Remove(saldo);
+            }
+            if (CurrenAcc.TypeAccount == 1)
+            {
+                lnsd = lnsd - lnsc;
+                lnsdv = lnsdv - lnscv;
+                lnsc = 0;
+                lnscv = 0;
             }
             else
             {
-                nsd = 0;
-                nskold = 0;
+                lnsc = lnsc - lnsd;
+                lnscv = lnscv - lnsdv;
+                lnsd = 0;
+                lnsdv = 0;
             }
-            var sbor = nsd + sumamd;
-            var sbork = nskold + sumacolmd;
-            row1.Add("----------------------------------------------------------------------------------");
-            row1.Add("|Сборно          |          л е в а              |           количества          |");
-            row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
-            row1.Add("----------------------------------------------------------------------------------");
-            row1.Add($"|Начални салда   |{nsd.ToString(Vf.LevFormatUI),15}|               |{nskold.ToString(Vf.KolFormatUI),15}|               |");
-            row1.Add($"|Oбороти         |{sumamd.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sumacolmd.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-            row1.Add($"|Сборове         |{sbor.ToString(Vf.LevFormatUI),15}|{sumamc.ToString(Vf.LevFormatUI),15}|{sbork.ToString(Vf.KolFormatUI),15}|{sumacolmc.ToString(Vf.KolFormatUI),15}|");
-            row1.Add($"|Крайни салда    |{(sbor - sumamc).ToString(Vf.LevFormatUI),15}|               |{(sbork - sumacolmc).ToString(Vf.KolFormatUI),15}|               |");
-            //row1.Add($"|Средна цена     |{((sumamd + nsd) / (sumacolmd + nskold)).ToString(Vf.LevFormatUI),15}|               |               |               |");
-            row1.Add("----------------------------------------------------------------------------------");
-            Rowfoother.Add(currentrow-1, row1);
+            var lsbord = lnsd + lsumad;
+            var lsborc = lnsc + lsumac;
+            var lsbordv = lnsdv + lsumavald;
+            var lsborcv = lnscv + lsumavalc;
+            decimal lksd = 0;
+            decimal lksc = 0;
+            decimal lksdv = 0;
+            decimal lkscv = 0;
+            if (CurrenAcc.TypeAccount == 1)
+            {
+                lksd = (lsumad + lnsd) - (lsumac + lnsc);
+                lksdv = (lsumavald + lnsdv) - (lsumavalc + lnsc);
+            }
+            else
+            {
+                lksc = (lsumac + lnsc) - (lsumad + lnsd);
+                lkscv = (lsumavalc + lnscv) - (lsumavald + lnsdv);
+            }
+            if (currentrow > 0)
+            {
+                var row1 = new List<string>();
+                row1.Add("----------------------------------------------------------------------------------");
+                row1.Add("|Сборно          |          л е в а              |           количество          |");
+                row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
+                row1.Add("----------------------------------------------------------------------------------");
+                row1.Add($"|Начални салда   |{lnsd.ToString(Vf.LevFormatUI),15}|{lnsc.ToString(Vf.LevFormatUI),15}|{lnsdv.ToString(Vf.ValFormatUI),15}|{lnscv.ToString(Vf.ValFormatUI),15}|");
+                row1.Add($"|Oбороти         |{lsumad.ToString(Vf.LevFormatUI),15}|{lsumac.ToString(Vf.LevFormatUI),15}|{lsumavald.ToString(Vf.ValFormatUI),15}|{lsumavalc.ToString(Vf.ValFormatUI),15}|");
+                row1.Add($"|Сборове         |{lsbord.ToString(Vf.LevFormatUI),15}|{lsborc.ToString(Vf.LevFormatUI),15}|{lsbordv.ToString(Vf.ValFormatUI),15}|{lsborcv.ToString(Vf.ValFormatUI),15}|");
+                row1.Add($"|Крайни салда    |{lksd.ToString(Vf.LevFormatUI),15}|{lksc.ToString(Vf.LevFormatUI),15}|{lksdv.ToString(Vf.ValFormatUI),15}|{lkscv.ToString(Vf.ValFormatUI),15}|");
+                row1.Add("----------------------------------------------------------------------------------");
+                Rowfoother.Add(currentrow - 1, row1);
+            }
             if (string.IsNullOrWhiteSpace(KindStock))
             {
                 foreach (var item in rezi)
@@ -266,7 +390,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     sumamd += item.BeginSaldoDebit-item.BeginSaldoCredit;
                     sumacolmd += item.BeginSaldoDebitKol-item.BeginSaldoCreditKol;
                     currentrow++;
-                    row1 = new List<string>();
+                    var row1 = new List<string>();
                     row1.Add("----------------------------------------------------------------------------------");
                     row1.Add("|Сборно          |          л е в а              |           количества          |");
                     row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
@@ -308,7 +432,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     sumamd += item.BeginSaldoDebit;
                     sumacolmd += item.BeginSaldoDebitKol;
                     currentrow++;
-                    row1 = new List<string>();
+                    var row1 = new List<string>();
                     row1.Add("----------------------------------------------------------------------------------");
                     row1.Add("|Сборно          |          л е в а              |           количества          |");
                     row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
@@ -347,8 +471,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + BeginValSc);
                 KrainoSaldoDV = (sumaquantityd + BeginValSd) - (sumaquantityc);
                 KrainoSaldoKV = 0;
-                var test = (sumad + BeginSaldoD) / (sumaquantityd + BeginValSd);
-                Sad = string.Format(Vf.LevFormat,test );
+                //var test = (sumad + BeginSaldoD) / (sumaquantityd + BeginValSd);
+                //Sad = string.Format(Vf.LevFormat,test );
                 //Sak ="";
             }
             if (CurrenAcc.TypeAccount == 2)
@@ -446,7 +570,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 list.Add(string.Format("| Обороти                     |{0,17}|{1,18}|", Sumavald, Sumavalc));
                 list.Add(string.Format("| Сборове                     |{0,17}|{1,18}|", TSumavald, TSumavalc));
                 list.Add(string.Format("| Крайно салдо                |{0,17}|{1,18}|", KrainoSaldoDV.ToString(Vf.KolFormatUI), ""));
-                list.Add(string.Format("| Средна цена                 |{0,17}|{1,18}|", Sad, ""));
+                //list.Add(string.Format("| Средна цена                 |{0,17}|{1,18}|", Sad, ""));
                 list.Add("--------------------------------------------------------------------");
                 return list;
             }
