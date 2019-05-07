@@ -64,8 +64,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
             }
             if (fromDate.Month > 1)
             {
-                contosb = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 1, KindStock));
-                contos1b = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate, 2, KindStock));
+                contosb = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate.AddDays(-1), 1, KindStock));
+                contos1b = new List<QuantityModel>(Context.GetAllContoQuantity(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, CurrenAcc.Id, new DateTime(FromDate.Year, 1, 1), FromDate.AddDays(-1), 2, KindStock));
 
                 if (contosb != null)
                 {
