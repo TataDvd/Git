@@ -665,7 +665,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
                     ObservableCollection<string> currow = Contents[CurrentRowIndex+1];
                     int selectedgroup = int.Parse(currow[currow.Count - 1]);
                     Context.DeleteMovement(accountsModel.Id, selectedgroup);
-                    Context.UpdateMovement(new SaldoAnaliticModel { ACCID = accountsModel.Id });
+                    if (Contents.Count>2) Context.UpdateMovement(new SaldoAnaliticModel { ACCID = accountsModel.Id });
                     GetValue(accountsModel);
                }
 
