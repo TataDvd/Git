@@ -313,8 +313,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
             var lnsd = saldo != null ? saldo.BeginSaldoDebit : 0;
             var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
-            var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
-            var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
+            var lnsdv = saldo != null ? saldo.BeginSaldoDebitKol : 0;
+            var lnscv = saldo != null ? saldo.BeginSaldoCreditKol : 0;
             if (saldo != null)
             {
                 rezi.Remove(saldo);
