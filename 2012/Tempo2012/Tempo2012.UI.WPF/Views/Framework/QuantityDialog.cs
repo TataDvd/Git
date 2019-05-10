@@ -126,6 +126,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
             decimal sumad = 0,sumac = 0;
             decimal nsd = 0, nskold = 0;
+            decimal nsc = 0, nskolc = 0;
+            decimal ksd = 0, kskold = 0;
+            decimal ksc = 0, kskolc = 0;
             decimal sumamd = 0, sumamc = 0;
             decimal sumacolmd = 0, sumacolmc = 0;
 
@@ -170,6 +173,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         lnsdv1 = lnsdv1 - lnscv1;
                         lnsc1 = 0;
                         lnscv1 = 0;
+                        nsd += lnsd1;
+                        nskold += lnsdv1;
                     }
                     else
                     {
@@ -177,6 +182,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         lnscv1 = lnscv1 - lnsdv1;
                         lnsd1 = 0;
                         lnsdv1 = 0;
+                        nsc += lnsc1;
+                        nskolc += lnscv1;
                     }
                     var lsbord1 = lnsd1 + lsumad1;
                     var lsborc1 = lnsc1 + lsumac1;
@@ -190,11 +197,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     {
                         lksd1 = (lsumad1 + lnsd1) - (lsumac1 + lnsc1);
                         lksdv1 = (lsumavald1 + lnsdv1) - (lsumavalc1 + lnsc1);
+                        ksd += lksd1;
+                        kskold += lksdv1;
                     }
                     else
                     {
                         lksc1 = (lsumac1 + lnsc1) - (lsumad1 + lnsd1);
                         lkscv1 = (lsumavalc1 + lnscv1) - (lsumavald1 + lnsdv1);
+                        ksc += lksc1;
+                        kskolc += lkscv1;
                     }
 
                     var row2 = new List<string>();
@@ -325,6 +336,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 lnsdv = lnsdv - lnscv;
                 lnsc = 0;
                 lnscv = 0;
+                nsd += lnsd;
+                nskold += lnsdv;
             }
             else
             {
@@ -332,6 +345,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 lnscv = lnscv - lnsdv;
                 lnsd = 0;
                 lnsdv = 0;
+                nsc += lnsc;
+                nskolc += lnscv;
             }
             var lsbord = lnsd + lsumad;
             var lsborc = lnsc + lsumac;
@@ -345,11 +360,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
             {
                 lksd = (lsumad + lnsd) - (lsumac + lnsc);
                 lksdv = (lsumavald + lnsdv) - (lsumavalc + lnsc);
+                ksd += lksd;
+                kskold += lksdv;
             }
             else
             {
                 lksc = (lsumac + lnsc) - (lsumad + lnsd);
                 lkscv = (lsumavalc + lnscv) - (lsumavald + lnsdv);
+                ksc += lksc;
+                kskolc += lkscv;
             }
             if (currentrow > 0)
             {
@@ -468,10 +487,14 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 : string.Format(Vf.LevFormat, sumac);
             if (CurrenAcc.TypeAccount == 1)
             {
-                KrainoSaldoD = (sumad + BeginSaldoD) - (sumac);
-                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + BeginValSd);
-                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + BeginValSc);
-                KrainoSaldoDV = (sumaquantityd + BeginValSd) - (sumaquantityc);
+                BeginSaldoD = nsd;
+                BeginValSd = nskold;
+                BeginValSc = 0;
+                BeginSaldoK = 0;
+                KrainoSaldoD = (sumad + nsd) - (sumac);
+                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + nskold);
+                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + nskolc);
+                KrainoSaldoDV = (sumaquantityd + nskold) - (sumaquantityc);
                 KrainoSaldoKV = 0;
                 //var test = (sumad + BeginSaldoD) / (sumaquantityd + BeginValSd);
                 //Sad = string.Format(Vf.LevFormat,test );
@@ -479,8 +502,14 @@ namespace Tempo2012.UI.WPF.Views.Framework
             }
             if (CurrenAcc.TypeAccount == 2)
             {
-                KrainoSaldoK = (sumac + BeginSaldoK) - (sumad);
-                KrainoSaldoKV = (sumaquantityc + BeginValSc) - (sumaquantityd);
+                BeginSaldoK = nsc;
+                BeginValSc = nskolc;
+                BeginSaldoD = 0;
+                BeginValSd = 0;
+                KrainoSaldoK = (sumac + nsc) - (sumad);
+                KrainoSaldoKV = (sumaquantityc + nskolc) - (sumaquantityd);
+                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + nskold);
+                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + nskolc);
                 KrainoSaldoDV = 0;
                 //Sad = "";
                 //Sak = string.Format(Vf.KursFormat, KrainoSaldoKV != 0 ? KrainoSaldoK / KrainoSaldoKV : 0);
