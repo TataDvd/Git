@@ -395,11 +395,20 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item2.Add("");
                     item2.Add("");
                     item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit-item.BeginSaldoCredit));
-                    BeginSaldoD += item.BeginSaldoDebit - item.BeginSaldoCredit;
+                    if (CurrenAcc.TypeAccount == 1)
+                    {
+                        nsd += item.BeginSaldoDebit - item.BeginSaldoCredit;
+                        nskold += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
+                    }
+                    else
+                    {
+                        nsc += item.BeginSaldoCredit- item.BeginSaldoDebit ;
+                        nskolc +=item.BeginSaldoCreditKol - item.BeginSaldoDebitKol;
+                    }
                     item2.Add("");
                     item2.Add("");
                     item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol-item.BeginSaldoCreditKol));
-                    BeginValSd += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
+                    
                     item2.Add("");
                     item2.Add("");
                     item2.Add("");
@@ -480,10 +489,10 @@ namespace Tempo2012.UI.WPF.Views.Framework
            
 
             TotalD = CurrenAcc.TypeAccount == 1
-                ? string.Format(Vf.LevFormat, sumad + BeginSaldoD)
+                ? string.Format(Vf.LevFormat, sumad + nsd)
                 : string.Format(Vf.LevFormat, sumad);
             TotalC = CurrenAcc.TypeAccount == 2
-                ? string.Format(Vf.LevFormat, sumac + BeginSaldoK)
+                ? string.Format(Vf.LevFormat, sumac + nsc)
                 : string.Format(Vf.LevFormat, sumac);
             if (CurrenAcc.TypeAccount == 1)
             {
