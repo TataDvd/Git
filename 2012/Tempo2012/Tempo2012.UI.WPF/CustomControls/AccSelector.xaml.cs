@@ -138,5 +138,10 @@ namespace Tempo2012.UI.WPF.CustomControls
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _Popup.IsOpen = false;
+        }
     }
 }
