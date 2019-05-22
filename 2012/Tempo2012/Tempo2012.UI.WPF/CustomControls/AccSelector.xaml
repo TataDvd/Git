@@ -204,19 +204,21 @@
                         <CustomControls:TextBlockEx Text="С междинни суми"  Height="15" Margin="0" Visibility="{Binding ShowContragentSum,Converter={StaticResource BoolToVisibleConvertor}}"/>
                     </CheckBox>
                 </StackPanel>
-                <Popup Height="500" Width="600" IsOpen="False" PlacementTarget="{Binding ElementName=EntryBoxEx}" x:Name="_Popup" Focusable="False" AllowsTransparency="True" Margin="0,1,0,0"  VerticalAlignment="Top">
-                    <Grid>
+                <!--<Popup Height="500" Width="600" IsOpen="False" PlacementTarget="{Binding ElementName=EntryBoxEx}" x:Name="_Popup" Focusable="False" AllowsTransparency="True" Margin="0,1,0,0"  VerticalAlignment="Top">
+                    <Grid Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="25"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Button Grid.Row="0" Click="Button_Click" Margin="500,0,0,0">Отказ
                         </Button>
-                    <ListView Grid.Row="1" ItemsSource="{Binding AllAccounts}"   MouseDoubleClick="ListView_MouseDoubleClick" KeyDown="ListView_KeyDown">
+                        <Button Grid.Row="0" Click="Button_Click_1" Margin="400,0,100,0">Избор
+                        </Button>
+                        <ListView Grid.Row="1" ItemsSource="{Binding AllAccounts}"   MouseDoubleClick="ListView_MouseDoubleClick" KeyDown="ListView_KeyDown">
 
                     </ListView>
                     </Grid>
-                </Popup>
+                </Popup>-->
                 <!--<Button  Margin="0,5,10,5" 
                          Grid.Row="0" Grid.Column="2"
                          Click="ButtonBase_OnClick"
