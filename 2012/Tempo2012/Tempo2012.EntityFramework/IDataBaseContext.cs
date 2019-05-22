@@ -41,7 +41,7 @@ namespace Tempo2012.EntityFramework
         bool DeleteAccount(int id);
         IEnumerable<MapAnanaliticAccToAnaliticField> GetAllConnectorTypeField();
         List<List<string>> CheckSellsPurchases(DateTime fromDate, DateTime toDate, int kindDDS);
-        List<List<string>> GetOborotnaVedDetail(DateTime fromDate, DateTime toDate, int id = -1);
+        List<List<string>> GetOborotnaVedDetail(DateTime fromDate, DateTime toDate,bool hideAllZero, int id = -1);
         bool DeleteLookUp(LookUpMetaData lookUpMetaData);
         bool UpdateLookup(LookupModel lookUpMetaData);
         IEnumerable<LookUpMetaData> GetAllSysLookups();
@@ -98,7 +98,7 @@ namespace Tempo2012.EntityFramework
         IEnumerable<Conto> GetAllConto(int firmaId, ISearchAcc pSearcAcc, int startingIndex, int numberOfRecords);
         IEnumerable<Conto> GetNextConto(int firmaId, ISearchAcc pSearcAcc);
         IEnumerable<Conto> GetPrevConto(int firmaId, ISearchAcc pSearcAcc);
-        List<List<string>> GetOborotnaVed(DateTime toDate, DateTime fromDate);
+        List<List<string>> GetOborotnaVed(DateTime toDate, DateTime fromDate,bool hideAllZero);
         Dictionary<string, string> GetOborotnaVedTemplate(DateTime toDate, DateTime fromDate);
         void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4, BackgroundWorker bw);
         IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false);
@@ -167,6 +167,6 @@ namespace Tempo2012.EntityFramework
 
         List<List<string>> GetUnusableClients(bool delitem = false);
         List<List<string>> GetUnusableDost(bool v = false);
-        List<List<string>> GetOborotnaFullDetailed(DateTime FromDate, DateTime ToDate);
+        List<List<string>> GetOborotnaFullDetailed(DateTime FromDate, DateTime ToDate,bool HideAllZero);
     }
 }

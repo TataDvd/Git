@@ -575,8 +575,17 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate() });
-                rd.ShowDialog();
+                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = true });
+                    rd.ShowDialog();
+                }
+                else
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = false });
+                    rd.ShowDialog();
+
+                }
             }
         }
 
@@ -975,8 +984,16 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1 });
-                rd.ShowDialog();
+                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = true });
+                    rd.ShowDialog();
+                }
+                else
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = false });
+                    rd.ShowDialog();
+                }
             }
         }
 
