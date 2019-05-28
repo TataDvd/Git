@@ -47,6 +47,7 @@ using TemplateGenerator;
 using Tempo2012.UI.WPF.ViewModels.AccountManagment;
 using System.ComponentModel;
 using System.IO;
+using Tempo2012.UI.WPF.Views.ValutaReport;
 
 namespace Tempo2012.UI.WPF
 {
@@ -1248,6 +1249,35 @@ namespace Tempo2012.UI.WPF
                         report.ShowDialog();
                     }
                 }
+            }
+        }
+
+        private void MenuItem_Click_40(object sender, RoutedEventArgs e)
+        {
+            ChoiserMatAcc acc = new ChoiserMatAcc();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                reportMenuProvider.ShowDialog();
+                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                {
+
+                    var oldacc = Entrence.Mask.CreditAcc;
+                    var oldaccd = Entrence.Mask.DebitAcc;
+                    Entrence.Mask.CreditAcc = null;
+                    Entrence.Mask.DebitAcc = null;
+                    Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material });
+                    Entrence.Mask.CreditAcc = oldacc;
+                    Entrence.Mask.DebitAcc = oldaccd;
+                    rd.ShowDialog();
+
+                }
+
+                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
             }
         }
     }
