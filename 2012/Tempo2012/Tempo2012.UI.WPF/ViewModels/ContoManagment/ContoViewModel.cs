@@ -3372,6 +3372,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                         saldoItem.ValueVal=decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
                         saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
                         i++;
                         continue;
                     }
@@ -3435,6 +3436,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                         saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
                         saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
                         i++;
                         continue;
                     }
