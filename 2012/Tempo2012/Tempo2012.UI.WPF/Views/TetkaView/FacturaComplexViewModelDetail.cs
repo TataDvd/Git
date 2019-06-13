@@ -207,7 +207,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e=>e.DataInvoise<FromDate));
                 AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e=>e.DataInvoise<FromDate));
                 AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e=>e.DataInvoise>=FromDate && e.DataInvoise<=ToDate));
-                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id, true).Where(e=>e.DataInvoise>=FromDate && e.DataInvoise<=ToDate));
+                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e=>e.DataInvoise>=FromDate && e.DataInvoise<=ToDate));
             }
             else
             {
@@ -299,16 +299,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 item.Reason = invoiseControl.Reason;
                 item.Pr1 = invoiseControl.Pr1;
                 item.Pr2 = invoiseControl.Pr2;
-                if (item.Type == 1) item.Data = invoiseControl.DataInvoise;
-                var lc = AllMovementCredit1.FirstOrDefault(
-                        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
-                if (lc != null)
-                {
+                item.Data = invoiseControl.DataInvoise;
+                //if (item.Type == 1) 
+                //var lc = AllMovementCredit1.FirstOrDefault(
+                //        w => w.CodeContragent == invoiseControl.CodeContragent && w.NInvoise == invoiseControl.NInvoise);
+                //if (lc != null)
+                //{
 
-                    item.Oc += lc.Oborot;
-                    if (item.Type == 2) item.Data = lc.DataInvoise;
-                    AllMovementCredit1.Remove(lc);
-                }
+                //    item.Oc += lc.Oborot;
+                //    if (item.Type == 2) item.Data = lc.DataInvoise;
+                //    AllMovementCredit1.Remove(lc);
+                //}
                 _movements.Add(item);
 
             }
@@ -377,6 +378,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             }
             string name = "";
             string code = "";
+            string numinvoice = "";
             string folder ="";
             string reason = "";
             string docnum = "";
@@ -392,13 +394,14 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             decimal sumaOct = 0;
             decimal sumansdt = 0;
             decimal sumaOdt = 0;
-            foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod))
+            foreach (AccItemSaldo itemSaldo in _movements.OrderBy(m => m.Cod).ThenBy(m=>m.NInvoise))
             {
                 List<string> row = new List<string>();
                 if (first)
                 {
                     name = itemSaldo.NameContragent;
                     code = itemSaldo.Code;
+                    numinvoice = itemSaldo.NInvoise;
                     first = false;
                     folder = itemSaldo.Folder;
                     reason = itemSaldo.Reason;
@@ -408,7 +411,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 else
                 {
-                    if (code!= itemSaldo.Code && WithContragentSum)
+                    if (code!= itemSaldo.Code && WithContragentSum)//|| numinvoice !=itemSaldo.NInvoise
                     {
                         if (!OnlyContragent) NewRow(items);
                         List<string> rowTotal = new List<string>();
@@ -416,13 +419,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         {
                             rowTotal.Add("");
                             rowTotal.Add("");
-                           
+                            //rowTotal.Add("");
                         }
                         else
                         {
                             rowTotal.Add(code);
                             rowTotal.Add(name);
-                            
+                            rowTotal.Add(numinvoice);
                         }
                         rowTotal.Add("");
                         rowTotal.Add(" Общо :");
@@ -472,6 +475,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                         sumaOd = 0;
                         name = itemSaldo.NameContragent;
                         code = itemSaldo.Code;
+                        numinvoice = itemSaldo.NInvoise;
                         folder = itemSaldo.Folder;
                         reason = itemSaldo.Reason;
                         docnum = itemSaldo.DocNumber;
@@ -533,6 +537,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 {
                     rowTotalLas.Add(code);
                     rowTotalLas.Add(name);
+                    rowTotalLas.Add(numinvoice);
                 }
                 rowTotalLas.Add("");
                 rowTotalLas.Add(" Общо :");
