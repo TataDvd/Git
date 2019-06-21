@@ -75,6 +75,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                                  select new QuantityModel
                                  {
                                      StockCode = grp.Key.StockCode,
+                                     Stock=grp.First().Stock,
                                      Oborot=grp.Sum(t => t.Oborot),
                                      Quantity=grp.Sum(t=>t.Quantity)
                                  }).ToList();
@@ -87,7 +88,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         }
                         else
                         {
-                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode, BeginSaldoDebit = item.Oborot,BeginSaldoDebitKol=item.Quantity });
+                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode,NameMaterial=item.Stock, BeginSaldoDebit = item.Oborot,BeginSaldoDebitKol=item.Quantity });
                         }
                     }
                 }
@@ -99,6 +100,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                                  select new QuantityModel
                                  {
                                      StockCode = grp.Key.StockCode,
+                                     Stock = grp.First().Stock,
                                      Oborot = grp.Sum(t => t.Oborot),
                                      Quantity = grp.Sum(t => t.Quantity)
                                  }).ToList();
@@ -111,7 +113,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         }
                         else
                         {
-                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode, BeginSaldoCredit = item.Oborot,BeginSaldoCreditKol=item.Quantity});
+                            rezi.Add(new SaldoFactura { CodeMaterial = item.StockCode, NameMaterial = item.Stock, BeginSaldoCredit = item.Oborot,BeginSaldoCreditKol=item.Quantity});
                         }
                     }
                 }
@@ -124,6 +126,9 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
             decimal sumad = 0,sumac = 0;
             decimal nsd = 0, nskold = 0;
+            decimal nsc = 0, nskolc = 0;
+            decimal ksd = 0, kskold = 0;
+            decimal ksc = 0, kskolc = 0;
             decimal sumamd = 0, sumamc = 0;
             decimal sumacolmd = 0, sumacolmc = 0;
 
@@ -153,7 +158,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     var lsumac1 = contos1.Where(e => e.StockCode == oldrec).Sum(e => e.Oborot);
                     var lsumavald1 = contos.Where(e => e.StockCode == oldrec).Sum(e => e.Quantity);
                     var lsumavalc1 = contos1.Where(e => e.StockCode == oldrec).Sum(e => e.Quantity);
-                   var saldo1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
+                    var saldo1 = rezi.FirstOrDefault(e => e.CodeMaterial == oldrec);
                     if (saldo1 != null)
                     {
                         rezi.Remove(saldo1);
@@ -168,6 +173,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         lnsdv1 = lnsdv1 - lnscv1;
                         lnsc1 = 0;
                         lnscv1 = 0;
+                        nsd += lnsd1;
+                        nskold += lnsdv1;
                     }
                     else
                     {
@@ -175,6 +182,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                         lnscv1 = lnscv1 - lnsdv1;
                         lnsd1 = 0;
                         lnsdv1 = 0;
+                        nsc += lnsc1;
+                        nskolc += lnscv1;
                     }
                     var lsbord1 = lnsd1 + lsumad1;
                     var lsborc1 = lnsc1 + lsumac1;
@@ -188,11 +197,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     {
                         lksd1 = (lsumad1 + lnsd1) - (lsumac1 + lnsc1);
                         lksdv1 = (lsumavald1 + lnsdv1) - (lsumavalc1 + lnsc1);
+                        ksd += lksd1;
+                        kskold += lksdv1;
                     }
                     else
                     {
                         lksc1 = (lsumac1 + lnsc1) - (lsumad1 + lnsd1);
                         lkscv1 = (lsumavalc1 + lnscv1) - (lsumavald1 + lnsdv1);
+                        ksc += lksc1;
+                        kskolc += lkscv1;
                     }
 
                     var row2 = new List<string>();
@@ -311,8 +324,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
             var lnsd = saldo != null ? saldo.BeginSaldoDebit : 0;
             var lnsc = saldo != null ? saldo.BeginSaldoCredit : 0;
-            var lnsdv = saldo != null ? saldo.BeginSaldoDebitValuta : 0;
-            var lnscv = saldo != null ? saldo.BeginSaldoCreditValuta : 0;
+            var lnsdv = saldo != null ? saldo.BeginSaldoDebitKol : 0;
+            var lnscv = saldo != null ? saldo.BeginSaldoCreditKol : 0;
             if (saldo != null)
             {
                 rezi.Remove(saldo);
@@ -323,6 +336,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 lnsdv = lnsdv - lnscv;
                 lnsc = 0;
                 lnscv = 0;
+                nsd += lnsd;
+                nskold += lnsdv;
             }
             else
             {
@@ -330,6 +345,8 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 lnscv = lnscv - lnsdv;
                 lnsd = 0;
                 lnsdv = 0;
+                nsc += lnsc;
+                nskolc += lnscv;
             }
             var lsbord = lnsd + lsumad;
             var lsborc = lnsc + lsumac;
@@ -343,11 +360,15 @@ namespace Tempo2012.UI.WPF.Views.Framework
             {
                 lksd = (lsumad + lnsd) - (lsumac + lnsc);
                 lksdv = (lsumavald + lnsdv) - (lsumavalc + lnsc);
+                ksd += lksd;
+                kskold += lksdv;
             }
             else
             {
                 lksc = (lsumac + lnsc) - (lsumad + lnsd);
                 lkscv = (lsumavalc + lnscv) - (lsumavald + lnsdv);
+                ksc += lksc;
+                kskolc += lkscv;
             }
             if (currentrow > 0)
             {
@@ -360,6 +381,17 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 row1.Add($"|Oбороти         |{lsumad.ToString(Vf.LevFormatUI),15}|{lsumac.ToString(Vf.LevFormatUI),15}|{lsumavald.ToString(Vf.ValFormatUI),15}|{lsumavalc.ToString(Vf.ValFormatUI),15}|");
                 row1.Add($"|Сборове         |{lsbord.ToString(Vf.LevFormatUI),15}|{lsborc.ToString(Vf.LevFormatUI),15}|{lsbordv.ToString(Vf.ValFormatUI),15}|{lsborcv.ToString(Vf.ValFormatUI),15}|");
                 row1.Add($"|Крайни салда    |{lksd.ToString(Vf.LevFormatUI),15}|{lksc.ToString(Vf.LevFormatUI),15}|{lksdv.ToString(Vf.ValFormatUI),15}|{lkscv.ToString(Vf.ValFormatUI),15}|");
+                if (!string.IsNullOrWhiteSpace(KindStock))
+                {
+                    if (CurrenAcc.TypeAccount == 1)
+                    {
+                        row1.Add($"|Средна цена     |{(lksd / (lksdv != 0 ? lksdv : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    }
+                    else
+                    {
+                        row1.Add($"|Средна цена     |{(lksc / (lkscv != 0 ? lkscv : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
+                    }
+                }
                 row1.Add("----------------------------------------------------------------------------------");
                 Rowfoother.Add(currentrow - 1, row1);
             }
@@ -374,11 +406,20 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item2.Add("");
                     item2.Add("");
                     item2.Add(string.Format(Vf.LevFormat, item.BeginSaldoDebit-item.BeginSaldoCredit));
-                    BeginSaldoD += item.BeginSaldoDebit - item.BeginSaldoCredit;
+                    if (CurrenAcc.TypeAccount == 1)
+                    {
+                        nsd += item.BeginSaldoDebit - item.BeginSaldoCredit;
+                        nskold += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
+                    }
+                    else
+                    {
+                        nsc += item.BeginSaldoCredit- item.BeginSaldoDebit ;
+                        nskolc +=item.BeginSaldoCreditKol - item.BeginSaldoDebitKol;
+                    }
                     item2.Add("");
                     item2.Add("");
                     item2.Add(string.Format(Vf.ValFormat, item.BeginSaldoDebitKol-item.BeginSaldoCreditKol));
-                    BeginValSd += item.BeginSaldoDebitKol - item.BeginSaldoCreditKol;
+                    
                     item2.Add("");
                     item2.Add("");
                     item2.Add("");
@@ -395,10 +436,10 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     row1.Add("|Сборно          |          л е в а              |           количества          |");
                     row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
                     row1.Add("----------------------------------------------------------------------------------");
-                    row1.Add($"|Начални салда   |{item.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Начални салда   |{(item.BeginSaldoDebit - item.BeginSaldoCredit).ToString(Vf.LevFormatUI),15}|               |{(item.BeginSaldoDebitKol-item.BeginSaldoCreditKol).ToString(Vf.KolFormatUI),15}|               |");
                     row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
-                    row1.Add($"|Сборове         |{0,15}|{sumamc.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|               |");
-                    row1.Add($"|Крайни салда    |{item.BeginSaldoDebit,15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Сборове         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
+                    row1.Add($"|Крайни салда    |{(item.BeginSaldoDebit - item.BeginSaldoCredit).ToString(Vf.LevFormatUI),15}|               |{(item.BeginSaldoDebitKol - item.BeginSaldoCreditKol).ToString(Vf.KolFormatUI),15}|               |");
                     //row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
                     row1.Add("----------------------------------------------------------------------------------");
                     Rowfoother.Add(currentrow - 1, row1);
@@ -437,10 +478,10 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     row1.Add("|Сборно          |          л е в а              |           количества          |");
                     row1.Add("|                |    дебит      |    кредит     |    дебит      |    кредит     |");
                     row1.Add("----------------------------------------------------------------------------------");
-                    row1.Add($"|Начални салда   |{item.BeginSaldoDebit.ToString(Vf.LevFormatUI),15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Начални салда   |{(item.BeginSaldoDebit-item.BeginSaldoCredit).ToString(Vf.LevFormatUI),15}|               |{(item.BeginSaldoDebitKol-item.BeginSaldoCreditKol).ToString(Vf.KolFormatUI),15}|               |");
                     row1.Add($"|Oбороти         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
-                    row1.Add($"|Сборове         |{0,15}|{sumamc.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|               |");
-                    row1.Add($"|Крайни салда    |{item.BeginSaldoDebit,15}|               |{item.BeginSaldoDebitKol.ToString(Vf.KolFormatUI),15}|               |");
+                    row1.Add($"|Сборове         |{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.LevFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|{0.ToString(Vf.KolFormatUI),15}|");
+                    row1.Add($"|Крайни салда    |{(item.BeginSaldoDebit-item.BeginSaldoCredit).ToString(Vf.LevFormatUI),15}|               |{(item.BeginSaldoDebitKol - item.BeginSaldoCreditKol).ToString(Vf.KolFormatUI),15}|               |");
                     row1.Add($"|Средна цена     |{(item.BeginSaldoDebit / (item.BeginSaldoDebitKol != 0 ? item.BeginSaldoDebitKol : 1)).ToString(Vf.LevFormatUI),15}|               |               |               |");
                     row1.Add("----------------------------------------------------------------------------------");
                     Rowfoother.Add(currentrow - 1, row1);
@@ -459,17 +500,21 @@ namespace Tempo2012.UI.WPF.Views.Framework
            
 
             TotalD = CurrenAcc.TypeAccount == 1
-                ? string.Format(Vf.LevFormat, sumad + BeginSaldoD)
+                ? string.Format(Vf.LevFormat, sumad + nsd)
                 : string.Format(Vf.LevFormat, sumad);
             TotalC = CurrenAcc.TypeAccount == 2
-                ? string.Format(Vf.LevFormat, sumac + BeginSaldoK)
+                ? string.Format(Vf.LevFormat, sumac + nsc)
                 : string.Format(Vf.LevFormat, sumac);
             if (CurrenAcc.TypeAccount == 1)
             {
-                KrainoSaldoD = (sumad + BeginSaldoD) - (sumac);
-                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + BeginValSd);
-                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + BeginValSc);
-                KrainoSaldoDV = (sumaquantityd + BeginValSd) - (sumaquantityc);
+                BeginSaldoD = nsd;
+                BeginValSd = nskold;
+                BeginValSc = 0;
+                BeginSaldoK = 0;
+                KrainoSaldoD = (sumad + nsd) - (sumac);
+                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + nskold);
+                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + nskolc);
+                KrainoSaldoDV = (sumaquantityd + nskold) - (sumaquantityc);
                 KrainoSaldoKV = 0;
                 //var test = (sumad + BeginSaldoD) / (sumaquantityd + BeginValSd);
                 //Sad = string.Format(Vf.LevFormat,test );
@@ -477,8 +522,14 @@ namespace Tempo2012.UI.WPF.Views.Framework
             }
             if (CurrenAcc.TypeAccount == 2)
             {
-                KrainoSaldoK = (sumac + BeginSaldoK) - (sumad);
-                KrainoSaldoKV = (sumaquantityc + BeginValSc) - (sumaquantityd);
+                BeginSaldoK = nsc;
+                BeginValSc = nskolc;
+                BeginSaldoD = 0;
+                BeginValSd = 0;
+                KrainoSaldoK = (sumac + nsc) - (sumad);
+                KrainoSaldoKV = (sumaquantityc + nskolc) - (sumaquantityd);
+                TSumavald = string.Format(Vf.KolFormat, sumaquantityd + nskold);
+                TSumavalc = string.Format(Vf.KolFormat, sumaquantityc + nskolc);
                 KrainoSaldoDV = 0;
                 //Sad = "";
                 //Sak = string.Format(Vf.KursFormat, KrainoSaldoKV != 0 ? KrainoSaldoK / KrainoSaldoKV : 0);

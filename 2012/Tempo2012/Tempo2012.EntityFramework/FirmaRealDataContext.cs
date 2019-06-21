@@ -453,6 +453,7 @@ namespace Tempo2012.EntityFramework
                     {
                         string name = dbman.DataReader["Name"].ToString();
                         string value = dbman.DataReader["VALUE"].ToString();
+
                         string lookup = dbman.DataReader["LOOKUPVAL"].ToString();
                         row.Fields = string.Format("{0}|{1} ", row.Fields, string.IsNullOrWhiteSpace(lookup) ? value : value + "---" + lookup);
                         if (name == "Контрагент")
@@ -465,7 +466,7 @@ namespace Tempo2012.EntityFramework
                         }
                         if (name == "Дата на фактура")
                         {
-                            row.Data = DateTime.Parse(value);
+                            row.Data = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
                         }
                         if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
                         if (firstrow)

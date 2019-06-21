@@ -12,6 +12,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
     public class OborotkiViewModelDetail:BaseViewModel,IReportBuilder
     {
         public Dictionary<int, List<string>> Rowfoother { get; set; }
+        public bool HideAllZero { get; set;}
         public OborotkiViewModelDetail() 
         {
             ToDate = DateTime.Now;
@@ -72,7 +73,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         {
             if (AccString == "*")
             {
-                return Context.GetOborotnaVedDetail(FromDate, ToDate);
+                return Context.GetOborotnaVedDetail(FromDate, ToDate,HideAllZero);
             }
             else
             {
@@ -80,7 +81,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                 var curacc = allacc.FirstOrDefault(e => e.Short == AccString);
                 if (curacc != null)
                 {
-                    return Context.GetOborotnaVedDetail(FromDate, ToDate,curacc.Id);
+                    return Context.GetOborotnaVedDetail(FromDate, ToDate,HideAllZero,curacc.Id);
                 }
             }
             return null;

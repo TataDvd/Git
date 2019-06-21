@@ -65,14 +65,20 @@ namespace Tempo2012.UI.WPF.CustomControls
             }
             if (e.Key == Key.F6)
             {
-                _Popup.IsOpen = true;
+               // _Popup.IsOpen = true;
                 e.Handled = true;
             }
         }
 
         private void SearchButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _Popup.IsOpen = true;
+            TreeManagerViewDialog sf = new TreeManagerViewDialog();
+            sf.ShowDialog();
+            if (sf.DialogResult.HasValue && sf.DialogResult.Value)
+            {
+                if (sf.CurrentAcc != null) vm.DAccountsModel = sf.CurrentAcc;
+                //vm.RefreshAcc();
+            }
         }
 
 
@@ -119,24 +125,39 @@ namespace Tempo2012.UI.WPF.CustomControls
             }
         }
 
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var selitem = ((sender as ListBox).SelectedItem as AccountsModel);
-            if (vm != null) EntryBoxEx.Text = vm.LoadAnaliticDetailsDebit(selitem.Short);
-            _Popup.IsOpen = false;
-        }
+        //private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    var selitem = ((sender as ListBox).SelectedItem as AccountsModel);
+        //    if (vm != null) EntryBoxEx.Text = vm.LoadAnaliticDetailsDebit(selitem.Short);
+        //    _Popup.IsOpen = false;
+        //}
 
-        private void ListView_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                if ((sender as ListBox).SelectedItem != null)
-                {
-                    var selitem = ((sender as ListBox).SelectedItem as AccountsModel);
-                    if (vm != null) EntryBoxEx.Text = vm.LoadAnaliticDetailsDebit(selitem.Short);
-                    _Popup.IsOpen = false;
-                }
-            }
-        }
+        //private void ListView_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        if ((sender as ListBox).SelectedItem != null)
+        //        {
+        //            var selitem = ((sender as ListBox).SelectedItem as AccountsModel);
+        //            if (vm != null) EntryBoxEx.Text = vm.LoadAnaliticDetailsDebit(selitem.Short);
+        //            _Popup.IsOpen = false;
+        //        }
+        //    }
+        //}
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _Popup.IsOpen = false;
+        //}
+
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    if ((sender as ListBox).SelectedItem != null)
+        //    {
+        //        var selitem = ((sender as ListBox).SelectedItem as AccountsModel);
+        //        if (vm != null) EntryBoxEx.Text = vm.LoadAnaliticDetailsDebit(selitem.Short);
+        //        _Popup.IsOpen = false;
+        //    }
+        //}
     }
 }

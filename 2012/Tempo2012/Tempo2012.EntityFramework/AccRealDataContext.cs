@@ -1206,7 +1206,7 @@ namespace Tempo2012.EntityFramework
             }
         }
 
-        internal static List<List<string>> GetOborotnaVed(DateTime ToDate, DateTime FromDate)
+        internal static List<List<string>> GetOborotnaVed(DateTime ToDate, DateTime FromDate, bool hideAllZero)
         {
             var Allacc = new List<AccountsModel>(GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
             List<List<string>> result = new List<List<string>>();
@@ -1415,25 +1415,31 @@ namespace Tempo2012.EntityFramework
                     //    item.NSK += sm.BeginSaldoL;
                     //    item.KSD = item.NSK + item.OK - item.NSD-item.OD;
                     //}
-                                    }
-                var row = new List<string>();
-                row.Add(item.ToShortString());
-                row.Add(item.Name);
-                row.Add(item.NSD.ToString(Vf.LevFormatUI));
-                row.Add(item.NSK.ToString(Vf.LevFormatUI));
-                row.Add(item.OD.ToString(Vf.LevFormatUI));
-                row.Add(item.OK.ToString(Vf.LevFormatUI));
-                row.Add(item.KSD.ToString(Vf.LevFormatUI));
-                row.Add(item.KSK.ToString(Vf.LevFormatUI));
-                result.Add(row);
+                }
+                if (hideAllZero && item.NSD == 0 && item.NSK == 0 && item.OD == 0 && item.OK == 0 && item.KSD == 0 && item.KSK == 0)
+                {
+                }
+                else
+                {
+                    var row = new List<string>();
+                    row.Add(item.ToShortString());
+                    row.Add(item.Name);
+                    row.Add(item.NSD.ToString(Vf.LevFormatUI));
+                    row.Add(item.NSK.ToString(Vf.LevFormatUI));
+                    row.Add(item.OD.ToString(Vf.LevFormatUI));
+                    row.Add(item.OK.ToString(Vf.LevFormatUI));
+                    row.Add(item.KSD.ToString(Vf.LevFormatUI));
+                    row.Add(item.KSK.ToString(Vf.LevFormatUI));
+                    result.Add(row);
+                }
             }
             return result;
         }
 
-        internal static List<List<string>> GetOborotnaFullDetailed(DateTime ToDate, DateTime FromDate)
+        internal static List<List<string>> GetOborotnaFullDetailed(DateTime ToDate, DateTime FromDate,bool HideAllZero)
         {
             var Allacc = new List<AccountsModel>(GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
-            var Oborotka = GetOborotnaVed(ToDate, FromDate);
+            var Oborotka = GetOborotnaVed(ToDate, FromDate,HideAllZero);
             List<List<string>> result = new List<List<string>>();
             foreach (var item in Allacc)
             {
@@ -1441,7 +1447,7 @@ namespace Tempo2012.EntityFramework
                 {
                     //var row = Oborotka.FirstOrDefault(e => e[0] == item.ShortName);
                     //if (row != null) result.Add(row);
-                    var rows = GetOborotnaVedDetailed(ToDate, FromDate, item.Id);
+                    var rows = GetOborotnaVedDetailed(ToDate, FromDate,HideAllZero, item.Id);
                     foreach (var r in rows)
                     {
                         List<String> toadd = new List<string>();
@@ -1467,6 +1473,18 @@ namespace Tempo2012.EntityFramework
                         //toadd.Add(r[20]);
                         //toadd.Add(r[21]);
                         //toadd.Add(r[22]);
+                        //if (HideAllZero) {
+                        //    if (r[5] != 0.ToString(Vf.LevFormatUI)
+                        //        && r[6] != 0.ToString(Vf.LevFormatUI)
+                        //        && r[7] != 0.ToString(Vf.LevFormatUI)
+                        //        && r[8] != 0.ToString(Vf.LevFormatUI)
+                        //        && r[9] != 0.ToString(Vf.LevFormatUI)
+                        //        && r[10] != 0.ToString(Vf.LevFormatUI))
+                        //    {
+                        //        result.Add(toadd);
+                        //    }
+                        //}
+                        //else
                         result.Add(toadd);
                     }
                         
@@ -1479,7 +1497,7 @@ namespace Tempo2012.EntityFramework
             }
             return result;
         }
-        internal static List<List<string>> GetOborotnaVedDetailed(DateTime From, DateTime To,int accid=-1)
+        internal static List<List<string>> GetOborotnaVedDetailed(DateTime From, DateTime To,bool hideAllZero,int accid=-1)
         {
             var Allacc = new List<AccountsModel>(GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
             List<List<string>> result = new List<List<string>>();
@@ -1759,33 +1777,39 @@ namespace Tempo2012.EntityFramework
                                         itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
                                         itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
                                     }
-                                    var row1 = new List<string>();
-                                    row1.Add(itemp.ToShortString());
-                                    row1.Add(itemp.Name);
-                                    row1.Add(itemp.numContagent==0?"":itemp.numContagent.ToString());
-                                    row1.Add(itemp.Bulstad ?? " ");
-                                    row1.Add(itemp.Contagent ?? " ");
-                                    row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
-                                    row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
-                                    row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
-                                    row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
-                                    row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
-                                    row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+                                    if (hideAllZero && itemp.NSD == 0 && itemp.NSK == 0 && itemp.OD == 0 && itemp.OK == 0 && itemp.KSD == 0 && itemp.KSK == 0)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        var row1 = new List<string>();
+                                        row1.Add(itemp.ToShortString());
+                                        row1.Add(itemp.Name);
+                                        row1.Add(itemp.numContagent == 0 ? "" : itemp.numContagent.ToString());
+                                        row1.Add(itemp.Bulstad ?? " ");
+                                        row1.Add(itemp.Contagent ?? " ");
+                                        row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
+                                        row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
+                                        row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
+                                        row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
+                                        row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
+                                        row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+                                        //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                        //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                        //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                        //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                        //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                        //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                                    //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                                    //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                                    //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                                    //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                                    //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                                    //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
-
-                                    //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                                    //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                                    //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                                    //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                                    //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                                    //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
-                                    result.Add(row1);
+                                        //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                        //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                        //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                        //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                        //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                        //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                        result.Add(row1);
+                                    }
+                                    
 
 
                                 }
@@ -1865,34 +1889,39 @@ namespace Tempo2012.EntityFramework
                         //    item.NSK += sm.BeginSaldoL;
                         //    item.KSD = item.NSK + item.OK - item.NSD-item.OD;
                         //}
+                        if (hideAllZero && item.NSD == 0 && item.NSK == 0 && item.OD == 0 && item.OK == 0 && item.KSD == 0 && item.KSK == 0)
+                        {
+                        }
+                        else
+                        {
+                            var row = new List<string>();
+                            row.Add(item.ToShortString());
+                            row.Add(item.Name);
+                            row.Add(item.numContagent.ToString());
+                            row.Add(item.Bulstad ?? " ");
+                            row.Add(item.Contagent);
+                            row.Add(item.NSD.ToString(Vf.LevFormatUI));
+                            row.Add(item.NSK.ToString(Vf.LevFormatUI));
+                            row.Add(item.OD.ToString(Vf.LevFormatUI));
+                            row.Add(item.OK.ToString(Vf.LevFormatUI));
+                            row.Add(item.KSD.ToString(Vf.LevFormatUI));
+                            row.Add(item.KSK.ToString(Vf.LevFormatUI));
 
-                        var row = new List<string>();
-                        row.Add(item.ToShortString());
-                        row.Add(item.Name);
-                        row.Add(item.numContagent.ToString());
-                        row.Add(item.Bulstad ?? " ");
-                        row.Add(item.Contagent);
-                        row.Add(item.NSD.ToString(Vf.LevFormatUI));
-                        row.Add(item.NSK.ToString(Vf.LevFormatUI));
-                        row.Add(item.OD.ToString(Vf.LevFormatUI));
-                        row.Add(item.OK.ToString(Vf.LevFormatUI));
-                        row.Add(item.KSD.ToString(Vf.LevFormatUI));
-                        row.Add(item.KSK.ToString(Vf.LevFormatUI));
+                            //row.Add(item.NSDV.ToString(Vf.ValFormatUI));
+                            //row.Add(item.NSKV.ToString(Vf.ValFormatUI));
+                            //row.Add(item.ODV.ToString(Vf.ValFormatUI));
+                            //row.Add(item.OKV.ToString(Vf.ValFormatUI));
+                            //row.Add(item.KSDV.ToString(Vf.ValFormatUI));
+                            //row.Add(item.KSKV.ToString(Vf.ValFormatUI));
 
-                        //row.Add(item.NSDV.ToString(Vf.ValFormatUI));
-                        //row.Add(item.NSKV.ToString(Vf.ValFormatUI));
-                        //row.Add(item.ODV.ToString(Vf.ValFormatUI));
-                        //row.Add(item.OKV.ToString(Vf.ValFormatUI));
-                        //row.Add(item.KSDV.ToString(Vf.ValFormatUI));
-                        //row.Add(item.KSKV.ToString(Vf.ValFormatUI));
-
-                        //row.Add(item.NSDK.ToString(Vf.KolFormatUI));
-                        //row.Add(item.NSKK.ToString(Vf.KolFormatUI));
-                        //row.Add(item.ODK.ToString(Vf.KolFormatUI));
-                        //row.Add(item.OKK.ToString(Vf.KolFormatUI));
-                        //row.Add(item.KSDK.ToString(Vf.KolFormatUI));
-                        //row.Add(item.KSKK.ToString(Vf.KolFormatUI));
-                        result.Add(row);
+                            //row.Add(item.NSDK.ToString(Vf.KolFormatUI));
+                            //row.Add(item.NSKK.ToString(Vf.KolFormatUI));
+                            //row.Add(item.ODK.ToString(Vf.KolFormatUI));
+                            //row.Add(item.OKK.ToString(Vf.KolFormatUI));
+                            //row.Add(item.KSDK.ToString(Vf.KolFormatUI));
+                            //row.Add(item.KSKK.ToString(Vf.KolFormatUI));
+                            result.Add(row);
+                        }
                     }
                     var item1 = results.OrderBy(e => e.Num1).ThenBy(e => e.SubNum1).ThenBy(e => e.numContagent).Last();
                     if (rezi != null && rezi.Count > 0)
@@ -1947,34 +1976,39 @@ namespace Tempo2012.EntityFramework
                                 itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSDV + itemp.ODV);
                                 itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSDK + itemp.ODK);
                             }
-                            
-                            var row1 = new List<string>();
-                            row1.Add(itemp.ToShortString());
-                            row1.Add(itemp.Name);
-                            row1.Add(itemp.numContagent.ToString());
-                            row1.Add(itemp.Bulstad ?? " ");
-                            row1.Add(itemp.Contagent);
-                            row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
-                            row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
-                            row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
-                            row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
-                            row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
-                            row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+                            if (hideAllZero && itemp.NSD == 0 && itemp.NSK == 0 && itemp.OD == 0 && itemp.OK == 0 && itemp.KSD == 0 && itemp.KSK == 0)
+                            {
+                            }
+                            else
+                            {
+                                var row1 = new List<string>();
+                                row1.Add(itemp.ToShortString());
+                                row1.Add(itemp.Name);
+                                row1.Add(itemp.numContagent.ToString());
+                                row1.Add(itemp.Bulstad ?? " ");
+                                row1.Add(itemp.Contagent);
+                                row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
+                                row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
+                                row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
+                                row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
+                                row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
+                                row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                            //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                            //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                            //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                            //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                            //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                            //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                            //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                            //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                            //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                            //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                            //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                            //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
-                            result.Add(row1);
+                                //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                result.Add(row1);
+                            }
                         }
                     }
                 }
@@ -2069,33 +2103,39 @@ namespace Tempo2012.EntityFramework
                                     itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSKK + itemp.ODK);
                                     itemp.KSKV= (itemp.NSKV + itemp.OKV) - (itemp.NSKV + itemp.ODV);
                                 }
-                                var row1 = new List<string>();
-                                row1.Add(itemp.ToShortString());
-                                row1.Add(itemp.Name);
-                                row1.Add(itemp.numContagent.ToString());
-                                row1.Add(itemp.Bulstad ?? " ");
-                                row1.Add(itemp.Contagent);
-                                row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
-                                row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
-                                row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
-                                row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
-                                row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
-                                row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
+                                if (hideAllZero && itemp.NSD == 0 && itemp.NSK == 0 && itemp.OD == 0 && itemp.OK == 0 && itemp.KSD == 0 && itemp.KSK == 0)
+                                {
+                                }
+                                else
+                                {
+                                    var row1 = new List<string>();
+                                    row1.Add(itemp.ToShortString());
+                                    row1.Add(itemp.Name);
+                                    row1.Add(itemp.numContagent.ToString());
+                                    row1.Add(itemp.Bulstad ?? " ");
+                                    row1.Add(itemp.Contagent);
+                                    row1.Add(itemp.NSD.ToString(Vf.LevFormatUI));
+                                    row1.Add(itemp.NSK.ToString(Vf.LevFormatUI));
+                                    row1.Add(itemp.OD.ToString(Vf.LevFormatUI));
+                                    row1.Add(itemp.OK.ToString(Vf.LevFormatUI));
+                                    row1.Add(itemp.KSD.ToString(Vf.LevFormatUI));
+                                    row1.Add(itemp.KSK.ToString(Vf.LevFormatUI));
 
-                                //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
-                                //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
-                                //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
-                                //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
-                                //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
-                                //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.NSKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.ODV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.OKV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSDV.ToString(Vf.ValFormatUI));
+                                    //row1.Add(itemp.KSKV.ToString(Vf.ValFormatUI));
 
-                                //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
-                                //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
-                                //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
-                                //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
-                                //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
-                                //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
-                                result.Add(row1);
+                                    //row1.Add(itemp.NSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.NSKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.ODK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.OKK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
+                                    //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
+                                    result.Add(row1);
+                                }
                             }
                         }
                     }
@@ -2188,7 +2228,12 @@ namespace Tempo2012.EntityFramework
                                     itemp.KSKK = (itemp.NSKK + itemp.OKK) - (itemp.NSKK + itemp.ODK);
                                     itemp.KSKV = (itemp.NSKV + itemp.OKV) - (itemp.NSKV + itemp.ODV);
                                 }
-                                var row1 = new List<string>();
+                                if (hideAllZero && itemp.NSD == 0 && itemp.NSK == 0 && itemp.OD == 0 && itemp.OK == 0 && itemp.KSD == 0 && itemp.KSK == 0)
+                                {
+                                }
+                                else
+                                {
+                                    var row1 = new List<string>();
                                     row1.Add(itemp.ToShortString());
                                     row1.Add(itemp.Name);
                                     row1.Add(itemp.numContagent.ToString());
@@ -2215,7 +2260,7 @@ namespace Tempo2012.EntityFramework
                                     //row1.Add(itemp.KSDK.ToString(Vf.KolFormatUI));
                                     //row1.Add(itemp.KSKK.ToString(Vf.KolFormatUI));
                                     result.Add(row1);
-                                
+                                }
                             }
                         }    
                     }
@@ -2230,7 +2275,7 @@ namespace Tempo2012.EntityFramework
             {
                 dbman.Dispose();
             }
-
+            
             return result;
         }
         internal static OboronaVed GetOborotnaVedSaldo(DateTime FromDate, int accid)
@@ -2718,7 +2763,7 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(40);
             if (et2)
             {
-                var list = GetOborotnaVed(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31));
+                var list = GetOborotnaVed(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31),false);
                 bw.ReportProgress(55);
                 foreach (var item in list)
                 {

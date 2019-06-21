@@ -39,12 +39,12 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-       <DataTemplate x:Key="EmptyTemplate">
+        <DataTemplate x:Key="EmptyTemplate">
             <customControls:TextBlockEx Width="50" Text=""/>
         </DataTemplate>
         <DataTemplate x:Key="StringTemplate">
             <Grid Margin="20,0,20,0" >
-               <Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"></ColumnDefinition>
                     <ColumnDefinition Width="180"></ColumnDefinition>
 
@@ -169,8 +169,8 @@
               ValTemplate="{StaticResource ValTemplate}"
               
             x:Key="ItemDataTemplateSelecor" />
-       
-       
+
+
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="Избери сметка" Grid.Column="0" >
@@ -190,12 +190,12 @@
                     <customControls:TextBoxEx Text="{Binding Path=DAccountsModel.Search}" Margin="10,0,10,0" Width="100" x:Name="EntryBoxEx"
                                               HorizontalAlignment="Left" KeyDown="SearchElement_OnKeyDown" LostFocus="Acc_OnLostFocus"
                                               TabIndex="1" />
-                   
+
                     <Button  Click="SearchButton_OnClick"
                                         Margin="0,5,0,2" 
                                         IsEnabled="True" 
                                         Focusable="False">...</Button>
-                    
+
                     <CheckBox  
                                       IsChecked="{Binding Path=WithContragentSum,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       TabIndex="-1" ToolTip="Включи междинна суме в справкарта" 
@@ -204,11 +204,21 @@
                         <CustomControls:TextBlockEx Text="С междинни суми"  Height="15" Margin="0" Visibility="{Binding ShowContragentSum,Converter={StaticResource BoolToVisibleConvertor}}"/>
                     </CheckBox>
                 </StackPanel>
-                <Popup Height="500" Width="600" IsOpen="False" PlacementTarget="{Binding ElementName=EntryBoxEx}" x:Name="_Popup" Focusable="False" AllowsTransparency="True" Margin="0,1,0,0"  VerticalAlignment="Top">
-                    <ListView ItemsSource="{Binding AllAccounts}"   MouseDoubleClick="ListView_MouseDoubleClick" KeyDown="ListView_KeyDown">
+                <!--<Popup Height="500" Width="600" IsOpen="False" PlacementTarget="{Binding ElementName=EntryBoxEx}" x:Name="_Popup" Focusable="False" AllowsTransparency="True" Margin="0,1,0,0"  VerticalAlignment="Top">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Click="Button_Click" Margin="500,0,0,0">Отказ
+                        </Button>
+                        <Button Grid.Row="0" Click="Button_Click_1" Margin="400,0,100,0">Избор
+                        </Button>
+                        <ListView Grid.Row="1" ItemsSource="{Binding AllAccounts}"   MouseDoubleClick="ListView_MouseDoubleClick" KeyDown="ListView_KeyDown">
 
                     </ListView>
-                </Popup>
+                    </Grid>
+                </Popup>-->
                 <!--<Button  Margin="0,5,10,5" 
                          Grid.Row="0" Grid.Column="2"
                          Click="ButtonBase_OnClick"
@@ -224,15 +234,15 @@
                 <customControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                            Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
                            Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" />
-                
-           
+
+
                 <Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <ItemsControl 
                                         ItemsSource="{Binding ItemsDebit,ValidatesOnDataErrors=True}" 
                                        ItemTemplateSelector="{StaticResource ItemDataTemplateSelecor}" 
                                        TabIndex="2" 
-                                        IsTabStop="False"
+                                        IsTabStop="False" Height="206" Width="461"
                                     >
                         </ItemsControl>
                     </ScrollViewer>

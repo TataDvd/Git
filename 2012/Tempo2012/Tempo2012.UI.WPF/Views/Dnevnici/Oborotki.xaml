@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
-        Title="Оборотна ведомост" Height="129" Width="617">
+        Title="Оборотна ведомост" Height="129" Width="630">
     <Grid>
         <StackPanel>
 
@@ -11,6 +11,8 @@
                 <DatePicker Text="{Binding FromDate,Mode=TwoWay}" Width="150" Margin="10,5,10,5"></DatePicker>
                 <customControls:TextBlockEx  Margin="10,5,10,5" >До дата</customControls:TextBlockEx>
                 <DatePicker Text="{Binding ToDate,Mode=TwoWay}" Width="150" Margin="10,5,10,5"></DatePicker>
+                <customControls:TextBlockEx  Margin="10,5,10,5" >Изключи нули</customControls:TextBlockEx>
+                <CheckBox IsChecked="{Binding HideAllZero,Mode=TwoWay}" Width="20" Margin="10,5,10,5"></CheckBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Справка" Margin="10,5,10,5" Command="{Binding AddCommand}"></Button>

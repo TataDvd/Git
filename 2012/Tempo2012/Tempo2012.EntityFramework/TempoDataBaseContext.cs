@@ -378,9 +378,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetAllConto(p, pSearcAcc);
         }
 
-        public virtual  List<List<string>> GetOborotnaVed(DateTime toDate,DateTime fromDate)
+        public virtual  List<List<string>> GetOborotnaVed(DateTime toDate,DateTime fromDate,bool hideAllZero)
         {
-            return RealDataContext.GetOborotnaVed(toDate,fromDate);
+            return RealDataContext.GetOborotnaVed(toDate,fromDate,hideAllZero);
         }
 
         public virtual  void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4, BackgroundWorker bw)
@@ -664,9 +664,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetOborotnaVedTemplate(toDate, fromDate);
         }
 
-        public List<List<string>> GetOborotnaVedDetail(DateTime fromDate, DateTime toDate,int id=-1)
+        public List<List<string>> GetOborotnaVedDetail(DateTime fromDate, DateTime toDate,bool hideAllZero,int id=-1)
         {
-            return RealDataContext.GetOborotnaVedDetailed(fromDate,toDate,id);
+            return RealDataContext.GetOborotnaVedDetailed(fromDate,toDate,hideAllZero,id);
         }
 
         public List<List<string>> GetUnusableDost(bool v=false)
@@ -674,9 +674,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetUnusableDost(v);
         }
 
-        public List<List<string>> GetOborotnaFullDetailed(DateTime FromDate, DateTime ToDate)
+        public List<List<string>> GetOborotnaFullDetailed(DateTime FromDate, DateTime ToDate,bool HideAllZero)
         {
-            return RealDataContext.GetOborotnaFullDetailed(FromDate, ToDate);
+            return RealDataContext.GetOborotnaFullDetailed(FromDate, ToDate,HideAllZero);
         }
 
         public OboronaVed GetOborotnaVedSaldo(DateTime fromDate, int id, int firmaId)

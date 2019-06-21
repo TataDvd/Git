@@ -291,7 +291,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(w => w.CodeContragent == contr));
                     AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(w => w.CodeContragent == contr));
                     AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(w => w.CodeContragent == contr));
-                    rezi = new List<SaldoFactura>(rezi.Where(t => t.NameContragent == contr));
+                    rezi = new List<SaldoFactura>(rezi.Where(t => t.Code == contr));
                 }
 
             }

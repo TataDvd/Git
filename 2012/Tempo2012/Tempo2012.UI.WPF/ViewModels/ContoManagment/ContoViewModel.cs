@@ -3354,6 +3354,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             if (sv.SelectedRow != null)
             {
                 int i = 0;
+                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                 string[] stringSeparators = new string[] { "---" };
                 foreach (var saldoItem in ItemsDebit)
                 {
@@ -3371,6 +3372,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                         saldoItem.ValueVal=decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
                         saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
                         i++;
                         continue;
                     }
@@ -3417,6 +3419,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             {
                 string[] stringSeparators = new string[] { "---" };
                 int i = 0;
+                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                 foreach (var saldoItem in ItemsCredit)
                 {
                     if (saldoItem.Name == "Количествo")
@@ -3433,6 +3436,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
                         saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
                         saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
                         i++;
                         continue;
                     }

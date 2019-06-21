@@ -230,7 +230,7 @@
                             <CustomControls:TextBlockEx Text="Справки материали"/>
                         </DataTemplate>
                     </MenuItem.HeaderTemplate>
-                    <MenuItem  Click="MenuItem_OnClick23">
+                    <MenuItem  Click="MenuItem_Click_40">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справка за Материали"/>

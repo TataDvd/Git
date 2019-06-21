@@ -28,9 +28,15 @@ namespace Tempo2012.UI.WPF.Views.ValutaReport
         {
             DialogResult = true;
             Acc = cccValuta.EntryBoxEx.Text;
-            Sklad = cccValuta.ItemsDebit[0].Value;
-            CodeMaterial = cccValuta.ItemsDebit[1].Value;
-            Material = cccValuta.ItemsDebit[1].Lookupval;
+            if (cccValuta.ItemsDebit != null && cccValuta.ItemsDebit.Count>0)
+            {
+                Sklad = cccValuta.ItemsDebit[0].Value;
+                if (cccValuta.ItemsDebit.Count > 1)
+                {
+                    CodeMaterial = cccValuta.ItemsDebit[1].Value;
+                    Material = cccValuta.ItemsDebit[1].Lookupval;
+                }
+            }
             Close();
         }
 

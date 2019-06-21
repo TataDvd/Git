@@ -497,8 +497,18 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                ReportDialog rd = new ReportDialog(new OborotkiViewModel{FromDate = reportMenuProvider.Vm.FromDate(),ToDate = reportMenuProvider.Vm.ToDate()});
-                rd.ShowDialog();
+                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?","Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=true });
+                    rd.ShowDialog();
+                }
+                else
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=false });
+                    rd.ShowDialog();
+
+                }
+               
             }
         }
 
@@ -919,8 +929,16 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),AccString=acc.Acc});
-                    rd.ShowDialog();
+                    if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                    {
+                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = true });
+                        rd.ShowDialog();
+                    }
+                    else
+                    {
+                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = false });
+                        rd.ShowDialog();
+                    }
                 }
             }
         }
@@ -961,8 +979,16 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),FullReport=1});
-                rd.ShowDialog();
+                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1 ,HideAllZero=true});
+                    rd.ShowDialog();
+                }
+                else
+                {
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1,HideAllZero=false });
+                    rd.ShowDialog();
+                }
             }
         }
 
@@ -1205,6 +1231,35 @@ namespace Tempo2012.UI.WPF
                         report.ShowDialog();
                     }
                 }
+            }
+        }
+
+        private void MenuItem_Click_40(object sender, RoutedEventArgs e)
+        {
+            ChoiserMatAcc acc = new ChoiserMatAcc();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                reportMenuProvider.ShowDialog();
+                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                {
+
+                    var oldacc = Entrence.Mask.CreditAcc;
+                    var oldaccd = Entrence.Mask.DebitAcc;
+                    Entrence.Mask.CreditAcc = null;
+                    Entrence.Mask.DebitAcc = null;
+                    Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material });
+                    Entrence.Mask.CreditAcc = oldacc;
+                    Entrence.Mask.DebitAcc = oldaccd;
+                    rd.ShowDialog();
+
+                }
+
+                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
             }
         }
     }

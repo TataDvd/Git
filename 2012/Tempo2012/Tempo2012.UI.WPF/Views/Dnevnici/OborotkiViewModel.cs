@@ -12,6 +12,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
     public class OborotkiViewModel:BaseViewModel,IReportBuilder
     {
         public Dictionary<int, List<string>> Rowfoother { get; set; }
+        public bool HideAllZero { get; set;}
         public OborotkiViewModel() 
         {
             ToDate = DateTime.Now;
@@ -90,8 +91,8 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         public int FullReport { get; set;}
         public List<List<string>> GetItems()
         {
-            if (FullReport == 1) return Context.GetOborotnaFullDetailed(FromDate, ToDate);
-                return Context.GetOborotnaVed(FromDate,ToDate);
+            if (FullReport == 1) return Context.GetOborotnaFullDetailed(FromDate, ToDate,HideAllZero);
+                return Context.GetOborotnaVed(FromDate,ToDate,HideAllZero);
         }
 
         public List<string> GetTitles()

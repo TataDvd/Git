@@ -242,6 +242,15 @@ namespace Tempo2012.UI.WPF.Models
                             }
                             else
                             {
+                                if (value.Contains("/"))
+                                {
+                                    var split = value.Split('/');
+                                    if (split.Count() == 2)
+                                    {
+                                        ValueDate = new DateTime(int.Parse(split[2]), int.Parse(split[0]), int.Parse(split[1]));
+                                    }
+                                }
+                                else
                                 ValueDate = ConfigTempoSinglenton.GetInstance().WorkDate;
                             }
                             break;
