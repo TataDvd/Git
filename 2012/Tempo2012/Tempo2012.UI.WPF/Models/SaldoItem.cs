@@ -452,7 +452,7 @@ namespace Tempo2012.UI.WPF.Models
             get { return _valueKurs; }
             set { _valueKurs = value;
                 //SumaLeva = ValueVal*ValueKurs;
-                KursDif = (ValueKurs - MainKurs)*ValueVal;
+                //KursDif = (ValueKurs - MainKurs)*ValueVal;
                 OnPropertyChanged("ValueKurs"); }
         }
         private decimal _kursDif;
@@ -471,7 +471,7 @@ namespace Tempo2012.UI.WPF.Models
         {
             get { return _mainKurs; }
             set { _mainKurs = value;
-            KursDif = (ValueKurs - MainKurs) * ValueVal;
+            //KursDif = (ValueKurs - MainKurs) * ValueVal;
                 OnPropertyChanged("MainKurs"); }
         }
 
