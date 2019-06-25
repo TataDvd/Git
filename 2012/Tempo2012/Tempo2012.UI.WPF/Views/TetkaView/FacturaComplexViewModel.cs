@@ -272,13 +272,6 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
                 AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
             }
-            if (!string.IsNullOrWhiteSpace(KindValuta))
-            {
-                AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
-                AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(e => e.VidValCode == KindValuta));
-                AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(e => e.VidValCode == KindValuta));
-                AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(e => e.VidValCode == KindValuta));
-            }
             var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId, !string.IsNullOrWhiteSpace(KindValuta)?KindValuta:null);
             if (typerep == 1 && filter != null)
             {
