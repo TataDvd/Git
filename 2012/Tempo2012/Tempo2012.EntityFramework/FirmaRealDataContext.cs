@@ -334,7 +334,7 @@ namespace Tempo2012.EntityFramework
                         id);
                 if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
                 {
-                    s = s + $" AND (c.CDETAILS like '%{filti[1].Trim()}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\",m.SORTORDER";
+                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\",m.SORTORDER";
                 }
                 else
                 {
@@ -522,11 +522,13 @@ namespace Tempo2012.EntityFramework
             titles.Add("КС");
             rez1.Add(titles);
             var query = (from t in rez
-                         group t by new { t.Details}
+                         group t by new { t.Code,t.NInvoise}
                              into grp
                              select new AccItemSaldo
                              {
-                                 Details=grp.Key.Details,
+                                 Code=grp.Key.Code,
+                                 NInvoise=grp.Key.NInvoise,
+                                 Details=grp.Last().Details,
                                  Type=grp.First().Type,
                                  Data=grp.Min(e=>e.Data),
                                  Fields=grp.Last().Fields,

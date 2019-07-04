@@ -3340,7 +3340,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
                     if (first && saldoItem.IsLookUp)
                     {
-                        contofilter = string.Format("{0} - {1} {2} ", saldoItem.Name, saldoItem.Value, saldoItem.Lookupval);
+                        contofilter = string.Format("{0} - {1} ", saldoItem.Name, saldoItem.Value);
                         first = false;
                     }
                 }
@@ -3404,7 +3404,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
                     if (first && saldoItem.IsLookUp)
                     {
-                        contofilter = string.Format("{0} - {1} {2} ", saldoItem.Name, saldoItem.Value, saldoItem.Lookupval);
+                        contofilter = string.Format("{0} - {1} ",saldoItem.Name, saldoItem.Value);
                         first = false;
                     }
                 }
