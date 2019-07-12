@@ -167,6 +167,7 @@
     <Compile Include="Views\CompactStyle\AccReg.xaml.cs">
       <DependentUpon>AccReg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContrGrupaDocument.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContr.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelDost.cs" />
     <Compile Include="Views\Conto\AccountsManagment\TreeManagerViewDialog.xaml.cs">

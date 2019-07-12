@@ -275,5 +275,15 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 //Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
             }
         }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            ChoiserValutaandAcc acc = new ChoiserValutaandAcc();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                
+            }
+        }
     }
 }
