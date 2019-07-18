@@ -7,6 +7,7 @@ using Tempo2012.EntityFramework.Models;
 using System.Configuration;
 using System.Data;
 using System.IO;
+using Tempo2012.EntityFramework.Interface;
 
 namespace Tempo2012.EntityFramework
 {
@@ -716,6 +717,87 @@ namespace Tempo2012.EntityFramework
                 dbman. Dispose();
             }
             return true;
+        }
+
+        internal static IEnumerable<Conto> GetAllContoGrupedByContragent(int firmaId, DateTime from, DateTime to, string nom,int accid)
+        {
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            List<Conto> allConto = new List<Conto>();
+            try
+            {
+                dbman.Open();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("select c.*,cm.LOOKUPVAL,cm.\"VALUE\" from \"conto\" c");
+                sb.Append(" inner join \"accounts\" a on a.\"Id\"= c.\"CreditAccount\"");
+                sb.Append(" inner join \"accounts\" b on b.\"Id\"= c.\"DebitAccount\"");
+                sb.Append(" inner join CONTOMOVEMENT cm on cm.CONTOID = c.\"Id\"");
+                //sb.Append(" left outer join DDSDNEV d on d.NOM=c.\"Id\"");
+                sb.AppendFormat(" where \"FirmId\"={0}", firmaId);
+                sb.AppendFormat(" AND \"Date\">='{0}.{1}.{2}' and \"Date\"<='{3}.{4}.{5}'",
+                   from.Day,
+                   from.Month,
+                   from.Year,
+                   to.Day,
+                   to.Month,
+                   to.Year);
+                sb.AppendFormat(" AND cm.ACCFIELDKEY=28 AND (c.\"CreditAccount\"={0} OR  c.\"DebitAccount\"={0})", accid);
+                string s = sb.ToString();
+                dbman.ExecuteReader(CommandType.Text, s);
+                while (dbman.DataReader.Read())
+                {
+                    var c = new Conto();
+                    c.Id = int.Parse(dbman.DataReader["Id"].ToString());
+                    c.CartotecaCredit = int.Parse(dbman.DataReader["CartotecaCredit"].ToString());
+                    c.CartotekaDebit = int.Parse(dbman.DataReader["CartotekaDebit"].ToString());
+                    c.CreditAccount = int.Parse(dbman.DataReader["CreditAccount"].ToString());
+                    c.Data = DateTime.Parse(dbman.DataReader["Date"].ToString());
+                    c.DataInvoise = DateTime.Parse(dbman.DataReader["DataInvoise"].ToString());
+                    c.DebitAccount = int.Parse(dbman.DataReader["DebitAccount"].ToString());
+                    c.DocumentId = int.Parse(dbman.DataReader["DocumentId"].ToString());
+                    c.FirmId = int.Parse(dbman.DataReader["FirmId"].ToString());
+                    c.Reason = dbman.DataReader["Reason"].ToString();
+                    c.Note = dbman.DataReader["Note"].ToString();
+                    c.NumberObject = int.Parse(dbman.DataReader["NumberObject"].ToString());
+                    c.Oborot = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                    c.DocNum = dbman.DataReader["DOCNUM"].ToString();
+                    c.OborotValutaD = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
+                    c.OborotKolD = decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
+                    c.OborotValutaK = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
+                    c.OborotKolK = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
+                    c.Folder = dbman.DataReader["FOLDER"].ToString();
+                    c.Nd = int.Parse(dbman.DataReader["PORNOM"].ToString());
+                    c.IsDdsPurchases = int.Parse(dbman.DataReader["ISDDSPURCHASES"].ToString());
+                    c.IsDdsSales = int.Parse(dbman.DataReader["ISDDSSALES"].ToString());
+                    c.IsDdsPurchasesIncluded = int.Parse(dbman.DataReader["ISDDSPURCHASESINCLUDED"].ToString());
+                    c.IsDdsSalesIncluded = int.Parse(dbman.DataReader["ISDDSSALESINCLUDED"].ToString());
+                    c.VopPurchases = dbman.DataReader["VOPPURCHASES"].ToString();
+                    c.VopSales = dbman.DataReader["VOPSALES"].ToString();
+                    c.IsSales = int.Parse(dbman.DataReader["ISSALES"].ToString());
+                    c.IsPurchases = int.Parse(dbman.DataReader["ISPURCHASES"].ToString());
+                    c.DDetails = dbman.DataReader["DDETAILS"].ToString();
+                    c.CDetails = dbman.DataReader["CDETAILS"].ToString();
+                    c.UserId = int.Parse(dbman.DataReader["USERID"].ToString());
+                    c.Pr1 = dbman.DataReader["PR1"].ToString();
+                    c.Pr2 = dbman.DataReader["PR2"].ToString();
+                    c.KD = dbman.DataReader["KD"].ToString();
+                    c.DDetails= dbman.DataReader["VALUE"].ToString();
+                    c.CDetails= dbman.DataReader["LOOKUPVAL"].ToString();
+                    allConto.Add(c);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Logger.Instance().WriteLogError(ex.Message, "internal static IEnumerable<Conto> GetContosByContragent(int firmaId, DateTime from, DateTime to, int code,string nom)");
+            }
+
+            finally
+            {
+                dbman.Dispose();
+            }
+
+            return allConto;
         }
 
         internal static List<List<string>> CheckSellsPurchases(DateTime fromDate, DateTime toDate, int kindDDS)

@@ -716,5 +716,10 @@ namespace Tempo2012.EntityFramework
         {
             return RealDataContext.CheckSellsPurchases(fromDate, toDate, kindDDS);
         }
+
+        public IEnumerable<Conto> GetAllContoGrupedByContragent(int id, DateTime fromDate, DateTime toDate, string nom, int accid)
+        {
+            return RealDataContext.GetAllContoGrupedByContragent(id, fromDate,toDate,nom,accid);
+        }
     }
 }

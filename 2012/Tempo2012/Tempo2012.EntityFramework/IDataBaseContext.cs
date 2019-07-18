@@ -61,6 +61,7 @@ namespace Tempo2012.EntityFramework
         bool DeleteAt(long p);
         bool UpdateAccount(AccountsModel transport, bool p, System.Collections.ObjectModel.ObservableCollection<AnaliticalFields> SelectedAnaliticalFields, out string errormessage);
         IEnumerable<Conto> GetContosByContragent(int id, DateTime fromDate, DateTime toDate, string code, string nom);
+        IEnumerable<Conto> GetAllContoGrupedByContragent(int id, DateTime fromDate, DateTime toDate,string nom,int accid);
         void LoadMapToLookUps(System.Collections.ObjectModel.ObservableCollection<AnaliticalFields> selectedAnaliticalFields, int acc, long analitic);
         Dictionary<string, List<string>> LoadMapToLookUps(int analiticId, long lookupid);
         void SaveSaldos(System.Collections.ObjectModel.ObservableCollection<SaldosModel> Fields, int accID, int lookUpId);
@@ -152,6 +153,7 @@ namespace Tempo2012.EntityFramework
         string FbBatchExecution(string sql);
 
         IEnumerable<Conto> GetAllContoWithDds(int p, CSearchAcc cSearchAcc, int tipdnev);
+        
 
         List<List<string>> GetDebit(DateTime fromDate, DateTime toDate, int accId, int firmId);
         List<List<string>> GetCredit(DateTime fromDate, DateTime toDate, int accId, int firmId);

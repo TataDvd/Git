@@ -19,7 +19,7 @@
                  <MenuItem Header="Справка валута" Click="MenuItemValRep_OnClick"/>
                 <MenuItem Header="Справка валути с детайли" Click="MenuItem_Click_4"/>
                 <MenuItem Header="Справка материали" Click="MenuItem_Click_Quantity"/>
-                <MenuItem Header="Справка по контрагент,групи и номер документ сборувано" Click="MenuItem_Click_5"/>
+                <MenuItem Header="Справка по контрагент,групи и номер документ сборувано" Click="MenuItem_Grouping"/>
             </MenuItem>
             <MenuItem Header="Изход" Click="MenuItem_Click"/>        
         </Menu>

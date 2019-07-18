@@ -276,13 +276,20 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             }
         }
 
-        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        private void MenuItem_Grouping(object sender, RoutedEventArgs e)
         {
-            ChoiserValutaandAcc acc = new ChoiserValutaandAcc();
+            SelectAccDialog acc = new SelectAccDialog();
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
             {
-                
+                ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                reportMenuProvider.ShowDialog();
+                if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                {
+                    ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContrGrupaDocument { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), CurrenAcc = acc.CurrentAcc, ItemsDebit = acc.ItemsDebit });
+                    rd.ShowDialog();
+                   
+                }
             }
         }
     }
