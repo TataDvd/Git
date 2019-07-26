@@ -94,6 +94,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                 Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
                 ReportDialog rmDialog=new ReportDialog(sm);
+                rmDialog.Title= (sender as MenuItem).Tag.ToString();
                 rmDialog.ShowDialog();
             }
         }
@@ -109,6 +110,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                 Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
                 ReportDialog rmDialog = new ReportDialog(sm);
+                rmDialog.Title = (sender as MenuItem).Tag.ToString();
                 rmDialog.ShowDialog();
             }
         }
@@ -148,7 +150,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                         Entrence.Mask.DebitAcc = null;
                         Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                         Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                        ReportDialog rd = new ReportDialog(new ValutareportDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, CodeClient = acc.CodeClient, Client = acc.Client });
+                        ReportDialog rd = new ReportDialog(new ValutareportDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, CodeClient = acc.CodeClient, Client = acc.Client,Title = (sender as MenuItem).Tag.ToString()});
                         Entrence.Mask.CreditAcc = oldacc;
                         Entrence.Mask.DebitAcc = oldaccd;
                         rd.ShowDialog();
@@ -180,7 +182,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                         Entrence.Mask.DebitAcc = null;
                         Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                         Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContr { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc});
+                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContr { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc, Title = (sender as MenuItem).Tag.ToString() });
                         rd.ShowDialog();
                         Entrence.Mask.CreditAcc = oldacc;
                         Entrence.Mask.DebitAcc = oldaccd;
@@ -209,7 +211,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                         Entrence.Mask.DebitAcc = null;
                         Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                         Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelDost { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc});
+                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelDost { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit,CurrenAcc=acc1.CurrentAcc, Title = (sender as MenuItem).Tag.ToString() });
                         rd.ShowDialog();
                         Entrence.Mask.CreditAcc = oldacc;
                         Entrence.Mask.DebitAcc = oldaccd;
@@ -236,7 +238,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                     Entrence.Mask.DebitAcc = null;
                     Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                     Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material });
+                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material, Title = (sender as MenuItem).Tag.ToString() });
                     Entrence.Mask.CreditAcc = oldacc;
                     Entrence.Mask.DebitAcc = oldaccd;
                     rd.ShowDialog();
@@ -265,7 +267,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                     Entrence.Mask.DebitAcc = null;
                     Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                     Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new ValutaExtendedDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, CodeClient = acc.CodeClient, Client = acc.Client});
+                    ReportDialog rd = new ReportDialog(new ValutaExtendedDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.VidV, CodeClient = acc.CodeClient, Client = acc.Client, Title = (sender as MenuItem).Tag.ToString() });
                     Entrence.Mask.CreditAcc = oldacc;
                     Entrence.Mask.DebitAcc = oldaccd;
                     rd.ShowDialog();
@@ -286,7 +288,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContrGrupaDocument { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), CurrenAcc = acc.CurrentAcc, ItemsDebit = acc.ItemsDebit });
+                    ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelContrGrupaDocument { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), CurrenAcc = acc.CurrentAcc, ItemsDebit = acc.ItemsDebit, Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
                    
                 }

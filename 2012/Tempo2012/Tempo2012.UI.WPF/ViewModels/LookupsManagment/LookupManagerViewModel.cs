@@ -287,7 +287,6 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         protected override void Delete()
         {
-            LookupModel lookup = null;
             if (Lookup != null)
             {
                 if ((this.CurrentRowIndex == -1)) return;
@@ -550,7 +549,8 @@ namespace Tempo2012.UI.WPF.ViewModels
             }
         }
 
-        public string Title
+        private string title;
+        public string SubTitle
         {
             get
             {
@@ -558,8 +558,12 @@ namespace Tempo2012.UI.WPF.ViewModels
                     return "Номенклатура " + LookupModelm.LookUpMetaData.Name;
                 return  "Номенклатура";
             }
+            set { title = value; }
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems
         {
             get { return _reportItems; }

@@ -557,9 +557,12 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
         public string Title
         {
-            get { return "AНАЛИТИЧЕН   РЕГИСТЪР - справка валута"; }
+            get;set;// { return "AНАЛИТИЧЕН   РЕГИСТЪР - справка валута"; }
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set; }
 
         public List<string> GetSubTitles()

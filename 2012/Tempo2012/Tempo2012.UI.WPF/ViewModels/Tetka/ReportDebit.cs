@@ -76,12 +76,16 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
         {
             get { return IsCredit?"debitrep":"creditrep"; }
         }
-
-        public string Title
+        string title;
+        public string SubTitle
         {
             get { return IsCredit ? "Корeспонденция по сметка кредит" : "Корeспонденция по сметка дебит"; }
+            set { title = value; }
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
 
         public List<string> GetSubTitles()

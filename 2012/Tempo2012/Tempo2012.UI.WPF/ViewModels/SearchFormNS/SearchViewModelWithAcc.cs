@@ -190,11 +190,16 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             get { return "hronodds";}
         }
 
-        public string Title
+        string title;
+        public string SubTitle
         {
             get { return Tipdnev==1?"Хронологичен р-р с дневниk покупки": "Хронологичен р-р с дневниk продажби"; }
+            set { title = value;}
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
 
         public List<string> GetSubTitles()

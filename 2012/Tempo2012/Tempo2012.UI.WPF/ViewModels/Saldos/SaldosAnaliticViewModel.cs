@@ -298,7 +298,10 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
         public AccountsModel accountsModel;
         private AccountsModel CurrentAccount;
         public string Title { get; set;}
-
+        public string SubTitle
+        {
+            get; set;
+        }
         protected override void Report()
         {
             ReportDialog report = new ReportDialog(this);

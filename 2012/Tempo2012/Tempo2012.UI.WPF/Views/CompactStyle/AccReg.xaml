@@ -6,20 +6,20 @@
         <Menu Height="30" VerticalAlignment="Top">
             <MenuItem Header="Маска" Click="MenuItem_Click_3"/>
             <MenuItem Header="Хронологичен регистър">
-                <MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_2"/>
-                <MenuItem Header="Хронологичен регистър с дневници продажби" Click="MenuItem_OnClick_DnevProd"/>
-                <MenuItem Header="Хронологичен регистър с дневници покупки" Click="MenuItem_OnClick"/>
-                <MenuItem Header="Осчетоводявания, несвързани с  дневници" Click="MenuItem_OnClick_bezDDS"/>
+                <MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_2" Tag="Хронологичен регистър"/>
+                <MenuItem Header="Хронологичен регистър с дневници продажби" Click="MenuItem_OnClick_DnevProd" Tag="Хронологичен регистър с дневници продажби"/>
+                <MenuItem Header="Хронологичен регистър с дневници покупки" Click="MenuItem_OnClick" Tag="Хронологичен регистър с дневници покупки"/>
+                <MenuItem Header="Осчетоводявания, несвързани с  дневници" Click="MenuItem_OnClick_bezDDS" Tag="Осчетоводявания, несвързани с  дневници"/>
             </MenuItem>
           
             <MenuItem Header="Аналитичен регистър">
-                 <MenuItem Header="Аналитичен регистър" Click="MenuItem_Click_1"/>
-                 <MenuItem Header="Аналитичен регистър по клиент" Click="MenuItem_Click_Contr"/>
-                <MenuItem Header="Аналитичен регистър по доставчик" Click="MenuItem_Click_Dost"/>
-                 <MenuItem Header="Справка валута" Click="MenuItemValRep_OnClick"/>
-                <MenuItem Header="Справка валути с детайли" Click="MenuItem_Click_4"/>
-                <MenuItem Header="Справка материали" Click="MenuItem_Click_Quantity"/>
-                <MenuItem Header="Справка по контрагент,групи и номер документ сборувано" Click="MenuItem_Grouping"/>
+                 <MenuItem Header="Аналитичен регистър" Click="MenuItem_Click_1" Tag="Аналитичен регистър"/>
+                 <MenuItem Header="Аналитичен регистър по клиент" Click="MenuItem_Click_Contr" Tag="Аналитичен регистър по клиент"/>
+                <MenuItem Header="Аналитичен регистър по доставчик" Click="MenuItem_Click_Dost" Tag="Аналитичен регистър по доставчик"/>
+                 <MenuItem Header="Справка валута" Click="MenuItemValRep_OnClick" Tag="Справка валута"/>
+                <MenuItem Header="Справка валути с детайли" Click="MenuItem_Click_4" Tag="Справка валути с детайли"/>
+                <MenuItem Header="Справка материали" Click="MenuItem_Click_Quantity" Tag="Справка материали"/>
+                <MenuItem Header="Аналитичен регистър по сметка синтетично" Click="MenuItem_Grouping" Tag="Аналитичен регистър по сметка синтетично"/>
             </MenuItem>
             <MenuItem Header="Изход" Click="MenuItem_Click"/>        
         </Menu>

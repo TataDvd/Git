@@ -197,6 +197,13 @@ namespace ReportBuilder
                     Line(iReportBuilder, sb);
                     
                 }
+                if (iReportBuilder.SubTitle != null)
+                {
+                    sb.AppendLine(iReportBuilder.SubTitle);
+                    //sb.AppendFormat("{0:300}", "-");
+                    Line(iReportBuilder, sb);
+
+                }
                 // Fill spreadsheet with sample data
 
                 //int i = 0;
@@ -433,7 +440,11 @@ namespace ReportBuilder
                     sb.AppendFormat("<H1>{0}</H1>",iReportBuilder.Title);
                     
                 }
-               
+                if (iReportBuilder.SubTitle != null)
+                {
+                    sb.AppendFormat("<H1>{0}</H1>",iReportBuilder.SubTitle);
+                   
+                }
 
                 //foreach (var hedar in iReportBuilder.GetHeader())
                 //{
@@ -442,9 +453,9 @@ namespace ReportBuilder
 
 
                 //}
-                
-                
-                
+
+
+
                 var header = iReportBuilder.GetHeader();
                 GenFilter(iReportBuilder, header);
                 if (header != null)
@@ -527,7 +538,7 @@ namespace ReportBuilder
             }
             catch (Exception err)
             {
-
+                Logger.Instance().WriteLogError(err.Message, "public static void CreateWorkbookCsv(IReportBuilder iReportBuilder)");
             }
             finally
             {

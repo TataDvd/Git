@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <Border CornerRadius="5" Grid.ColumnSpan="2">
             <Menu VerticalAlignment="Top">
-                <MenuItem >
+                <MenuItem>
                     <MenuItem.HeaderTemplate>
                         <DataTemplate>
                             <CustomControls:TextBlockEx Text="Група" />
@@ -160,20 +160,20 @@
                                 <CustomControls:TextBlockEx Text="Справки"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                    <MenuItem >
+                    <MenuItem>
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справки сметкоплан"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                        <MenuItem  Click="MenuItem_MainAccountReport_Click">
+                        <MenuItem  Click="MenuItem_MainAccountReport_Click" Tag="Справка за сметки">
                              <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справка за сметки"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_MainAccountReportWithSaldo_Click">
+                        <MenuItem  Click="MenuItem_MainAccountReportWithSaldo_Click" Tag="Справка за салда">
                              <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справка за салда"/>
@@ -189,21 +189,21 @@
                                 <CustomControls:TextBlockEx Text="Справки фактури"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                            <MenuItem  Click="MenuItem_OnClick23">
+                            <MenuItem  Click="MenuItem_OnClick23" Tag="Справка за Фактури">
                                 <MenuItem.HeaderTemplate>
                                     <DataTemplate>
-                                        <CustomControls:TextBlockEx Text="Справка за Фактури"/>
+                                        <CustomControls:TextBlockEx Text="Справка зMenuItem_Click_25а Фактури"/>
                                     </DataTemplate>
                                 </MenuItem.HeaderTemplate>
                             </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_25">
+                        <MenuItem  Click="MenuItem_Click_25" Tag="Справка фактури обобщени по контрагент">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_39">
+                        <MenuItem  Click="MenuItem_Click_39" Tag="Справка фактури обобщени по контрагент валута">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент валута"/>
@@ -217,7 +217,7 @@
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_33">
+                        <MenuItem  Click="MenuItem_Click_33" Tag="Справка фактури с разбити плащания">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка фактури с разбити плащания"/>
@@ -231,14 +231,14 @@
                                 <CustomControls:TextBlockEx Text="Справки материали"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                        <MenuItem  Click="MenuItem_Click_40">
+                        <MenuItem  Click="MenuItem_Click_40" Tag="Справка за Материали">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка за Материали"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_25">
+                        <!--<MenuItem  Click="MenuItem_Click_25">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка материали обобщени по контрагент"/>
@@ -251,15 +251,15 @@
                                     <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент материал"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
-                        </MenuItem>
+                        </MenuItem>-->
                         
-                        <MenuItem  Click="MenuItem_Click_33">
+                        <!--<MenuItem  Click="MenuItem_Click_33">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка материали с разбити плащания"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
-                        </MenuItem>
+                        </MenuItem>-->
                     </MenuItem>
                     <MenuItem>
                         <MenuItem.HeaderTemplate>
@@ -267,14 +267,14 @@
                                 <CustomControls:TextBlockEx Text="Справки ДДС"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                        <MenuItem  Click="MenuItem_Click_7">
+                        <MenuItem  Click="MenuItem_Click_7" Tag="Дневник покупки">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Дневник покупки"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_8">
+                        <MenuItem  Click="MenuItem_Click_8" Tag="Дневник продажби">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Дневник продажби"/>
@@ -303,14 +303,14 @@
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem Click="MenuItem_Click_37">
+                        <MenuItem Click="MenuItem_Click_37" Tag="Проверка за дублирани фактури покупки">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Проверка за дублирани фактури покупки"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem Click="MenuItem_Click_38">
+                        <MenuItem Click="MenuItem_Click_38" Tag="Проверка за дублирани фактури продажби">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Проверка за дублирани фактури продажби"/>
@@ -320,21 +320,21 @@
                     </MenuItem>
                    
                     
-                    <MenuItem Click="MenuItem_Click_10">
+                    <MenuItem Click="MenuItem_Click_10" Tag="Оборотна ведомост">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Оборотна ведомост"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem Click="MenuItem_Click_29">
+                    <MenuItem Click="MenuItem_Click_29" Tag="Оборотка на аналитични сметки">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Оборотка на аналитични сметки"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem Click="MenuItem_Click_32">
+                    <MenuItem Click="MenuItem_Click_32" Tag="Разгъната Оборотна ведомост">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Разгъната Оборотна ведомост"/>
@@ -348,35 +348,35 @@
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_OnClick26">
+                    <MenuItem  Click="MenuItem_OnClick26" Tag="Кореспонденции по сметка дебит">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Кореспонденции по сметка дебит"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_OnClick27">
+                    <MenuItem  Click="MenuItem_OnClick27" Tag="Кореспонденции по сметка кредит">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Кореспонденции по сметка кредит"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_OnClick28">
+                    <MenuItem  Click="MenuItem_OnClick28" Tag="Главна Книга">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Главна Книга"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_Click_26">
+                    <MenuItem  Click="MenuItem_Click_26" Tag="Справка неизползвани клиенти">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справка неизползвани клиенти"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem  Click="MenuItem_Click_31">
+                    <MenuItem  Click="MenuItem_Click_31" Tag="Справка неизползвани доставчици">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Справка неизползвани доставчици"/>

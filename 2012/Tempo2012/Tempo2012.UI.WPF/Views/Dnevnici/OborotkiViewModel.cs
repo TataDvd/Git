@@ -29,7 +29,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             //    };
             //if (FullReport == 1)
             //{
-                ReportItems = new List<ReportItem>{
+            ReportItems = new List<ReportItem>{
                     new ReportItem{IsShow=true, Width=7, Name="Номер Сметка",Height=20},
                     new ReportItem{IsShow=true, Width=50, Name="Име на Сметка",Height=20},
                     new ReportItem{IsShow=true, Width=15, Name="Начално салдо дебит",Height=20,Sborno = true},
@@ -50,14 +50,17 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                     //new ReportItem{IsShow = true, Width = 15, Name = "Оборот кредит количество", Height = 20, Sborno = true },
                     //new ReportItem{IsShow = true, Width = 15, Name = "КС дебит количество", Height = 20, Sborno = true },
                     //new ReportItem{IsShow = true, Width = 15, Name = "КС кредит количество", Height = 20, Sborno = true },
+
+                    //}
                 };
-            //}
-        }
+            title= string.Format("на фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name, FromDate.ToShortDateString(), ToDate.ToShortDateString());
+            if (FullReport == 1)
+                    title = string.Format("на фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name, FromDate.ToShortDateString(), ToDate.ToShortDateString());
+        }    
         public void LoadSettings(string Path)
         {
             ReportItems = SerializeUtil.DeserializeFromXML<List<ReportItem>>(Path);
         }
-
         public void SaveSettings(string Path)
         {
             SerializeUtil.SerializeToXML<List<ReportItem>>(Path, ReportItems);
@@ -118,14 +121,23 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         {
             get {return "oborot";}
         }
-
+        private string title;
         public string Title
         {
-            get {if (FullReport==1) return string.Format("Пълна оборотна ведомост на фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); 
-                return string.Format("Оборотна ведомост на фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); }
+            get 
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+            }
+        }
+        public string SubTitle
+        {
+            get; set;
         }
 
-       
         public IEnumerable<ReportItem> ReportItems
         {
             get;

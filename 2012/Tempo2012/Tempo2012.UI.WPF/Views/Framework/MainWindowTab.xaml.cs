@@ -339,7 +339,7 @@ namespace Tempo2012.UI.WPF
         private void MenuItem_MainAccountReport_Click(object sender, RoutedEventArgs e)
         {
             //AddItem("Индивидуален сметкоплан", new ReportAccountsView());
-            ReportDialog report = new ReportDialog(new  ReportAccountsViewModel());
+            ReportDialog report = new ReportDialog(new ReportAccountsViewModel {Title= "Справка за сметки" });
             report.ShowDialog();
             _HelpModel.TopicId = "13";
         }
@@ -347,7 +347,7 @@ namespace Tempo2012.UI.WPF
         private void MenuItem_MainAccountReportWithSaldo_Click(object sender, RoutedEventArgs e)
         {
             //AddItem("Сметкоплан с начално салдо", new ReportAccountsWithSaldoView());
-            ReportDialog report = new ReportDialog(new ReportAccountViewModelWithSaldo());
+            ReportDialog report = new ReportDialog(new ReportAccountViewModelWithSaldo { Title = "Справка за салда" });
             report.ShowDialog();
         }
 
@@ -497,14 +497,14 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?","Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                if (MessageBoxWrapper.Show("Справката да покаже ли редове само с нули?","Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=true });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=false,Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
                 }
                 else
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=false });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=true,Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
 
                 }
@@ -625,6 +625,7 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_OnClick23(object sender, RoutedEventArgs e)
         {
+            string tit = (sender as MenuItem).Tag.ToString();
             SelectAccDialog acc = new SelectAccDialog(true);
             acc.ShowDialog();
             if (acc.DialogResult.HasValue && acc.DialogResult.Value)
@@ -655,6 +656,7 @@ namespace Tempo2012.UI.WPF
                     if (contri == "")
                     {
                         var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum);
+                        f.Title = tit;
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -663,6 +665,7 @@ namespace Tempo2012.UI.WPF
                     else
                     {
                         var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum, antetka, contri);
+                        f.Title = tit;
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -728,7 +731,7 @@ namespace Tempo2012.UI.WPF
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
 
-                    ReportDialog rd = new ReportDialog(new ReportDebit { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc,IsCredit=false });
+                    ReportDialog rd = new ReportDialog(new ReportDebit { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc,IsCredit=false, Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
                 }
             }
@@ -744,7 +747,7 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    ReportDialog rd = new ReportDialog(new ReportDebit { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, IsCredit = true });
+                    ReportDialog rd = new ReportDialog(new ReportDebit { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, IsCredit = true, Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
                 }
             }
@@ -760,7 +763,7 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    ReportDialog rd = new ReportDialog(new MainBook { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc});
+                    ReportDialog rd = new ReportDialog(new MainBook { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
                 }
             }
@@ -832,6 +835,7 @@ namespace Tempo2012.UI.WPF
                         var f = new FacturaComplexViewModel(accountsModel, null, true, true,false,false,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         ReportDialog report = new ReportDialog(f);
                         report.ShowDialog();
                     }
@@ -841,6 +845,7 @@ namespace Tempo2012.UI.WPF
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         report.ShowDialog();
                     }
                 }
@@ -850,6 +855,7 @@ namespace Tempo2012.UI.WPF
         private void MenuItem_Click_26(object sender, RoutedEventArgs e)
         {
             var f = new ReportNoUseClient();
+            f.Title=(sender as MenuItem).Tag.ToString();
             ReportDialog report = new ReportDialog(f);
             report.ShowDialog();
         }
@@ -929,14 +935,14 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                    if (MessageBoxWrapper.Show("Справката да покаже ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                     {
-                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = true });
+                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = false, Title = (sender as MenuItem).Tag.ToString()});
                         rd.ShowDialog();
                     }
                     else
                     {
-                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = false });
+                        ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = true, Title=(sender as MenuItem).Tag.ToString()});
                         rd.ShowDialog();
                     }
                 }
@@ -968,7 +974,7 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_Click_31(object sender, RoutedEventArgs e)
         {
-            var f = new ReportNoUseDost();
+            var f = new ReportNoUseDost {Title = (sender as MenuItem).Tag.ToString()};
             ReportDialog report = new ReportDialog(f);
             report.ShowDialog();
         }
@@ -981,12 +987,12 @@ namespace Tempo2012.UI.WPF
             {
                 if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1 ,HideAllZero=true});
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1 ,HideAllZero=true,Title= (sender as MenuItem).Tag.ToString()});
                     rd.ShowDialog();
                 }
                 else
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1,HideAllZero=false });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1,HideAllZero=false, Title = (sender as MenuItem).Tag.ToString()});
                     rd.ShowDialog();
                 }
             }
@@ -1030,6 +1036,7 @@ namespace Tempo2012.UI.WPF
                         var f = new FacturaComplexViewModelDetail(accountsModel, null, true,"",null,false,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title= (sender as MenuItem).Tag.ToString();
                         ReportDialog report = new ReportDialog(f);
                         report.ShowDialog();
                     }
@@ -1038,6 +1045,7 @@ namespace Tempo2012.UI.WPF
                         var f = new FacturaComplexViewModelDetail(accountsModel, null, true, antetka, contri,false,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         ReportDialog report = new ReportDialog(f);
                         report.ShowDialog();
                     }
@@ -1252,7 +1260,7 @@ namespace Tempo2012.UI.WPF
                     Entrence.Mask.DebitAcc = null;
                     Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                     Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
-                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material });
+                    ReportDialog rd = new ReportDialog(new QuantityDialog { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccShortName = acc.Acc, VidVal = acc.Sklad, KindStock = acc.CodeMaterial, Stock = acc.Material,Title= (sender as MenuItem).Tag.ToString()});
                     Entrence.Mask.CreditAcc = oldacc;
                     Entrence.Mask.DebitAcc = oldaccd;
                     rd.ShowDialog();

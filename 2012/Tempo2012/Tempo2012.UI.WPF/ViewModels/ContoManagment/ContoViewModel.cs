@@ -2166,11 +2166,14 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 return "";
             }
         }
-        protected string Title
+        public string Title
         {
             get; set;
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         protected bool IsEdit
         {
             get; set;
@@ -2720,10 +2723,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
 
         public IEnumerable<ReportItem> ReportItems { get; set; }
         
-        string IReportBuilder.Title
-        {
-            get { return "Движение по сметки"; }
-        }
+        //string IReportBuilder.Title
+        //{
+        //    get { return "Движение по сметки"; }
+        //}
 
         private int FirmaId;
 

@@ -74,6 +74,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             return ReportItems.Select(reportItem => reportItem.Name).ToList();
         }
 
+        
         public List<string> GetHeader()
         {
             var ret = new List<string>();
@@ -92,14 +93,18 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         {
             get {return "oborot";}
         }
-
-        public string Title
+        string title;
+        public string SubTitle
         {
             get {if (KindDDS==1) return string.Format("Проверка дублирани фактури дневник покупки за фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); 
                 return string.Format("Проверка дублирани фактури дневник продажби за фирма {0} от {1} до {2}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); }
+            set { title = value; }
+        }
+        public string Title
+        {
+            get; set;
         }
 
-       
         public IEnumerable<ReportItem> ReportItems
         {
             get;

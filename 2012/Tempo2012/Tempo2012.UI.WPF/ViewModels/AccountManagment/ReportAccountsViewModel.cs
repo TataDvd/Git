@@ -118,9 +118,14 @@ namespace Tempo2012.UI.WPF.ViewModels.AccountManagment
             get { return "IndAcc";}
         }
 
+
         public string Title
         {
-            get { return "Индивидуален сметкоплан"; }
+            get;set; 
+        }
+        public string SubTitle
+        {
+            get; set;
         }
 
         public IEnumerable<ReportItem> ReportItems { get; set;}

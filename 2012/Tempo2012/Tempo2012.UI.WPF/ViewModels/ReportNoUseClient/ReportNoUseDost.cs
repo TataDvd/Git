@@ -104,9 +104,12 @@ namespace Tempo2012.UI.WPF.ViewModels.AccountManagment
 
         public string Title
         {
-            get { return "Справка за доставчици не участващи в осчетоводяване"; }
+            get;set; //{ return "Справка за доставчици не участващи в осчетоводяване"; }
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
 
         public List<string> GetSubTitles()

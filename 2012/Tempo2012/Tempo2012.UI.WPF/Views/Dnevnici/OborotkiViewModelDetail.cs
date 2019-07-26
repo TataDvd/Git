@@ -110,13 +110,17 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
         {
             get {return "oborotdetail";}
         }
-
+        string title = "на фирма {0} от {1} до {2} по контрагенти";
+        public string SubTitle
+        {
+            get { return string.Format(title, ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); }
+            set { title = value;}
+        }
         public string Title
         {
-            get { return string.Format("Оборотна ведомост на фирма {0} от {1} до {2} по контрагенти", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name,FromDate.ToShortDateString(),ToDate.ToShortDateString()); }
+            get; set;
         }
 
-       
         public IEnumerable<ReportItem> ReportItems
         {
             get;

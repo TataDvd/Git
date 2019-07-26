@@ -17,6 +17,7 @@ namespace Tempo2012.EntityFramework.Models
         public decimal KolCredit { get; set; }
         public string VidKol { get; set; }
         public DateTime DataInvoise { get; set;}
+        public DateTime DataConto { get; set; }
         public int LOOKUPFIELDKEY { get; set; }
         public int LOOKUPID{get; set; }
         public int CKEY { get; set; }

@@ -150,9 +150,12 @@ namespace Tempo2012.UI.WPF.ViewModels.AccountManagment
 
         public string Title
         {
-            get { return "Индивидуален сметкоплан"; }
+            get;set;// { return "Индивидуален сметкоплан"; }
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
         public Dictionary<int, List<string>> Rowfoother { get; set; }
 

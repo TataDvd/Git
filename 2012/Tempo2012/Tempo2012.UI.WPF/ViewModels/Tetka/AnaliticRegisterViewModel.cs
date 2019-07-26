@@ -307,9 +307,12 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
 
         public string Title
         {
-            get { return "AНАЛИТИЧЕН   РЕГИСТЪР"; }
+            get;set; //{ return "AНАЛИТИЧЕН   РЕГИСТЪР"; }
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get ; set; }
 
         public List<string> GetSubTitles()

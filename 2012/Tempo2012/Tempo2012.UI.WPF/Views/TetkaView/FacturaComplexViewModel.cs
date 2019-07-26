@@ -261,10 +261,90 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 blanka = File.ReadAllText(Path.Combine(Entrence.CurrentFirmaPathTemplate, "Pismo.txt"));
             }
 
-            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
-            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
-            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataConto < FromDate));
+            AllMovementDebit = new ObservableCollection<InvoiseControl>(from t in AllMovementDebit
+                         group t by new { t.NInvoise, t.CodeContragent }
+                into grp
+                         select new InvoiseControl
+                         {
+                             NInvoise = grp.Key.NInvoise,
+                             NameContragent = grp.Last().NameContragent,
+                             CodeContragent = grp.Key.CodeContragent,
+                             Oborot = grp.Sum(t => t.Oborot),
+                             DataInvoise = grp.Max(t => t.DataInvoise),
+                             Reason = grp.First().Reason,
+                             Folder = grp.First().Folder,
+                             DocNumber = grp.First().DocNumber,
+                             VidVal = grp.First().VidVal,
+                             VidValCode = grp.First().VidValCode,
+                             OborotValuta = grp.Sum(t => t.OborotValuta),
+                             Pr1 = grp.First().Pr1,
+                             Pr2 = grp.First().Pr2,
+                             CID = grp.First().CID
+                         });
+            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataConto < FromDate));
+            AllMovementCredit = new ObservableCollection<InvoiseControl>(from t in AllMovementCredit
+                                                                         group t by new { t.NInvoise, t.CodeContragent }
+                                                                         into grp
+                                                                         select new InvoiseControl
+                                                                                      {
+                                                                                          NInvoise = grp.Key.NInvoise,
+                                                                                          NameContragent = grp.Last().NameContragent,
+                                                                                          CodeContragent = grp.Key.CodeContragent,
+                                                                                          Oborot = grp.Sum(t => t.Oborot),
+                                                                                          DataInvoise = grp.Max(t => t.DataInvoise),
+                                                                                          Reason = grp.First().Reason,
+                                                                                          Folder = grp.First().Folder,
+                                                                                          DocNumber = grp.First().DocNumber,
+                                                                                          VidVal = grp.First().VidVal,
+                                                                                          VidValCode = grp.First().VidValCode,
+                                                                                          OborotValuta = grp.Sum(t => t.OborotValuta),
+                                                                                          Pr1 = grp.First().Pr1,
+                                                                                          Pr2 = grp.First().Pr2,
+                                                                                          CID = grp.First().CID
+                                                                                      });
+            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id,true).Where(e => e.DataConto >= FromDate && e.DataConto <= ToDate));
+            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(from t in AllMovementDebit1
+                                                                                      group t by new { t.NInvoise, t.CodeContragent }
+                                                                                      into grp
+                                                                                      select new InvoiseControl
+                                                                                      {
+                                                                                          NInvoise = grp.Key.NInvoise,
+                                                                                          NameContragent = grp.Last().NameContragent,
+                                                                                          CodeContragent = grp.Key.CodeContragent,
+                                                                                          Oborot = grp.Sum(t => t.Oborot),
+                                                                                          DataInvoise = grp.Max(t => t.DataInvoise),
+                                                                                          Reason = grp.First().Reason,
+                                                                                          Folder = grp.First().Folder,
+                                                                                          DocNumber = grp.First().DocNumber,
+                                                                                          VidVal = grp.First().VidVal,
+                                                                                          VidValCode = grp.First().VidValCode,
+                                                                                          OborotValuta = grp.Sum(t => t.OborotValuta),
+                                                                                          Pr1 = grp.First().Pr1,
+                                                                                          Pr2 = grp.First().Pr2,
+                                                                                          CID = grp.First().CID
+                                                                                      });
+            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,true).Where(e => e.DataConto >= FromDate && e.DataConto <= ToDate));
+            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(from t in AllMovementCredit1
+                                                                          group t by new { t.NInvoise, t.CodeContragent }
+                                                                          into grp
+                                                                          select new InvoiseControl
+                                                                          {
+                                                                              NInvoise = grp.Key.NInvoise,
+                                                                              NameContragent = grp.Last().NameContragent,
+                                                                              CodeContragent = grp.Key.CodeContragent,
+                                                                              Oborot = grp.Sum(t => t.Oborot),
+                                                                              DataInvoise = grp.Max(t => t.DataInvoise),
+                                                                              Reason = grp.First().Reason,
+                                                                              Folder = grp.First().Folder,
+                                                                              DocNumber = grp.First().DocNumber,
+                                                                              VidVal = grp.First().VidVal,
+                                                                              VidValCode = grp.First().VidValCode,
+                                                                              OborotValuta = grp.Sum(t => t.OborotValuta),
+                                                                              Pr1 = grp.First().Pr1,
+                                                                              Pr2 = grp.First().Pr2,
+                                                                              CID = grp.First().CID
+                                                                          });
             if (!string.IsNullOrWhiteSpace(KindValuta))
             {
                 AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
@@ -1233,13 +1313,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             get { return "Invoises";}
         }
-
-        public string Title
+        string title;
+        public string SubTitle
         {
             get
             {
-                string b = "Справка Фактури обобщена за контрагент за сметка ";
-                if (this.IsVal)  b = "Справка Фактури обобщена за контрагент и валута за сметка ";
+                string b = "обобщена за контрагент за сметка ";
+                if (this.IsVal)  b = "обобщена за контрагент и валута за сметка ";
                 string a=b + this.accountsModel.ShortName;
                 if (typerep == 1)
                 {
@@ -1255,8 +1335,12 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     }
                 return a;
             }
+            set { title = value; }
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
         public bool WithContragentSum { get;  set; }
         public bool OnlyContragent { get; private set; }

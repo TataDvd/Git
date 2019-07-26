@@ -12,7 +12,8 @@ namespace ReportBuilder
         List<string> GetHeader();
         List<string> GetFuther();
         string Filename { get; }
-        string Title { get; }
+        string Title { get; set;}
+        string SubTitle { get; set;}
         IEnumerable<ReportItem> ReportItems { get; set;}
         List<string> GetSubTitles();
         List<List<string>> GetTXTAntetka();

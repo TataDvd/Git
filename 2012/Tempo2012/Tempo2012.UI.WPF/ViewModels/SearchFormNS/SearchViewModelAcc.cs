@@ -475,11 +475,15 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             get { return "contoreport"; }
         }
 
-        public string Title
+        public string SubTitle
         {
             get { return Hrono; }
+            set { Hrono = value;}
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
 
         public List<string> GetSubTitles()

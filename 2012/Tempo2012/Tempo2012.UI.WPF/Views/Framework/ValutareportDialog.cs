@@ -102,6 +102,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
                     item.Add("");
                     item.Add("");
                     item.Add("");
+                    item.Add("");
                     item.Add(string.Format(Vf.LevFormat, sumadm));
                     item.Add("");
                     item.Add("");
@@ -158,6 +159,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             items.Add(NewMethod());
             items.Add(item1);
             item1 = new List<string>();
+            item1.Add("");
             item1.Add("");
             item1.Add("");
             item1.Add("");
@@ -365,9 +367,12 @@ namespace Tempo2012.UI.WPF.Views.Framework
 
         public string Title
         {
-            get { return "AНАЛИТИЧЕН   РЕГИСТЪР - справка валута"; }
+            get;set;// { return "AНАЛИТИЧЕН   РЕГИСТЪР - справка валута"; }
         }
-
+        public string SubTitle
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set; }
 
         public List<string> GetSubTitles()

@@ -184,12 +184,15 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             OnPropertyChanged("Fields");
         }
 
-        public string Title
+        public string SubTitle
         {
             get { return _title; }
             set { _title = value; OnPropertyChanged("Title"); }
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public List<List<string>> Fields { get; set;}
         public int CurrentRowIndex { get; set; }
 

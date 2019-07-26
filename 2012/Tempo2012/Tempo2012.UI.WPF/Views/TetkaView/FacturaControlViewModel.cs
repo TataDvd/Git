@@ -606,20 +606,24 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             get { return "Invoises";}
         }
-
-        public string Title
+        string title;
+        public string SubTitle
         {
             get
             {
-                string a="Справка фактури за сметка " + this.accountsModel.ShortName;
+                string a="за сметка " + this.accountsModel.ShortName;
                 if (typerep == 1)
                 {
                     return a + "  " + antetka;
                 }
                 return a;
             }
+            set { title = value;}
         }
-
+        public string Title
+        {
+            get; set;
+        }
         public IEnumerable<ReportItem> ReportItems { get; set;}
         public bool WithContragentSum { get;  set; }
         public bool OnlyContragent { get; private set; }

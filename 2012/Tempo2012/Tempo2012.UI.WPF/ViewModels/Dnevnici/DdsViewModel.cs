@@ -55,11 +55,21 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                 RefreshExecuted(this, e);
             }
         }
+        public string SubTitle
+        {
+            get
+            {
+                return ddsDnevnikModel.Title;
+            }
+            set
+            {
+                ddsDnevnikModel.Title = value;
+            }
+        }
         public string Title
         {
-            get { return ddsDnevnikModel.Title; }
+            get; set;
         }
-
         public string Linked
         {
             get
@@ -764,7 +774,6 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
         public List<List<string>> GetTXTAntetka()
         {
             var ret = new List<List<string>>();
-            int maxlen = 0;
             bool razmina = true; 
             int k = 0;
             int step = 1;
