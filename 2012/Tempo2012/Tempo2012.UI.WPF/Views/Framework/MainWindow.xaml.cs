@@ -576,14 +576,14 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                if (MessageBoxWrapper.Show("С включени нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = true });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = false });
                     rd.ShowDialog();
                 }
                 else
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = false });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), HideAllZero = true });
                     rd.ShowDialog();
 
                 }
@@ -985,14 +985,14 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                if (MessageBoxWrapper.Show("Справката да ские ли редове само с нули?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                if (MessageBoxWrapper.Show("С включени нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = true });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = false });
                     rd.ShowDialog();
                 }
                 else
                 {
-                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = false });
+                    ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1, HideAllZero = true });
                     rd.ShowDialog();
                 }
             }
@@ -1100,7 +1100,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, true, true,false,kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, true, true,1,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -1108,7 +1108,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, true,false,kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, true,1,kindval);
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -1153,7 +1153,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, true, true, false, kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, true, true, 1, kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -1161,7 +1161,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, true, false, kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, true, 1, kindval);
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -1234,7 +1234,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, null, true, false, true, kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, null, true, false, 1, kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -1242,7 +1242,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, false, true, kindval);
+                        var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, contri, true, false, 1, kindval);
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();

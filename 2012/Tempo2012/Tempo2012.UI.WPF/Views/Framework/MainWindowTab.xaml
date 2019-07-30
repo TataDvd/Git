@@ -192,7 +192,7 @@
                             <MenuItem  Click="MenuItem_OnClick23" Tag="Справка за Фактури">
                                 <MenuItem.HeaderTemplate>
                                     <DataTemplate>
-                                        <CustomControls:TextBlockEx Text="Справка зMenuItem_Click_25а Фактури"/>
+                                        <CustomControls:TextBlockEx Text="Справка за Фактури"/>
                                     </DataTemplate>
                                 </MenuItem.HeaderTemplate>
                             </MenuItem>
@@ -203,7 +203,14 @@
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
-                        <MenuItem  Click="MenuItem_Click_39" Tag="Справка фактури обобщени по контрагент валута">
+                        <MenuItem  Click="MenuItem_Click_39" Tag="Справка фактури обобщени по контрагент валута годишна">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент валута годишна"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem  Click="MenuItem_Click_41" Tag="Справка фактури обобщени по контрагент валута">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>
                                     <CustomControls:TextBlockEx Text="Справка фактури обобщени по контрагент валута"/>
