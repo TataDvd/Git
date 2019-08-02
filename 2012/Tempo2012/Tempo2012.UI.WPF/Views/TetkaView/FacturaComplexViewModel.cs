@@ -1834,8 +1834,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             get
             {
-                string b = "обобщена за контрагент за сметка ";
-                if (this.IsVal==1)  b = "обобщена за контрагент и валута за сметка ";
+                string b = "за сметка ";
+                if (this.IsVal==1)  b = "за сметка ";
                 string a=b + this.accountsModel.ShortName;
                 if (typerep == 1)
                 {

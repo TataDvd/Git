@@ -640,7 +640,7 @@
                 </MenuItem>
             </Menu>
         </Border>
-        <TabControl Name="MDIContainer" Grid.Row="1">
+        <TabControl Name="MDIContainer" Grid.Row="1" >
         </TabControl>
         <!--<Expander Grid.Row="1" Grid.Column="1" 
                   Header="Текуща конфигурация" Height="Auto"
