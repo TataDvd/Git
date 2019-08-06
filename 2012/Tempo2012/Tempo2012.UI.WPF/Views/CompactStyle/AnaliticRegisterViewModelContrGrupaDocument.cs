@@ -29,21 +29,21 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
         public AnaliticRegisterViewModelContrGrupaDocument()
         {
             var reportItems = new List<ReportItem>();
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "запис", Width = 5 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "запис", Width = 5 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "номер", Width = 5 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата", Width = 10 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "папка", Width = 5 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "вид д.", Width = 5 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "сч.", Width = 3 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "обект", Width = 5 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата док.", Width = 10 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "вид д.", Width = 5 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "сч.", Width = 3 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "обект", Width = 5 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дата док.", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "оборот", Width = 12, IsSuma = true });
             //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "оборотк", Width = 12, IsSuma = true });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дебит сметка", Width = 12 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "кредит сметка", Width = 12 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "основание", Width = 30 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "забележка", Width = 20 });
-            //reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "транзакция", Width = 12 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "дебит сметка", Width = 12 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "кредит сметка", Width = 12 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "основание", Width = 30 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "забележка", Width = 20 });
+            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "транзакция", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "код контр.", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "контрагент", Width = 32 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Забележка", Width = 32 });
@@ -68,8 +68,8 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
 
             List<List<string>> items = new List<List<string>>();
             List<Conto> contos = new List<Conto>(Context.GetAllContoGrupedByContragent(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromDate,ToDate, "17",CurrenAcc.Id));
-            List<Conto> contosdebit = contos.Where(e => e.DebitAccount == CurrenAcc.Id).ToList();
-            List<Conto> contoscredit = contos.Where(e => e.CreditAccount == CurrenAcc.Id).ToList();
+            List<Conto> contosdebit = contos.Where(e => e.DebitAccount == CurrenAcc.Id && !string.IsNullOrWhiteSpace(e.DDetails)).ToList();
+            List<Conto> contoscredit = contos.Where(e => e.CreditAccount == CurrenAcc.Id && !string.IsNullOrWhiteSpace(e.DDetails)).ToList();
             contosdebit = contosdebit.GroupBy(item => new { item.DocNum, item.Folder, item.DDetails }).Select(
                 y => new Conto() {
                     DocNum=y.Key.DocNum,
@@ -77,7 +77,17 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                     DDetails=y.Key.DDetails,
                     Oborot=y.Sum(j=>j.Oborot),
                     CDetails=y.Last().CDetails,
-                    Note=y.Last().Note
+                    Nd=y.Last().Nd,
+                    Data = y.Last().Data,
+                    UserId = y.Last().UserId,
+                    KD =y.Last().KD,
+                    NumberObject = y.Last().NumberObject,
+                    DataInvoise = y.Last().DataInvoise,
+                    DebitAccount = y.Last().DebitAccount,
+                    Note =y.Last().Note,
+                    Reason = y.Last().Reason,
+                    Id = y.Last().Id,
+                    CreditAccount = y.Last().CreditAccount
                 }).ToList();
             contoscredit = contoscredit.GroupBy(item => new { item.DocNum, item.Folder, item.DDetails }).Select(
                y => new Conto()
@@ -87,9 +97,20 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                    DDetails = y.Key.DDetails,
                    Oborot = y.Sum(j => j.Oborot),
                    CDetails = y.Last().CDetails,
-                   Note = y.Last().Note
+                   Nd = y.Last().Nd,
+                   KD =y.Last().KD,
+                   UserId=y.Last().UserId,
+                   Data=y.Last().Data,
+                   NumberObject= y.Last().NumberObject,
+                   DataInvoise = y.Last().DataInvoise,
+                   Note = y.Last().Note,
+                   Reason = y.Last().Reason,
+                   Id=y.Last().Id,
+                   DebitAccount = y.Last().DebitAccount,
+                   CreditAccount=y.Last().CreditAccount
                }).ToList();
-            var joins = contosdebit.Union(contoscredit);                             
+            var joins = contosdebit.Union(contoscredit);
+            var all = joins.Union(contos.Where(e =>string.IsNullOrWhiteSpace(e.DDetails)));
             //contosdebit=from item in contosdebit
             //            group item by new {item.DocNum,item.Folder,item.DDetails}
             //            into gr
@@ -101,22 +122,22 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             foreach (var co in joins.OrderBy(e=>e.DocNum))
             {
                 List<string> item = new List<string>();
-                //item.Add(co.Nd.ToString());
+                item.Add(co.Nd.ToString());
                 item.Add(co.DocNum);
-                //item.Add(co.Data.ToShortDateString());
+                item.Add(co.Data.ToShortDateString());
                 item.Add(co.Folder);
-                //item.Add(co.KD);
-                //item.Add(co.UserId.ToString());
-                //item.Add(co.NumberObject.ToString());
-                //item.Add(co.DataInvoise.ToShortDateString());
+                item.Add(co.KD);
+                item.Add(co.UserId.ToString());
+                item.Add(co.NumberObject.ToString());
+                item.Add(co.DataInvoise.ToShortDateString());
                 item.Add(string.Format(Vf.LevFormat, co.Oborot));
-                //var dac = Allacc.FirstOrDefault(e => e.Id == co.DebitAccount);
-                //if (dac != null) item.Add(dac.Short);
-                //dac = Allacc.FirstOrDefault(e => e.Id == co.CreditAccount);
-                //if (dac != null) item.Add(dac.Short);
-                //item.Add(co.Reason);
-                //item.Add(co.Note);
-                //item.Add(co.Id.ToString());
+                var dac = Allacc.FirstOrDefault(e => e.Id == co.DebitAccount);
+                if (dac != null) item.Add(dac.Short);
+                dac = Allacc.FirstOrDefault(e => e.Id == co.CreditAccount);
+                if (dac != null) item.Add(dac.Short);
+                item.Add(co.Reason);
+                item.Add(co.Note);
+                item.Add(co.Id.ToString());
                 item.Add(co.DDetails);
                 item.Add(co.CDetails);
                 item.Add(co.Note);
