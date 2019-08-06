@@ -70,7 +70,8 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 {
                     var sm = new SearchViewModelAcc();
                     Entrence.Mask.FromDate=reportMenuProvider.Vm.FromDate();
-                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();  
+                    Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                    sm.Hrono  = (sender as MenuItem).Tag.ToString();
                     sm.AddNewCommand.Execute(null);
                     
                 }
@@ -123,7 +124,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
                 var sm = new SearchViewModelAcc();
-                sm.Hrono = "Хронологичен регистър без дневници";
+                sm.Hrono = (sender as MenuItem).Tag.ToString(); 
                 Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                 Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
                 sm.DeleteCommand.Execute(null);

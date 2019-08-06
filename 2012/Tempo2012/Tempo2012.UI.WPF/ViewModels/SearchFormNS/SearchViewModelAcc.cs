@@ -62,7 +62,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             if (Entrence.Mask.CreditAcc != null) _credit= Entrence.Mask.CreditAcc.ToString();
             if (Entrence.Mask.DebitMask != null) _debit = Entrence.Mask.DebitMask;
             if (Entrence.Mask.CreditMask != null) _credit = Entrence.Mask.CreditMask;
-            Hrono = "Хронологичен регистър";
+            
         }
         public void LoadSettings(string Path)
         {
