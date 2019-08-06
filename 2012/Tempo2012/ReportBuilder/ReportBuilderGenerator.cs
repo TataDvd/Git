@@ -280,6 +280,7 @@ namespace ReportBuilder
                         i++;
                     }
                     sb.Append("|");
+                    sb.AppendLine();
                     Line(iReportBuilder, sb);
                 }
                 i = 0;
@@ -300,6 +301,7 @@ namespace ReportBuilder
                         i++;
                     }
                     sb.Append("|");
+                    sb.AppendLine();
                     Line(iReportBuilder, sb);
                 }
                 //sborno
