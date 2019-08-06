@@ -596,7 +596,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
             ret.Add(String.Format("За фирма            : {0}",ConfigTempoSinglenton.GetInstance().CurrentFirma.Name));
             ret.Add(String.Format("Съставил            : {0}", Entrence.UserName));
             ret.Add(String.Format("ИД.Номер по ЗДДС    : {0}", ConfigTempoSinglenton.GetInstance().CurrentFirma.DDSnum));
-            ret.Add(String.Format("Даначеn период      : {0}/{1}",ddsDnevnikModel.Month, ddsDnevnikModel.Year));
+            ret.Add(String.Format("Данъчен период      : {0}/{1}",ddsDnevnikModel.Month, ddsDnevnikModel.Year));
             return ret;
             
         }
@@ -648,7 +648,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                     ret.Add("ИДЕНТИФИКАЦ.");//6
                     ret.Add("ИМЕ НА КОНТРАГЕНТА");//7
                     ret.Add("ВИД НА СТОКА/УСЛУГА");//8
-                    ret.Add("Дост чл 163а");//8а
+                    ret.Add("Дост чл 163а или внос чл.167а");//8а
                     if (KindActivity == 2)
                     {
                         ret.Add("ОБЩО ДО ЗА ОБЛАГАНЕ С ДДС");//9

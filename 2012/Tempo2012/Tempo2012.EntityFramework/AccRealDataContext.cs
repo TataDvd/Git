@@ -3492,7 +3492,9 @@ namespace Tempo2012.EntityFramework
                     ic.NameField = dbman.DataReader["NAME"].ToString();
                     ic.Oborot = decimal.Parse(dbman.DataReader["Oborot"].ToString());
                     ic.VALUE = dbman.DataReader["VALUE"].ToString();
-                    ic.DataInvoise = DateTime.Parse(dbman.DataReader["DD"].ToString());
+                    var dd = DateTime.Parse(dbman.DataReader["DD"].ToString());
+                    ic.DataInvoise = dd;
+                    ic.DataConto = dd;
                     ic.Folder = dbman.DataReader["Folder"].ToString();
                     ic.DocNumber = dbman.DataReader["DOCNUM"].ToString();
                     ic.Reason = dbman.DataReader["Reason"].ToString();
@@ -3596,6 +3598,7 @@ namespace Tempo2012.EntityFramework
                              CodeContragent = grp.Key.CodeContragent,
                              Oborot = grp.Sum(t => t.Oborot),
                              DataInvoise = grp.Max(t => t.DataInvoise),
+                             DataConto= grp.Max(t => t.DataConto),
                              Reason = grp.First().Reason,
                              Folder=grp.First().Folder,
                              VidVal=grp.First().VidVal,

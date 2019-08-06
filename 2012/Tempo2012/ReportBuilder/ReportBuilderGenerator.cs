@@ -194,14 +194,14 @@ namespace ReportBuilder
                 {
                     sb.AppendLine(iReportBuilder.Title);
                     //sb.AppendFormat("{0:300}", "-");
-                    Line(iReportBuilder, sb);
+                    //Line(iReportBuilder, sb);
                     
                 }
                 if (iReportBuilder.SubTitle != null)
                 {
                     sb.AppendLine(iReportBuilder.SubTitle);
                     //sb.AppendFormat("{0:300}", "-");
-                    Line(iReportBuilder, sb);
+                    //Line(iReportBuilder, sb);
 
                 }
                 // Fill spreadsheet with sample data
@@ -280,6 +280,7 @@ namespace ReportBuilder
                         i++;
                     }
                     sb.Append("|");
+                    sb.AppendLine();
                     Line(iReportBuilder, sb);
                 }
                 i = 0;
@@ -300,6 +301,7 @@ namespace ReportBuilder
                         i++;
                     }
                     sb.Append("|");
+                    sb.AppendLine();
                     Line(iReportBuilder, sb);
                 }
                 //sborno
@@ -776,7 +778,7 @@ namespace ReportBuilder
         }
         private static void Line(IReportBuilder iReportBuilder, StringBuilder sb)
         {
-            sb.AppendLine();
+            //sb.AppendLine();
             foreach (var c in iReportBuilder.ReportItems)
             {
                 if (c.IsShow)

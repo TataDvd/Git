@@ -1146,6 +1146,7 @@ namespace Tempo2012.UI.WPF
                         var f = new FacturaComplexViewModel(accountsModel, null, true, true,true,0,kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         ReportDialog report = new ReportDialog(f);
                         report.ShowDialog();
                     }
@@ -1155,6 +1156,7 @@ namespace Tempo2012.UI.WPF
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         report.ShowDialog();
                     }
                 }
@@ -1225,6 +1227,7 @@ namespace Tempo2012.UI.WPF
                     if (contri == "")
                     {
                         var f = new FacturaComplexViewModel(accountsModel, null, true,antetka, null, true,false,1,kindval);
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         f.FromDate = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,1,1);
                         f.ToDate = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12,31);//reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);
@@ -1236,9 +1239,10 @@ namespace Tempo2012.UI.WPF
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 1, 1);
                         f.ToDate = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31);
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         //reportMenuProvider.Vm.ToDate();
-                                                                                                       //f.FromDate = reportMenuProvider.Vm.FromDate();
-                                                                                                       //f.ToDate = reportMenuProvider.Vm.ToDate();
+                        //f.FromDate = reportMenuProvider.Vm.FromDate();
+                        //f.ToDate = reportMenuProvider.Vm.ToDate();
                         report.ShowDialog();
                     }
                // }
@@ -1318,6 +1322,7 @@ namespace Tempo2012.UI.WPF
                         var f = new FacturaComplexViewModel(accountsModel, null, true, antetka, null, true, false, 2, kindval);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         ReportDialog report = new ReportDialog(f);
                         report.ShowDialog();
                     }
@@ -1327,10 +1332,13 @@ namespace Tempo2012.UI.WPF
                         ReportDialog report = new ReportDialog(f);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
+                        f.Title = (sender as MenuItem).Tag.ToString();
                         report.ShowDialog();
                     }
                 }
             }
         }
+
+       
     }
 }
