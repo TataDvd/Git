@@ -731,7 +731,7 @@ namespace Tempo2012.EntityFramework
                 sb.Append("select c.*,cm.LOOKUPVAL,cm.\"VALUE\" from \"conto\" c");
                 sb.Append(" inner join \"accounts\" a on a.\"Id\"= c.\"CreditAccount\"");
                 sb.Append(" inner join \"accounts\" b on b.\"Id\"= c.\"DebitAccount\"");
-                sb.Append(" left outer join CONTOMOVEMENT cm on cm.CONTOID = c.\"Id\"");
+                sb.Append(" inner join CONTOMOVEMENT cm on cm.CONTOID = c.\"Id\"");
                 //sb.Append(" left outer join DDSDNEV d on d.NOM=c.\"Id\"");
                 sb.AppendFormat(" where \"FirmId\"={0}", firmaId);
                 sb.AppendFormat(" AND \"Date\">='{0}.{1}.{2}' and \"Date\"<='{3}.{4}.{5}'",
@@ -742,7 +742,7 @@ namespace Tempo2012.EntityFramework
                    to.Month,
                    to.Year);
                 sb.AppendFormat(" AND cm.ACCFIELDKEY=28 AND (c.\"CreditAccount\"={0} OR  c.\"DebitAccount\"={0})", accid);
-                sb.Append(" AND (cm.ACCFIELDKEY=28 or cm.\"VALUE\" is null)");
+                sb.Append(" AND (cm.ACCFIELDKEY=28)");
                 string s = sb.ToString();
                 dbman.ExecuteReader(CommandType.Text, s);
                 while (dbman.DataReader.Read())

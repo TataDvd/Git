@@ -63,13 +63,38 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
         public AccountsModel CurrenAcc { get; set; }
 
         private List<AccountsModel> Allacc;
+        public class ContoComparer : IEqualityComparer<Conto>
+        {
+            public bool Equals(Conto emp1, Conto emp2)
+            {
+                if (string.Equals(emp1.DocNum,emp2.DocNum) && string.Equals(emp1.Folder,emp2.Folder))
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            public int GetHashCode(Conto obj)
+            {
+                return obj.DocNum.GetHashCode();
+            }
+        }
         public List<List<string>> GetItems()
         {
-
+            if (Entrence.Mask.DebitAcc != null)
+            {
+                Entrence.Mask.DebitAcc.Num = CurrenAcc.Id;
+            }
+            else
+            {
+                Entrence.Mask.DebitAcc = new AccNum();
+                Entrence.Mask.DebitAcc.Num = CurrenAcc.Id;
+            }
+            List<Conto> contosall = new List<Conto>(Context.GetAllContoOrfiltered(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, Entrence.Mask));
             List<List<string>> items = new List<List<string>>();
             List<Conto> contos = new List<Conto>(Context.GetAllContoGrupedByContragent(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromDate,ToDate, "17",CurrenAcc.Id));
-            List<Conto> contosdebit = contos.Where(e => e.DebitAccount == CurrenAcc.Id && !string.IsNullOrWhiteSpace(e.DDetails)).ToList();
-            List<Conto> contoscredit = contos.Where(e => e.CreditAccount == CurrenAcc.Id && !string.IsNullOrWhiteSpace(e.DDetails)).ToList();
+            List<Conto> contosdebit = contos.Where(e => e.DebitAccount == CurrenAcc.Id).ToList();
+            List<Conto> contoscredit = contos.Where(e => e.CreditAccount == CurrenAcc.Id).ToList();
             contosdebit = contosdebit.GroupBy(item => new { item.DocNum, item.Folder, item.DDetails }).Select(
                 y => new Conto() {
                     DocNum=y.Key.DocNum,
@@ -110,7 +135,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                    CreditAccount=y.Last().CreditAccount
                }).ToList();
             var joins = contosdebit.Union(contoscredit);
-            var all = joins.Union(contos.Where(e =>string.IsNullOrWhiteSpace(e.DDetails)));
+            var all = joins.Union(contosall,new ContoComparer());
             //contosdebit=from item in contosdebit
             //            group item by new {item.DocNum,item.Folder,item.DDetails}
             //            into gr
@@ -119,7 +144,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             //            }
             //Контрагент - 4 АНИ - ЕКС ООД
 
-            foreach (var co in joins.OrderBy(e=>e.DocNum))
+            foreach (var co in all.OrderBy(e=>e.DocNum))
             {
                 List<string> item = new List<string>();
                 item.Add(co.Nd.ToString());
