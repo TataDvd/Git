@@ -21,8 +21,10 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
     public class SearchViewModelAcc : BaseViewModel, ISearchAcc, IReportBuilder
     {
         public Dictionary<int, List<string>> Rowfoother { get; set; }
-        public SearchViewModelAcc()
+        public bool IsDetailed { get; set; }
+        public SearchViewModelAcc(bool isdetailed)
         {
+            IsDetailed = isdetailed;
             AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
             AllWrapedConto = new ObservableCollection<WraperConto>();
             //AllConto =
@@ -51,8 +53,23 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 1", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Признак 2", Width = 10 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Ном. Факт.", Width = 10 });
-            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит Детайли", Width = 100 });
-            reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит Детайли", Width = 100 });
+            if (IsDetailed) {
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит поле1", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит поле2", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит поле3", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит поле4", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит поле5", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит поле1", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит поле2", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит поле3", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит поле4", Width = 30 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит поле5", Width = 30 });
+            }
+            else
+            {
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Дебит Детайли", Width = 100 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Кредит Детайли", Width = 100 });
+            }
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Потребител", Width = 12 });
             reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = "Транзакция", Width = 12 });
 
@@ -160,8 +177,72 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                 {
                     newitem.Add("");
                 }
-                newitem.Add(conto.DDetails ?? "");
-                newitem.Add(conto.CDetails ?? "");
+                if (IsDetailed)
+                {
+                    if (!string.IsNullOrWhiteSpace(conto.DDetails))
+                    {
+                        var sp = conto.DDetails.Split('\n');
+                        int i = 0;
+                        foreach (string item in sp)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item))
+                            {
+                                var split = item.Split('-');
+                                newitem.Add(split[1]);
+                                i++;
+                            }
+                        }
+                        if (i < 5)
+                        {
+                            for (var j = i; j < 5; j++)
+                            {
+                                newitem.Add("");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                    }
+                    if (!string.IsNullOrWhiteSpace(conto.CDetails))
+                    {
+                        var sp = conto.CDetails.Split('\n');
+                        int i = 0;
+                        foreach (string item in sp)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item))
+                            {
+                                var split = item.Split('-');
+                                newitem.Add(split[1]);
+                                i++;
+                            }
+                        }
+                        if (i < 5)
+                        {
+                            for (var j = i; j < 5; j++)
+                            {
+                                newitem.Add("");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                        newitem.Add("");
+                    }
+                }
+                else
+                {
+                    newitem.Add(conto.DDetails ?? "");
+                    newitem.Add(conto.CDetails ?? "");
+                }
                 newitem.Add(conto.UserId.ToString());
                 newitem.Add(conto.Id.ToString());
                 result.Add(newitem);

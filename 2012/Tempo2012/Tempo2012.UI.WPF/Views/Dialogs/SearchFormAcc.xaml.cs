@@ -30,7 +30,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         public SearchFormAcc()
         {
             InitializeComponent();
-            vm = new SearchViewModelAcc();
+            vm = new SearchViewModelAcc(false);
             DataContext = vm;
         }
 

@@ -7,6 +7,7 @@
             <MenuItem Header="Маска" Click="MenuItem_Click_3"/>
             <MenuItem Header="Хронологичен регистър">
                 <MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_2" Tag="Хронологичен регистър"/>
+                <MenuItem Header="Хронологичен регистър подробен" Click="MenuItem_Click_5" Tag="Хронологичен регистър подробен"/>
                 <MenuItem Header="Хронологичен регистър с дневници продажби" Click="MenuItem_OnClick_DnevProd" Tag="Хронологичен регистър с дневници продажби"/>
                 <MenuItem Header="Хронологичен регистър с дневници покупки" Click="MenuItem_OnClick" Tag="Хронологичен регистър с дневници покупки"/>
                 <MenuItem Header="Осчетоводявания, несвързани с  дневници" Click="MenuItem_OnClick_bezDDS" Tag="Осчетоводявания, несвързани с  дневници"/>

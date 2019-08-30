@@ -68,7 +68,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    var sm = new SearchViewModelAcc();
+                    var sm = new SearchViewModelAcc(false);
                     Entrence.Mask.FromDate=reportMenuProvider.Vm.FromDate();
                     Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
                     sm.Hrono  = (sender as MenuItem).Tag.ToString();
@@ -123,7 +123,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                var sm = new SearchViewModelAcc();
+                var sm = new SearchViewModelAcc(false);
                 sm.Hrono = (sender as MenuItem).Tag.ToString(); 
                 Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
                 Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
@@ -293,6 +293,21 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
                     rd.ShowDialog();
                    
                 }
+            }
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+            reportMenuProvider.ShowDialog();
+            if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+            {
+                var sm = new SearchViewModelAcc(true);
+                Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                sm.Hrono = (sender as MenuItem).Tag.ToString();
+                sm.AddNewCommand.Execute(null);
+
             }
         }
     }
