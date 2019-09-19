@@ -1226,7 +1226,7 @@ namespace Tempo2012.EntityFramework
             {
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 string s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(a.\"Oborot\") as debit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(Round(a.\"Oborot\",2)) as debit FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"DebitAccount\" " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<='{4}.{5}.{6}') " +
                    "group by b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\" " +
@@ -1264,7 +1264,7 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(a.\"Oborot\") as debit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(Round(a.\"Oborot\",2)) as debit FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"DebitAccount\" " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<'{4}.{5}.{6}') " +
                    "group by b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\" " +
@@ -1300,7 +1300,7 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(a.\"Oborot\") as credit FROM \"conto\" a "+
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(Round(a.\"Oborot\",2)) as credit FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"CreditAccount\" " +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<='{4}.{5}.{6}')"+
                    "group by b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\" "+
@@ -1336,7 +1336,7 @@ namespace Tempo2012.EntityFramework
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
                 s = string.Format(
-                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(a.\"Oborot\") as credit FROM \"conto\" a " +
+                   "SELECT b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\",sum(Round(a.\"Oborot\",2)) as credit FROM \"conto\" a " +
                    "inner join \"accounts\" b on b.\"Id\"=a.\"CreditAccount\"" +
                    "where (a.\"FirmId\"='{0}' and a.\"Date\">='{1}.{2}.{3}' and a.\"Date\"<'{4}.{5}.{6}')" +
                    "group by b.\"Id\",b.NAMEMAIN,b.NUM,b.\"SubNum\" " +
