@@ -1253,12 +1253,12 @@ namespace Tempo2012.EntityFramework
                         obor.Num = dbman.DataReader["NUM"].ToString();
                         obor.SubNum = dbman.DataReader["SubNum"].ToString();
                         obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
-                        obor.OD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                        obor.OD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()),2);
                         gruper.Add(obor);
                     }
                     else
                     {
-                        ite.OD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                        ite.OD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()));
                     }
                     
                 }
@@ -1290,7 +1290,7 @@ namespace Tempo2012.EntityFramework
                         obor.Num = dbman.DataReader["NUM"].ToString();
                         obor.SubNum = dbman.DataReader["SubNum"].ToString();
                         obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
-                        obor.NSD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                        obor.NSD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()),2);
                         gruper.Add(obor);
                     }
                     else
@@ -1326,12 +1326,12 @@ namespace Tempo2012.EntityFramework
                          obor.Num = dbman.DataReader["NUM"].ToString();
                          obor.SubNum = dbman.DataReader["SubNum"].ToString();
                          obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
-                         obor.OK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                         obor.OK = Math.Round(decimal.Parse(dbman.DataReader["credit"].ToString()),2);
                          gruper.Add(obor);
                      }
                      else
                      {
-                         ite.OK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                         ite.OK = Math.Round(decimal.Parse(dbman.DataReader["credit"].ToString()),2);
                      }
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
@@ -1362,12 +1362,12 @@ namespace Tempo2012.EntityFramework
                          obor.Num = dbman.DataReader["NUM"].ToString();
                          obor.SubNum = dbman.DataReader["SubNum"].ToString();
                          obor.Name = dbman.DataReader["NAMEMAIN"].ToString();
-                         obor.NSK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                         obor.NSK = Math.Round(decimal.Parse(dbman.DataReader["credit"].ToString()),2);
                          gruper.Add(obor);
                      }
                      else
                      {
-                         ite.NSK = decimal.Parse(dbman.DataReader["credit"].ToString());
+                         ite.NSK = Math.Round(decimal.Parse(dbman.DataReader["credit"].ToString()),2);
                      }
                  }
             }
