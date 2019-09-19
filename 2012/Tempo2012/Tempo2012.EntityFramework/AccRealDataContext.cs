@@ -1258,7 +1258,7 @@ namespace Tempo2012.EntityFramework
                     }
                     else
                     {
-                        ite.OD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()));
+                        ite.OD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()),2);
                     }
                     
                 }
@@ -1295,7 +1295,7 @@ namespace Tempo2012.EntityFramework
                     }
                     else
                     {
-                        ite.NSD = decimal.Parse(dbman.DataReader["debit"].ToString());
+                        ite.NSD = Math.Round(decimal.Parse(dbman.DataReader["debit"].ToString()),2);
                     }
                 }
                 // "SELECT p.NUM,p.NAME,p.NSD,p.NSK,p.OBD,p.OBK,p.KSD,p.KSK FROM GETALLOBOROTKA('{0}.{1}.{2}','{3}.{4}.{5}',{6}) p"
