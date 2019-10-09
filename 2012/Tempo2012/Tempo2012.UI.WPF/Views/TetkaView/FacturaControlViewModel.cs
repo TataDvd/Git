@@ -16,6 +16,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
     {
         public Dictionary<int, List<string>> Rowfoother { get; set; }
         private ContoViewModel cv;
+        private ContoViewModelLight cv1;
         public FacturaControlViewModel(AccountsModel accountsModel, ContoViewModel contoView,bool withContragentSum,  bool onlyContragent=false, bool withpisma = false)
         {
             _movements = new List<AccItemSaldo>();
@@ -37,6 +38,28 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             this.withpisma = withpisma;
             ReportItems = _reportItems;
             
+        }
+        public FacturaControlViewModel(AccountsModel accountsModel, ContoViewModelLight contoView, bool withContragentSum, bool onlyContragent = false, bool withpisma = false)
+        {
+            _movements = new List<AccItemSaldo>();
+            this.accountsModel = accountsModel;
+            cv1 = contoView;
+            this.WithContragentSum = withContragentSum;
+            this.OnlyContragent = onlyContragent;
+            var _reportItems = new List<ReportItem>();
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Код", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Контрагент", Width = 50 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Номер Фактура", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Дата", Width = 10 });
+            // _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС", Width = 15, IsSuma = true });
+            // _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС Кредит", Width = 15, IsSuma = true });
+            this.withpisma = withpisma;
+            ReportItems = _reportItems;
+
         }
         public FacturaControlViewModel(AccountsModel accountsModel,ContoViewModel contoView,bool WithContragentSum,string antetka, string contr = null, bool onlyContragent = false, bool withpisma = false)
         {
@@ -70,6 +93,37 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
         }
 
+        public FacturaControlViewModel(AccountsModel accountsModel, ContoViewModelLight contoView, bool WithContragentSum, string antetka, string contr = null, bool onlyContragent = false, bool withpisma = false)
+        {
+            _movements = new List<AccItemSaldo>();
+            OnlyContragent = onlyContragent;
+            cv1 = contoView;
+            this.accountsModel = accountsModel;
+            this.antetka = antetka;
+            this.WithContragentSum = WithContragentSum;
+            var _reportItems = new List<ReportItem>();
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Код", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Контрагент", Width = 30 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Номер Фактура", Width = 10 });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Дата", Width = 10 });
+            //_reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "НС", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "Оборот Кредит", Width = 15, IsSuma = true });
+            //_reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС Дебит ", Width = 15, IsSuma = true });
+            _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС", Width = 15, IsSuma = true });
+
+            ReportItems = _reportItems;
+            filter = null;
+            if (contr != null)
+            {
+                filter = string.Format("|{0} ", contr);
+            }
+            typerep = 1;
+
+            this.withpisma = withpisma;
+
+        }
 
         public void LoadSettings(string Path)
         {
@@ -156,35 +210,70 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         {
             var it = item as AccItemSaldo;
             if (it == null) return;
-            
-            foreach (var saldoItem in cv.ItemsCredit)
+            if (cv != null)
             {
-                if (saldoItem.Name.Contains("Дата на фактура"))
+                foreach (var saldoItem in cv.ItemsCredit)
                 {
-                    saldoItem.ValueDate = it.Data;
+                    if (saldoItem.Name.Contains("Дата на фактура"))
+                    {
+                        saldoItem.ValueDate = it.Data;
 
+                    }
+                    if (saldoItem.Name.Contains("Номер фактура"))
+                    {
+                        saldoItem.Value = it.NInvoise;
+                    }
+                    if (saldoItem.IsLookUp)
+                    {
+                        oldsaldo = saldoItem;
+                    }
                 }
-                if (saldoItem.Name.Contains("Номер фактура"))
+                cv.CurrentWraperConto.Oborot = it.Ksd;
+                cv.SaveF3();
+                foreach (var saldoItem in cv.ItemsCredit)
                 {
-                    saldoItem.Value = it.NInvoise;
-                }
-                if (saldoItem.IsLookUp)
-                {
-                    oldsaldo = saldoItem;
+
+                    if (saldoItem.IsLookUp)
+                    {
+                        saldoItem.Bulstad = oldsaldo.Bulstad;
+                        saldoItem.LookUp = oldsaldo.LookUp;
+                        saldoItem.Value = oldsaldo.Value;
+                        saldoItem.Lookupval = oldsaldo.Lookupval;
+                        saldoItem.LiD = oldsaldo.LiD;
+                    }
                 }
             }
-            cv.CurrentWraperConto.Oborot = it.Ksd;
-            cv.SaveF3();
-            foreach (var saldoItem in cv.ItemsCredit)
+            else
             {
-                
-                if (saldoItem.IsLookUp)
+                foreach (var saldoItem in cv1.ItemsCredit)
                 {
-                    saldoItem.Bulstad = oldsaldo.Bulstad;
-                    saldoItem.LookUp = oldsaldo.LookUp;
-                    saldoItem.Value = oldsaldo.Value;
-                    saldoItem.Lookupval = oldsaldo.Lookupval;
-                    saldoItem.LiD = oldsaldo.LiD;
+                    if (saldoItem.Name.Contains("Дата на фактура"))
+                    {
+                        saldoItem.ValueDate = it.Data;
+
+                    }
+                    if (saldoItem.Name.Contains("Номер фактура"))
+                    {
+                        saldoItem.Value = it.NInvoise;
+                    }
+                    if (saldoItem.IsLookUp)
+                    {
+                        oldsaldo = saldoItem;
+                    }
+                }
+                cv1.CurrentWraperConto.Oborot = it.Ksd;
+                cv1.SaveF3();
+                foreach (var saldoItem in cv1.ItemsCredit)
+                {
+
+                    if (saldoItem.IsLookUp)
+                    {
+                        saldoItem.Bulstad = oldsaldo.Bulstad;
+                        saldoItem.LookUp = oldsaldo.LookUp;
+                        saldoItem.Value = oldsaldo.Value;
+                        saldoItem.Lookupval = oldsaldo.Lookupval;
+                        saldoItem.LiD = oldsaldo.LiD;
+                    }
                 }
             }
         }

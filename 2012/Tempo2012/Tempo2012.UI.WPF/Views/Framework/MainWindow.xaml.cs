@@ -800,7 +800,7 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum);
+                    var f = new FacturaControlViewModel(accountsModel, new ContoViewModelLight(), acc.WithContragentSum);
                     f.FromDate = reportMenuProvider.Vm.FromDate();
                     f.ToDate = reportMenuProvider.Vm.ToDate();
                     ReportDialog report = new ReportDialog(f);
@@ -847,7 +847,7 @@ namespace Tempo2012.UI.WPF
                             MessageBoxWrapper.Show("Не е намерена сметка с номер " + acc.Acc);
                             return;
                         }
-                        var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum,true);
+                        var f = new FacturaControlViewModel(accountsModel, new ContoViewModelLight(), acc.WithContragentSum,true);
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
                         ReportDialog report = new ReportDialog(f);

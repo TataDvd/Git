@@ -1,0 +1,1083 @@
+﻿<UserControl x:Class="Tempo2012.UI.WPF.Views.ContoViewLight"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:inteli="clr-namespace:dragonz.actb.control;assembly=dragonz.actb"
+             xmlns:local="clr-namespace:Tempo2012.UI.WPF.TemplateSelector"
+             xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+             xmlns:Framework="clr-namespace:Tempo2012.UI.WPF.Views.Framework"
+             xmlns:LookupFastSearch="clr-namespace:Tempo2012.UI.WPF.Views.LookupFastSearch"
+             xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+             mc:Ignorable="d" 
+             x:Name="_this" 
+             KeyDown="_this_KeyDown"
+             MouseLeftButtonDown="ContoView_OnMouseDown"
+             >
+    <UserControl.Resources>
+        <l:AccToVisibleConvertor x:Key="AccToVisibleConvertor"></l:AccToVisibleConvertor>
+        <l:LevConvertor x:Key="lv"/>
+        <l:ValConvertor x:Key="val"></l:ValConvertor>
+        <l:KolConvertor x:Key="kol"></l:KolConvertor>
+        <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+        <Style TargetType="{x:Type CustomControls:TextBlockEx}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type CustomControls:TextBoxEx}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Margin" Value="0,8" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+            Value="{Binding 
+                    RelativeSource={RelativeSource Self}, 
+                    Path=(Validation.Errors)[0].ErrorContent
+                   }"/>
+                    <Setter Property="Validation.ErrorTemplate">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1" >
+                                        <AdornedElementPlaceholder/>
+                                    </Border>
+                                    <CustomControls:TextBlockEx Foreground="Red" FontSize="16">!</CustomControls:TextBlockEx>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
+        <l:FromEnumToString x:Key="etostr"/>
+        <l:ValidityToColor x:Key="vtoc"/>
+        <l:BooleanToColorConvertor x:Key="btoc"/>
+        <l:BooleanToImageConvertor x:Key="btoi"/>
+        <l:DateToStringConverter x:Key="dtos"/>
+        <DataTemplate x:Key="InfoTemplateK">
+            <CustomControls:TextBlockEx Width="50" Text="...">
+                <CustomControls:TextBlockEx.ToolTip>
+                    <ToolTip>
+                        <DockPanel>
+                            <Image Source="../../Images/notes.png"/>
+                            <CustomControls:TextBlockEx Text="{Binding CDetails}"></CustomControls:TextBlockEx>
+                        </DockPanel>
+                    </ToolTip>
+                </CustomControls:TextBlockEx.ToolTip>
+            </CustomControls:TextBlockEx>
+
+
+        </DataTemplate>
+        <DataTemplate x:Key="InfoTemplateD">
+            <CustomControls:TextBlockEx Width="50" Text="...">
+                <CustomControls:TextBlockEx.ToolTip>
+                    <ToolTip>
+                        <DockPanel>
+                            <Image Source="../../Images/notes.png"/>
+                            <CustomControls:TextBlockEx Text="{Binding DDetails}"></CustomControls:TextBlockEx>
+                        </DockPanel>
+                    </ToolTip>
+                </CustomControls:TextBlockEx.ToolTip>
+            </CustomControls:TextBlockEx>
+
+
+        </DataTemplate>
+        <DataTemplate x:Key="EmptyTemplate">
+            <CustomControls:TextBlockEx Width="50" Text=""/>
+        </DataTemplate>
+        <DataTemplate x:Key="StringTemplate">
+            <Grid Margin="20,0,20,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+
+
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="0" Text="{Binding  Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Margin="10,5,10,5"
+                         Grid.Column="1"
+                         Text="{Binding  Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         Background="{Binding Value,Converter={StaticResource vtoc}}"                 
+                         Width="180"
+                         TabIndex="{Binding TabIndex}" 
+                         KeyboardNavigation.ControlTabNavigation="None"
+                                          TextChanged="TextBoxBase_OnTextChanged"
+                />
+                <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" Foreground="{Binding Path=IsValid,Converter={StaticResource btoc}}"/>-->
+
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DTemplate">
+            <Grid Margin="20,0,20,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
+
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+                          TabIndex="{Binding TabIndex}"                   
+                          />
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"></CustomControls:TextBlockEx>
+                <!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="КTemplate">
+            <Grid Margin="20,0,20,0" FocusManager.FocusedElement="{Binding ElementName=firstelement}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
+
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+                          TabIndex="{Binding TabIndex}"                   
+                                   />
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"></CustomControls:TextBlockEx>
+                <!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ValTemplate">
+
+            <Framework:Valuta DataContext="{Binding}" ValutaChanged="ValutaValutaChanged" >
+            </Framework:Valuta>
+
+        </DataTemplate>
+        <DataTemplate x:Key="KolTemplate">
+            <Framework:Col DataContext="{Binding}" ColChanged="Col_OnColChanged">
+            </Framework:Col>
+
+        </DataTemplate>
+        <DataTemplate x:Key="LookUpTemplate">
+            <LookupFastSearch:LookupFastSearcherUniverse DataContext="{Binding}" TabIndex="{Binding TabIndex}" ChangeElement="LookupFastSearcherUniverse_OnChangeElement"></LookupFastSearch:LookupFastSearcherUniverse>
+        </DataTemplate>
+        <DataTemplate x:Key="DateTemplate">
+            <Grid Margin="20,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
+                <DatePicker Margin="10,5,10,5" Grid.Column="1" SelectedDate="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="{Binding TabIndex}" SelectedDateChanged="DatePicker_OnSelectedDateChanged"></DatePicker>
+                <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+            </Grid>
+        </DataTemplate>
+        <local:ItemDataTemplateSelecor
+              IntTemplate="{StaticResource StringTemplate}" 
+              StringTemplate="{StaticResource StringTemplate}" 
+              LookUpTemplate="{StaticResource  LookUpTemplate}"
+              DateTemplate="{StaticResource DateTemplate}"
+              MoneyTemplate="{StaticResource StringTemplate}"
+              DTemplate="{StaticResource DTemplate}"
+              KTemplate="{StaticResource КTemplate}"  
+              KolTemplate="{StaticResource KolTemplate}"
+              ValTemplate="{StaticResource ValTemplate}"
+              
+            x:Key="ItemDataTemplateSelecor" />
+        <local:DetailsTemplateSelecorC
+              ShowTemplate="{StaticResource InfoTemplateK}" 
+              EmptyTemplate="{StaticResource EmptyTemplate}" 
+                  
+            x:Key="ks" />
+        <local:DetailsTemplateSelecorD
+              ShowTemplate="{StaticResource InfoTemplateD}" 
+              EmptyTemplate="{StaticResource EmptyTemplate}" 
+                  
+            x:Key="ds" />
+    </UserControl.Resources>
+    <!--<Border>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto" MinHeight="400"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="90"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--<v:CommandBar Grid.Row="0" x:Name="commands" DataContext="{Binding ElementName=_this}">
+
+                </v:CommandBar>-->
+                <GroupBox Grid.Row="1" Header="ДДС" 
+                                  Visibility="{Binding Path=IsDdsVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" PreviewKeyDown="UIElement_OnPreviewKeyDown">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="250"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,0,10,0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+                            <StackPanel Orientation="Horizontal"  Height="30">
+                                <CheckBox  
+                                      IsChecked="{Binding Path=IsSales}"
+                                      IsEnabled="False"
+                                      TabIndex="-1" Width="130" ToolTip="Включи контировката в дневник продажби" 
+                                       Margin="0,5,0,0" 
+                                      >
+                                    <CustomControls:TextBlockEx Text="Д-к продажби"  Height="15" Margin="0"/>
+                                </CheckBox>
+                                <CustomControls:TextBlockEx Text="Сделка" Margin="0,5,0,8"  />
+                                <!--<CustomControls:TextBlockEx Grid.Row="0" Grid.Column="3" Text="Сделка" Margin="10,5,10,2" Visibility="{Binding Path=IsDealVisible,Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                                <inteli:AutoCompleteTextBox Width="60" 
+                                                            Margin="10,5,10,5" 
+                                                            ItemsSource="{Binding VopsSales}"
+                                                            Text="{Binding VopSales,Mode=TwoWay}"
+                                                            IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"
+                                                     TabIndex="2" />
+                                <ComboBox   SelectedItem="{Binding CurrItemDdsDnevSales,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                            Width="250" 
+                                            Margin="10,5,10,5" 
+                                            ItemsSource="{Binding ElementName=_this,Path=DataContext.ItemsDdsDnevSales}" 
+                                            IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"
+                                            TabIndex="3" DisplayMemberPath="NameCode"
+                           />
+
+
+
+                                <Button Content="Д-к Продажби"
+                                        Margin="10,0,10,5" 
+                                        Click="Button_Click_1" 
+                                        Visibility="{Binding Path=EnableUpdate,Converter={StaticResource BooleanToVisibilityConverter}}" Focusable="False"
+                                        Width="120" Height="20" VerticalAlignment="Bottom" />
+                                <StackPanel Orientation="Horizontal" >
+                                    <CheckBox  IsChecked="{Binding Path=IsDds}"
+                                           
+                                           TabIndex="52" IsEnabled="False" Margin="0,7,0,0" >
+
+                                        <CustomControls:TextBlockEx Text=" С ДДС" Height="20" Margin="0" />
+                                    </CheckBox>
+                                    <CheckBox  IsChecked="{Binding Path=IsDdsInclude}" Margin="20,7,20,0"
+                                          TabIndex="51"
+                                          IsEnabled="False"
+                                          >
+                                        <CustomControls:TextBlockEx Text="Включен ДДС" Height="20" Margin="0" />
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Height="30">
+                                <CheckBox  
+                                      IsChecked="{Binding Path=IsPurchases}"
+                                      TabIndex="-1"
+                                      Width="130"
+                                      ToolTip="Включи сделката в дневник покупки"
+                                      IsEnabled="False"
+                                      Margin="0,5,0,2"
+                                   >
+                                    <CustomControls:TextBlockEx Text="Д-к покупки" VerticalAlignment="Top" Height="23" Margin="0"/>
+                                </CheckBox>
+                                <CustomControls:TextBlockEx Text="Сделка" />
+                                <inteli:AutoCompleteTextBox Width="60" Grid.Row="0" Grid.Column="4" Margin="10,5,10,2" ItemsSource="{Binding VopsPurchases}" Text="{Binding VopPurchases,Mode=TwoWay}" 
+                                                     TabIndex="4" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" />
+                                <ComboBox   SelectedItem="{Binding CurrItemDdsDnevPurchases,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          Width="250" 
+                                          Margin="10,5,10,5" 
+                                          ItemsSource="{Binding ItemsDdsDnevPurchases}" DisplayMemberPath="NameCode"
+                                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" 
+                                          TabIndex="5"
+                                          />
+                                <Button Content="Д-к Покупки"
+                                        Margin="10,5,10,5"
+                                        Click="ButtonClick2" 
+                                        Width="120"
+                                        Visibility="{Binding Path=EnableUpdate,Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                        Focusable="False"
+                                  />
+
+                            </StackPanel>
+
+                        </StackPanel>
+                        <StackPanel >
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                                <CustomControls:TextBlockEx Text="Вид Документ"  Margin="10,7,10,5"></CustomControls:TextBlockEx>
+
+                            </StackPanel>
+                            <ComboBox x:Name="ComboBoxDoc" IsEditable="True" TabIndex="1" Width="230" 
+                              ItemsSource="{Binding ElementName=_this,Path=DataContext.KindDocLookup}"
+                              DisplayMemberPath="Name" 
+                              SelectedItem="{Binding Path=KindDoc,Mode=TwoWay}"
+                              Margin="10,5,10,2"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+        <GroupBox Header="Картон за осчетоводяване" 
+                          Grid.Column="0"
+                          Grid.Row="1"
+                          Grid.ColumnSpan="2" 
+                          FontWeight="Bold"
+                          IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"
+                          v:EnhancedFocusScope.IsEnhancedFocusScope="True"
+                          KeyboardNavigation.ControlTabNavigation="Once"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          PreviewKeyDown="UIElement_OnPreviewKeyDown"
+                          >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" MinWidth="150"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="150" MinWidth="150"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+
+                    <ColumnDefinition Width="150" MinWidth="150"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="150" Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6">
+                    <CustomControls:TextBlockEx  Text="Документ No:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
+                    <CustomControls:TextBoxEx x:Name="mainfocus" TabIndex="6"  Text="{Binding Path=DocId,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,5"  Width="115" HorizontalAlignment="Left"/>
+                    <CustomControls:TextBlockEx  Text="Папка No:" Margin="10,5,10,2" Width="66"/>
+                    <CustomControls:TextBoxEx Text="{Binding Path=Folder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="5,5,10,5" TabIndex="7"  Width="36" Tag="Folder" KeyDown="Prev_OnKeyDown"/>
+
+                    <CustomControls:TextBlockEx  Text="Обект No:" Margin="10,5,10,2"  Width="74" TextAlignment="Right"/>
+                    <CustomControls:TextBoxEx Text="{Binding NumberObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,5" TabIndex="8"  Width="50"/>
+                    <CustomControls:TextBlockEx 
+                                   Text="Натрупана сума" 
+                                   Visibility="{Binding ShowContoAll}" 
+                                   Margin="9,5,11,5"
+                                   />
+                    <CustomControls:TextBlockEx  
+                                   Text="{Binding ContoAll}" 
+                                   Margin="9,5,11,5"
+                                   FontFamily="Arial" FontSize="14" FontWeight="Bold"
+                                   Visibility="{Binding ShowContoAll}" />
+
+                    <Button  
+                                   Content="Изчисти"
+                                   Click="Button_Click_2" 
+                                   Margin="9,5,11,5"
+                                   FontFamily="Arial" FontSize="14" FontWeight="Bold"
+                                   Visibility="{Binding ShowContoAll}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Column="0"  Grid.ColumnSpan="6">
+                    <CustomControls:TextBlockEx  Text="Запис No:" Margin="5,5,4,2"  Width="61" />
+                    <CustomControls:TextBlockEx Text="{Binding Path=Index}" Margin="0,5,10,2" Width="52" />
+                    <CustomControls:TextBlockEx  Text="От всичко:" Margin="0,5,5,2"  Width="70" />
+                    <CustomControls:TextBlockEx Text="{Binding Path=Total}" Margin="10,5,10,2" Width="52" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6">
+                    <CustomControls:TextBlockEx  Text="Дата нa осчетоводяване:" Margin="10,5,10,2" Width="160" TextAlignment="Right" />
+                    <DatePicker TabIndex="9" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
+                                x:Name="datePicker1" 
+                                Width="115" 
+                                SelectedDate="{Binding Path=Data,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                Behavior:SelectedDateSyncBehavior.SyncText="True" KeyDown="_this_KeyDown"
+                                />
+                    <CustomControls:TextBlockEx  Text="Дата нa документа:" Margin="10,5,10,2" Width="120"  />
+                    <DatePicker Height="25" HorizontalAlignment="Left" Margin="20,5,10,2"
+                                x:Name="datePicker2" 
+                            SelectedDate="{Binding Path=DataInvoise,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"  TabIndex="10" Width="130"
+                             Behavior:SelectedDateSyncBehavior.SyncText="True" KeyDown="_this_KeyDown"
+                           />
+
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6">
+                    <CustomControls:TextBlockEx  Text="Номер" Margin="10,5,2,2" Width="51" />
+                    <CustomControls:TextBlockEx Text="{Binding Path=Id}" Margin="0,5,10,2" Width="57"/>
+                    <CustomControls:TextBlockEx  Text="Месец:" Margin="10,5,6,2"  Width="71" />
+                    <CustomControls:TextBlockEx Text="{Binding Path=Month}" Margin="0,5,0,2" Width="15"/>
+                    <CustomControls:TextBlockEx Text="/" Margin="0,5,0,2" Width="5"/>
+                    <CustomControls:TextBlockEx Text="{Binding Path=Year}" Margin="0,5,0,2" Width="50"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6" >
+                    <CustomControls:TextBlockEx 
+                           HorizontalAlignment="Right"
+                           Text="Основание:" 
+                           Margin="10,5,10,2"
+                            />
+                    <ComboBox Width="330" IsEditable="true"
+                          Text="{Binding Path=Reason,Mode=TwoWay,UpdateSourceTrigger= PropertyChanged,ValidatesOnDataErrors=True}" 
+                          Margin="10,5,10,5" 
+                          ItemsSource="{Binding Path=Osnovanie}" TabIndex="11" >
+                        <ComboBox.Resources>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="MaxLength" Value="50"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                    <CustomControls:TextBlockEx Text="Забележка" Margin="160,5,10,2"   />
+                    <ComboBox  Width="240"
+                           Text="{Binding Path=Note,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" 
+                          Margin="9,5,119,5" 
+                          ItemsSource="{Binding Path=Notes}" 
+                          IsEditable="True" TabIndex="12" >
+                        <ComboBox.Resources>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="MaxLength" Value="50"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </StackPanel>
+                <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" 
+                                   Text="Оборот" 
+                                   Margin="50,5,11,5"
+                                   FontFamily="Arial" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" />
+
+                <CustomControls:MaskTextBox 
+                            Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                            Grid.Row="3" 
+                            Grid.Column="3" 
+                            Text="{Binding Path=Oborot,Mode=TwoWay,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}" 
+                            Margin="0,5,0,5" 
+                            Width="100" 
+                            HorizontalAlignment="Left"
+                            DataType="decimal"
+                            FontFamily="Arial" FontSize="14" FontWeight="Bold" TabIndex="13" x:Name="Ob" LostFocus="UIElement_OnLostFocus"/>
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" 
+                                   Text="Признак 1" 
+                                   Margin="9,5,11,5"
+                                   FontFamily="Arial" />
+                    <CustomControls:TextBoxEx Text="{Binding Path=Pr1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="2,5,10,5" TabIndex="14" Width="250"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <CustomControls:TextBlockEx Grid.Row="3" Grid.Column="2" 
+                                   Text="Признак 2" 
+                                   Margin="9,5,11,5"
+                                   FontFamily="Arial" />
+                    <CustomControls:TextBoxEx Text="{Binding Path=Pr2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="5,5,10,5" TabIndex="15"  Width="250"/>
+                </StackPanel>
+                <Grid Grid.Row="5" Grid.ColumnSpan="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Дебит" Grid.Column="0">
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"></RowDefinition>
+                                <RowDefinition Height="25"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="75"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
+                                <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Дебит сметка" Margin="5,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
+                                <CustomControls:TextBoxEx Text="{Binding Path=DAccountsModel.Search}" Margin="10,0,10,0" Width="100" HorizontalAlignment="Left" KeyDown="debitsmetka_KeyDown" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" TabIndex="16" LostFocus="Mainfocus_OnLostFocus"/>
+                                <Button Grid.Row="0" Grid.Column="2" 
+                                        Click="Button_Click"
+                                        Margin="0,5,0,2" 
+                                        IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" 
+                                        Focusable="False">...</Button>
+                            </StackPanel>
+                            <!--<Button  Margin="0,5,10,5" 
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick"
+                         CommandParameter="{Binding DAccountsModel}"
+                         Content="Детайли" 
+                         Visibility="{Binding DAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                        />-->
+                            <CustomControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                           Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                           Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" />
+                            <Button   
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick1" 
+                         Content="Детайли" 
+                         Visibility="{Binding DAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                         Focusable="False" Height="25" VerticalAlignment="Top"
+                        />
+                            <!--<Button   
+                         Grid.Row="1" Grid.Column="2"
+                         Click="Button_Click_3" 
+                         Content="Фактури" 
+                         Visibility="{Binding DAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                         Focusable="False"
+                        />-->
+                            <Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewKeyDown="UIElement_OnPreviewKeyDown">
+                                    <ItemsControl 
+                                        ItemsSource="{Binding ElementName=_this, Path=DataContext.ItemsDebit}" 
+                                       ItemTemplateSelector="{StaticResource ItemDataTemplateSelecor}" 
+                                       IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" 
+                                       TabIndex="17" 
+                                        IsTabStop="False"
+                                    >
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+
+                    </GroupBox>
+                    <GroupBox Header="Кредит" Grid.Column="1">
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="25"></RowDefinition>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="75"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Grid.ColumnSpan="3">
+                                <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Kредит сметка" Margin="5,5,10,2"/>
+                                <CustomControls:TextBoxEx Text="{Binding Path=CAccountsModel.Search}"  Margin="10,0,10,0" Width="100" HorizontalAlignment="Left" KeyDown="kreditsmetka_KeyDown" TabIndex="60" LostFocus="Kredit_OnLostFocus"/>
+
+                                <Button Grid.Row="0" Grid.Column="2" Click="Button_Click1"  Margin="0,5,0,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Focusable="False">...</Button>
+                            </StackPanel>
+                            <!--<Button  Margin="0,5,10,5" 
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick"
+                         CommandParameter="{Binding CAccountsModel}"
+                         Content="Детайли" 
+                         Visibility="{Binding CAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         Foreground="BlueViolet"
+                         IsEnabled="True"
+                         />-->
+                            <CustomControls:TextBlockEx Grid.Row="1" 
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2" Text="{Binding Path=CAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                         Margin="10,5,10,2"
+                        />
+                            <Button   
+                         Grid.Row="0" Grid.Column="2"
+                         Click="ButtonBase_OnClick" 
+                         Content="Детайли" 
+                         Visibility="{Binding CAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                         Focusable="False"
+                        />
+                            <!--<Button   
+                         Grid.Row="1" Grid.Column="2"
+                         Click="Button_Click_4" 
+                         Content="Фактури" 
+                         Visibility="{Binding CAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="BlueViolet"
+                         Focusable="False"
+                        />-->
+                            <Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewKeyDown="UIElement_OnPreviewKeyDown">
+                                    <ItemsControl  
+                                        ItemsSource="{Binding ElementName=_this,Path=DataContext.ItemsCredit}" 
+                                        ItemTemplateSelector="{StaticResource ItemDataTemplateSelecor}" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"
+                                        TabIndex="61" 
+                                        IsTabStop="False">
+
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+
+
+        <StackPanel  Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                     PreviewKeyDown="UIElement_OnPreviewKeyDown" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableInsert,Converter={StaticResource invertor}}">
+
+            <CustomControls:TextBlockEx Margin="10,2,10,2" Text="Търсене по запис"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Margin="10,2,10,2" Width="50" KeyDown="TextBoxKeyDown" Text="{Binding SearchWord,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>
+            <!--<CustomControls:TextBlockEx Margin="10,2,10,2" Text="за месец"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Margin="10,2,10,2" Width="25" KeyDown="TextBoxKeyDown" Text="{Binding SearchMonth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>-->
+            <CustomControls:TextBlockEx Margin="10,2,10,2" Text="Търсене по документ"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Margin="10,2,10,2" Width="50" KeyDown="TextBoxKeyDown1" Text="{Binding SearchDoc,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>
+            <CustomControls:TextBlockEx Margin="10,2,10,2" Text="и папка"></CustomControls:TextBlockEx>
+            <CustomControls:TextBoxEx Margin="10,2,10,2" Width="50" KeyDown="TextBoxKeyDown1" Text="{Binding SearchFolder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>
+            <CheckBox IsChecked="{Binding IsCurrentUser,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2">
+                <CustomControls:TextBlockEx  Text="Записи само текущ потребител" Height="23" Margin="0"></CustomControls:TextBlockEx>
+            </CheckBox>
+
+            <!--<StackPanel Orientation="Horizontal">
+                <Viewbox Width="30" Height="30" Margin="20,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Visibility="{Binding Visible}">
+                    <CustomControls:Pb  Visibility="{Binding Visible}"  />
+                </Viewbox>
+                <CustomControls:TextBlockEx  Margin="10,5,10,5" Visibility="{Binding Visible}">Моля изчакайте</CustomControls:TextBlockEx>
+            </StackPanel>-->
+        </StackPanel>
+
+        <!--<Expander  Grid.Row="3" Grid.ColumnSpan="2" Header="{Binding LastFiveTitle}" ExpandDirection="Down" IsExpanded="{Binding ShowLastFive,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <StackPanel >
+                <StackPanel Orientation="Horizontal"  IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableInsert,Converter={StaticResource invertor}}">
+                    <Button Margin="43,5,5,2" Command="{Binding MoveFirstPageCommand}" FontSize="9">|&lt;&lt;</Button>
+                    <Button Margin="5,5,5,2" Command="{Binding MovePreviusPageCommand}" FontSize="9">&lt;&lt;</Button>
+                    <CustomControls:TextBlockEx Margin="5,2,5,2" Text="Страници" FontSize="9"></CustomControls:TextBlockEx>
+                    <CustomControls:TextBlockEx Margin="5,2,5,2" Text="{Binding FromToPages}" Width="100" ></CustomControls:TextBlockEx>
+                    <Button Margin="5,2,5,2" Command="{Binding MoveNextPageCommand}" FontSize="9">&gt;&gt;</Button>
+                    <Button Margin="5,2,5,2" Command="{Binding MoveLastPageCommand}" FontSize="9">&gt;&gt;|</Button>
+                </StackPanel>
+                --><!--<DockPanel Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Stretch">--><!--
+                <DataGrid  ItemsSource="{Binding AllWrapedConto}"   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                   SelectedItem="{Binding CurrentWraperConto,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                   SelectionUnit="FullRow"
+                   SelectionMode = "Single"
+                   x:Name="myDataGridEvtCode"
+                    AutoGenerateColumns="False" 
+                    IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableGrid}"
+                    ScrollViewer.VerticalScrollBarVisibility="auto" 
+                    ScrollViewer.HorizontalScrollBarVisibility="auto" 
+                    IsReadOnly="True"
+                    Margin="10,0,10,0"
+                    PreviewKeyUp="DataGrid_KeyDown"  
+                    AlternatingRowBackground="Gainsboro"
+                    AlternationCount="2"
+                    VirtualizingStackPanel.VirtualizationMode="Recycling"
+                         
+                    VerticalAlignment="Stretch"
+                       HorizontalContentAlignment="Stretch"
+                      Height="300"
+                       >
+                    <DataGrid.Columns>
+
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Id">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Запис</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="DocId">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Номер</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Документ</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DocId}" FontWeight="Bold" FontSize="10" Foreground="Red"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="DocId">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Вид</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Документ</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Kd}" FontWeight="Bold" FontSize="10" ></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Folder">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Папка</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Folder}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="NumberObject">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Обект</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding NumberObject}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Data">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Дата на</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Осчетов.</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Data}" FontWeight="Bold" FontSize="10"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="DName">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Дебит</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Сметка</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DName}" FontWeight="Bold" FontSize="10"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="CName">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Кредит</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Сметка</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CName}" FontWeight="Bold" FontSize="10"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="DocId">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Оборот</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Oborot,Converter={StaticResource lv}}" FontSize="10" FontWeight="Bold" Foreground="Red"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Reason">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Основание</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Reason}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Note">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Забележка</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Note}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Dnevnik">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Д-к ДДС</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Dnevnik}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Val">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Оборот Валута</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Width="50" FontSize="10" FontWeight="Bold">Dt</TextBlock>
+                                            <TextBlock Width="50" FontSize="10" FontWeight="Bold">Kt</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="50" Text="{Binding Val,Converter={StaticResource lv}}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                        <TextBlock Width="50" Text="{Binding ValK,Converter={StaticResource lv}}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Kol">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Оборот Количество</TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Width="50" FontSize="10" FontWeight="Bold">Dt</TextBlock>
+                                            <TextBlock Width="50" FontSize="10" FontWeight="Bold">Kt</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="50" Text="{Binding Kol,Converter={StaticResource lv}}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                        <TextBlock Width="50" Text="{Binding KolK,Converter={StaticResource lv}}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        --><!--<DataGridTemplateColumn  CellTemplateSelector="{Binding Source={StaticResource ds}}" SortMemberPath="DDetails" ClipboardContentBinding="{Binding DDetails}">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock>Дебит</TextBlock>
+                                <TextBlock>Детайли</TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CellTemplateSelector="{Binding Source={StaticResource ks}}" SortMemberPath="CDetails" ClipboardContentBinding="{Binding CDetails}">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock>Кредит</TextBlock>
+                                <TextBlock>Детайли</TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                </DataGridTemplateColumn>--><!--
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="DDetails">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Дебит Детайли</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DDetails}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="CDetails">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Кредит Детайли</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CDetails}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Дата на</TextBlock>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Документа</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="70" Text="{Binding DataInvoise}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        --><!--<DataGridTemplateColumn CanUserSort="True" SortMemberPath="Id">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Уникален номер</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Id}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            
+                        </DataGridTemplateColumn>--><!--
+                        <DataGridTemplateColumn CanUserSort="True" SortMemberPath="UserId">
+                            <DataGridTemplateColumn.HeaderTemplate >
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="10" FontWeight="Bold">Потребител</TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding UserId}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Expander>-->
+        <!--</DockPanel>-->
+    </Grid>
+</UserControl>

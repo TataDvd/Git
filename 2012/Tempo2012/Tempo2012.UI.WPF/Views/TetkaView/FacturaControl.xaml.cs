@@ -25,7 +25,18 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             DataContext = vm;
             InitializeComponent();
         }
-
+        public FacturaControl(AccountsModel accountsModel, ContoViewModelLight cv)
+        {
+            vm = new FacturaControlViewModel(accountsModel, cv, true);
+            DataContext = vm;
+            InitializeComponent();
+        }
+        public FacturaControl(AccountsModel accountsModel, ContoViewModelLight cv, string contr = null)
+        {
+            vm = new FacturaControlViewModel(accountsModel, cv, true, contr);
+            DataContext = vm;
+            InitializeComponent();
+        }
         private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             SelectedItem = vm.AccItemSaldo;

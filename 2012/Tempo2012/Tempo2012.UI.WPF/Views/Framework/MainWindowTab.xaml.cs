@@ -655,7 +655,7 @@ namespace Tempo2012.UI.WPF
                 {
                     if (contri == "")
                     {
-                        var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum);
+                        var f = new FacturaControlViewModel(accountsModel, new ContoViewModelLight(), acc.WithContragentSum);
                         f.Title = tit;
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -664,7 +664,7 @@ namespace Tempo2012.UI.WPF
                     }
                     else
                     {
-                        var f = new FacturaControlViewModel(accountsModel, null, acc.WithContragentSum, antetka, contri);
+                        var f = new FacturaControlViewModel(accountsModel, new ContoViewModelLight(), acc.WithContragentSum, antetka, contri);
                         f.Title = tit;
                         f.FromDate = reportMenuProvider.Vm.FromDate();
                         f.ToDate = reportMenuProvider.Vm.ToDate();
@@ -1339,6 +1339,9 @@ namespace Tempo2012.UI.WPF
             }
         }
 
-       
+        private void MenuItem_Click_42(object sender, RoutedEventArgs e)
+        {
+            AddItem("Бързо Kонтиране", new ContoViewLight());
+        }
     }
 }

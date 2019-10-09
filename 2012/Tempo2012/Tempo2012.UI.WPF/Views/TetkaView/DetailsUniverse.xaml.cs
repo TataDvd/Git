@@ -31,7 +31,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             InitializeComponent();
             DataContext = vm;
         }
+        public DetailsUniverse(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode)
+        {
 
+            vm = new DetailsUniverseViewModel(dAccountsModel, filter, cvm, tip, mode);
+            InitializeComponent();
+            DataContext = vm;
+        }
         private void Dg_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (vm.CurrentRowIndex >= 0)

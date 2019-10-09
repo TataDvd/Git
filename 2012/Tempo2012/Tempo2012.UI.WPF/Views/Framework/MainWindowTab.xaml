@@ -137,6 +137,13 @@
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
+                    <MenuItem Click="MenuItem_Click_42">
+                        <MenuItem.HeaderTemplate>
+                            <DataTemplate>
+                                <CustomControls:TextBlockEx Text="Бързо Осчетоводяване" />
+                            </DataTemplate>
+                        </MenuItem.HeaderTemplate>
+                    </MenuItem>
                     <MenuItem Click="MenuItem_Nomenclature_Click">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>

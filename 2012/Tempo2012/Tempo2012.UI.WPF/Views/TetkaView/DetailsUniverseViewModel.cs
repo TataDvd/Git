@@ -20,6 +20,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         public const int PAGECOUNT = 20;
         private List<List<string>> _fields;
         private ContoViewModel Cvm;
+        private ContoViewModelLight Cvm1;
         private decimal _suma;
         private decimal _sumaval;
         private int Tip;
@@ -119,64 +120,212 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             ReportItems = reportItems;
             OnPropertyChanged("Fields");
         }
+        public DetailsUniverseViewModel(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode)
+        {
+            var reportItems = new List<ReportItem>();
+            Filt = filter;
+            Filters = new ObservableCollection<Filter>();
+            Acc = dAccountsModel;
+            if (mode == EditMode.Edit)
+            {
+                IsEditMode = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                IsEditMode = System.Windows.Visibility.Visible;
+            }
+            Title = "Детайли за " + dAccountsModel.ShortName;
+            Tip = tip;
+            Cvm1 = cvm;
 
+            List<List<string>> v = null;
+            var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter);
+            if (c != null) v = c.Select(i => i.ToList()).ToList();
+            _fields = new List<List<string>>();
+            if (v != null)
+            {
+                foreach (var item in v)
+                {
+                    _fields.Add(new List<string>(item));
+                }
+                foreach (var item in _fields[0])
+                {
+                    Filters.Add(new ViewModels.ContragenManager.Filter { FilterName = item });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = item, Width = 15 });
+                }
+            }
+            else
+            {
+                var r = new List<string>();
+                var atr = Context.LoadAllAnaliticfields(dAccountsModel.Id);
+                foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
+                {
+                    r.Add(saldoAnaliticModel.Name);
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, Name = saldoAnaliticModel.Name, Width = 15 });
+                }
+                r.Add("НС");
+                r.Add("ОД");
+                r.Add("ОК");
+                r.Add("КС");
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "НС", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОД", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОК", Width = 10 });
+                reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "КС", Width = 10 });
+                if (dAccountsModel.Val == 1)
+                {
+                    r.Add("НСВ");
+                    r.Add("ОДВ");
+                    r.Add("ОКВ");
+                    r.Add("КСВ");
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "НСВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОДВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОКВ", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "КСВ", Width = 10 });
+                }
+                if (dAccountsModel.Kol == 1)
+                {
+                    r.Add("НСК");
+                    r.Add("ОДК");
+                    r.Add("ОКК");
+                    r.Add("КСК");
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "НСК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОДК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "ОКК", Width = 10 });
+                    reportItems.Add(new ReportItem { Height = 30, IsShow = true, IsSuma = true, Sborno = true, Name = "КСК", Width = 10 });
+                }
+                _fields.Add(r);
+            }
+            if (dAccountsModel.Kol == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.KolFormatUI));
+            }
+            else if (dAccountsModel.Val == 1)
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 5] != Vf.ValFormatUI));
+            }
+            else
+            {
+                Fields = new List<List<string>>(_fields.Where(e => e[e.Count - 1] != Vf.LevFormatUI));
+            }
+            ReportItems = reportItems;
+            OnPropertyChanged("Fields");
+        }
         internal void SaveContos(IList selectedItems)
         {
             decimal kurrazsum = 0;
-            Cvm.notupdated=true;
-            foreach (var item in selectedItems)
+            if (Cvm != null)
             {
-               
-                kurrazsum+=Math.Round(SaveConto(item),2);
-
-            }
-            var AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
-            if (kurrazsum < 0)
-            {
-                var model = AllAccountsK.FirstOrDefault(e => e.Num == 624 && e.SubNum == 0);
-                if (model != null)
+                Cvm.notupdated = true;
+                foreach (var item in selectedItems)
                 {
-                    Cvm.DAccountsModel = model;
-                    Cvm.Oborot = kurrazsum;
-                    foreach (SaldoItem saldoItem in Cvm.ItemsCredit)
-                    {
-                        if (saldoItem.Name == "Сума валута")
-                        {
-                            saldoItem.ValueVal = 0;
-                            saldoItem.Value = "0";
-                            saldoItem.ValueKurs = saldoItem.MainKurs;
-                            saldoItem.KursDif = 0;
-                        }
 
-                    }
-                    Cvm.SaveF4();
+                    kurrazsum += Math.Round(SaveConto(item), 2);
+
                 }
-            }
-            else if (kurrazsum > 0)
-            {
-                var model = AllAccountsK.FirstOrDefault(e => e.Num == 724 && e.SubNum == 0);
-                if (model != null)
+                var AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
+                if (kurrazsum < 0)
                 {
-                    Cvm.DAccountsModel = Cvm.CAccountsModel;
-                    Cvm.ItemsDebit = Cvm.ItemsCredit;
-                    Cvm.CAccountsModel = model;
-                    Cvm.Oborot = kurrazsum;
-                    foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
+                    var model = AllAccountsK.FirstOrDefault(e => e.Num == 624 && e.SubNum == 0);
+                    if (model != null)
                     {
-                        if (saldoItem.Name == "Сума валута")
+                        Cvm.DAccountsModel = model;
+                        Cvm.Oborot = kurrazsum;
+                        foreach (SaldoItem saldoItem in Cvm.ItemsCredit)
                         {
-                            saldoItem.ValueVal = 0;
-                            saldoItem.Value = "0";
-                            saldoItem.ValueKurs = saldoItem.MainKurs;
-                            saldoItem.KursDif = 0;
+                            if (saldoItem.Name == "Сума валута")
+                            {
+                                saldoItem.ValueVal = 0;
+                                saldoItem.Value = "0";
+                                saldoItem.ValueKurs = saldoItem.MainKurs;
+                                saldoItem.KursDif = 0;
+                            }
+
                         }
-
+                        Cvm.SaveF4();
                     }
-                    Cvm.SaveF4();
                 }
-            }
+                else if (kurrazsum > 0)
+                {
+                    var model = AllAccountsK.FirstOrDefault(e => e.Num == 724 && e.SubNum == 0);
+                    if (model != null)
+                    {
+                        Cvm.DAccountsModel = Cvm.CAccountsModel;
+                        Cvm.ItemsDebit = Cvm.ItemsCredit;
+                        Cvm.CAccountsModel = model;
+                        Cvm.Oborot = kurrazsum;
+                        foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
+                        {
+                            if (saldoItem.Name == "Сума валута")
+                            {
+                                saldoItem.ValueVal = 0;
+                                saldoItem.Value = "0";
+                                saldoItem.ValueKurs = saldoItem.MainKurs;
+                                saldoItem.KursDif = 0;
+                            }
 
-            Cvm.notupdated = false;
+                        }
+                        Cvm.SaveF4();
+                    }
+                }
+
+                Cvm.notupdated = false;
+            }
+            else {
+                Cvm1.notupdated = true;
+                foreach (var item in selectedItems)
+                {
+
+                    kurrazsum += Math.Round(SaveConto(item), 2);
+
+                }
+                var AllAccountsK = new ObservableCollection<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
+                if (kurrazsum < 0)
+                {
+                    var model = AllAccountsK.FirstOrDefault(e => e.Num == 624 && e.SubNum == 0);
+                    if (model != null)
+                    {
+                        Cvm1.DAccountsModel = model;
+                        Cvm1.Oborot = kurrazsum;
+                        foreach (SaldoItem saldoItem in Cvm1.ItemsCredit)
+                        {
+                            if (saldoItem.Name == "Сума валута")
+                            {
+                                saldoItem.ValueVal = 0;
+                                saldoItem.Value = "0";
+                                saldoItem.ValueKurs = saldoItem.MainKurs;
+                                saldoItem.KursDif = 0;
+                            }
+
+                        }
+                        Cvm1.SaveF4();
+                    }
+                }
+                else if (kurrazsum > 0)
+                {
+                    var model = AllAccountsK.FirstOrDefault(e => e.Num == 724 && e.SubNum == 0);
+                    if (model != null)
+                    {
+                        Cvm1.DAccountsModel = Cvm1.CAccountsModel;
+                        Cvm1.ItemsDebit = Cvm1.ItemsCredit;
+                        Cvm1.CAccountsModel = model;
+                        Cvm1.Oborot = kurrazsum;
+                        foreach (SaldoItem saldoItem in Cvm1.ItemsDebit)
+                        {
+                            if (saldoItem.Name == "Сума валута")
+                            {
+                                saldoItem.ValueVal = 0;
+                                saldoItem.Value = "0";
+                                saldoItem.ValueKurs = saldoItem.MainKurs;
+                                saldoItem.KursDif = 0;
+                            }
+
+                        }
+                        Cvm1.SaveF4();
+                    }
+                }
+
+                Cvm1.notupdated = false;
+            }
     }
 
         internal void UpdateProperty()
