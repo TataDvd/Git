@@ -65,11 +65,11 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             ShowContoAll = Visibility.Hidden;
             ContoAll = 0;
             KindDocLookup = new ObservableCollection<LookUpSpecific>(Context.GetAllDocTypes());
-            
-            this.MoveNextPageCommand = new DelegateCommand((o) => this.MoveNextPage());
-            this.MovePreviusPageCommand = new DelegateCommand((o) => this.MovePreviusPage());
-            this.MoveLastPageCommand = new DelegateCommand((o) => this.MoveLastPage());
-            this.MoveFirstPageCommand = new DelegateCommand((o) => this.MoveFirstPage());
+            IsShowNavigation = false;
+            //this.MoveNextPageCommand = new DelegateCommand((o) => this.MoveNextPage());
+            //this.MovePreviusPageCommand = new DelegateCommand((o) => this.MovePreviusPage());
+            //this.MoveLastPageCommand = new DelegateCommand((o) => this.MoveLastPage());
+            //this.MoveFirstPageCommand = new DelegateCommand((o) => this.MoveFirstPage());
             this.SumaDdsCommand=new DelegateCommand((o)=>this.SumaDdsAdd());
             _isDdsVisible = ConfigTempoSinglenton.GetInstance().CurrentFirma.RegisterDds;
             FirmaId = ConfigTempoSinglenton.GetInstance().CurrentFirma.Id;
@@ -207,12 +207,12 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         }
         private void ReloadRecords()
         {
-            EnableGrid = false;
-            Visible = Visibility.Visible;
-            var bw = new BackgroundWorker { WorkerReportsProgress = false, WorkerSupportsCancellation = true };
-            bw.DoWork += new DoWorkEventHandler(ReloadLastFive);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            bw.RunWorkerAsync();
+            //EnableGrid = false;
+            //Visible = Visibility.Visible;
+            //var bw = new BackgroundWorker { WorkerReportsProgress = false, WorkerSupportsCancellation = true };
+            //bw.DoWork += new DoWorkEventHandler(ReloadLastFive);
+            //bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            //bw.RunWorkerAsync();
             
         }
         private void SumaDdsAdd()
@@ -3485,10 +3485,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             set
             {
                 _showLastFive = value;
-                if (_showLastFive)
-                {
-                    LoadLastRecordsAsynk();
-                }
+                //if (_showLastFive)
+                //{
+                //    LoadLastRecordsAsynk();
+                //}
                 OnPropertyChanged("ShowLastFive");
             }
         }

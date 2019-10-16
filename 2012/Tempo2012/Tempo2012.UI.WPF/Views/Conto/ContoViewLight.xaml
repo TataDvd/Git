@@ -290,9 +290,9 @@
                     <RowDefinition Height="90"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <!--<v:CommandBar Grid.Row="0" x:Name="commands" DataContext="{Binding ElementName=_this}">
+                <v:CommandBar Grid.Row="0" x:Name="commands" DataContext="{Binding ElementName=_this}">
 
-                </v:CommandBar>-->
+                </v:CommandBar>
                 <GroupBox Grid.Row="1" Header="ДДС" 
                                   Visibility="{Binding Path=IsDdsVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
                                   IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" PreviewKeyDown="UIElement_OnPreviewKeyDown">
@@ -459,12 +459,12 @@
                                    FontFamily="Arial" FontSize="14" FontWeight="Bold"
                                    Visibility="{Binding ShowContoAll}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Column="0"  Grid.ColumnSpan="6">
+                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Grid.Column="0"  Grid.ColumnSpan="6">
                     <CustomControls:TextBlockEx  Text="Запис No:" Margin="5,5,4,2"  Width="61" />
                     <CustomControls:TextBlockEx Text="{Binding Path=Index}" Margin="0,5,10,2" Width="52" />
                     <CustomControls:TextBlockEx  Text="От всичко:" Margin="0,5,5,2"  Width="70" />
                     <CustomControls:TextBlockEx Text="{Binding Path=Total}" Margin="10,5,10,2" Width="52" />
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6">
                     <CustomControls:TextBlockEx  Text="Дата нa осчетоводяване:" Margin="10,5,10,2" Width="160" TextAlignment="Right" />
                     <DatePicker TabIndex="9" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
@@ -482,8 +482,8 @@
 
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="6">
-                    <CustomControls:TextBlockEx  Text="Номер" Margin="10,5,2,2" Width="51" />
-                    <CustomControls:TextBlockEx Text="{Binding Path=Id}" Margin="0,5,10,2" Width="57"/>
+                    <!--<CustomControls:TextBlockEx  Text="Номер" Margin="10,5,2,2" Width="51" />
+                    <CustomControls:TextBlockEx Text="{Binding Path=Id}" Margin="0,5,10,2" Width="57"/>-->
                     <CustomControls:TextBlockEx  Text="Месец:" Margin="10,5,6,2"  Width="71" />
                     <CustomControls:TextBlockEx Text="{Binding Path=Month}" Margin="0,5,0,2" Width="15"/>
                     <CustomControls:TextBlockEx Text="/" Margin="0,5,0,2" Width="5"/>
@@ -716,9 +716,6 @@
             <CustomControls:TextBoxEx Margin="10,2,10,2" Width="50" KeyDown="TextBoxKeyDown1" Text="{Binding SearchDoc,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>
             <CustomControls:TextBlockEx Margin="10,2,10,2" Text="и папка"></CustomControls:TextBlockEx>
             <CustomControls:TextBoxEx Margin="10,2,10,2" Width="50" KeyDown="TextBoxKeyDown1" Text="{Binding SearchFolder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ></CustomControls:TextBoxEx>
-            <CheckBox IsChecked="{Binding IsCurrentUser,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,2">
-                <CustomControls:TextBlockEx  Text="Записи само текущ потребител" Height="23" Margin="0"></CustomControls:TextBlockEx>
-            </CheckBox>
 
             <!--<StackPanel Orientation="Horizontal">
                 <Viewbox Width="30" Height="30" Margin="20,0,0,0"
