@@ -1200,7 +1200,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             if (OborotChange)
             {
                 OborotChange = false;
-                UpdateRelatedDds();
+                if (CurrentWraperConto.IsDdsPurchases || CurrentWraperConto.IsDdsSales)
+                {
+                    UpdateRelatedDds();
+                }
             }
         }
         protected override void Add()
