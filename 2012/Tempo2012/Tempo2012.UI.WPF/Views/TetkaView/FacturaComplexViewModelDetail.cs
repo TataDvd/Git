@@ -584,33 +584,36 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 items.Add(rowTotalLas);
             }
-            NewRow(items);
-            List<string> rowTotalLast = new List<string>();
-            rowTotalLast.Add("");
-            rowTotalLast.Add("");
-            rowTotalLast.Add("");
-            rowTotalLast.Add(" Общо :");
-            //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
-            if (accountsModel.TypeAccount != 1)
+            if (filter == null)
             {
-                var ks = sumansct + sumaOct - (sumansdt + sumaOdt);
-                var ns = sumansct - (sumansdt);
-                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
+                NewRow(items);
+                List<string> rowTotalLast = new List<string>();
+                rowTotalLast.Add("");
+                rowTotalLast.Add("");
+                rowTotalLast.Add("");
+                rowTotalLast.Add(" Общо :");
+                //row.Add(itemSaldo.Nsd.ToString(Vf.LevFormatUI));
+                if (accountsModel.TypeAccount != 1)
+                {
+                    var ks = sumansct + sumaOct - (sumansdt + sumaOdt);
+                    var ns = sumansct - (sumansdt);
+                    rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
 
+                }
+                else
+                {
+                    var ks = sumansdt + sumaOdt - sumansct + sumaOct;
+                    var ns = sumansdt - sumansct;
+                    rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
+                    rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
+                }
+                items.Add(rowTotalLast);
             }
-            else
-            {
-                var ks = sumansdt + sumaOdt - sumansct + sumaOct;
-                var ns = sumansdt - sumansct;
-                rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));
-                rowTotalLast.Add(ks.ToString(Vf.LevFormatUI));
-            }
-            items.Add(rowTotalLast);
             return items;
         }
 
