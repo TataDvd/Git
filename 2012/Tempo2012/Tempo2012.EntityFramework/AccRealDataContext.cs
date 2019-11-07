@@ -2729,7 +2729,7 @@ namespace Tempo2012.EntityFramework
             }
             return sFieldses;
         }
-        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4, BackgroundWorker bw)
+        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4,bool et5, BackgroundWorker bw)
         {
             if (et1)
             {
@@ -2794,7 +2794,7 @@ namespace Tempo2012.EntityFramework
                     if (a.LevelAccount == 2)
                     {
                         list2.Add(new List<string> { a.ShortName });
-                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4));
+                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4,et5));
                     }
                 }
                 bw.ReportProgress(80);
@@ -2868,7 +2868,7 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(100);
         }
 
-        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0)
+        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0, bool po00)
         {
             var items = new List<List<string>>();
             var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
@@ -3065,38 +3065,68 @@ namespace Tempo2012.EntityFramework
             }
             else
             {
-                foreach (AccItemSaldo accItemSaldo in _movements1)
-                {
-                    var saldo =
-                        rezi.FirstOrDefault(
-                            m => m.Code == accItemSaldo.Code && m.NumInvoise == accItemSaldo.NInvoise);
-                    if (saldo != null)
+                
+                    foreach (AccItemSaldo accItemSaldo in _movements1)
                     {
-                        accItemSaldo.Nsd = saldo.BeginSaldoDebit;
-                        accItemSaldo.Nsc = saldo.BeginSaldoCredit;
-                        accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
-                        accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
-                        rezi.Remove(saldo);
+                        var saldo =
+                            rezi.FirstOrDefault(
+                                m => m.Code == accItemSaldo.Code && m.NumInvoise == accItemSaldo.NInvoise);
+                        if (saldo != null)
+                        {
+                            accItemSaldo.Nsd = saldo.BeginSaldoDebit;
+                            accItemSaldo.Nsc = saldo.BeginSaldoCredit;
+                            accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
+                            accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
+                            rezi.Remove(saldo);
+                        }
                     }
-                }
-                foreach (var item in rezi.OrderBy(e => e.Code))
-                {
-                    var item1 = new AccItemSaldo();
-                    item1.NInvoise = item.NumInvoise;
-                    item1.NameContragent = item.NameContragent;
-                    item1.Data = item.Date;
-                    item1.Code = item.Code;
-                    item1.Od = 0;
-                    item1.Nsd = item.BeginSaldoDebit;
-                    item1.Nsc = item.BeginSaldoCredit;
-                    item1.Nsdv = item.BeginSaldoDebitValuta;
-                    item1.Nscv = item.BeginSaldoCreditValuta;
-                    item1.Type = accountsModel.TypeAccount;
-                    _movements1.Add(item1);
-                }
+                    foreach (var item in rezi.OrderBy(e => e.Code))
+                    {
+                        var item1 = new AccItemSaldo();
+                        item1.NInvoise = item.NumInvoise;
+                        item1.NameContragent = item.NameContragent;
+                        item1.Data = item.Date;
+                        item1.Code = item.Code;
+                        item1.Od = 0;
+                        item1.Nsd = item.BeginSaldoDebit;
+                        item1.Nsc = item.BeginSaldoCredit;
+                        item1.Nsdv = item.BeginSaldoDebitValuta;
+                        item1.Nscv = item.BeginSaldoCreditValuta;
+                        item1.Type = accountsModel.TypeAccount;
+                        _movements1.Add(item1);
+                    }
+                
             }
-            
 
+            if (po00)
+            {
+                var _mov = (from t in _movements1
+                           group t by new { t.Code }
+                                into grp
+                           select new AccItemSaldo
+                           {
+                               Code = grp.Key.Code,
+                               Nsc=grp.Sum(e=>e.Nsc),
+                               Nsd = grp.Sum(e => e.Nsd),
+                               Oc = grp.Sum(e => e.Oc),
+                               Od = grp.Sum(e => e.Od),
+                           });
+                foreach (var t in _mov)
+                {
+                    if (accountsModel.TypeAccount != 1)
+                    {
+                        t.Ks = t.Nsc + t.Oc - (t.Nsd + t.Od);
+                       
+                    }
+                    else
+                    {
+                        t.Ks = t.Nsd + t.Od - (t.Nsc + t.Oc);
+                        
+                    }
+                    if (t.Ks==0) _movements1.RemoveAll(e => e.Code == t.Code);
+                };
+                    
+            }
             foreach (AccItemSaldo itemSaldo in _movements1.OrderBy(m => m.Cod))
             {
                 List<string> row = new List<string>();

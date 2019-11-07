@@ -21,6 +21,7 @@ namespace Tempo2012.UI.WPF.ViewModels
         public bool IsCalculateSaldoDetail { get { return isCalculateSaldoDetail; } set { isCalculateSaldoDetail = value; OnPropertyChanged("IsCalculateSaldoDetail"); } }
 
         public bool IsCalculateSaldoDetailZero { get { return isCalculateSaldoDetailZero; } set { isCalculateSaldoDetailZero = value; OnPropertyChanged("IsCalculateSaldoDetailZero"); } }
+        public bool ExcludeTotalZero { get { return excludeTotalZero; } set { excludeTotalZero = value; OnPropertyChanged("ExcludeTotalZero"); } }
 
         public int CurrentProgress
         {
@@ -45,6 +46,7 @@ namespace Tempo2012.UI.WPF.ViewModels
             isCalculateSaldoDetail = true;
             isCopySmetkoplan = true;
             isCalculateSaldoDetailZero = false;
+            excludeTotalZero = false;
         }
 
         private bool CanCopyAccFromYtoY()
@@ -76,7 +78,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         private void DoCopy(object sender, DoWorkEventArgs e)
         {
-            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero,bw);
+            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero, ExcludeTotalZero, bw);
         }
 
         
@@ -96,6 +98,7 @@ namespace Tempo2012.UI.WPF.ViewModels
         private bool isCopySmetkoplan;
         private bool isCalculateSaldoDetail;
         private bool isCalculateSaldoDetailZero;
+        private bool excludeTotalZero;
         private BackgroundWorker bw;
         private int currentProgress;
 
