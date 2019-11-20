@@ -131,16 +131,15 @@ namespace Tempo2012.UI.WPF.Views
                 decimal sumastoki = mydecimal.Parse(item[6]);
                 decimal sumausl = mydecimal.Parse(item[7]);
                 decimal suma709 = mydecimal.Parse(item[8]);
-                
-
-                if (sumastoki == 0 && sumausl == 0 && suma709 == 0)
-                {
-                    continue;
-                }
                 decimal dds = mydecimal.Parse(item[9]);
                 int nachin = int.Parse(item[10]);
                 decimal avans = mydecimal.Parse(item[11]);
                 string nomfakavans= item[12];
+                if (sumastoki == 0 && sumausl == 0 && suma709 == 0 && avans==0)
+                {
+                    continue;
+                }
+                
                 ImportFact(nomFak, dataF, viddoc, klient, bulstat, ddsnom, sumastoki, sumausl, suma709, dds, nachin,avans, nomfakavans);
                 DefaultDocNom++;
                 bw.ReportProgress(i++);
