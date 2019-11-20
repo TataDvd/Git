@@ -605,8 +605,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
                 else
                 {
-                    var ks = sumansdt + sumaOdt - sumansct + sumaOct;
-                    var ns = sumansdt - sumansct;
+                    var ks = sumansdt + sumaOdt - (sumansct + sumaOct);
+                    var ns = sumansdt - (sumansct);
                     rowTotalLast.Add(ns.ToString(Vf.LevFormatUI));
                     rowTotalLast.Add(sumaOdt.ToString(Vf.LevFormatUI));
                     rowTotalLast.Add(sumaOct.ToString(Vf.LevFormatUI));

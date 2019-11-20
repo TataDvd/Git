@@ -163,6 +163,12 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.KD = viddoc;
             c.Conto.KindDoc = viddoc;
             var isavans = false;
+          
+            if (sumastoki == 0)
+            {
+                c.Conto.Reason = "УСЛУГИ";
+                if (suma709 != 0) c.Conto.Reason = "TECDOC";
+            }
             if (avans != 0)
             {
                 if (suma709 == 0 && sumastoki == 0 && sumausl == 0)
@@ -174,11 +180,6 @@ namespace Tempo2012.UI.WPF.Views
                 {
                     c.Conto.Reason = "ПРОДАЖБА СТОКИ";
                 }
-            }
-            if (sumastoki == 0)
-            {
-                c.Conto.Reason = "УСЛУГИ";
-                if (suma709 != 0) c.Conto.Reason = "TECDOC";
             }
             if (string.IsNullOrWhiteSpace(ddsnom))
             {
@@ -406,7 +407,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsDdsPurchases = 0;
                     c.Conto.IsPurchases = 0;
                     c.Conto.VopPurchases = "";
-                    NewMethod(nomFak, dataF, klient, ddsnom, c);
+                    NewMethod1(nomFak, dataF, klient, ddsnom, c);
                     if (dds != 0)
                     {
                         c.Conto.IsDdsSalesIncluded = 0;
@@ -665,7 +666,79 @@ namespace Tempo2012.UI.WPF.Views
             }
             SaveMainConto(c);
         }
+        private void NewMethod1(string nomFak, DateTime dataF, string klient, string ddsnom, ContoAll c)
+        {
 
+            LoadAnaliticDetailsD(c);
+            LoadAnaliticDetailsK(c);
+            c.NameClient = klient;
+            SetAnaliticVal(ddsnom, c, 4);
+            SetAnaliticVal(nomFak, c, 5);
+            SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 6);
+            DataFactura = dataF;
+            c.Conto.CDetails = "";
+            c.Conto.DDetails = "";
+            if (c.ItemsCredit != null)
+            {
+                foreach (SaldoItem currentsaldos in c.ItemsCredit)
+                {
+                    if (currentsaldos.Fieldkey == 30)
+                    {
+                        c.Conto.OborotValutaK = currentsaldos.ValueVal;
+                        c.Conto.CDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                            currentsaldos.ValueVal, currentsaldos.Lookupval);
+                        currentsaldos.Value = currentsaldos.ValueVal.ToString(Vf.LevFormatUI);
+                    }
+                    else
+                    {
+                        if (currentsaldos.Fieldkey == 31)
+                        {
+                            c.Conto.OborotKolK = currentsaldos.ValueKol;
+                            c.Conto.CDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                                currentsaldos.ValueKol, currentsaldos.Lookupval);
+                            //currentsaldos.Value = currentsaldos.ValueVal.ToString(Vf.LevFormatUI);
+                        }
+                        else
+                        {
+                            c.Conto.CDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                                currentsaldos.Value, currentsaldos.Lookupval);
+                        }
+
+                    }
+                }
+            }
+            if (c.ItemsDebit != null)
+            {
+                foreach (SaldoItem currentsaldos in c.ItemsDebit)
+                {
+                    if (currentsaldos.Fieldkey == 30)
+                    {
+                        c.Conto.OborotValutaD = currentsaldos.ValueVal;
+                        c.Conto.DDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                            currentsaldos.ValueVal, currentsaldos.Lookupval);
+                        currentsaldos.Value = currentsaldos.ValueVal.ToString(Vf.LevFormatUI);
+                    }
+                    else
+                    {
+                        if (currentsaldos.Fieldkey == 31)
+                        {
+                            c.Conto.OborotKolD = currentsaldos.ValueKol;
+                            c.Conto.DDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                                currentsaldos.ValueKol, currentsaldos.Lookupval);
+                        }
+                        else
+                        {
+                            c.Conto.DDetails += string.Format("{0} - {1} {2}\n", currentsaldos.Name,
+                                currentsaldos.Value, currentsaldos.Lookupval);
+                        }
+
+                    }
+
+                }
+
+            }
+            SaveMainConto(c);
+        }
         private decimal SaveDDS(ContoAll allconto)
         {
             var currItemDdsDnevPurchases = ItemsDdsDnevPurchases.FirstOrDefault(e => e.Code == allconto.KindDds);
