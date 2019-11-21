@@ -237,6 +237,57 @@ namespace Tempo2012.UI.WPF.Views
             {
                 c.Conto.Reason = c.Conto.Reason.Substring(0, 50);
             }
+            if (avans != 0 && isavans)
+            {
+
+                c.Conto.CreditAccount = sm411.Id;
+                c.Conto.Oborot = avans;
+                c.Conto.IsDdsSales = 1;
+                c.Conto.IsSales = 1;
+                c.Conto.VopSales = "";
+                c.Conto.IsDdsPurchases = 0;
+                c.Conto.IsPurchases = 0;
+                c.Conto.VopPurchases = "";
+                NewMethod1(nomFak, dataF, klient, ddsnom, c);
+                if (dds != 0)
+                {
+                    c.Conto.IsDdsSalesIncluded = 0;
+                    c.Conto.IsDdsSales = 1;
+                    c.Conto.IsSales = 1;
+                    c.Conto.VopSales = "ДК";
+                    c.KindDds = "ДК";
+                    c.Sborno = false;
+                    c.Conto.Oborot =avans;
+                    c.Conto.Oborot = SaveDDS(c);
+                    c.Conto.Oborot = dds;
+                    c.Conto.IsDdsSales = 0;
+                    c.Conto.IsSales = 0;
+                    c.Conto.VopSales = "";
+                    c.Conto.IsDdsPurchases = 0;
+                    c.Conto.IsPurchases = 0;
+                    c.Conto.VopPurchases = "";
+                    //c.Conto.Oborot = dds;
+                    c.Conto.CreditAccount = ddssmetka.Id;
+                    LoadAnaliticDetailsK(c);
+                    SaveMainConto(c);
+                }
+                else
+                {
+                    c.Conto.IsDdsSalesIncluded = 0;
+                    c.Conto.IsDdsSales = 1;
+                    c.Conto.IsSales = 1;
+                    c.Sborno = true;
+                    c.Conto.Oborot =avans;
+                    SaveDDS(c);
+                    c.Conto.IsDdsSales = 0;
+                    c.Conto.IsSales = 0;
+                    c.Conto.VopSales = "";
+                    c.Conto.IsDdsPurchases = 0;
+                    c.Conto.IsPurchases = 0;
+                    c.Conto.VopPurchases = "";
+                }
+                return;
+            }
             if ((suma709 != 0 && sumastoki != 0) || (suma709 != 0 && sumausl != 0) || (sumastoki != 0 && sumausl != 0))
             {
                 sbor = false;
@@ -396,54 +447,7 @@ namespace Tempo2012.UI.WPF.Views
                 }
                 var sdelka = c.Conto.VopSales;
                 var vid = c.KindDds;
-                if (avans != 0 && isavans)
-                {
-
-                    c.Conto.CreditAccount = sm411.Id;
-                    c.Conto.Oborot = avans;
-                    c.Conto.IsDdsSales =1;
-                    c.Conto.IsSales = 1;
-                    c.Conto.VopSales = "";
-                    c.Conto.IsDdsPurchases = 0;
-                    c.Conto.IsPurchases = 0;
-                    c.Conto.VopPurchases = "";
-                    NewMethod1(nomFak, dataF, klient, ddsnom, c);
-                    if (dds != 0)
-                    {
-                        c.Conto.IsDdsSalesIncluded = 0;
-                        c.Conto.IsDdsSales = 1;
-                        c.Conto.IsSales = 1;
-                        c.Sborno = true;
-                        c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                        c.Conto.Oborot = SaveDDS(c);
-                        c.Conto.IsDdsSales = 0;
-                        c.Conto.IsSales = 0;
-                        c.Conto.VopSales = "";
-                        c.Conto.IsDdsPurchases = 0;
-                        c.Conto.IsPurchases = 0;
-                        c.Conto.VopPurchases = "";
-                        //c.Conto.Oborot = dds;
-                        c.Conto.CreditAccount = ddssmetka.Id;
-                        LoadAnaliticDetailsK(c);
-                        SaveMainConto(c);
-                    }
-                    else
-                    {
-                        c.Conto.IsDdsSalesIncluded = 0;
-                        c.Conto.IsDdsSales = 1;
-                        c.Conto.IsSales = 1;
-                        c.Sborno = true;
-                        c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                        SaveDDS(c);
-                        c.Conto.IsDdsSales = 0;
-                        c.Conto.IsSales = 0;
-                        c.Conto.VopSales = "";
-                        c.Conto.IsDdsPurchases = 0;
-                        c.Conto.IsPurchases = 0;
-                        c.Conto.VopPurchases = "";
-                    }
-                    return;
-                }
+                
                 if (suma709 != 0)
                 {
                     c.Conto.Reason = "TECDOC";
@@ -672,6 +676,9 @@ namespace Tempo2012.UI.WPF.Views
             LoadAnaliticDetailsD(c);
             LoadAnaliticDetailsK(c);
             c.NameClient = klient;
+            SetAnaliticVal(ddsnom, c, 0);
+            SetAnaliticVal(nomFak, c, 1);
+            SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 2);
             SetAnaliticVal(ddsnom, c, 4);
             SetAnaliticVal(nomFak, c, 5);
             SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 6);
@@ -830,7 +837,7 @@ namespace Tempo2012.UI.WPF.Views
                         }
                     }
                 }
-                if (allconto.ItemsDebit != null)
+                if (allconto.ItemsCredit != null)
                 {
                     foreach (SaldoItem saldoItem in allconto.ItemsCredit)
                     {
