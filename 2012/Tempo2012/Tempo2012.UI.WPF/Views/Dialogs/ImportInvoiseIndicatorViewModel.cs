@@ -579,21 +579,22 @@ namespace Tempo2012.UI.WPF.Views
                         }
                    
                 }
-                if (avans!=0)
-                    {
-                        c.Conto.Reason = "ЗAКРИВАНЕ НА АВАНС";
-                        c.Conto.Pr1 = nomFak;
-                        c.Conto.CreditAccount = sm701.Id;
-                        c.Conto.DebitAccount = sm411.Id;
-                        c.Conto.Oborot = avans;
-                        c.Conto.IsDdsSales = 0;
-                        c.Conto.IsSales = 0;
-                        c.Conto.VopSales = sdelka;
-                        c.KindDds = vid;
-                        NewMethod(nomfakavans, dataF, klient, ddsnom, c);
-                    }
+               
 
                 
+            }
+            if (avans != 0)
+            {
+                c.Conto.Reason = "ЗAКРИВАНЕ НА АВАНС";
+                c.Conto.Pr1 = nomFak;
+                c.Conto.CreditAccount = sm701.Id;
+                c.Conto.DebitAccount = sm411.Id;
+                c.Conto.Oborot = avans;
+                c.Conto.IsDdsSales = 0;
+                c.Conto.IsSales = 0;
+                c.Conto.VopSales = sdelka;
+                c.KindDds = vid;
+                NewMethod(nomfakavans, dataF, klient, ddsnom, c);
             }
         }
 
