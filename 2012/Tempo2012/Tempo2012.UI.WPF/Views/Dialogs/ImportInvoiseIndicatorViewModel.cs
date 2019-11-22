@@ -577,7 +577,9 @@ namespace Tempo2012.UI.WPF.Views
                             c.Conto.IsPurchases = 0;
                             c.Conto.VopPurchases = "";
                         }
-                   if (avans!=0)
+                   
+                }
+                if (avans!=0)
                     {
                         c.Conto.Reason = "ЗAКРИВАНЕ НА АВАНС";
                         c.Conto.Pr1 = nomFak;
@@ -590,8 +592,6 @@ namespace Tempo2012.UI.WPF.Views
                         c.KindDds = vid;
                         NewMethod(nomfakavans, dataF, klient, ddsnom, c);
                     }
-                }
-                
 
                 
             }
