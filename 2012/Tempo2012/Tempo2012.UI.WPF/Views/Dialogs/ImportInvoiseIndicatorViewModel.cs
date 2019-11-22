@@ -133,8 +133,13 @@ namespace Tempo2012.UI.WPF.Views
                 decimal suma709 = mydecimal.Parse(item[8]);
                 decimal dds = mydecimal.Parse(item[9]);
                 int nachin = int.Parse(item[10]);
-                decimal avans = mydecimal.Parse(item[11]);
-                string nomfakavans= item[12];
+                decimal avans = 0;
+                string nomfakavans = "";
+                if (item.Length > 10)
+                {
+                     avans = mydecimal.Parse(item[11]);
+                     nomfakavans = item[12];
+                }
                 if (sumastoki == 0 && sumausl == 0 && suma709 == 0 && avans==0)
                 {
                     continue;
@@ -592,8 +597,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.Oborot = avans;
                 c.Conto.IsDdsSales = 0;
                 c.Conto.IsSales = 0;
-                c.Conto.VopSales = sdelka;
-                c.KindDds = vid;
+                //c.Conto.VopSales = sdelka;
                 NewMethod(nomfakavans, dataF, klient, ddsnom, c);
             }
         }
