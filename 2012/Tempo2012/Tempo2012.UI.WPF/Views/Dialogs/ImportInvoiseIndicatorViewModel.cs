@@ -135,7 +135,7 @@ namespace Tempo2012.UI.WPF.Views
                 int nachin = int.Parse(item[10]);
                 decimal avans = 0;
                 string nomfakavans = "";
-                if (item.Length > 10)
+                if (item.Length > 12)
                 {
                      avans = mydecimal.Parse(item[11]);
                      nomfakavans = item[12];
