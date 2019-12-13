@@ -541,6 +541,7 @@ namespace Tempo2012.EntityFramework
                              }).ToList();
             //
             var rezi = GetAllAnaliticSaldos(id, Entrence.CurrentFirma.Id);
+            if (string.IsNullOrEmpty(filter)) rezi = rezi.Where(mbox => mbox.Details.Contains(filter)).ToList();
             foreach (AccItemSaldo accItemSaldo in query)
             {
                 var saldo =
@@ -559,11 +560,11 @@ namespace Tempo2012.EntityFramework
             }
             foreach (var items in rezi)
             {
-                var saldo =
-                   query.FirstOrDefault(
-                       m => items.Details.Contains(m.Details));
-                if (saldo == null)
-                {
+                //var saldo =
+                //   query.FirstOrDefault(
+                //       m => items.Details.Contains(m.Details));
+                //if (saldo == null)
+                //{
                     var item = new AccItemSaldo();
                     item.Nsc = items.BeginSaldoCredit;
                     item.Nsd = items.BeginSaldoDebit;
@@ -576,7 +577,7 @@ namespace Tempo2012.EntityFramework
                     item.Nsdk = items.BeginSaldoDebitKol;
                     item.Nsck = items.BeginSaldoCreditKol;
                     query.Add(item);
-                }
+                //}
             }
             //
             if (!string.IsNullOrWhiteSpace(filter))
