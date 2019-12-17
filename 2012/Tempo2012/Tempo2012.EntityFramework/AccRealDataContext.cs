@@ -4030,10 +4030,10 @@ namespace Tempo2012.EntityFramework
             try
             {
                 dbman.Open();
-                c = (int) dbman.ExecuteScalar(CommandType.Text,
-                    String.Format(
+                var command = String.Format(
                         "select count(*) from \"conto\" where \"FirmId\"={0} and \"Date\">='1.{1}.{2}' and \"Date\"<='{3}.{1}.{2}'",
-                        id, month, year, GetEndDate(month, year)));
+                        id, month, year, GetEndDate(month, year));
+                c = (int) dbman.ExecuteScalar(CommandType.Text,command);
             }
             catch (Exception ex)
             {

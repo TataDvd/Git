@@ -11,10 +11,40 @@ using Tempo2012.EntityFramework.Interface;
 
 namespace Tempo2012.EntityFramework
 {
-    public static partial class RealDataContext
+    public class SaldoRepository
     {
-       
-             
+        private SaldoRepository()
+        {
+            SaldoItems = new Dictionary<string, List<SaldoFactura>>();
+        }
+
+        private static SaldoRepository _Instance;
+        public static SaldoRepository Instance
+        {
+            get { return _Instance ?? (_Instance = new SaldoRepository()); }
+        }
+        private Dictionary<string, List<SaldoFactura>> SaldoItems;
+        public List<SaldoFactura> ContoItems(string key)
+        {
+            if (SaldoItems.ContainsKey(key))
+            {
+                return SaldoItems[key];
+            }
+            return null;
+        }
+        public void Add(string key, List<SaldoFactura> lookupModel)
+        {
+            SaldoItems.Add(key, lookupModel);
+        }
+        public void Remove(string key)
+        {
+            SaldoItems.Remove(key);
+        }
+    }
+
+public static partial class RealDataContext
+    {
+              
         
         public static IEnumerable<MapAnanaliticAccToAnaliticField> GetAllConnectorAnaliticField()
         {
@@ -1463,7 +1493,11 @@ namespace Tempo2012.EntityFramework
 
         public static List<SaldoFactura> GetAllAnaliticSaldos(int accid,int firmid, string kindValuta = null)
         {
-            List<SaldoFactura> allmovement = new List<SaldoFactura>();
+            List<SaldoFactura> allmovement = null;
+            allmovement = SaldoRepository.Instance.ContoItems(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta));
+            if (allmovement != null)
+                return allmovement;
+            allmovement = new List<SaldoFactura>();
             var dbman = new DBManager(DataProvider.Firebird);
             dbman.ConnectionString = Entrence.ConnectionString;
             try
@@ -1587,6 +1621,7 @@ namespace Tempo2012.EntityFramework
             }
             if (kindValuta != null)
                 return allmovement.Where(e => e.CodeValuta == kindValuta).ToList();
+            SaldoRepository.Instance.Add(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta), allmovement);
             return allmovement;
         }
         public static IEnumerable<SaldoAnaliticModel> GetCurrentMovements(int accid, int groupid)

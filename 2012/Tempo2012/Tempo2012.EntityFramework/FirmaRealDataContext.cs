@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using Tempo2012.EntityFramework.Interface;
+using System.Globalization;
 
 namespace Tempo2012.EntityFramework
 {
@@ -327,162 +328,92 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
-                        "where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",c.CDETAILS,c.DDETAILS,c.\"DebitAccount\",c.\"CreditAccount\" FROM \"conto\" c " +
+                        //"inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\" " +
+                        //"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
+                        "where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and (c.\"CreditAccount\"={2} or c.\"DebitAccount\"={2}) ",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year,
                         id);
                 if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
                 {
-                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\",m.SORTORDER";
+                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\"";
                 }
                 else
                 {
-                    s = s + ") order by c.\"Id\",m.SORTORDER";
+                    s = s + ") order by c.\"Id\"";
                 }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
-                string command =
-               string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
-                             " FROM \"accounts\" a " +
-                             "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
-                             "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
-                             "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
-                             "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
-                             "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
-                             " where a.\"Id\"={0}", id);
-                int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
-                bool change = false;
-                bool first = true;
+               // string command =
+               //string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
+               //              " FROM \"accounts\" a " +
+               //              "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
+               //              "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
+               //              "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
+               //              "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
+               //              "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
+               //              " where a.\"Id\"={0}", id);
+               // int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
+                //bool change = false;
+                //bool first = true;
                 bool firstrow = true;
                 bool ima = false;
-                AccItemSaldo row = new AccItemSaldo();
-                row.Type = typeAccount;
-                int oldid = 0, newid = 0;
-                int chikiriki = 0;
+                
+                //int oldid = 0, newid = 0;
+                //int chikiriki = 0;
                 while (dbman.DataReader.Read())
                 {
+                    AccItemSaldo row = new AccItemSaldo();
+                    row.Type = typeAccount;
                     ima = true;
-                    newid = int.Parse(dbman.DataReader["Id"].ToString());
-                    if (first)
+                    int smetka = 0;
+                    if (int.TryParse(dbman.DataReader["DebitAccount"].ToString(), out smetka))
                     {
-                        first = false;
-                        oldid = newid;
-                        int smetka = 0;
-                        if (int.TryParse(dbman.DataReader["DebitAccount"].ToString(), out smetka))
+                        if (smetka == id)
                         {
-                            if (smetka == id)
+                            row.IsDebit = true;
+                            row.Type = typeAccount;
+                            row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                            if (kol == 1)
                             {
-                                row.IsDebit = true;
-                                row.Type = typeAccount;
-                                row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                if (kol == 1)
-                                {
-                                    row.Odk=decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
-                                }
-                                if (val == 1)
-                                {
-                                    row.Odv = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
-                                }
+                                row.Odk = decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
                             }
-                            else
+                            if (val == 1)
                             {
-                                row.Type = typeAccount;
-                                row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                if (kol == 1)
-                                {
-                                    row.Ock = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
-                                }
-                                if (val == 1)
-                                {
-                                    row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
-                                }
+                                row.Odv = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
+                            }
+                        }
+                        else
+                        {
+                            row.Type = typeAccount;
+                            row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
+                            if (kol == 1)
+                            {
+                                row.Ock = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
+                            }
+                            if (val == 1)
+                            {
+                                row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
                             }
                         }
                     }
-                    if (oldid != newid)
+                    if (smetka == id)
                     {
-                        change = true;
+                        string ddetails = dbman.DataReader["DDETAILS"].ToString();
+                        parsedetails(titles, firstrow, row, ddetails);
                     }
-                    if (change)
+                    else
                     {
-                        if (firstrow)
-                        {
-
-                            firstrow = false;
-                        }
-                        rez.Add(row);
-                        row = new AccItemSaldo();
-                        oldid = newid;
-                        change = false;
-                        int smetka;
-                        if (int.TryParse(dbman.DataReader["DebitAccount"].ToString(), out smetka))
-                        {
-                            if (smetka == id)
-                            {
-                                row.IsDebit = true;
-                                row.Type = typeAccount;
-                                row.Od = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                if (kol == 1)
-                                {
-                                    row.Odk = decimal.Parse(dbman.DataReader["OBOROTKOL"].ToString());
-                                }
-                                if (val == 1)
-                                {
-                                    row.Odv = decimal.Parse(dbman.DataReader["OBOROTVALUTA"].ToString());
-                                }
-                            }
-                            else
-                            {
-                                row.Type = typeAccount;
-                                row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                                if (kol == 1)
-                                {
-                                    row.Ock = decimal.Parse(dbman.DataReader["OBOROTKOLK"].ToString());
-                                }
-                                if (val == 1)
-                                {
-                                    row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
-                                }
-                            }
-                        }
-                        chikiriki = 0;
+                        string cdetails = dbman.DataReader["CDETAILS"].ToString();
+                        parsedetails(titles, firstrow, row, cdetails);
                     }
-
-                    if (chikiriki < count)
-                    {
-                        string name = dbman.DataReader["Name"].ToString();
-                        string value = dbman.DataReader["VALUE"].ToString();
-
-                        string lookup = dbman.DataReader["LOOKUPVAL"].ToString();
-                        row.Fields = string.Format("{0}|{1} ", row.Fields, string.IsNullOrWhiteSpace(lookup) ? value : value + "---" + lookup);
-                        if (name == "Контрагент")
-                        {
-                            row.Code = value;
-                        }
-                        if (name == "Номер фактура")
-                        {
-                            row.NInvoise = value;
-                        }
-                        if (name == "Дата на фактура")
-                        {
-                            row.Data = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
-                        }
-                        if (!name.Contains("Дата ")) row.Details = string.Format("{0}|{1} ", row.Details, value);
-                        if (firstrow)
-                        {
-                            titles.Add(name);
-                        }
-                        chikiriki++;
-                    }
-                }
-                if (ima)
-                {
                     rez.Add(row);
+                    firstrow = false;
                 }
-                else
+                if (!ima)
                 {
-                    //return null;
+                
                     var atr = LoadAllAnaliticfields(id);
                     foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
                     {
@@ -757,6 +688,71 @@ namespace Tempo2012.EntityFramework
                 }
             }
             return rez1;
+        }
+
+        private static void parsedetails(List<string> titles, bool firstrow, AccItemSaldo row, string ddetails)
+        {
+            if (!string.IsNullOrWhiteSpace(ddetails))
+            {
+                var str = ddetails.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var a in str)
+                {
+                    if (string.IsNullOrWhiteSpace(a)) continue;
+                    var str1 = a.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (str1.Length > 0)
+                    {
+                        string name = str1[0];
+                        string value = str1[1].Trim();
+                        if (name == "Контрагент")
+                        {
+                            row.Code = value.Split(' ')[0];
+                            row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
+                            row.Fields = string.Format("{0}|{1} ", row.Fields, row.Code + "---" + value.Replace(row.Code, "").Trim());
+                        }
+                        else
+                        if (name == "Номер фактура")
+                        {
+                            row.NInvoise = value;
+                            row.Details = string.Format("{0}|{1} ", row.Details, value);
+                            row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+                        }
+                        else
+                        if (name == "Дата на фактура")
+                        {
+                            DateTime dateValue;
+                            if (DateTime.TryParse(value, out dateValue))
+                            {
+                                row.Data = dateValue;
+                            }
+                            else
+                            {
+                                var culture = CultureInfo.CreateSpecificCulture("en-US");
+                                if (DateTime.TryParse(value, culture, DateTimeStyles.AssumeLocal, out dateValue))
+                                {
+                                    row.Data = dateValue;
+                                }
+                                else
+                                {
+                                    row.Data = DateTime.Now;
+                                }
+                            }
+                            row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+
+                        }
+                        else
+                        {
+                            row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+                        }
+                        if (firstrow)
+                        {
+                            titles.Add(name);
+                        }
+                    }
+
+
+                }
+
+            }
         }
 
         internal static IEnumerable<Conto> GetAllContoOrfiltered(int firmaId, ISearchAcc pSearcAcc)
