@@ -707,7 +707,7 @@ namespace Tempo2012.EntityFramework
                         {
                             row.Code = value.Split(' ')[0];
                             row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
-                            row.Fields = string.Format("{0}|{1} ", row.Fields, row.Code + "---" + value.Replace(row.Code, "").Trim());
+                            row.Fields = string.Format("{0}|{1}---{2} ", row.Fields, row.Code , value.Replace(row.Code, "").Trim());
                         }
                         else
                         if (name == "Вид валута")
@@ -715,7 +715,7 @@ namespace Tempo2012.EntityFramework
                             row.VidValCode = value.Split(' ')[0];
                             row.VidVal = value.Replace(row.VidValCode, "").Trim();
                             row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
-                            row.Fields = string.Format("{0}|{1} ", row.Fields, row.VidValCode + "---" + row.VidVal);
+                            row.Fields = string.Format("{0}|{1}---{2}", row.Fields, row.VidValCode,row.VidVal);
                         }
                         else
                         if (name == "Номер фактура")
