@@ -710,6 +710,14 @@ namespace Tempo2012.EntityFramework
                             row.Fields = string.Format("{0}|{1} ", row.Fields, row.Code + "---" + value.Replace(row.Code, "").Trim());
                         }
                         else
+                        if (name == "Вид валута")
+                        {
+                            row.VidValCode = value.Split(' ')[0];
+                            row.VidVal = value.Replace(row.VidValCode, "").Trim();
+                            row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
+                            row.Fields = string.Format("{0}|{1} ", row.Fields, row.VidValCode + "---" + row.VidVal);
+                        }
+                        else
                         if (name == "Номер фактура")
                         {
                             row.NInvoise = value;
