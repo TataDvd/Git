@@ -3205,7 +3205,7 @@ namespace Tempo2012.EntityFramework
             }
             if (it.Name.Contains("Дата"))
             {
-                saldoAnaliticModel.VAL = DateTime.Now.ToShortDateString();
+                saldoAnaliticModel.VAL =saldoAnaliticModel.VALUEDATE.ToShortDateString();
             }
             if (it.Name==("Номер фактура"))
             {

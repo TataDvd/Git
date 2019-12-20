@@ -697,6 +697,7 @@ namespace Tempo2012.EntityFramework
                 var str = ddetails.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var a in str)
                 {
+                    
                     if (string.IsNullOrWhiteSpace(a)) continue;
                     var str1 = a.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
                     if (str1.Length > 0)
@@ -708,23 +709,38 @@ namespace Tempo2012.EntityFramework
                             row.Code = value.Split(' ')[0];
                             row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
                             row.Fields = string.Format("{0}|{1}---{2} ", row.Fields, row.Code , value.Replace(row.Code, "").Trim());
+                            if (firstrow)
+                            {
+                                titles.Add(name);
+                            }
+                            continue;
                         }
-                        else
+                       
                         if (name == "Вид валута")
                         {
                             row.VidValCode = value.Split(' ')[0];
                             row.VidVal = value.Replace(row.VidValCode, "").Trim();
-                            row.Details = string.Format("{0}|{1} ", row.Details, row.Code);
+                            row.Details = string.Format("{0}|{1} ", row.Details, row.VidValCode);
                             row.Fields = string.Format("{0}|{1}---{2}", row.Fields, row.VidValCode,row.VidVal);
+                            if (firstrow)
+                            {
+                                titles.Add(name);
+                            }
+                            continue;
                         }
-                        else
+                        
                         if (name == "Номер фактура")
                         {
                             row.NInvoise = value;
                             row.Details = string.Format("{0}|{1} ", row.Details, value);
                             row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+                            if (firstrow)
+                            {
+                                titles.Add(name);
+                            }
+                            continue;
                         }
-                        else
+                       
                         if (name == "Дата на фактура")
                         {
                             DateTime dateValue;
@@ -745,16 +761,17 @@ namespace Tempo2012.EntityFramework
                                 }
                             }
                             row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+                            if (firstrow)
+                            {
+                                titles.Add(name);
+                            }
+                            continue;
 
                         }
-                        else
-                        {
-                            row.Fields = string.Format("{0}|{1} ", row.Fields, value);
-                        }
-                        if (firstrow)
-                        {
-                            titles.Add(name);
-                        }
+                        if (name == "Сума валута") continue;
+                        row.Fields = string.Format("{0}|{1} ", row.Fields, value);
+                       
+                       
                     }
 
 

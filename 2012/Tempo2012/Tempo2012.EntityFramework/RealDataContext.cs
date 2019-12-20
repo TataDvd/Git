@@ -1494,9 +1494,9 @@ public static partial class RealDataContext
         public static List<SaldoFactura> GetAllAnaliticSaldos(int accid,int firmid, string kindValuta = null)
         {
             List<SaldoFactura> allmovement = null;
-            allmovement = SaldoRepository.Instance.ContoItems(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta));
-            if (allmovement != null)
-                return allmovement;
+            //allmovement = SaldoRepository.Instance.ContoItems(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta));
+            //if (allmovement != null)
+            //    return allmovement;
             allmovement = new List<SaldoFactura>();
             var dbman = new DBManager(DataProvider.Firebird);
             dbman.ConnectionString = Entrence.ConnectionString;
@@ -1621,7 +1621,7 @@ public static partial class RealDataContext
             }
             if (kindValuta != null)
                 return allmovement.Where(e => e.CodeValuta == kindValuta).ToList();
-            SaldoRepository.Instance.Add(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta), allmovement);
+            //SaldoRepository.Instance.Add(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta), allmovement);
             return allmovement;
         }
         public static IEnumerable<SaldoAnaliticModel> GetCurrentMovements(int accid, int groupid)
