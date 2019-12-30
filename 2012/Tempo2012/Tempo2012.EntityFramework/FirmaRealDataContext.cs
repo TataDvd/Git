@@ -337,11 +337,11 @@ namespace Tempo2012.EntityFramework
                         id);
                 if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
                 {
-                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%')) order by c.\"Id\"";
+                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%'))";
                 }
                 else
                 {
-                    s = s + ") order by c.\"Id\"";
+                    s = s + ")";
                 }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
@@ -471,23 +471,51 @@ namespace Tempo2012.EntityFramework
                                  Odv = grp.Sum(t => t.Odv),
                              }).ToList();
             //
+            //if (!string.IsNullOrWhiteSpace(filter))
+            //{
+            //    query = query.Where(e => e.Details != null && e.Fields != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details).ToList();
+            //}
             var rezi = GetAllAnaliticSaldos(id, Entrence.CurrentFirma.Id);
-            if (string.IsNullOrEmpty(filter)) rezi = rezi.Where(mbox => mbox.Details.Contains(filter)).ToList();
+            if (!string.IsNullOrEmpty(filter)) rezi = rezi.Where(mbox => mbox.Details.Contains(filter)).ToList();
+            //var join = from item in query
+            //           join saldo in rezi on item.Details equals saldo.Details
+            //           select new AccItemSaldo {
+            //               Code = item.Code,
+            //               NInvoise =item.NInvoise,
+            //               Details = item.Details,
+            //               Type = item.Type,
+            //               Data = item.Data,
+            //               Fields = item.Fields,
+            //               Ock = item.Ock,
+            //               Odk =item.Odk,
+            //               Oc = item.Oc,
+            //               Od = item.Od,
+            //               Ocv = item.Ocv,
+            //               Odv = item.Odv,
+            //               Nsd = saldo.BeginSaldoDebit,
+            //               Nsc = saldo.BeginSaldoCredit,
+            //               Nsdv = saldo.BeginSaldoDebitValuta,
+            //               Nscv = saldo.BeginSaldoCreditValuta,
+            //               Nsdk = saldo.BeginSaldoDebitKol,
+            //               Nsck = saldo.BeginSaldoCreditKol
+            //            };
+
+
             foreach (AccItemSaldo accItemSaldo in query)
             {
                 var saldo =
                     rezi.FirstOrDefault(
-                        m => accItemSaldo.Details==m.Details);
+                        m => accItemSaldo.Details == m.Details);
                 if (saldo != null)
                 {
                     accItemSaldo.Nsd = saldo.BeginSaldoDebit;
                     accItemSaldo.Nsc = saldo.BeginSaldoCredit;
                     accItemSaldo.Nsdv = saldo.BeginSaldoDebitValuta;
                     accItemSaldo.Nscv = saldo.BeginSaldoCreditValuta;
-                    accItemSaldo.Nsdk=  saldo.BeginSaldoDebitKol;
-                    accItemSaldo.Nsck=  saldo.BeginSaldoCreditKol;
+                    accItemSaldo.Nsdk = saldo.BeginSaldoDebitKol;
+                    accItemSaldo.Nsck = saldo.BeginSaldoCreditKol;
                     rezi.Remove(saldo);
-                 }
+                }
             }
             foreach (var items in rezi)
             {
@@ -496,111 +524,23 @@ namespace Tempo2012.EntityFramework
                 //       m => items.Details.Contains(m.Details));
                 //if (saldo == null)
                 //{
-                    var item = new AccItemSaldo();
-                    item.Nsc = items.BeginSaldoCredit;
-                    item.Nsd = items.BeginSaldoDebit;
-                    item.Data = items.Date;
-                    item.Type = typeAccount;
-                    item.Details = items.Details;
-                    item.Fields = items.Fields;
-                    item.Nsdv = items.BeginSaldoDebitValuta;
-                    item.Nscv = items.BeginSaldoCreditValuta;
-                    item.Nsdk = items.BeginSaldoDebitKol;
-                    item.Nsck = items.BeginSaldoCreditKol;
-                    query.Add(item);
+                var item = new AccItemSaldo();
+                item.Nsc = items.BeginSaldoCredit;
+                item.Nsd = items.BeginSaldoDebit;
+                item.Data = items.Date;
+                item.Type = typeAccount;
+                item.Details = items.Details;
+                item.Fields = items.Fields;
+                item.Nsdv = items.BeginSaldoDebitValuta;
+                item.Nscv = items.BeginSaldoCreditValuta;
+                item.Nsdk = items.BeginSaldoDebitKol;
+                item.Nsck = items.BeginSaldoCreditKol;
+                query.Add(item);
                 //}
             }
-            //
-            if (!string.IsNullOrWhiteSpace(filter))
-            {
-                foreach (var item in query.Where(e => e.Details != null && e.Fields!=null && e.Details.StartsWith(filter)).OrderBy(e => e.Details))
-                {
-                    var det = item.Fields.Split('|');
-                    List<string> newrow = det.Skip(1).ToList();
-                    decimal saldo = 0;
-                    decimal ksaldo = 0;
-                    if (val == 1)
-                    {
-                        saldo = 0;
-                        if (item.Type == 1)
-                        {
-                            saldo = item.Nsdv - item.Nscv;
-                        }
-                        else
-                        {
-                            saldo = item.Nscv - item.Nsdv;
-                        }
-                        //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
-                        newrow.Add(saldo.ToString(Vf.LevFormatUI));
-                        newrow.Add(item.Odv.ToString(Vf.LevFormatUI));
-                        newrow.Add(item.Ocv.ToString(Vf.LevFormatUI));
-                        ksaldo = 0;
-                        if (item.Type == 1)
-                        {
-                            ksaldo = (item.Nsdv + item.Odv) - (item.Nscv + item.Ocv);
-                        }
-                        else
-                        {
-                            ksaldo = (item.Nscv + item.Ocv) - (item.Nsdv + item.Odv);
-                        }
-                        newrow.Add(ksaldo.ToString(Vf.ValFormatUI));
-                    }
-                    if (kol == 1)
-                    {
-                         saldo = 0;
-                        if (item.Type == 1)
-                        {
-                            saldo = item.Nsdk - item.Nsck;
-                        }
-                        else
-                        {
-                            saldo = item.Nsck - item.Nsdk;
-                        }
-                        //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
-                        newrow.Add(saldo.ToString(Vf.KolFormatUI));
-                        newrow.Add(item.Odk.ToString(Vf.KolFormatUI));
-                        newrow.Add(item.Ock.ToString(Vf.KolFormatUI));
-                         ksaldo = 0;
-                        if (item.Type == 1)
-                        {
-                            ksaldo = (item.Nsdk + item.Odk) - (item.Nsck + item.Ock);
-                        }
-                        else
-                        {
-                            ksaldo = (item.Nsck + item.Ock) - (item.Nsdk + item.Odk);
-                        }
-                        newrow.Add(ksaldo.ToString(Vf.KolFormatUI));
 
-                    }
-                    saldo = 0;
-                    ksaldo = 0;
-                    if (item.Type == 1)
-                    {
-                        saldo = item.Nsd - item.Nsc;
-                    }
-                    else
-                    {
-                        saldo = item.Nsc - item.Nsd;
-                    }
-                    //newrow.Add(string.Format("{0}.{1}.{2}",item.Data.Day.ToZeroString(2),item.Data.Month.ToZeroString(2),item.Data.Year.ToZeroString(4))); 
-                    newrow.Add(saldo.ToString(Vf.LevFormatUI));
-                    newrow.Add(item.Od.ToString(Vf.LevFormatUI));
-                    newrow.Add(item.Oc.ToString(Vf.LevFormatUI));
-                    if (item.Type == 1)
-                    {
-                        ksaldo = (item.Nsd + item.Od) - (item.Nsc + item.Oc);
-                    }
-                    else
-                    {
-                        ksaldo = (item.Nsc + item.Oc) - (item.Nsd + item.Od);
-                    }
-                    newrow.Add(ksaldo.ToString(Vf.LevFormatUI));
-                    rez1.Add(newrow);
-                }
-            }
-            else
-            {
-                foreach (var item in query.OrderBy(e => e.Details))
+
+            foreach (var item in query)
                 {
                     if (item.Details != null && item.Fields!=null)
                     {
@@ -684,7 +624,7 @@ namespace Tempo2012.EntityFramework
                         }
                         newrow.Add(ksaldo.ToString(Vf.LevFormatUI));
                         rez1.Add(newrow);
-                    }
+                    
                 }
             }
             return rez1;
