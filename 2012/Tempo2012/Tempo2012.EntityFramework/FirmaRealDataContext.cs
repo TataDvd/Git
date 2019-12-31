@@ -337,7 +337,7 @@ namespace Tempo2012.EntityFramework
                         id);
                 if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
                 {
-                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1].Trim()}%'))";
+                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1]}%'))";
                 }
                 else
                 {
