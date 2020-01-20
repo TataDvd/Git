@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -190,12 +191,16 @@
       <DependentUpon>DeclarConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\AllConto.cs" />
+    <Compile Include="Views\Dialogs\BackUp.xaml.cs">
+      <DependentUpon>BackUp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\BisyDialog.xaml.cs">
       <DependentUpon>BisyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ImportInvoiseIndicator.xaml.cs">
       <DependentUpon>ImportInvoiseIndicator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\BackUpViewModel.cs" />
     <Compile Include="Views\Dialogs\ImportInvoiseIndicatorViewModel.cs" />
     <Compile Include="Views\Dialogs\ModalTemplate.xaml.cs">
       <DependentUpon>ModalTemplate.xaml</DependentUpon>
@@ -493,6 +498,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Declar\DeclarConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\BackUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -540,7 +540,7 @@ namespace Tempo2012.EntityFramework
             }
 
 
-            foreach (var item in query)
+            foreach (var item in query.OrderBy(e=>e.Details))
                 {
                     if (item.Details != null && item.Fields!=null)
                     {

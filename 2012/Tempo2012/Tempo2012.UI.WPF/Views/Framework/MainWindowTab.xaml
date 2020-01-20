@@ -518,11 +518,19 @@
                         </DataTemplate>
                     </MenuItem.HeaderTemplate>
                     <MenuItem>
+                        
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
                                 <CustomControls:TextBlockEx Text="Манипулация на данни" />
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
+                        <MenuItem  Click="MenuItem_Click_43">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Архивиране" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
                         <MenuItem  Click="MenuItem_Click_17">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>

@@ -1343,5 +1343,11 @@ namespace Tempo2012.UI.WPF
         {
             AddItem("Бързо Kонтиране", new ContoViewLight());
         }
+
+        private void MenuItem_Click_43(object sender, RoutedEventArgs e)
+        {
+            BackUp acc = new BackUp();
+            acc.ShowDialog();
+        }
     }
 }
