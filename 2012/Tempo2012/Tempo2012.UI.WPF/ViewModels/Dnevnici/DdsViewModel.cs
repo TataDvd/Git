@@ -698,7 +698,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                     }
                     if (KindActivity == 2)
                         {
-                            items[14].IsShow = false;
+                            items[14].IsShow = true;//Денкее Денкее гулема ли
                             for(var k=17;k<26;k++) items[k].IsShow = false;
 
                         }

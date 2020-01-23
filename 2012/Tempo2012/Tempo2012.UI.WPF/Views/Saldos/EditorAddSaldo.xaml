@@ -4,14 +4,17 @@
         xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
         xmlns:local="clr-namespace:Tempo2012.UI.WPF.TemplateSelector"
+        xmlns:Framework="clr-namespace:Tempo2012.UI.WPF.Views.Framework"
         xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
         xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
         xmlns:LookupFastSearch="clr-namespace:Tempo2012.UI.WPF.Views.LookupFastSearch" Title="{Binding Title}"
         UIElement.PreviewKeyDown="Window_PreviewKeyDown"
          KeyDown="_this_KeyDown" Height="418" Width="800" Name="_this">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <l:BoolToOpositeBoolConverter x:Key="invertor"/>
         <l:FromEnumToString x:Key="etostr"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <l:ValidityToColor x:Key="vtoc"/>
         <l:BooleanToColorConvertor x:Key="btoc"/>
         <l:BooleanToImageConvertor x:Key="btoi"/>
         <l:DateToStringConverter x:Key="dtos"/>
@@ -19,193 +22,137 @@
         <l:ValConvertor x:Key="val"></l:ValConvertor>
         <l:KolConvertor x:Key="kol"></l:KolConvertor>
         <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+        <DataTemplate x:Key="InfoTemplateK">
+            <CustomControls:TextBlockEx Width="50" Text="...">
+                <CustomControls:TextBlockEx.ToolTip>
+                    <ToolTip>
+                        <DockPanel>
+                            <Image Source="../../Images/notes.png"/>
+                            <CustomControls:TextBlockEx Text="{Binding CDetails}"></CustomControls:TextBlockEx>
+                        </DockPanel>
+                    </ToolTip>
+                </CustomControls:TextBlockEx.ToolTip>
+            </CustomControls:TextBlockEx>
+
+
+        </DataTemplate>
+        <DataTemplate x:Key="InfoTemplateD">
+            <CustomControls:TextBlockEx Width="50" Text="...">
+                <CustomControls:TextBlockEx.ToolTip>
+                    <ToolTip>
+                        <DockPanel>
+                            <Image Source="../../Images/notes.png"/>
+                            <CustomControls:TextBlockEx Text="{Binding DDetails}"></CustomControls:TextBlockEx>
+                        </DockPanel>
+                    </ToolTip>
+                </CustomControls:TextBlockEx.ToolTip>
+            </CustomControls:TextBlockEx>
+
+
+        </DataTemplate>
+        <DataTemplate x:Key="EmptyTemplate">
+            <CustomControls:TextBlockEx Width="50" Text=""/>
+        </DataTemplate>
         <DataTemplate x:Key="StringTemplate">
-            <Grid Margin="20,0,20,0">
+            <Grid Margin="20,0,20,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="220"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
+
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+
+
                 </Grid.ColumnDefinitions>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="0" Text="{Binding  Name}" Width="220"></CustomControls:TextBlockEx>
-                <TextBox Margin="10,5,10,5" Grid.Column="1"  Text="{Binding  Value,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
-                                       Width="100" TabIndex="{Binding TabIndex}"
-                                       
-                                                                        
-                                       
-                                   />
-                <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding / IsValid,Converter={StaticResource btoi}}" />-->
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="0" Text="{Binding  Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBoxEx Margin="10,5,10,5"
+                         Grid.Column="1"
+                         Text="{Binding  Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         Background="{Binding Value,Converter={StaticResource vtoc}}"                 
+                         Width="180"
+                         TabIndex="{Binding TabIndex}" 
+                         KeyboardNavigation.ControlTabNavigation="None"
+                                         
+                />
+                <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" Foreground="{Binding Path=IsValid,Converter={StaticResource btoc}}"/>-->
 
 
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="DKTemplate">
-            <Grid Margin="20,0,20,0">
+        <DataTemplate x:Key="DTemplate">
+            <Grid Margin="20,0,20,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
                     <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="1" Text="Дебит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="3" Text="Кредит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
-                <CustomControls:MaskTextBox  Margin="10,5,10,5" 
-                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                   
-                          Grid.Column="1"
-                          Text="{Binding ValueDebit,Mode=TwoWay,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}"
-                          Grid.Row="1" 
-                          MinWidth="{Binding MinWidth}"
-                          MaxLength="{Binding  Length}"
-                          DataType="decimal" TabIndex="{Binding TabIndex}"
-                                   />
-                <Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />
-                <CustomControls:MaskTextBox
-                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
-                    Margin="10,5,10,5"
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv},UpdateSourceTrigger=LostFocus}"
-                    DataType="decimal"                                                     
-                    IsEnabled="{Binding ReadOnly}"
-                    TabIndex="{Binding TabIndex}"/>
-                <Image Margin="10,5,10,5" Grid.Row="1" Grid.Column="4" Source="{Binding IsValidd,Converter={StaticResource btoi}}" />
+                    <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
 
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="KolTemplate">
-            <Grid Margin="20,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="1" Text="Дебит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="3" Text="Кредит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
-                <CustomControls:MaskTextBox  Margin="10,5,10,5" 
-                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                   
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
                           Grid.Column="1"
-                          Text="{Binding ValueDebit,Mode=TwoWay,Converter={StaticResource kol},UpdateSourceTrigger=LostFocus}"
-                          Grid.Row="1" 
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
                           MinWidth="{Binding MinWidth}"
                           MaxLength="{Binding  Length}"
                           DataType="decimal" 
-                          TabIndex="{Binding TabIndex}"/>
-                <Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />
-                <CustomControls:MaskTextBox
-                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
-                    Margin="10,5,10,5"
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource kol},UpdateSourceTrigger=LostFocus}"
-                    DataType="decimal"                                                     
-                    IsEnabled="{Binding ReadOnly}"
-                    TabIndex="{Binding TabIndex}"
-                    />
-                <Image Margin="10,5,10,5" Grid.Row="1" Grid.Column="4" Source="{Binding IsValidd,Converter={StaticResource btoi}}" />
+                          TabIndex="{Binding TabIndex}"                   
+                          />
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"></CustomControls:TextBlockEx>
+                <!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="КTemplate">
+            <Grid Margin="20,0,20,0" FocusManager.FocusedElement="{Binding ElementName=firstelement}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <!--<ColumnDefinition Width="20"></ColumnDefinition>-->
+
+                </Grid.ColumnDefinitions>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:MaskTextBox  Margin="10,5,10,5"
+                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                       
+                          Grid.Column="1"
+                          Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource lv}}"
+                          Grid.Row="0" 
+                          MinWidth="{Binding MinWidth}"
+                          MaxLength="{Binding  Length}"
+                          DataType="decimal" 
+                          TabIndex="{Binding TabIndex}"                   
+                                   />
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="0" Text="{Binding InfoTitle}" Width="120"></CustomControls:TextBlockEx>
+                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1" Grid.Column="1" Text="{Binding InfoValue,Converter={StaticResource lv}}" Width="120"></CustomControls:TextBlockEx>
+                <!--<Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
+
 
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ValTemplate">
-            <Grid Margin="20,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="1" Text="Дебит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Column="3" Text="Кредит"></CustomControls:TextBlockEx>
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="1"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
-                <CustomControls:MaskTextBox  Margin="10,5,10,5" 
-                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                   
-                          Grid.Column="1"
-                          Text="{Binding ValueDebit,Mode=TwoWay,Converter={StaticResource val},UpdateSourceTrigger=LostFocus}"
-                          Grid.Row="1" 
-                          MinWidth="{Binding MinWidth}"
-                          MaxLength="{Binding  Length}"
-                          DataType="decimal" 
-                          TabIndex="{Binding TabIndex}"                    
-                                   />
-                <Image   Margin="10,5,10,5" Grid.Row="1" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />
-                <CustomControls:MaskTextBox
-                    Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
-                    Margin="10,5,10,5"
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Text="{Binding ValueCredit,Mode=TwoWay,Converter={StaticResource val},UpdateSourceTrigger=LostFocus}"
-                    DataType="decimal"                                                     
-                    IsEnabled="{Binding ReadOnly}"
-                    TabIndex="{Binding TabIndex}"
-                    />
-                <Image Margin="10,5,10,5" Grid.Row="1" Grid.Column="4" Source="{Binding IsValidd,Converter={StaticResource btoi}}" />
 
-            </Grid>
+            <Framework:Valuta DataContext="{Binding}" ValutaChanged="ValutaValutaChanged" >
+            </Framework:Valuta>
+
         </DataTemplate>
-        <DataTemplate x:Key="KursTemplate">
-            <Grid Margin="20,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                    
-                </Grid.ColumnDefinitions>
-               
-                <CustomControls:TextBlockEx Margin="10,5,10,5" Grid.Row="0"  Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
-                <CustomControls:MaskTextBox  Margin="10,5,10,5" 
-                          Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"                   
-                          Grid.Column="1"
-                          Text="{Binding ValueDebit,Mode=TwoWay,Converter={StaticResource kurs},UpdateSourceTrigger=LostFocus}"
-                          Grid.Row="1" 
-                          MinWidth="{Binding MinWidth}"
-                          MaxLength="{Binding  Length}"
-                          DataType="decimal" TabIndex="{Binding TabIndex}"
-                                   />
-               
+        <DataTemplate x:Key="KolTemplate">
+            <Framework:Col DataContext="{Binding}" ColChanged="Col_OnColChanged">
+            </Framework:Col>
 
-            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="LookUpTemplate">
-            <Grid Margin="20,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"></ColumnDefinition>
-                    <ColumnDefinition Width="150"></ColumnDefinition>
-                   <ColumnDefinition Width="150"></ColumnDefinition>
-                    <ColumnDefinition Width="150"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <LookupFastSearch:LookupFastSearcherUniverse DataContext="{Binding}" Grid.Column="0" Grid.ColumnSpan="3"></LookupFastSearch:LookupFastSearcherUniverse>
-                <!--<TextBlockEx Margin="10,5,10,5" Text="{Binding Name}" Width="100" ></TextBlockEx>
-                <ComboBox Margin="10,5,10,5" Grid.Column="1" ItemsSource="{Binding LookUp}" DisplayMemberPath="Key" IsSynchronizedWithCurrentItem="True" Text="{Binding Key,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="{Binding TabIndex}"/>
-                <ComboBox Margin="10,5,10,5" Grid.Column="2" ItemsSource="{Binding LookUp}" DisplayMemberPath="Value" IsSynchronizedWithCurrentItem="True" Text="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="{Binding TabIndex}"/>
-                <Button Margin="10,5,10,5" Grid.Column="3" Content="Нов елемент" Click="Button_Click_1" CommandParameter="{Binding}" Focusable="False"/>-->
-
-            </Grid>
+            <LookupFastSearch:LookupFastSearcherUniverse DataContext="{Binding}" TabIndex="{Binding TabIndex}" ChangeElement="LookupFastSearcherUniverse_OnChangeElement"></LookupFastSearch:LookupFastSearcherUniverse>
         </DataTemplate>
         <DataTemplate x:Key="DateTemplate">
             <Grid Margin="20,0,20,0">
@@ -213,14 +160,12 @@
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
                     <ColumnDefinition Width="140"></ColumnDefinition>
-                    <ColumnDefinition Width="20"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <CustomControls:TextBlockEx Margin="10,5,10,5" Text="{Binding Name}" Width="120"></CustomControls:TextBlockEx>
-                <DatePicker Margin="10,5,10,5" Grid.Column="1" SelectedDate="{Binding Value,Mode=TwoWay,Converter={StaticResource dtos},UpdateSourceTrigger=LostFocus}" TabIndex="{Binding TabIndex}" 
-                            DisplayDateEnd="{Binding ElementName=_this,Path=DataContext.MaxDate,Mode=OneWay}"></DatePicker>
-                <Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />
+                <DatePicker Margin="10,5,10,5" Grid.Column="1" SelectedDate="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="{Binding TabIndex}" ></DatePicker>
+                <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" />-->
             </Grid>
         </DataTemplate>
         <local:ItemDataTemplateSelecor
@@ -229,10 +174,11 @@
               LookUpTemplate="{StaticResource  LookUpTemplate}"
               DateTemplate="{StaticResource DateTemplate}"
               MoneyTemplate="{StaticResource StringTemplate}"
-              DKTemplate="{StaticResource DKTemplate}"
-              ValTemplate="{StaticResource ValTemplate}"
+              DTemplate="{StaticResource DTemplate}"
+              KTemplate="{StaticResource КTemplate}"  
               KolTemplate="{StaticResource KolTemplate}"
-              KursTemplate="{StaticResource KursTemplate}"
+              ValTemplate="{StaticResource ValTemplate}"
+              
             x:Key="ItemDataTemplateSelecor" />
     </Window.Resources>
     <Grid Margin="20,0,20,0">
@@ -254,7 +200,8 @@
 
         </Border>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Width="auto">
-            <Button x:Name="btnSave" Margin="25,5,20,5" Width="150" Click="Button_Click" Focusable="False">F2 Запис</Button>
+            <Button x:Name="btnSave" Margin="25,5,20,5" Width="150" Click="Button_Click" Focusable="False" IsEnabled="{Binding Path=IsValid,UpdateSourceTrigger=PropertyChanged}">F2 Запис</Button>
+            
             <Button Margin="25,5,0,5" Width="150" IsCancel="True" TabIndex="301" Focusable="False">Отказ</Button>
         </StackPanel>
     </Grid>

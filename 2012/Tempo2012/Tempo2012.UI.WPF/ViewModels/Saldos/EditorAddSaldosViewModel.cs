@@ -462,7 +462,50 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
                 OnPropertyChanged("Title");
             }
         }
+        protected override bool CanSave()
+        {
+            return IsValid;
+        }
+        public static readonly string[] ValidatedProperties =
+            {
+                "Items"
+                
+            };
 
+
+        public string GetValidationError(string propertyName)
+        {
+            if (Array.IndexOf(ValidatedProperties, propertyName) < 0)
+                return null;
+
+            string error = null;
+
+            switch (propertyName)
+            {
+                
+                case "Items":
+                    error = ValidateItems();
+                    break;
+                
+            }
+
+            return error;
+        }
+        private string ValidateItems()
+        {
+            return (from saldoItem in Items where string.IsNullOrWhiteSpace(saldoItem.Value) where !saldoItem.IsVal where !saldoItem.IsKol select "Невалидна стойност на поле " + saldoItem.Name).FirstOrDefault();
+        }
+        public bool IsValid
+        {
+            get
+            {
+                foreach (string property in ValidatedProperties)
+                    if (GetValidationError(property) != null)
+                        return false;
+
+                return true;
+            }
+        }
         protected override void Save()
         {
             int sortorder = 0;

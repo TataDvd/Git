@@ -269,6 +269,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
 
                 Cvm.notupdated = false;
+                int test;
+                if (int.TryParse(Cvm.CurrentWraperConto.CurrentConto.DocNum, out test))
+                {
+                    Cvm.DocId = (test + 1).ToString();
+                }
             }
             else {
                 Cvm1.notupdated = true;
@@ -325,6 +330,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 }
 
                 Cvm1.notupdated = false;
+                int test;
+                if (int.TryParse(Cvm1.CurrentWraperConto.CurrentConto.DocNum, out test))
+                {
+                    Cvm1.DocId = (test + 1).ToString();
+                }
             }
     }
 
