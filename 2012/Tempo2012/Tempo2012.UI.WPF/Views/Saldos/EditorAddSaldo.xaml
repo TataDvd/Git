@@ -22,34 +22,8 @@
         <l:ValConvertor x:Key="val"></l:ValConvertor>
         <l:KolConvertor x:Key="kol"></l:KolConvertor>
         <l:KursConvertor x:Key="kurs"></l:KursConvertor>
-        <DataTemplate x:Key="InfoTemplateK">
-            <CustomControls:TextBlockEx Width="50" Text="...">
-                <CustomControls:TextBlockEx.ToolTip>
-                    <ToolTip>
-                        <DockPanel>
-                            <Image Source="../../Images/notes.png"/>
-                            <CustomControls:TextBlockEx Text="{Binding CDetails}"></CustomControls:TextBlockEx>
-                        </DockPanel>
-                    </ToolTip>
-                </CustomControls:TextBlockEx.ToolTip>
-            </CustomControls:TextBlockEx>
-
-
-        </DataTemplate>
-        <DataTemplate x:Key="InfoTemplateD">
-            <CustomControls:TextBlockEx Width="50" Text="...">
-                <CustomControls:TextBlockEx.ToolTip>
-                    <ToolTip>
-                        <DockPanel>
-                            <Image Source="../../Images/notes.png"/>
-                            <CustomControls:TextBlockEx Text="{Binding DDetails}"></CustomControls:TextBlockEx>
-                        </DockPanel>
-                    </ToolTip>
-                </CustomControls:TextBlockEx.ToolTip>
-            </CustomControls:TextBlockEx>
-
-
-        </DataTemplate>
+        
+        
         <DataTemplate x:Key="EmptyTemplate">
             <CustomControls:TextBlockEx Width="50" Text=""/>
         </DataTemplate>
@@ -73,7 +47,7 @@
                          Width="180"
                          TabIndex="{Binding TabIndex}" 
                          KeyboardNavigation.ControlTabNavigation="None"
-                                         
+                         TextChanged="TextBoxEx_TextChanged"                
                 />
                 <!--<Image Margin="10,5,10,5" Grid.Column="2" Source="{Binding IsValid,Converter={StaticResource btoi}}" Foreground="{Binding Path=IsValid,Converter={StaticResource btoc}}"/>-->
 
@@ -147,12 +121,12 @@
 
         </DataTemplate>
         <DataTemplate x:Key="KolTemplate">
-            <Framework:Col DataContext="{Binding}" ColChanged="Col_OnColChanged">
+            <Framework:Col DataContext="{Binding}">
             </Framework:Col>
 
         </DataTemplate>
         <DataTemplate x:Key="LookUpTemplate">
-            <LookupFastSearch:LookupFastSearcherUniverse DataContext="{Binding}" TabIndex="{Binding TabIndex}" ChangeElement="LookupFastSearcherUniverse_OnChangeElement"></LookupFastSearch:LookupFastSearcherUniverse>
+            <LookupFastSearch:LookupFastSearcherUniverse DataContext="{Binding}" TabIndex="{Binding TabIndex}" ChangeElement="LookupFastSearcherUniverse_ChangeElement"></LookupFastSearch:LookupFastSearcherUniverse>
         </DataTemplate>
         <DataTemplate x:Key="DateTemplate">
             <Grid Margin="20,0,20,0">
@@ -174,8 +148,6 @@
               LookUpTemplate="{StaticResource  LookUpTemplate}"
               DateTemplate="{StaticResource DateTemplate}"
               MoneyTemplate="{StaticResource StringTemplate}"
-              DTemplate="{StaticResource DTemplate}"
-              KTemplate="{StaticResource КTemplate}"  
               KolTemplate="{StaticResource KolTemplate}"
               ValTemplate="{StaticResource ValTemplate}"
               
@@ -200,7 +172,7 @@
 
         </Border>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Width="auto">
-            <Button x:Name="btnSave" Margin="25,5,20,5" Width="150" Click="Button_Click" Focusable="False" IsEnabled="{Binding Path=IsValid,UpdateSourceTrigger=PropertyChanged}">F2 Запис</Button>
+            <Button x:Name="btnSave" Margin="25,5,20,5" Width="150" Click="Button_Click" Focusable="False" IsEnabled="False">F2 Запис</Button>
             
             <Button Margin="25,5,0,5" Width="150" IsCancel="True" TabIndex="301" Focusable="False">Отказ</Button>
         </StackPanel>

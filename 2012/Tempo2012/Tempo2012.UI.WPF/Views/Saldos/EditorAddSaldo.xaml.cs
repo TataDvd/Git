@@ -166,5 +166,44 @@ namespace Tempo2012.UI.WPF.Views.Saldos
             //                FocusNavigationDirection.Next));
             //}
         }
+
+        private void ValutaValutaChanged(object sender, Events.ChangeValutaEventArgs e)
+        {
+            if (vm.GetValidationError("Items") == null)
+            {
+                btnSave.IsEnabled = true;
+            }
+            else
+            {
+                btnSave.IsEnabled = false;
+            }
+        }
+
+        private void TextBoxEx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (vm.GetValidationError("Items") == null)
+            {
+                btnSave.IsEnabled = true;
+            }
+            else
+            {
+                btnSave.IsEnabled = false;
+            }
+        }
+
+        private void LookupFastSearcherUniverse_ChangeElement(object sender, ViewModels.ContoManagment.FastLookupEventArgs e)
+        {
+            if (vm.GetValidationError("Items") == null)
+            {
+                btnSave.IsEnabled = true;
+            }
+            else
+            {
+                btnSave.IsEnabled = false;
+            }
+
+        }
+
+       
     }
 }
