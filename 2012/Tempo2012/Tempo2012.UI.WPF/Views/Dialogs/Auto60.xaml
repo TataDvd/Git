@@ -1,0 +1,37 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.Auto60"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tempo2012.UI.WPF.Views.Dialogs"
+        xmlns:CustomControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+        mc:Ignorable="d"
+        Title="Автоматично приключване по сметка 6*" Height="477" Width="664">
+    <Grid>
+        <Grid.RowDefinitions>
+        <RowDefinition Height="45"></RowDefinition>
+        <RowDefinition Height="45"></RowDefinition>
+        <RowDefinition Height="25"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30">
+            <CustomControls:TextBlockEx  Text="Документ No:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
+            <CustomControls:TextBoxEx x:Name="mainfocus" TabIndex="6"  Text="{Binding Path=DocId,Mode=TwoWay,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,5"  Width="80" HorizontalAlignment="Left"/>
+            <CustomControls:TextBlockEx  Text="Папка No:" Margin="10,5,10,2" Width="66"/>
+            <CustomControls:TextBoxEx Text="{Binding Path=Folder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="5,5,10,5" TabIndex="7"  Width="36" Tag="Folder" />
+            
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="30">
+            <CustomControls:TextBlockEx  Text="Дебитна насрещна сметка:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
+            <CustomControls:TextBoxEx Text="{Binding Path=Debit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="10,5,10,5" TabIndex="7"  Width="80" Tag="Folder" />
+            <CustomControls:TextBlockEx  Text="Дата нa осчетоводяване:" Margin="10,5,10,2" Width="150" TextAlignment="Right" />
+            <DatePicker TabIndex="9" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
+                                Width="115" 
+                                SelectedDate="{Binding Path=Data,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                Behavior:SelectedDateSyncBehavior.SyncText="True" 
+                                />
+        </StackPanel>
+        <Button Grid.Row="2" Content="Старт"  Width="150"  Margin="400,3,0,3" Command="{Binding StartAutoCommand}"></Button>
+    </Grid>
+</Window>

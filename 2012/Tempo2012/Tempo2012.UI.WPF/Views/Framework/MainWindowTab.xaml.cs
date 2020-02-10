@@ -1349,5 +1349,16 @@ namespace Tempo2012.UI.WPF
             BackUp acc = new BackUp();
             acc.ShowDialog();
         }
+
+        private void MenuItem_Click_44(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_45(object sender, RoutedEventArgs e)
+        {
+            Auto60 dialog = new Auto60();
+            dialog.ShowDialog();
+        }
     }
 }
