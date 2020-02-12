@@ -25,6 +25,8 @@ namespace Tempo2012.UI.WPF.Views
 
         private BackgroundWorker bw;
         private int currentProgress;
+        private Visibility _visible;
+
         public int CurrentProgress
         {
             get { return currentProgress; }
@@ -38,7 +40,11 @@ namespace Tempo2012.UI.WPF.Views
             }
         }
         public ICommand StartImportCommand { get; private set; }
-        public Visibility Visible { get; private set; }
+        public Visibility Visible
+        {
+            get { return _visible; }
+            set { _visible = value; OnPropertyChanged("Visible"); }
+        }
         internal void Start()
         {
 

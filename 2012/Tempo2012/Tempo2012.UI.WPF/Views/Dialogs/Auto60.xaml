@@ -12,7 +12,8 @@
         <Grid.RowDefinitions>
         <RowDefinition Height="45"></RowDefinition>
         <RowDefinition Height="45"></RowDefinition>
-        <RowDefinition Height="25"></RowDefinition>
+        <RowDefinition Height="45"></RowDefinition>
+        <RowDefinition Height="45"></RowDefinition>
         <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30">
@@ -32,6 +33,16 @@
                                 Behavior:SelectedDateSyncBehavior.SyncText="True" 
                                 />
         </StackPanel>
-        <Button Grid.Row="2" Content="Старт"  Width="150"  Margin="400,3,0,3" Command="{Binding StartAutoCommand}"></Button>
+        
+        <StackPanel  Grid.Row="3" Orientation="Horizontal"  Margin="10,5,10,5" >
+            <Button Content="Старт"  Width="150"  Margin="420,3,0,3" Command="{Binding StartAutoCommand}"></Button>
+            <Viewbox  Margin="10,5,19,5" Width="30" Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" Visibility="{Binding Visible}">
+                <CustomControls:Pb  Visibility="{Binding Visible}"  />
+
+            </Viewbox>
+        </StackPanel>
+        <TextBox Grid.Row="4" Margin="28,0,76,0" Text="{Binding Path=Rep, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

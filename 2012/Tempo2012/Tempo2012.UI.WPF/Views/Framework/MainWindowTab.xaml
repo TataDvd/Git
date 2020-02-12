@@ -598,7 +598,7 @@
                     <MenuItem Click="MenuItem_Click_45">
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Автоматично приключвателни операции по сметка 6*" />
+                                <CustomControls:TextBlockEx Text="Приключвателни операции по сметка 6*" />
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>

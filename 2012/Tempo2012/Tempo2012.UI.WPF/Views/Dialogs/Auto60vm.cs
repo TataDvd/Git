@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using Tempo2012.EntityFramework;
 using Tempo2012.EntityFramework.Models;
@@ -17,15 +19,23 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         {
             StartAutoCommand = new DelegateCommand((o) => StartAuto(), (o) => this.CanStartAuto());
             Allacc = new List<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
-            Data = DateTime.Now;
+            Data = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,12,31);
+            Visible = System.Windows.Visibility.Hidden;
         }
         private List<AccountsModel> Allacc;
         private bool CanStartAuto()
         {
             return !string.IsNullOrWhiteSpace(DocId) && !string.IsNullOrWhiteSpace(Folder) && !string.IsNullOrWhiteSpace(Debit); 
         }
+        public System.Windows.Visibility Visible
+        {
+            get { return _visible; }
+            set { _visible = value; OnPropertyChanged("Visible"); }
+        }
 
-        private void StartAuto()
+        private BackgroundWorker bw;
+
+        private void StartAuto1()
         {
             AccountsModel debi = LoadAcc(Debit);
             if (debi == null)
@@ -43,21 +53,56 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             };
             List<List<string>> rez = Context.GetOborotnaVed(new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 1, 1), new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31), true);
             rez = rez.Where(e => e[0].StartsWith("6")).ToList();
+            int i = 0;
+            _rep = "";
             foreach (var item in rez)
             {
                 AccountsModel am = LoadAcc(item[0]);
-                if (am == null || am.Num==650) continue;
+                if (am == null || am.Num == 650) continue;
                 c.Conto.Folder = Folder;
-                c.Conto.Reason = "Автоматично приключване на сметка" + item[0];
+                c.Conto.Reason = "Приключване на сметка" + item[0];
                 c.Conto.DocNum = DocId;
                 c.Conto.Data = Data;
                 c.Conto.DataInvoise = Data;
                 c.Conto.CreditAccount = am.Id;
                 c.Conto.DebitAccount = debi.Id;
                 c.Conto.Oborot = decimal.Parse(item[6]);
+                if (c.Conto.Oborot == 0) continue;
                 Context.SaveConto(c.Conto, new List<SaldoAnaliticModel>(), new List<SaldoAnaliticModel>());
+                _rep = string.Format("{0}{1}  {2}\n",_rep,c.Conto.Reason,c.Conto.Oborot); 
+                bw.ReportProgress(i++);
             }
         }
+        private void StartAuto()
+        {
+            Visible = System.Windows.Visibility.Visible;
+            bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.WorkerSupportsCancellation = true;
+            bw.DoWork += new DoWorkEventHandler(bw_dowork);
+            bw.ProgressChanged += new ProgressChangedEventHandler(bw_progresschanged);
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            bw.RunWorkerAsync();
+           
+        }
+
+        private void bw_progresschanged(object sender, ProgressChangedEventArgs e)
+        {
+            OnPropertyChanged("Rep");
+        }
+
+        private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Visible = System.Windows.Visibility.Hidden;
+            MessageBoxWrapper.Show("Приключването е готово");
+        }
+
+        private void bw_dowork(object sender, DoWorkEventArgs e)
+        {
+            StartAuto1();
+        }
+
+       
 
         private AccountsModel LoadAcc(string v)
         {
@@ -115,6 +160,8 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         }
         string _folder;
         private DateTime _data;
+        private Visibility _visible;
+        
 
         public string Folder
         {
@@ -138,6 +185,18 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             {
                 _data = value;
                 OnPropertyChanged("Data");
+            }
+        }
+        private string _rep;
+        public string Rep {
+            get
+            {
+                return _rep;
+            }
+            set
+            {
+                _rep = value;
+                OnPropertyChanged("Rep");
             }
         }
     }
