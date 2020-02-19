@@ -3355,47 +3355,53 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     break;
                 }
             }
-           DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}",this,1,mode);
-            sv.ShowDialog();
-            if (sv.SelectedRow != null)
+            DateTime d = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31);
+            DataSelector ds = new DataSelector(d, "Избери крайна дата");
+            ds.ShowDialog();
+            if (ds.DialogResult.HasValue && ds.DialogResult.Value)
             {
-                int i = 0;
-                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                string[] stringSeparators = new string[] { "---" };
-                foreach (var saldoItem in ItemsDebit)
+                DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, ds.SelectedDate);
+                sv.ShowDialog();
+                if (sv.SelectedRow != null)
                 {
-                    if (saldoItem.Name == "Количествo")
+                    int i = 0;
+                    Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                    string[] stringSeparators = new string[] { "---" };
+                    foreach (var saldoItem in ItemsDebit)
                     {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        i++;
-                        continue;
+                        if (saldoItem.Name == "Количествo")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            i++;
+                            continue;
 
-                    }
-                    if (saldoItem.Name == "Сума валута")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueVal=decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
+                        }
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
+                            i++;
+                            continue;
+                        }
+                        var item = sv.SelectedRow[i].Trim();
+                        if (item.Contains("---"))
+                        {
+                            var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            saldoItem.Value = spliti[0];
+                            saldoItem.Lookupval = spliti[1];
+                        }
+                        else
+                        {
+                            saldoItem.Value = item;
+                        }
                         i++;
-                        continue;
                     }
-                    var item = sv.SelectedRow[i].Trim();
-                    if (item.Contains("---"))
-                    {
-                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                        saldoItem.Value = spliti[0];
-                        saldoItem.Lookupval = spliti[1];
-                    }
-                    else
-                    {
-                        saldoItem.Value = item;
-                    }
-                    i++;
+
                 }
-                
             }
         }
 
@@ -3420,47 +3426,53 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                     break;
                 }
             }
-            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}",this,2,mode);
-            sv.ShowDialog();
-            if (sv.SelectedRow != null)
+            DateTime d = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31);
+            DataSelector ds = new DataSelector(d, "Избери крайна дата");
+            ds.ShowDialog();
+            if (ds.DialogResult.HasValue && ds.DialogResult.Value)
             {
-                string[] stringSeparators = new string[] { "---" };
-                int i = 0;
-                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                foreach (var saldoItem in ItemsCredit)
+                DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, ds.SelectedDate);
+                sv.ShowDialog();
+                if (sv.SelectedRow != null)
                 {
-                    if (saldoItem.Name == "Количествo")
+                    string[] stringSeparators = new string[] { "---" };
+                    int i = 0;
+                    Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                    foreach (var saldoItem in ItemsCredit)
                     {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        i++;
-                        continue;
+                        if (saldoItem.Name == "Количествo")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            i++;
+                            continue;
 
-                    }
-                    if (saldoItem.Name == "Сума валута")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
+                        }
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
+                            i++;
+                            continue;
+                        }
+                        var item = sv.SelectedRow[i].Trim();
+                        if (item.Contains("---"))
+                        {
+                            var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            saldoItem.Value = spliti[0];
+                            saldoItem.Lookupval = spliti[1];
+                        }
+                        else
+                        {
+                            saldoItem.Value = item;
+                        }
                         i++;
-                        continue;
                     }
-                    var item = sv.SelectedRow[i].Trim();
-                    if (item.Contains("---"))
-                    {
-                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                        saldoItem.Value = spliti[0];
-                        saldoItem.Lookupval = spliti[1];
-                    }
-                    else
-                    {
-                        saldoItem.Value = item;
-                    }
-                    i++;
+
                 }
-                
             }
         }
 

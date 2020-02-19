@@ -24,17 +24,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
     public partial class DetailsUniverse : Window
     {
         private DetailsUniverseViewModel vm;
-        public DetailsUniverse(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip,EditMode mode)
+        public DetailsUniverse(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip,EditMode mode,DateTime enddate)
         {
             
-            vm=new DetailsUniverseViewModel(dAccountsModel,filter,cvm,tip,mode);
+            vm=new DetailsUniverseViewModel(dAccountsModel,filter,cvm,tip,mode,enddate);
             InitializeComponent();
             DataContext = vm;
         }
-        public DetailsUniverse(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode)
+        public DetailsUniverse(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode, DateTime enddate)
         {
 
-            vm = new DetailsUniverseViewModel(dAccountsModel, filter, cvm, tip, mode);
+            vm = new DetailsUniverseViewModel(dAccountsModel, filter, cvm, tip, mode,enddate);
             InitializeComponent();
             DataContext = vm;
         }
