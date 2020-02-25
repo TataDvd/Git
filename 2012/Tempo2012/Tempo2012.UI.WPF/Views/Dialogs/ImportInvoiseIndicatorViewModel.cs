@@ -41,10 +41,11 @@ namespace Tempo2012.UI.WPF.Views
         {
 
         }
-
-        public ImportInvoiseIndicatorViewModel(string filename, int docnum)
+        public bool IsTransport;
+        public ImportInvoiseIndicatorViewModel(string filename, int docnum,bool istransport)
             : base()
         {
+            IsTransport = istransport;
             StartImportCommand = new DelegateCommand((o) => this.StartImport(), (o) => this.CanStartImport());
             Visible = Visibility.Hidden;
             AllAccounts = new List<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().ActiveFirma));
@@ -52,8 +53,9 @@ namespace Tempo2012.UI.WPF.Views
             sm500 = AllAccounts.FirstOrDefault(e => e.Num == 500 && e.SubNum == 0);
             sm410_1 = AllAccounts.FirstOrDefault(e => e.Num == 410 && e.SubNum == 1);
             sm701 = AllAccounts.FirstOrDefault(e => e.Num == 701 && e.SubNum == 0);
-            sm703 = AllAccounts.FirstOrDefault(e => e.Num == 702 && e.SubNum == 0);
-            sm709 = AllAccounts.FirstOrDefault(e => e.Num == 702 && e.SubNum == 0);
+            sm702 = AllAccounts.FirstOrDefault(e => e.Num == 702 && e.SubNum == 0);
+            sm704 = AllAccounts.FirstOrDefault(e => e.Num == 704 && e.SubNum == 0);
+            sm709 = AllAccounts.FirstOrDefault(e => e.Num == 709 && e.SubNum == 0);
             sm411 = AllAccounts.FirstOrDefault(e => e.Num == 411 && e.SubNum == 0);
             ddssmetka = AllAccounts.FirstOrDefault(e => e.Short == Entrence.DdsSmetkaK);
             KindDocLookup = new List<LookUpSpecific>(Context.GetAllDocTypes());
@@ -78,7 +80,14 @@ namespace Tempo2012.UI.WPF.Views
             bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
-            bw.DoWork += new DoWorkEventHandler(DoCopy);
+            if (IsTransport)
+            {
+                bw.DoWork += new DoWorkEventHandler(DoTransport);
+            }
+            else
+            {
+                 bw.DoWork += new DoWorkEventHandler(DoCopy);
+            }
             bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
             bw.RunWorkerAsync();
@@ -150,6 +159,108 @@ namespace Tempo2012.UI.WPF.Views
                 bw.ReportProgress(i++);
             }
             
+        }
+        private void DoTransport(object sender, DoWorkEventArgs e)
+        {
+            var i = 0;
+            foreach (var line in Lines)
+            {
+
+                var item = line.Split('|');
+                string nomFak = item[0];
+                var itemdat = item[1].Split('.');
+                DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
+                string viddoc = item[2];
+                string klient = item[3];
+                string bulstat = item[4];
+                string ddsnom = item[5];
+                int tipplashtane= int.Parse(item[6]);
+                decimal dototal = mydecimal.Parse(item[6]);
+                decimal ddstotal = mydecimal.Parse(item[7]);
+                int kodsdelka = int.Parse(item[8]);
+                string vidsdelka = item[9];
+                string creditsm = item[10];
+                int osnovanie=int.Parse(item[11]);
+                ImportFactTransport(nomFak, dataF, viddoc, klient, bulstat, ddsnom, tipplashtane, dototal, ddstotal, kodsdelka, vidsdelka, creditsm, osnovanie);
+                DefaultDocNom++;
+                bw.ReportProgress(i++);
+            }
+
+        }
+
+        private void ImportFactTransport(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, int tipplashtane, decimal dototal, decimal ddstotal, int kodsdelka, string vidsdelka, string creditsm, int osnovanie)
+        {
+             if (string.IsNullOrWhiteSpace(bulstat))
+            {
+                bulstat = "999999999999999";
+            }
+            ContoAll c = new ContoAll();
+            c.Conto = new Conto();
+            c.Conto.DocNum = DefaultDocNom.ToString();
+            c.Conto.FirmId = Entrence.CurrentFirma.Id;
+            c.Conto.UserId = Entrence.UserId;
+            c.Conto.Reason = "Транспорт";
+            c.KindDeal = viddoc;
+            c.Conto.KD = viddoc;
+            c.Conto.KindDoc = viddoc;
+            c.Conto.Note = string.Format("{0},{1}", nomFak, klient);
+            switch (kodsdelka)
+            {
+                case 1:
+                case 9:
+                    c.Conto.CreditAccount = sm702.Id;
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                case 7:
+                    c.Conto.CreditAccount = sm709.Id;
+                    break;
+                case 5: 
+                case 6:
+                    c.Conto.CreditAccount = sm701.Id;
+                    break;
+                case 8:
+                    c.Conto.CreditAccount = sm704.Id;
+                    break;
+                
+            }
+            switch (tipplashtane)
+            {
+                case 1:
+                    c.Conto.DebitAccount = sm500.Id;
+                    break;
+                case 2:
+                    c.Conto.DebitAccount = sm410.Id;
+                    break;
+                case 3:
+                    c.Conto.DebitAccount = sm410_1.Id;
+                    break;
+            }
+            switch (osnovanie)
+            {
+                case 1:
+                case 2:
+                    c.Conto.VopSales = "ОСВ";
+                    c.KindDds = "ОСВ";
+                    break;
+                case 3:
+                    c.Conto.VopSales = "ВОД";
+                    c.KindDds = "ВОД";
+                    break;
+                case 4:
+                    c.Conto.VopSales = "ГЛЗ";
+                    c.KindDds = "ГЛЗ";
+                    break;
+                case 5:
+                    c.Conto.VopSales = "ДРЧЛЕНКА";
+                    c.KindDds = "ДРЧЛЕНКА";
+                    break;
+                case 6:
+                    c.Conto.VopSales = "ДК";
+                    c.KindDds = "ДК";
+                    break;
+            }
         }
 
         private void ImportFact(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, decimal sumastoki, decimal sumausl, decimal suma709, decimal dds, int nachin,decimal avans,string nomfakavans)
@@ -306,12 +417,12 @@ namespace Tempo2012.UI.WPF.Views
                 }
                 if (sumausl != 0)
                 {
-                    c.Conto.CreditAccount = sm703.Id;
+                    c.Conto.CreditAccount = sm702.Id;
                     c.Conto.Oborot = sumausl;
                 }
                 if (suma709 != 0)
                 {
-                    c.Conto.CreditAccount = sm709.Id;
+                    c.Conto.CreditAccount = sm702.Id;
                     c.Conto.Oborot = suma709;
                 }
                 c.Conto.VopSales = "ДК";
@@ -456,7 +567,7 @@ namespace Tempo2012.UI.WPF.Views
                 if (suma709 != 0)
                 {
                     c.Conto.Reason = "TECDOC";
-                    c.Conto.CreditAccount = sm709.Id;
+                    c.Conto.CreditAccount = sm702.Id;
                     c.Conto.Oborot = suma709;
                     c.Conto.IsDdsSales = 0;
                     c.Conto.IsSales = 0;
@@ -469,7 +580,7 @@ namespace Tempo2012.UI.WPF.Views
                 if (sumausl != 0)
                 {
                     c.Conto.Reason = "УСЛУГИ";
-                    c.Conto.CreditAccount = sm703.Id;
+                    c.Conto.CreditAccount = sm702.Id;
                     if (sumastoki != 0)
                     {
                         c.Conto.Oborot = sumausl;
@@ -1285,7 +1396,9 @@ namespace Tempo2012.UI.WPF.Views
         private AccountsModel sm500;
         private AccountsModel sm410_1;
         private AccountsModel sm701;
+        private AccountsModel sm702;
         private AccountsModel sm703;
+        private AccountsModel sm704;
         private AccountsModel sm709;
         private AccountsModel ddssmetka;
 

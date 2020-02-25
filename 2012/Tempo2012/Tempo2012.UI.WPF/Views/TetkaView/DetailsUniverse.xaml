@@ -15,6 +15,8 @@
             <customControls:TextBlockEx Text="{Binding Suma}" Width="100" Margin="10,5,10,5"></customControls:TextBlockEx>
             <customControls:TextBlockEx Text="Сума валута" Margin="10,5,10,5"></customControls:TextBlockEx>
             <customControls:TextBlockEx Text="{Binding SumaVal}" Width="100" Margin="10,5,10,5"></customControls:TextBlockEx>
+            <customControls:TextBlockEx Text="До дата" Margin="10,5,10,5"></customControls:TextBlockEx>
+            <customControls:TextBlockEx Text="{Binding EndDateShort}" Width="100" Margin="10,5,10,5"></customControls:TextBlockEx>
             <CheckBox Margin="10,5,10,5" Click="OnlySaldo_OnClick" IsChecked="True">Покажи само записи със салдо</CheckBox>
             <Button Margin="10,5,10,5" Click="Button_Click">Справка</Button>
             <Button Margin="10,5,10,5" Click="ContoSave_OnClick" Visibility="{Binding IsEditMode}">Осчетоводи</Button>

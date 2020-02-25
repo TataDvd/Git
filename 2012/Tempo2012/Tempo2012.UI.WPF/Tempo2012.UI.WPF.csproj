@@ -209,8 +209,8 @@
     <Compile Include="Views\Dialogs\ModalTemplate.xaml.cs">
       <DependentUpon>ModalTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\MonthSelector - Copy.xaml.cs">
-      <DependentUpon>MonthSelector - Copy.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\MonthSelector.xaml.cs">
+      <DependentUpon>MonthSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\NumSelector.xaml.cs">
       <DependentUpon>NumSelector.xaml</DependentUpon>
@@ -525,7 +525,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\MonthSelector - Copy.xaml">
+    <Page Include="Views\Dialogs\MonthSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -581,19 +581,26 @@
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
                     </MenuItem>
-                    <MenuItem Click="MenuItem_Click_34">
+                    <MenuItem>
                         <MenuItem.HeaderTemplate>
                             <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Импорт на фактури стоки" />
+                                <CustomControls:TextBlockEx Text="Импорт"/>
                             </DataTemplate>
                         </MenuItem.HeaderTemplate>
-                    </MenuItem>
-                    <MenuItem Click="MenuItem_Click_44">
-                        <MenuItem.HeaderTemplate>
-                            <DataTemplate>
-                                <CustomControls:TextBlockEx Text="Импорт на фактури транспорт" />
-                            </DataTemplate>
-                        </MenuItem.HeaderTemplate>
+                        <MenuItem Click="MenuItem_Click_34">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Импорт на фактури стоки" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
+                        <MenuItem Click="MenuItem_Click_44">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Импорт на фактури транспорт" />
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem> 
                     </MenuItem>
                     <MenuItem Click="MenuItem_Click_45">
                         <MenuItem.HeaderTemplate>

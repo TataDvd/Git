@@ -21,6 +21,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             Allacc = new List<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id));
             Data = new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,12,31);
             Visible = System.Windows.Visibility.Hidden;
+            ExDebit = "650";
         }
         private List<AccountsModel> Allacc;
         private bool CanStartAuto()
@@ -38,9 +39,15 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         private void StartAuto1()
         {
             AccountsModel debi = LoadAcc(Debit);
+            AccountsModel exdi = LoadAcc(ExDebit);
             if (debi == null)
             {
                 MessageBoxWrapper.Show("Невярна дебитна сметка");
+                return;
+            }
+            if (exdi == null)
+            {
+                MessageBoxWrapper.Show("Невярна изключваща сметка");
                 return;
             }
             var AllAccounts = new List<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().ActiveFirma));
@@ -58,7 +65,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             foreach (var item in rez)
             {
                 AccountsModel am = LoadAcc(item[0]);
-                if (am == null || am.Num == 650) continue;
+                if (am == null || am.Id == exdi.Id) continue;
                 c.Conto.Folder = Folder;
                 c.Conto.Reason = "Приключване на сметка" + item[0];
                 c.Conto.DocNum = DocId;
@@ -140,6 +147,21 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             {
                 _debit= value;
                 OnPropertyChanged("Debit");
+
+            }
+        }
+        string _exdebit;
+        public string ExDebit
+        {
+            get
+            {
+
+                return _exdebit;
+            }
+            set
+            {
+                _exdebit = value;
+                OnPropertyChanged("ExDebit");
 
             }
         }

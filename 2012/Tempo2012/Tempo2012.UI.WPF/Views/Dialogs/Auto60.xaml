@@ -24,7 +24,7 @@
             
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="30">
-            <CustomControls:TextBlockEx  Text="Дебитна насрещна сметка:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
+            <CustomControls:TextBlockEx  Text="Дебит сметка за приключване:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
             <CustomControls:TextBoxEx Text="{Binding Path=Debit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="10,5,10,5" TabIndex="7"  Width="80" Tag="Folder" />
             <CustomControls:TextBlockEx  Text="Дата нa осчетоводяване:" Margin="10,5,10,2" Width="150" TextAlignment="Right" />
             <DatePicker TabIndex="9" Height="25" HorizontalAlignment="Left" Margin="10,5,10,2" 
@@ -33,7 +33,10 @@
                                 Behavior:SelectedDateSyncBehavior.SyncText="True" 
                                 />
         </StackPanel>
-        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="30">
+            <CustomControls:TextBlockEx  Text="Изключи сметка:" Margin="10,5,10,5" Width="160" TextAlignment="Right" />
+            <CustomControls:TextBoxEx Text="{Binding Path=ExDebit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Margin="10,5,10,5" TabIndex="7"  Width="80" Tag="Folder" />
+        </StackPanel>
         <StackPanel  Grid.Row="3" Orientation="Horizontal"  Margin="10,5,10,5" >
             <Button Content="Старт"  Width="150"  Margin="420,3,0,3" Command="{Binding StartAutoCommand}"></Button>
             <Viewbox  Margin="10,5,19,5" Width="30" Height="30"

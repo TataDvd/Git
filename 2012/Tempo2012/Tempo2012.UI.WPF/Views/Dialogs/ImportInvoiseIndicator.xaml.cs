@@ -20,9 +20,9 @@ namespace Tempo2012.UI.WPF.Views
     public partial class ImportInvoiseIndicator : Window
     {
         
-        public ImportInvoiseIndicator(string fileName,int defdocnumber)
+        public ImportInvoiseIndicator(string fileName,int defdocnumber,bool isTransport=false)
         {
-            ImportInvoiseIndicatorViewModel vm =new ImportInvoiseIndicatorViewModel(fileName,defdocnumber);
+            ImportInvoiseIndicatorViewModel vm =new ImportInvoiseIndicatorViewModel(fileName,defdocnumber,isTransport);
             InitializeComponent();
             DataContext = vm;
         }

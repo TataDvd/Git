@@ -29,12 +29,32 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         public AccountsModel Acc;
 
         public string Filt { get; private set; }
-        public DateTime EndDate { get; private set; }
+
+        private DateTime endDate;
+        public DateTime EndDate {
+            get
+            {
+                return endDate;
+            }
+            set
+            {
+                endDate = value;
+                OnPropertyChanged("EndDate");
+            }
+        }
+        public string EndDateShort
+        {
+            get
+            {
+                return EndDate.ToShortDateString();
+            }
+        }
         public ObservableCollection<Filter> Filters { get; set; }
         public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode,DateTime enddate)
         {
             var reportItems = new List<ReportItem>();
             Filt = filter;
+
             EndDate = enddate;
             Filters = new ObservableCollection<Filter>();
             Acc = dAccountsModel;
@@ -567,12 +587,13 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         public List<string> GetHeader()
         {
             List<string> list = new List<string>();
-            list.Add(string.Format("Детайли за сметка                 : {0}", Acc.Short));
+            list.Add(string.Format("Детайли за сметка         : {0}", Acc.Short));
             list.Add(string.Format("Дата на извлечението      : {0}", DateTime.Now.ToShortDateString()));
             list.Add(string.Format("за фирма                  : {0}",
                 ConfigTempoSinglenton.GetInstance().CurrentFirma.Name));
             list.Add(string.Format("Счетоводител              : {0}", Config.CurrentUser.Name));
             list.Add(string.Format("Филтър                    : {0}", Filt));
+            list.Add(string.Format("До дата                   : {0}", EndDate.ToShortDateString()));
             return list;
         }
 

@@ -1352,7 +1352,22 @@ namespace Tempo2012.UI.WPF
 
         private void MenuItem_Click_44(object sender, RoutedEventArgs e)
         {
+            if (PassDialog.Show())
+            {
+                var numselector = new NumSelector("1");
+                numselector.ShowDialog();
+                if (numselector.DialogResult.HasValue && numselector.DialogResult.Value)
+                {
+                    var num = numselector.Num;
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        ImportInvoiseIndicator i = new ImportInvoiseIndicator(openFileDialog.FileName, num,true);
+                        i.ShowDialog();
 
+                    }
+                }
+            }
         }
 
         private void MenuItem_Click_45(object sender, RoutedEventArgs e)
