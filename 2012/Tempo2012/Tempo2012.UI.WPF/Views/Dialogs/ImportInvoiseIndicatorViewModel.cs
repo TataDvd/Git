@@ -175,12 +175,12 @@ namespace Tempo2012.UI.WPF.Views
                 string bulstat = item[4];
                 string ddsnom = item[5];
                 int tipplashtane= int.Parse(item[6]);
-                decimal dototal = mydecimal.Parse(item[6]);
-                decimal ddstotal = mydecimal.Parse(item[7]);
-                int kodsdelka = int.Parse(item[8]);
-                string vidsdelka = item[9];
-                string creditsm = item[10];
-                int osnovanie=int.Parse(item[11]);
+                decimal dototal = mydecimal.Parse(item[7]);
+                decimal ddstotal = mydecimal.Parse(item[8]);
+                int kodsdelka = int.Parse(item[9]);
+                string vidsdelka = item[10];
+                string creditsm = item[11];
+                int osnovanie=int.Parse(item[12]);
                 ImportFactTransport(nomFak, dataF, viddoc, klient, bulstat, ddsnom, tipplashtane, dototal, ddstotal, kodsdelka, vidsdelka, creditsm, osnovanie);
                 DefaultDocNom++;
                 bw.ReportProgress(i++);
@@ -199,7 +199,7 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.DocNum = DefaultDocNom.ToString();
             c.Conto.FirmId = Entrence.CurrentFirma.Id;
             c.Conto.UserId = Entrence.UserId;
-            c.Conto.Reason = "Транспорт";
+            c.Conto.Reason = vidsdelka;
             c.KindDeal = viddoc;
             c.Conto.KD = viddoc;
             c.Conto.KindDoc = viddoc;
@@ -239,6 +239,10 @@ namespace Tempo2012.UI.WPF.Views
             }
             switch (osnovanie)
             {
+                case 0:
+                    c.Conto.VopSales = "ДК";
+                    c.KindDds = "ДК";
+                    break;
                 case 1:
                 case 2:
                     c.Conto.VopSales = "ОСВ";
@@ -260,6 +264,52 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.VopSales = "ДК";
                     c.KindDds = "ДК";
                     break;
+            }
+            if (c.Conto.Reason.Length > 50)
+            {
+                c.Conto.Reason = c.Conto.Reason.Substring(0, 50);
+            }
+            c.Conto.Oborot = dototal;
+            c.Conto.IsDdsSales = 1;
+            c.Conto.IsSales = 1;
+            NewMethod(nomFak, dataF, klient, ddsnom, c);
+            SaveMainConto(c);
+            if (ddstotal != 0)
+            {
+                c.Conto.IsDdsSalesIncluded = 0;
+                c.Conto.IsDdsSales = 1;
+                c.Conto.IsSales = 1;
+                c.Conto.VopSales = "ДК";
+                c.KindDds = "ДК";
+                c.Sborno = false;
+                c.Conto.Oborot = ddstotal;
+                c.Conto.Oborot = SaveDDS(c);
+                c.Conto.Oborot = ddstotal;
+                c.Conto.IsDdsSales = 0;
+                c.Conto.IsSales = 0;
+                c.Conto.VopSales = "";
+                c.Conto.IsDdsPurchases = 0;
+                c.Conto.IsPurchases = 0;
+                c.Conto.VopPurchases = "";
+                //c.Conto.Oborot = dds;
+                c.Conto.CreditAccount = ddssmetka.Id;
+                LoadAnaliticDetailsK(c);
+                SaveMainConto(c);
+            }
+            else
+            {
+                c.Conto.IsDdsSalesIncluded = 0;
+                c.Conto.IsDdsSales = 1;
+                c.Conto.IsSales = 1;
+                c.Sborno = false;
+                c.Conto.Oborot = ddstotal;
+                SaveDDS(c);
+                c.Conto.IsDdsSales = 0;
+                c.Conto.IsSales = 0;
+                c.Conto.VopSales = "";
+                c.Conto.IsDdsPurchases = 0;
+                c.Conto.IsPurchases = 0;
+                c.Conto.VopPurchases = "";
             }
         }
 
