@@ -229,12 +229,15 @@ namespace Tempo2012.UI.WPF.Views
             {
                 case 1:
                     c.Conto.DebitAccount = sm500.Id;
+                    c.Conto.Folder = "1";
                     break;
                 case 2:
                     c.Conto.DebitAccount = sm410.Id;
+                    c.Conto.Folder = "10";
                     break;
                 case 3:
                     c.Conto.DebitAccount = sm410_1.Id;
+                    c.Conto.Folder = "10";
                     break;
             }
             switch (osnovanie)
@@ -269,11 +272,12 @@ namespace Tempo2012.UI.WPF.Views
             {
                 c.Conto.Reason = c.Conto.Reason.Substring(0, 50);
             }
+            c.Conto.Data = dataF;
+            c.Conto.DataInvoise = dataF;
             c.Conto.Oborot = dototal;
             c.Conto.IsDdsSales = 1;
             c.Conto.IsSales = 1;
             NewMethod(nomFak, dataF, klient, ddsnom, c);
-            SaveMainConto(c);
             if (ddstotal != 0)
             {
                 c.Conto.IsDdsSalesIncluded = 0;
