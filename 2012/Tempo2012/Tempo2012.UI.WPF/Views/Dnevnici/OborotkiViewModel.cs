@@ -108,6 +108,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             var ret = new List<string>();
             ret.Add(String.Format("Дата на извлечението: {0}", DateTime.Now.ToShortDateString()));
             ret.Add(String.Format("За фирма            : {0}", ConfigTempoSinglenton.GetInstance().CurrentFirma.Name));
+            ret.Add(String.Format("За период           : от {0} до {1}", fromDate.ToShortDateString(),toDate.ToShortDateString()));
             ret.Add(String.Format("Съставил            : {0}", Entrence.UserName));
             return ret;
         }

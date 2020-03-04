@@ -46,7 +46,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         }
 
         private void mo_KeyDown(object sender, KeyEventArgs e)
-        {
+        { 
             if (e.Key==Key.Enter)
             {
                 DialogResult = true;
