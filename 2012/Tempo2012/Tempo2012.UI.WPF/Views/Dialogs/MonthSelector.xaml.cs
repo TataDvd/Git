@@ -32,7 +32,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
                 int result;
                 if (int.TryParse(mo.Text, out result))
                 {
-                    if (result > 1 && result < 13)
+                    if (result > 0 && result < 13)
                     {
                         return result;
                     }
