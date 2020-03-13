@@ -64,7 +64,7 @@ namespace Tempo2012.EntityFramework
                 dbman.CreateParameters(33);
             }
             dbman.AddParameters(0, "@Date", CurrentConto.Data);
-            dbman.AddParameters(1, "@Oborot", CurrentConto.Oborot);
+            dbman.AddParameters(1, "@Oborot", Math.Round(CurrentConto.Oborot,2));
             dbman.AddParameters(2, "@Reason", CurrentConto.Reason);
             dbman.AddParameters(3, "@Note", CurrentConto.Note);
             dbman.AddParameters(4, "@DataInvoise", CurrentConto.DataInvoise);

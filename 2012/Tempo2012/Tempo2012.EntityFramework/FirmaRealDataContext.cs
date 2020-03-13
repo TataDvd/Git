@@ -339,7 +339,7 @@ namespace Tempo2012.EntityFramework
                         id);
                 if (filti.Length>1 && !string.IsNullOrWhiteSpace(filti[1]))
                 {
-                    s = s + $" AND (c.CDETAILS like '%{filti[1]}%' OR c.DDETAILS like '%{filti[1]}%'))";
+                    s = s + $" AND ((c.CDETAILS like '%{filti[1]}%' and c.\"CreditAccount\"={id}) OR (c.DDETAILS like '%{filti[1]}%' and c.\"DebitAccount\"={id})))";
                 }
                 else
                 {
@@ -399,6 +399,10 @@ namespace Tempo2012.EntityFramework
                                 row.Ocv = decimal.Parse(dbman.DataReader["OBOROTVALUTAK"].ToString());
                             }
                         }
+                    }
+                    if (rez.Count == 113)
+                    {
+                        row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
                     }
                     if (smetka == id)
                     {
