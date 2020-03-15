@@ -163,14 +163,14 @@ namespace Tempo2012.UI.WPF.Views
         private void DoTransport(object sender, DoWorkEventArgs e)
         {
             var i = 0;
-            foreach (var line in Lines)
+            foreach (var line in Lines.Skip(1))
             {
 
-                var item = line.Split('|');
+                var item = line.Split('\t');
                 string nomFak = item[0];
                 var itemdat = item[1].Split('.');
                 DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
-                string viddoc = item[2];
+                string viddoc ="0"+item[2];
                 string klient = item[3];
                 string bulstat = item[4];
                 string ddsnom = item[5];
@@ -181,6 +181,8 @@ namespace Tempo2012.UI.WPF.Views
                 string vidsdelka = item[10];
                 string creditsm = item[11];
                 int osnovanie=int.Parse(item[12]);
+                decimal vaksum = mydecimal.Parse(item[13]);
+                string kindval = item[14];
                 ImportFactTransport(nomFak, dataF, viddoc, klient, bulstat, ddsnom, tipplashtane, dototal, ddstotal, kodsdelka, vidsdelka, creditsm, osnovanie);
                 DefaultDocNom++;
                 bw.ReportProgress(i++);
