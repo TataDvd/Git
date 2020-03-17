@@ -135,6 +135,10 @@ namespace Tempo2012.UI.WPF.Views
                 DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
                 string viddoc = item[2];
                 string klient = item[3];
+                if (klient.Length > 40)
+                {
+                    klient = klient.Substring(0, 40);
+                }
                 string bulstat = item[4];
                 string ddsnom = item[5];
                 decimal sumastoki = mydecimal.Parse(item[6]);
@@ -170,8 +174,12 @@ namespace Tempo2012.UI.WPF.Views
                 string nomFak = item[0];
                 var itemdat = item[1].Split('.');
                 DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
-                string viddoc ="0"+item[2];
+                string viddoc =item[2];
                 string klient = item[3];
+                if (klient.Length > 40)
+                {
+                    klient = klient.Substring(0, 40);
+                }
                 string bulstat = item[4];
                 string ddsnom = item[5];
                 int tipplashtane= int.Parse(item[6]);
@@ -181,16 +189,16 @@ namespace Tempo2012.UI.WPF.Views
                 string vidsdelka = item[10];
                 string creditsm = item[11];
                 int osnovanie=int.Parse(item[12]);
-                decimal vaksum = mydecimal.Parse(item[13]);
+                decimal valsum = mydecimal.Parse(item[13]);
                 string kindval = item[14];
-                ImportFactTransport(nomFak, dataF, viddoc, klient, bulstat, ddsnom, tipplashtane, dototal, ddstotal, kodsdelka, vidsdelka, creditsm, osnovanie);
+                ImportFactTransport(nomFak, dataF, viddoc, klient, bulstat, ddsnom, tipplashtane, dototal, ddstotal, kodsdelka, vidsdelka, creditsm, osnovanie,kindval,valsum);
                 DefaultDocNom++;
                 bw.ReportProgress(i++);
             }
 
         }
 
-        private void ImportFactTransport(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, int tipplashtane, decimal dototal, decimal ddstotal, int kodsdelka, string vidsdelka, string creditsm, int osnovanie)
+        private void ImportFactTransport(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, int tipplashtane, decimal dototal, decimal ddstotal, int kodsdelka, string vidsdelka, string creditsm, int osnovanie,string kindvaluta,decimal sumavaluta)
         {
              if (string.IsNullOrWhiteSpace(bulstat))
             {
@@ -206,6 +214,15 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.KD = viddoc;
             c.Conto.KindDoc = viddoc;
             c.Conto.Note = string.Format("{0},{1}", nomFak, klient);
+            if (c.Conto.Note.Length > 50)
+            {
+                c.Conto.Note = c.Conto.Note.Substring(0, 50);
+            }
+            if (kindvaluta != "BGN")
+            {
+                c.Conto.Pr1 = kindvaluta;
+                c.Conto.Pr2 = sumavaluta.ToString();
+            }
             switch (kodsdelka)
             {
                 case 1:
@@ -379,7 +396,10 @@ namespace Tempo2012.UI.WPF.Views
                 ddsnom = "999999999999999";
             }
             c.Conto.Note = string.Format("{0},{1}", nomFak, klient);
-
+            if (c.Conto.Note.Length > 50)
+            {
+                c.Conto.Note = c.Conto.Note.Substring(0, 50);
+            }
             switch (nachin)
             {
                 case 3:
