@@ -174,7 +174,7 @@ namespace Tempo2012.UI.WPF.Views
                 string nomFak = item[0];
                 var itemdat = item[1].Split('.');
                 DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
-                string viddoc =item[2];
+                string viddoc ="0"+item[2];
                 string klient = item[3];
                 if (klient.Length > 40)
                 {
@@ -214,6 +214,7 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.KD = viddoc;
             c.Conto.KindDoc = viddoc;
             c.Conto.Note = string.Format("{0},{1}", nomFak, klient);
+            c.Conto.NumberObject = 990;
             if (c.Conto.Note.Length > 50)
             {
                 c.Conto.Note = c.Conto.Note.Substring(0, 50);
