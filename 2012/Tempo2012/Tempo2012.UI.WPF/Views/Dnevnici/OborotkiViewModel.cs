@@ -30,14 +30,14 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             //if (FullReport == 1)
             //{
             ReportItems = new List<ReportItem>{
-                    new ReportItem{IsShow=true, Width=7, Name="Номер Сметка",Height=20},
+                    new ReportItem{IsShow=true, Width=7, Name="Сметка",Height=20},
                     new ReportItem{IsShow=true, Width=50, Name="Име на Сметка",Height=20},
-                    new ReportItem{IsShow=true, Width=15, Name="Начално салдо дебит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Начално салдо кредит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Оборот дебит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Оборот кредит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Крайно салдо дебит",Height=20,Sborno = true},
-                    new ReportItem{IsShow=true, Width=15, Name="Крайно салдо кредит",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="НС дт",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="НС кт",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="ДО",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="КО",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="КС дт",Height=20,Sborno = true},
+                    new ReportItem{IsShow=true, Width=15, Name="КС кт",Height=20,Sborno = true},
                     //new ReportItem{IsShow = true, Width = 15, Name = "НС дебит валута", Height = 20, Sborno = true },
                     //new ReportItem{IsShow = true, Width = 15, Name = "НС кредит валута", Height = 20, Sborno = true },
                     //new ReportItem{IsShow = true, Width = 15, Name = "Оборот дебит валута", Height = 20, Sborno = true },

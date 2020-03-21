@@ -45,11 +45,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
                 MessageBoxWrapper.Show("Невярна дебитна сметка");
                 return;
             }
-            if (exdi == null)
-            {
-                MessageBoxWrapper.Show("Невярна изключваща сметка");
-                return;
-            }
+            
             var AllAccounts = new List<AccountsModel>(Context.GetAllAccounts(ConfigTempoSinglenton.GetInstance().ActiveFirma));
             ContoAll c = new ContoAll();
             c.Conto = new Conto
@@ -65,7 +61,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             foreach (var item in rez)
             {
                 AccountsModel am = LoadAcc(item[0]);
-                if (am == null || am.Id == exdi.Id) continue;
+                if (am == null || (exdi!=null && am.Id == exdi.Id)) continue;
                 c.Conto.Folder = Folder;
                 c.Conto.Reason = "Приключване на сметка" + item[0];
                 c.Conto.DocNum = DocId;

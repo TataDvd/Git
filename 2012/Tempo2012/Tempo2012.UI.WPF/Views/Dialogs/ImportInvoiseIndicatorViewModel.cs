@@ -174,7 +174,7 @@ namespace Tempo2012.UI.WPF.Views
                 string nomFak = item[0];
                 var itemdat = item[1].Split('.');
                 DateTime dataF = new DateTime(int.Parse(itemdat[2]), int.Parse(itemdat[1]), int.Parse(itemdat[0]));
-                string viddoc ="0"+item[2];
+                string viddoc =item[2].Length==1?"0"+item[2]:item[2];
                 string klient = item[3];
                 if (klient.Length > 40)
                 {
@@ -306,7 +306,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.VopSales = "ДК";
                 c.KindDds = "ДК";
                 c.Sborno = false;
-                c.Conto.Oborot = ddstotal;
+                c.Conto.Oborot = dototal;
                 c.Conto.Oborot = SaveDDS(c);
                 c.Conto.Oborot = ddstotal;
                 c.Conto.IsDdsSales = 0;
@@ -326,7 +326,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.IsDdsSales = 1;
                 c.Conto.IsSales = 1;
                 c.Sborno = false;
-                c.Conto.Oborot = ddstotal;
+                c.Conto.Oborot = dototal;
                 SaveDDS(c);
                 c.Conto.IsDdsSales = 0;
                 c.Conto.IsSales = 0;

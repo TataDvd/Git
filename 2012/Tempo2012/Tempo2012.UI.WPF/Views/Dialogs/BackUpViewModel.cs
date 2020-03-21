@@ -79,7 +79,7 @@ namespace Tempo2012.UI.WPF.Views
         {
 
             Visible = Visibility.Hidden;
-            MessageBoxWrapper.Show(string.Format("Създаден е архив TEMPO2012_{0}_{1}_{2}_{3}_{4}.FDB", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,DateTime.Now.Hour,DateTime.Now.Minute));
+            MessageBoxWrapper.Show(string.Format("Създаден е архив TEMPO2012_{0}_{1}_{2}_{3}_{4}_{5}.FDB", "H" + ConfigTempoSinglenton.GetInstance().ActiveHolding.ToString(), DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,DateTime.Now.Hour,DateTime.Now.Minute));
         }
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -91,7 +91,7 @@ namespace Tempo2012.UI.WPF.Views
         {
             
             FileSystem.FileCopy(Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + ConfigTempoSinglenton.GetInstance().ActiveHolding.ToString(), "TEMPO2012.FDB"),
-                                Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + ConfigTempoSinglenton.GetInstance().ActiveHolding.ToString(), string.Format("TEMPO2012_{0}_{1}_{2}_{3}_{4}.FDB", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,DateTime.Now.Hour,DateTime.Now.Minute)));
+                                Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + ConfigTempoSinglenton.GetInstance().ActiveHolding.ToString(), string.Format("TEMPO2012_{0}_{1}_{2}_{3}_{4}_{5}.FDB", "H" + ConfigTempoSinglenton.GetInstance().ActiveHolding.ToString(), DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,DateTime.Now.Hour,DateTime.Now.Minute)));
 
 
             
