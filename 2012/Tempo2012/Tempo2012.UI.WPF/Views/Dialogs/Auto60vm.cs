@@ -42,7 +42,8 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             AccountsModel exdi = LoadAcc(ExDebit);
             if (debi == null)
             {
-                MessageBoxWrapper.Show("Невярна дебитна сметка");
+                //MessageBoxWrapper.Show("Невярна дебитна сметка");
+                Error = "Невярна дебитна сметка";
                 return;
             }
             
@@ -97,7 +98,16 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
         private void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Visible = System.Windows.Visibility.Hidden;
-            MessageBoxWrapper.Show("Приключването е готово");
+            if (String.IsNullOrWhiteSpace(Error))
+            {
+                MessageBoxWrapper.Show("Приключването е готово");
+            }
+            else
+            {
+                MessageBoxWrapper.Show(Error);
+                Error = null;
+            }
+
         }
 
         private void bw_dowork(object sender, DoWorkEventArgs e)
@@ -217,5 +227,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
                 OnPropertyChanged("Rep");
             }
         }
+
+        public string Error { get; private set; }
     }
 }

@@ -307,7 +307,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.KindDds = "ДК";
                 c.Sborno = false;
                 c.Conto.Oborot = dototal;
-                c.Conto.Oborot = SaveDDS(c);
+                c.Conto.Oborot = SaveDDS(c, ddstotal);
                 c.Conto.Oborot = ddstotal;
                 c.Conto.IsDdsSales = 0;
                 c.Conto.IsSales = 0;
@@ -939,7 +939,7 @@ namespace Tempo2012.UI.WPF.Views
             }
             SaveMainConto(c);
         }
-        private decimal SaveDDS(ContoAll allconto)
+        private decimal SaveDDS(ContoAll allconto,Decimal dds=-1)
         {
             var currItemDdsDnevPurchases = ItemsDdsDnevPurchases.FirstOrDefault(e => e.Code == allconto.KindDds);
             var currItemDdsDnevSales = ItemsDdsDnevSales.FirstOrDefault(e => e.Code == allconto.KindDds);
@@ -1077,6 +1077,20 @@ namespace Tempo2012.UI.WPF.Views
                 In = true
             });
             vm.ddsDnevnikModel.NameKontr = allconto.NameClient;
+            if (dds != -1)
+            {
+                foreach (var item in vm.ddsDnevnikModel.DetailItems)
+                {
+                    if (item.In)
+                    {
+                        item.IsNotComputed = true;
+                        if (item.Dds != dds)
+                        {
+                            item.Dds = dds;
+                        }
+                    }
+                }
+            }
             vm.SaveCommand.Execute(null);
             return Decimal.Round(allconto.Conto.Oborot * ddspercent / 100, 2);
         }
