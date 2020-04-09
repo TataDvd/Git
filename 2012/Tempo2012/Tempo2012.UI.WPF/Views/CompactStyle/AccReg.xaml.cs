@@ -310,5 +310,34 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
 
             }
         }
+
+        private void MenuItem_Click_6(object sender, RoutedEventArgs e)
+        {
+            SelectTrueContDialog acc = new SelectTrueContDialog();
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                SelectAccDialog acc1 = new SelectAccDialog();
+                acc1.ShowDialog();
+                if (acc1.DialogResult.HasValue && acc1.DialogResult.Value)
+                {
+                    ReportMenuProviderView reportMenuProvider = new ReportMenuProviderView();
+                    reportMenuProvider.ShowDialog();
+                    if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
+                    {
+                        var oldacc = Entrence.Mask.CreditAcc;
+                        var oldaccd = Entrence.Mask.DebitAcc;
+                        Entrence.Mask.CreditAcc = null;
+                        Entrence.Mask.DebitAcc = null;
+                        Entrence.Mask.FromDate = reportMenuProvider.Vm.FromDate();
+                        Entrence.Mask.ToDate = reportMenuProvider.Vm.ToDate();
+                        ReportDialog rd = new ReportDialog(new AnaliticRegisterViewModelTrueContr { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), ItemsDebit = acc.ItemsDebit, CurrenAcc = acc1.CurrentAcc, Title = (sender as MenuItem).Tag.ToString() });
+                        rd.ShowDialog();
+                        Entrence.Mask.CreditAcc = oldacc;
+                        Entrence.Mask.DebitAcc = oldaccd;
+                    }
+                }
+            }
+        }
     }
 }

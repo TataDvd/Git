@@ -170,6 +170,7 @@
     <Compile Include="Views\CompactStyle\AccReg.xaml.cs">
       <DependentUpon>AccReg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelТруеContr.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContrGrupaDocument.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContr.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelDost.cs" />
@@ -217,6 +218,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\SearchFormAcc.xaml.cs">
       <DependentUpon>SearchFormAcc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SelectTrueContDialog.xaml.cs">
+      <DependentUpon>SelectTrueContDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\SelectDostDialog.xaml.cs">
       <DependentUpon>SelectDostDialog.xaml</DependentUpon>
@@ -536,6 +540,10 @@
     <Page Include="Views\Dialogs\SearchFormAcc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SelectTrueContDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\SelectDostDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

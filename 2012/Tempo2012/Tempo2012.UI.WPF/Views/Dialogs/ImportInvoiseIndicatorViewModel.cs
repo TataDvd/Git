@@ -57,6 +57,7 @@ namespace Tempo2012.UI.WPF.Views
             sm704 = AllAccounts.FirstOrDefault(e => e.Num == 704 && e.SubNum == 0);
             sm709 = AllAccounts.FirstOrDefault(e => e.Num == 709 && e.SubNum == 0);
             sm411 = AllAccounts.FirstOrDefault(e => e.Num == 411 && e.SubNum == 0);
+            sm303 = AllAccounts.FirstOrDefault(e => e.Num == 303 && e.SubNum == 0);
             ddssmetka = AllAccounts.FirstOrDefault(e => e.Short == Entrence.DdsSmetkaK);
             KindDocLookup = new List<LookUpSpecific>(Context.GetAllDocTypes());
             TypeDocuments = new List<LookUpSpecific>(Context.GetAllDocTypes());
@@ -224,27 +225,47 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.Pr1 = kindvaluta;
                 c.Conto.Pr2 = sumavaluta.ToString();
             }
-            switch (kodsdelka)
+            //switch (kodsdelka)
+            //{
+            //    case 1:
+            //    case 9:
+            //    case 11:
+            //    case 12:
+            //        c.Conto.CreditAccount = sm702.Id;
+            //        break;
+            //    case 2:
+            //    case 3:
+            //    case 4:
+            //    case 7:
+            //        c.Conto.CreditAccount = sm709.Id;
+            //        break;
+            //    case 5: 
+            //    case 6:
+            //    case 10:
+            //        c.Conto.CreditAccount = sm701.Id;
+            //        break;
+            //    case 8:
+            //        c.Conto.CreditAccount = sm704.Id;
+            //        break;
+            //    case 13:
+            //        c.Conto.CreditAccount = sm303.Id;
+            //        break;         
+
+            //}
+            int sm;
+            if (int.TryParse(creditsm, out sm))
             {
-                case 1:
-                case 9:
-                    c.Conto.CreditAccount = sm702.Id;
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 7:
-                    c.Conto.CreditAccount = sm709.Id;
-                    break;
-                case 5: 
-                case 6:
-                    c.Conto.CreditAccount = sm701.Id;
-                    break;
-                case 8:
-                    c.Conto.CreditAccount = sm704.Id;
-                    break;
-                
+                var kredit = AllAccounts.FirstOrDefault(e => e.Num == sm && e.SubNum == 0);
+                if (kredit == null)
+                {
+                    return;
+                }
+                else
+                {
+                    c.Conto.CreditAccount = kredit.Id;
+                }
             }
+            
             switch (tipplashtane)
             {
                 case 1:
@@ -297,7 +318,7 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.Oborot = dototal;
             c.Conto.IsDdsSales = 1;
             c.Conto.IsSales = 1;
-            NewMethod(nomFak, dataF, klient, ddsnom, c);
+            NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
             if (ddstotal != 0)
             {
                 c.Conto.IsDdsSalesIncluded = 0;
@@ -327,7 +348,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.IsSales = 1;
                 c.Sborno = false;
                 c.Conto.Oborot = dototal;
-                SaveDDS(c);
+                SaveDDS(c,ddstotal);
                 c.Conto.IsDdsSales = 0;
                 c.Conto.IsSales = 0;
                 c.Conto.VopSales = "";
@@ -441,7 +462,7 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.IsDdsPurchases = 0;
                 c.Conto.IsPurchases = 0;
                 c.Conto.VopPurchases = "";
-                NewMethod1(nomFak, dataF, klient, ddsnom, c);
+                NewMethod1(nomFak, dataF, klient, ddsnom, c,bulstat);
                 if (dds != 0)
                 {
                     c.Conto.IsDdsSalesIncluded = 0;
@@ -451,7 +472,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.KindDds = "ДК";
                     c.Sborno = false;
                     c.Conto.Oborot =avans;
-                    c.Conto.Oborot = SaveDDS(c);
+                    c.Conto.Oborot = SaveDDS(c,dds);
                     c.Conto.Oborot = dds;
                     c.Conto.IsDdsSales = 0;
                     c.Conto.IsSales = 0;
@@ -471,7 +492,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsSales = 1;
                     c.Sborno = true;
                     c.Conto.Oborot =avans;
-                    SaveDDS(c);
+                    SaveDDS(c,dds);
                     c.Conto.IsDdsSales = 0;
                     c.Conto.IsSales = 0;
                     c.Conto.VopSales = "";
@@ -596,7 +617,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsDdsSalesIncluded=0;
                     c.Conto.IsDdsSales = 1;
                     c.Conto.IsSales = 1;
-                    SaveDDS(c);
+                    SaveDDS(c,dds);
                     c.Conto.IsDdsSales = 0;
                     c.Conto.IsSales = 0;
                     c.Conto.VopSales = "";
@@ -613,7 +634,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsDdsSalesIncluded = 0;
                     c.Conto.IsDdsSales = 1;
                     c.Conto.IsSales = 1;
-                    SaveDDS(c);
+                    SaveDDS(c,dds);
                 }
                
             }
@@ -652,7 +673,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsDdsPurchases = 0;
                     c.Conto.IsPurchases = 0;
                     c.Conto.VopPurchases = "";
-                    NewMethod(nomFak, dataF, klient, ddsnom, c);
+                    NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
                 }
                 if (sumausl != 0)
                 {
@@ -680,7 +701,7 @@ namespace Tempo2012.UI.WPF.Views
                         c.Conto.IsPurchases = 0;
                         c.Conto.VopPurchases = "";
                     }
-                    NewMethod(nomFak, dataF, klient, ddsnom, c);
+                    NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
                     if (sumastoki == 0)
                     {
                         if (dds != 0)
@@ -690,7 +711,7 @@ namespace Tempo2012.UI.WPF.Views
                             c.Conto.IsSales = 1;
                             c.Sborno = true;
                             c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                            c.Conto.Oborot = SaveDDS(c);
+                            c.Conto.Oborot = SaveDDS(c,dds);
                             c.Conto.IsDdsSales = 0;
                             c.Conto.IsSales = 0;
                             c.Conto.VopSales = "";
@@ -710,7 +731,7 @@ namespace Tempo2012.UI.WPF.Views
                             c.Conto.IsSales = 1;
                             c.Sborno = true;
                             c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                            SaveDDS(c);
+                            SaveDDS(c,dds);
                             c.Conto.IsDdsSales = 0;
                             c.Conto.IsSales = 0;
                             c.Conto.VopSales = "";
@@ -734,7 +755,7 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.IsSales = 1;
                     c.Conto.VopSales = sdelka;
                     c.KindDds = vid;
-                    NewMethod(nomFak, dataF, klient, ddsnom, c);
+                    NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
                    
                         if (dds != 0)
                         {
@@ -743,7 +764,7 @@ namespace Tempo2012.UI.WPF.Views
                             c.Conto.IsSales = 1;
                             c.Sborno = true;
                             c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                            c.Conto.Oborot=SaveDDS(c);
+                            c.Conto.Oborot=SaveDDS(c,dds);
                             c.Conto.IsDdsSales = 0;
                             c.Conto.IsSales = 0;
                             c.Conto.VopSales = "";
@@ -762,7 +783,7 @@ namespace Tempo2012.UI.WPF.Views
                             c.Conto.IsSales = 1;
                             c.Sborno = true;
                             c.Conto.Oborot = suma709 + sumastoki + sumausl;
-                            SaveDDS(c);
+                            SaveDDS(c,dds);
                             c.Conto.IsDdsSales = 0;
                             c.Conto.IsSales = 0;
                             c.Conto.VopSales = "";
@@ -786,17 +807,24 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.IsDdsSales = 0;
                 c.Conto.IsSales = 0;
                 //c.Conto.VopSales = sdelka;
-                NewMethod(nomfakavans, dataF, klient, ddsnom, c);
+                NewMethod(nomfakavans, dataF, klient, ddsnom, c,bulstat);
             }
         }
 
-        private void NewMethod(string nomFak, DateTime dataF, string klient, string ddsnom, ContoAll c)
+        private void NewMethod(string nomFak, DateTime dataF, string klient, string ddsnom, ContoAll c,string bulstat)
         {
             
             LoadAnaliticDetailsD(c);
             LoadAnaliticDetailsK(c);
             c.NameClient = klient;
-            SetAnaliticVal(ddsnom, c, 0);
+            if (!string.IsNullOrEmpty(ddsnom))
+            {
+                SetAnaliticVal(ddsnom, c, 0);
+            }
+            else
+            {
+                SetAnaliticVal(bulstat, c, 0);
+            }
             SetAnaliticVal(nomFak, c, 1);
             SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 2);
             DataFactura = dataF;
@@ -863,16 +891,30 @@ namespace Tempo2012.UI.WPF.Views
             }
             SaveMainConto(c);
         }
-        private void NewMethod1(string nomFak, DateTime dataF, string klient, string ddsnom, ContoAll c)
+        private void NewMethod1(string nomFak, DateTime dataF, string klient, string ddsnom, ContoAll c,string bulstat)
         {
 
             LoadAnaliticDetailsD(c);
             LoadAnaliticDetailsK(c);
             c.NameClient = klient;
-            SetAnaliticVal(ddsnom, c, 0);
+            if (!string.IsNullOrEmpty(ddsnom))
+            {
+                SetAnaliticVal(ddsnom, c, 0);
+            }
+            else
+            {
+                SetAnaliticVal(bulstat, c, 0);
+            }
             SetAnaliticVal(nomFak, c, 1);
             SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 2);
-            SetAnaliticVal(ddsnom, c, 4);
+            if (!string.IsNullOrEmpty(ddsnom))
+            {
+                SetAnaliticVal(ddsnom, c, 4);
+            }
+            else
+            {
+                SetAnaliticVal(bulstat, c, 4);
+            }
             SetAnaliticVal(nomFak, c, 5);
             SetAnaliticVal(string.Format("{0}.{1}.{2}", dataF.Day, dataF.Month, dataF.Year), c, 6);
             DataFactura = dataF;
@@ -939,7 +981,7 @@ namespace Tempo2012.UI.WPF.Views
             }
             SaveMainConto(c);
         }
-        private decimal SaveDDS(ContoAll allconto,Decimal dds=-1)
+        private decimal SaveDDS(ContoAll allconto,Decimal dds)
         {
             var currItemDdsDnevPurchases = ItemsDdsDnevPurchases.FirstOrDefault(e => e.Code == allconto.KindDds);
             var currItemDdsDnevSales = ItemsDdsDnevSales.FirstOrDefault(e => e.Code == allconto.KindDds);
@@ -1077,17 +1119,15 @@ namespace Tempo2012.UI.WPF.Views
                 In = true
             });
             vm.ddsDnevnikModel.NameKontr = allconto.NameClient;
-            if (dds != -1)
+            foreach (var item in vm.ddsDnevnikModel.DetailItems)
             {
-                foreach (var item in vm.ddsDnevnikModel.DetailItems)
+                if (item.In)
                 {
-                    if (item.In)
+                    item.IsNotComputed = true;
+                    if (item.Dds != dds)
                     {
-                        item.IsNotComputed = true;
-                        if (item.Dds != dds)
-                        {
-                            item.Dds = dds;
-                        }
+                        item.Dds = dds;
+                        item.DdsTotal = dds + item.DdsSuma;
                     }
                 }
             }
@@ -1484,6 +1524,7 @@ namespace Tempo2012.UI.WPF.Views
         private int totalInvoise;
         private AccountsModel sm410;
         private AccountsModel sm411;
+        private AccountsModel sm303;
         private AccountsModel sm500;
         private AccountsModel sm410_1;
         private AccountsModel sm701;

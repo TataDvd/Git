@@ -17,6 +17,7 @@
                  <MenuItem Header="Аналитичен регистър" Click="MenuItem_Click_1" Tag="Аналитичен регистър"/>
                  <MenuItem Header="Аналитичен регистър по клиент" Click="MenuItem_Click_Contr" Tag="Аналитичен регистър по клиент"/>
                 <MenuItem Header="Аналитичен регистър по доставчик" Click="MenuItem_Click_Dost" Tag="Аналитичен регистър по доставчик"/>
+                <MenuItem Header="Аналитичен регистър по контрагент" Click="MenuItem_Click_6" Tag="Аналитичен регистър по контрагент"/>
                  <MenuItem Header="Справка валута" Click="MenuItemValRep_OnClick" Tag="Справка валута"/>
                 <MenuItem Header="Справка валути с детайли" Click="MenuItem_Click_4" Tag="Справка валути с детайли"/>
                 <MenuItem Header="Справка материали" Click="MenuItem_Click_Quantity" Tag="Справка материали"/>
