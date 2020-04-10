@@ -1400,15 +1400,15 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     }
                     else
                     {
-                        if (AllMovementCredit.Count > 0)
+                        if (AllMovementDebit.Count > 0)
                         {
-                            luki = AllMovementCredit.Max(e => e.CID);
+                            luki = AllMovementDebit.Max(e => e.CID);
                         }
                         else
                         {
-                            if (AllMovementDebit.Count > 0)
+                            if (AllMovementCredit.Count > 0)
                             {
-                                luki = AllMovementDebit.Max(e => e.CID);
+                                luki = AllMovementCredit.Max(e => e.CID);
                             }
                         }
                     }

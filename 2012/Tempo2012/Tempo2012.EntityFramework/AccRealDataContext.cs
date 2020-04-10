@@ -3300,7 +3300,7 @@ namespace Tempo2012.EntityFramework
                 dbman.ExecuteReader(CommandType.Text, s);
                 int oldid = 0;
                 bool first = true;
-
+                List<Dictionary<string, object>> lookup = null;
                 while (dbman.DataReader.Read())
                 {
                     var ic = new InvoiseControl();
@@ -3308,7 +3308,13 @@ namespace Tempo2012.EntityFramework
                     ic.Id = dbman.DataReader["Id"].ToString();
                     ic.LOOKUPFIELDKEY = int.Parse(dbman.DataReader["LOOKUPFIELDKEY"].ToString());
                     ic.LOOKUPID = int.Parse(dbman.DataReader["LOOKUPID"].ToString());
-                    
+                    if (ic.LOOKUPID > 0 && first)
+                    {
+                       
+                        var look = GetLookup(ic.LOOKUPID);
+                        lookup = GetLookupDictionary(look.LookUpMetaData.Tablename, ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).ToList();
+                        first = false;
+                    }
                     ic.NameField = dbman.DataReader["NAME"].ToString();
                     ic.Oborot = decimal.Parse(dbman.DataReader["Oborot"].ToString());
                     ic.VALUE = dbman.DataReader["VALUE"].ToString();
@@ -3329,8 +3335,24 @@ namespace Tempo2012.EntityFramework
                         ic.CID = ic.LOOKUPID;
 
                         ic.CKEY = ic.LOOKUPFIELDKEY;
+                        
                         ic.CodeContragent = ic.VALUE;
-                        ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                        if (lookup == null)
+                        {
+                            ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                        }
+                        else
+                        {
+                            var name = lookup.FirstOrDefault(x => x.ContainsKey("Name") && x["KONTRAGENT"].ToString() == ic.CodeContragent);
+                            if (name != null)
+                            {
+                                ic.NameContragent = name["Name"].ToString();
+                            }
+                            else
+                            {
+                                ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                            }
+                        }
                     }
                     if (ic.NameField == "Вид валута")
                     {
@@ -3511,7 +3533,7 @@ namespace Tempo2012.EntityFramework
                 dbman.ExecuteReader(CommandType.Text, s);
                 int oldid = 0;
                 bool first = true;
-
+                List<Dictionary<string, object>> lookup = null;
                 while (dbman.DataReader.Read())
                 {
                     var ic = new InvoiseControl();
@@ -3519,6 +3541,13 @@ namespace Tempo2012.EntityFramework
                     ic.Id = dbman.DataReader["Id"].ToString();
                     ic.LOOKUPFIELDKEY = int.Parse(dbman.DataReader["LOOKUPFIELDKEY"].ToString());
                     ic.LOOKUPID = int.Parse(dbman.DataReader["LOOKUPID"].ToString());
+                    if (ic.LOOKUPID > 0 && first)
+                    {
+
+                        var look = GetLookup(ic.LOOKUPID);
+                        lookup = GetLookupDictionary(look.LookUpMetaData.Tablename, ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).ToList();
+                        first = false;
+                    }
                     ic.NameField = dbman.DataReader["NAME"].ToString();
                     ic.Oborot = decimal.Parse(dbman.DataReader["Oborot"].ToString());
                     ic.VALUE = dbman.DataReader["VALUE"].ToString();
@@ -3540,7 +3569,15 @@ namespace Tempo2012.EntityFramework
                         ic.CID = ic.LOOKUPID;
                         ic.CKEY = ic.LOOKUPFIELDKEY;
                         ic.CodeContragent = ic.VALUE;
-                        ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                        var name = lookup.FirstOrDefault(x => x.ContainsKey("Name") && x["KONTRAGENT"].ToString() == ic.CodeContragent);
+                        if (name != null)
+                        {
+                            ic.NameContragent = name["Name"].ToString();
+                        }
+                        else
+                        {
+                            ic.NameContragent = dbman.DataReader["LOOKUPVAL"].ToString();
+                        }
                     }
                     if (ic.NameField == "Вид валута")
                     {

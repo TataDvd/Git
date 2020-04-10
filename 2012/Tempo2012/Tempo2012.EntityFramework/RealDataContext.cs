@@ -1517,7 +1517,9 @@ public static partial class RealDataContext
                 int curqroup = -1;
                 bool firstgroup = false;
                 bool havesaldo = false;
+                bool first = true;
                 SaldoFactura workSaldos=new SaldoFactura();
+                List<Dictionary<string, object>> loo = null;
                 while (dbman.DataReader.Read())
                 {
                     havesaldo = true;
@@ -1585,6 +1587,24 @@ public static partial class RealDataContext
                             if (int.TryParse(a, out b))
                             {
                                 workSaldos.LookupId = b;
+                                if (workSaldos.LookupId > 0 && first)
+                                {
+                                     {
+
+                                        var look = GetLookup(workSaldos.LookupId);
+                                        loo = GetLookupDictionary(look.LookUpMetaData.Tablename, ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).ToList();
+                                        first = false;
+                                    }
+                                }
+                            }
+                            if (loo != null)
+                            {
+                                var n = loo.FirstOrDefault(x => x.ContainsKey("Name") && x["KONTRAGENT"].ToString() == workSaldos.Code);
+                                if (n != null)
+                                {
+                                    workSaldos.NameContragent = n["Name"].ToString();
+                                }
+                                
                             }
                            
                         }
