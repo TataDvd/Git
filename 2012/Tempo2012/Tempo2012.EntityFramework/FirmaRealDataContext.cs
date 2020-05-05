@@ -400,10 +400,6 @@ namespace Tempo2012.EntityFramework
                             }
                         }
                     }
-                    if (rez.Count == 113)
-                    {
-                        row.Oc = decimal.Parse(dbman.DataReader["Oborot"].ToString());
-                    }
                     if (smetka == id)
                     {
                         string ddetails = dbman.DataReader["DDETAILS"].ToString();

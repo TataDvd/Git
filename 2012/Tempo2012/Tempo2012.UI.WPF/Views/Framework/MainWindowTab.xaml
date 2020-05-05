@@ -310,6 +310,14 @@
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
                         </MenuItem>
+                        <!--<MenuItem Header="Хронологичен регистър" Click="MenuItem_Click_17"/>-->
+                        <MenuItem  Click="MenuItem_Click_46">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="VIES-Декларация,раздел Г"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
+                        </MenuItem>
                         <MenuItem Click="MenuItem_Click_16">
                             <MenuItem.HeaderTemplate>
                                 <DataTemplate>

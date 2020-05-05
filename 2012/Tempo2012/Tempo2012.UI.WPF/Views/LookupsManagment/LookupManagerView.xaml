@@ -30,10 +30,18 @@
                   Margin="50,5,50,5" 
                   SelectedItem="{Binding Lookup}"
                   Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Button  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click">Копирай номенклатура от фирма</Button>
-            <Button  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_1">Изтрий всички елементи за фирма</Button>
-            <Button  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_2">Изтрий всички елементи</Button>
-            <Button  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_3">Експорт</Button>
+            <Button x:Name="b" Content="..."  Click="b_Click" Margin="10,5,10,5"  >
+                <Button.ContextMenu >
+                    <ContextMenu   >
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click" Header="Копирай номенклатура от фирма"></MenuItem>
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_1" Header="Изтрий всички елементи за фирма"></MenuItem>
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_2" Header="Изтрий всички елементи"></MenuItem>
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="Button_Click_3" Header="Експорт"></MenuItem>
+                        
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+           
         </StackPanel>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>

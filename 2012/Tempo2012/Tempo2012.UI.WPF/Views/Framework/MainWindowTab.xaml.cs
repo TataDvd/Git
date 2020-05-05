@@ -1375,5 +1375,11 @@ namespace Tempo2012.UI.WPF
             Auto60 dialog = new Auto60();
             dialog.ShowDialog();
         }
+
+        private void MenuItem_Click_46(object sender, RoutedEventArgs e)
+        {
+            ViesG dialog = new ViesG();
+            dialog.ShowDialog();
+        }
     }
 }

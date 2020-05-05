@@ -120,5 +120,11 @@ namespace Tempo2012.UI.WPF.Views
            vm.TransverLookUp();
        
         }
+
+        private void b_Click(object sender, RoutedEventArgs e)
+        {
+            b.ContextMenu.DataContext = b.DataContext;
+            b.ContextMenu.IsOpen = true;
+        }
     }
 }

@@ -192,6 +192,10 @@
       <DependentUpon>DeclarConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\AllConto.cs" />
+    <Compile Include="Views\Dialogs\ViesGvm.cs" />
+    <Compile Include="Views\Dialogs\ViesG.xaml.cs">
+      <DependentUpon>ViesG.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\Auto60.xaml.cs">
       <DependentUpon>Auto60.xaml</DependentUpon>
     </Compile>
@@ -508,6 +512,10 @@
     <Page Include="Views\Declar\DeclarConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ViesG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\Auto60.xaml">
       <SubType>Designer</SubType>
