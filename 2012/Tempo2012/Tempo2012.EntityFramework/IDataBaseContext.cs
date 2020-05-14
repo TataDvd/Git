@@ -117,6 +117,7 @@ namespace Tempo2012.EntityFramework
         List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid,string kindValuta=null);
         bool DeleteAllConto(int firmaId);
         List<ViesRow> GetVies(int month, int year, Dictionary<string, string> declar);
+        List<ViesRowG> GetViesG(int month, int year, Dictionary<string, string> declar);
         int GetAllContoCount(int id, int year, int mount);
         IEnumerable<AccItemSaldo> GetInfoFactura(int acc, int type, string fn, string constr);
         List<List<string>> GetDnevItem(int kindActivity, DateTime fromDate, DateTime toDate);

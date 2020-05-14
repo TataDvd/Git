@@ -394,7 +394,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                 declar.Add("mol", firma.Names);
             }
             string actual;
-            actual = DeklarviewModel.ReturnViesDeclar(declar, context.GetVies(month, year, declar));
+            actual = DeklarviewModel.ReturnViesDeclar(declar, context.GetVies(month, year, declar),context.GetViesG(month, year, declar));
             var path = AppDomain.CurrentDomain.BaseDirectory + "Vies1.txt";
             using (StreamWriter sw = new StreamWriter(path))
             {
@@ -432,6 +432,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             
             var path = AppDomain.CurrentDomain.BaseDirectory + "VIES.TXT";
             var list = context.GetVies(month, year, declar);
+            var listG = context.GetViesG(month, year, declar);
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0,3}", "VHR");              //1
             sb.AppendFormat("{0,7}", declar["data"]);     //2
@@ -458,6 +459,16 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             {
                 sb.AppendFormat("VIR{0,5}{1,-15}{2,12}{3,12}{4,12}{5,7}", l.PorNom, l.Name, l.K3, l.K4, l.K5, " ");
                 sb.AppendLine();
+            }
+            if (listG.Count > 0)
+            {
+                sb.AppendFormat("{0,3}", "CHR");
+                sb.AppendFormat("{0,5}", declar["countG"]);
+                foreach (var l in listG)
+                {
+                    sb.AppendFormat("COS{0,5}{1,-15}{2,1}{3,12}{4,12}{5,7}", l.NomRow, l.VIN, l.KOD, l.VINDest, l.PeriodOP, " ");
+                    sb.AppendLine();
+                }
             }
             Encoding srcEncodingFormat = Encoding.UTF8;
             Encoding dstEncodingFormat = Encoding.GetEncoding("windows-1251");

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tempo2012.UI.WPF", "Tempo2012.UI.WPF\Tempo2012.UI.WPF.csproj", "{F08860F4-6841-450A-8BEA-16C6BF9C9B01}"
 EndProject
@@ -47,6 +47,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interpretator", "Interpretator\Interpretator.csproj", "{AA55A7C1-7DC6-4256-885A-4B488AD43FE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix", "Matrix\Matrix.csproj", "{91AF2AC1-A931-4917-9EB7-29C838CDE84F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "upd", "upd", "{3F939AC1-8169-4E80-BCE9-1C4D00A9EBA6}"
+	ProjectSection(SolutionItems) = preProject
+		Upd\upd10.sql = Upd\upd10.sql
+		Upd\upd17.sql = Upd\upd17.sql
+		Upd\upd18.sql = Upd\upd18.sql
+		Upd\upd19.sql = Upd\upd19.sql
+		Upd\upd8.sql = Upd\upd8.sql
+		Upd\upd9.sql = Upd\upd9.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

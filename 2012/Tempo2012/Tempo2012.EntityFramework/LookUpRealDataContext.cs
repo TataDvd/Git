@@ -507,7 +507,7 @@ namespace Tempo2012.EntityFramework
                 List<string> row = new List<string>(roww);
                 if (roww != null)
                 {
-                    if (lookup.Fields[1].DbField == "integer")
+                    if (lookup.Fields[1].DbField == "integer" && lookup.Fields[1].Name!= "Период")
                     {
                         string cmd = string.Format("Select * from \"{0}\" where \"{1}\"={2}}",
                                                    lookup.LookUpMetaData.Tablename, lookup.Fields[1].NameEng, row[1]);
@@ -610,7 +610,7 @@ namespace Tempo2012.EntityFramework
                 //lookup.Fields.Add(new TableField { DbField = "integer", GROUP = 4, Id = 4, Length = 4, IsRequared = false, NameEng = "FIRMAID", Name = "Фирма Номер" });
                 if (roww != null)
                 {
-                    if (lookup.Fields[1].DbField == "integer")
+                    if (lookup.Fields[1].DbField == "integer" && lookup.Fields[1].Name != "Период")
                     {
                         string cmd = string.Format("Select * from \"{0}\" where \"{1}\"={2} and FIRMAID={3}",
                                                    lookup.LookUpMetaData.Tablename, lookup.Fields[1].NameEng, row[1],

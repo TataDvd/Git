@@ -1,0 +1,105 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.ViesG"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             x:Name="_this" 
+             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:v="clr-namespace:Tempo2012.UI.WPF.Views"
+             xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls"
+        Title="VIES декларация,раздел Г" Height="700" Width="1200">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
+        </Grid>
+       
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ItemsControl ItemsSource="{Binding Filters}" Grid.Row="0" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                        </StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="10,5,10,2">
+                            <customControls:TextBlockEx Margin="5,5,5,2" Text="{Binding FilterName}" FontSize="9"></customControls:TextBlockEx>
+                            <TextBox Margin="5,5,5,2"
+                                     Width="60"
+                                     Text="{Binding FilterWord,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Tag="{Binding}"
+                                     KeyDown="UIElement_OnKeyDown"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"
+                                     FontSize="9"></TextBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <dg2d:DataGrid2D Grid.Row="1"
+                             Name="dg"
+                             VerticalScrollBarVisibility="Auto" 
+                             HorizontalScrollBarVisibility="Auto"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields, Mode=TwoWay}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             SelectedIndex="{Binding Path=CurrentRowIndex,Mode=OneWayToSource}"
+                             SelectionUnit="FullRow"
+                             IsReadOnly="True">
+
+
+            </dg2d:DataGrid2D>
+            <StackPanel  Orientation="Horizontal" Grid.Row="3">
+                <Button Margin="10,5,10,2" Command="{Binding MoveFirstPageCommand}" >|&lt;&lt;</Button>
+                <Button Margin="10,5,10,2" Command="{Binding MovePreviusPageCommand}" >&lt;&lt;</Button>
+                <customControls:TextBlockEx Margin="10,2,10,2" Text="Страници"></customControls:TextBlockEx>
+                <customControls:TextBlockEx Margin="10,2,10,2" Text="{Binding FromToPages}" Width="100" ></customControls:TextBlockEx>
+                <Button Margin="10,5,10,2" Command="{Binding MoveNextPageCommand}" >&gt;&gt;</Button>
+                <Button Margin="10,5,10,2" Command="{Binding MoveLastPageCommand}" >&gt;&gt;|</Button>
+                <customControls:TextBlockEx Margin="10,2,10,2" Text="Отиди на страница" Width="120" ></customControls:TextBlockEx>
+                <customControls:TextBoxEx Margin="10,2,10,2" Text="{Binding TargetPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="40" ></customControls:TextBoxEx>
+                <Button Margin="10,5,10,2" Command="{Binding MoveToPageCommand}" >&gt;&gt;</Button>
+            </StackPanel>
+        </Grid>
+        <!--<dg2d:DataGrid2D Grid.Row="2" Name="dataGrid2D"
+                             VerticalScrollBarVisibility="Auto" 
+                             HorizontalScrollBarVisibility="Auto"
+                             Margin="5,0,5,5"
+                             AlternationCount="2"
+                             UseModifiedDataGridStyle="True"
+                             ItemsSource2D="{Binding Fields, Mode=TwoWay}"
+                             RowBackground="White"
+                             AlternatingRowBackground="#ebebeb"                       
+                             Background="Transparent"
+                             ItemsSource="{Binding}"
+                             SelectedIndex="{Binding Path=CurrentRowIndex,Mode=OneWayToSource}"
+                             SelectionUnit="FullRow"
+                             IsReadOnly="True">
+            
+      
+        </dg2d:DataGrid2D>-->
+
+
+
+    </Grid>
+</Window>

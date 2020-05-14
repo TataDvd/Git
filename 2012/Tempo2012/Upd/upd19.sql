@@ -2,7 +2,6 @@ CREATE TABLE VIESG
 (
   "Id" Integer NOT NULL,
   PERIOD Integer,
-  NOM Integer,
   VIN VARCHAR(16),
   KOD integer,
   VINDEST VARCHAR(16),

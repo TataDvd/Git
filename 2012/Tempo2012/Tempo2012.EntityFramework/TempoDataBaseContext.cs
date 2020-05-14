@@ -721,5 +721,10 @@ namespace Tempo2012.EntityFramework
         {
             return RealDataContext.GetAllContoGrupedByContragent(id, fromDate,toDate,nom,accid);
         }
+
+        public List<ViesRowG> GetViesG(int month, int year, Dictionary<string, string> declar)
+        {
+            return RealDataContext.GetViesG(month, year, declar);
+        }
     }
 }

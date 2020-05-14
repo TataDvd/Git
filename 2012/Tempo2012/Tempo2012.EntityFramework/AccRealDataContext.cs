@@ -15,8 +15,7 @@ using FirebirdSql.Data.Isql;
 using Tempo2012.EntityFramework.Interface;
 using System.ComponentModel;
 using System.Diagnostics;
-
-
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace Tempo2012.EntityFramework
 {
@@ -4058,7 +4057,33 @@ namespace Tempo2012.EntityFramework
             declar.Add("count", (k1 - 1).ToString());
             return r;
         }
-
+        internal static List<ViesRowG> GetViesG(int month, int year, Dictionary<string, string> declar)
+        {
+            List<ViesRowG> list = new List<ViesRowG>();
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            dbman.Open();
+            dbman.ExecuteReader(CommandType.Text,
+                string.Format("Select * from VIESG v where v.PERIOD='{0}'",
+                    year*100+month));
+            int i = 1;
+            while (dbman.DataReader.Read())
+            {
+                ViesRowG v = new ViesRowG();
+                v.NomRow = i;
+                v.Period =int.Parse(dbman.DataReader["PERIOD"].ToString());
+                //v.Nom=int.Parse(dbman.DataReader["NOM"].ToString());
+                v.VIN = dbman.DataReader["VIN"].ToString();
+                v.KOD=int.Parse(dbman.DataReader["KOD"].ToString());
+                v.VINDest=dbman.DataReader["VINDEST"].ToString();
+                v.PeriodOP = dbman.DataReader["PERIODOP"].ToString();
+                list.Add(v);
+                i++;
+            }
+            declar.Add("countG", (i).ToString());
+            dbman.Dispose();
+            return list;
+        }
         internal static int GetAllContoCount(int id, int year, int month)
         {
             int c = 0;
