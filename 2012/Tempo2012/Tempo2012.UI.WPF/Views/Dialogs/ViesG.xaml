@@ -15,13 +15,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <v:CommandBar x:Name="commands" DataContext="{Binding ElementName=_this}"/>
         </Grid>
-       
-        <Grid Grid.Row="1">
+       <Grid Grid.Row="1">
+            <Button x:Name="b" Content="..."  Click="b_Click" Margin="10,5,10,5"  >
+                <Button.ContextMenu >
+                    <ContextMenu   >
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="MenuItem_Click" Header="Изтрий всички записи на текущата фирма"></MenuItem>
+                        <MenuItem  Margin="10,5,10,5" Visibility="{Binding HideCombo,Converter={StaticResource BooleanToVisibilityConverter}}" Click="MenuItem_Click_1" Header="Изтрий всички записи"></MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition></RowDefinition>

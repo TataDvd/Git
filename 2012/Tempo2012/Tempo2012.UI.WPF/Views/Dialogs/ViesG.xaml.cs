@@ -50,5 +50,20 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             }
         }
 
+        private void b_Click(object sender, RoutedEventArgs e)
+        {
+            b.ContextMenu.DataContext = b.DataContext;
+            b.ContextMenu.IsOpen = true;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            vm.DeleteAllItemsFirma();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            vm.DeleteAllItems();
+        }
     }
 }
