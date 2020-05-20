@@ -4080,7 +4080,7 @@ namespace Tempo2012.EntityFramework
                 list.Add(v);
                 i++;
             }
-            declar.Add("countG", (i).ToString());
+            declar.Add("countG", (i-1).ToString());
             dbman.Dispose();
             return list;
         }

@@ -464,6 +464,7 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
             {
                 sb.AppendFormat("{0,3}", "CHR");
                 sb.AppendFormat("{0,5}", declar["countG"]);
+                sb.AppendLine();
                 foreach (var l in listG)
                 {
                     sb.AppendFormat("COS{0,5}{1,-15}{2,1}{3,12}{4,12}{5,7}", l.NomRow, l.VIN, l.KOD, l.VINDest, l.PeriodOP, " ");

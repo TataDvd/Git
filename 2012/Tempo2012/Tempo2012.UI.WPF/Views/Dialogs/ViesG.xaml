@@ -33,7 +33,7 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
@@ -48,7 +48,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="10,5,10,2">
+                        <StackPanel Orientation="Vertical" Margin="10,5,10,2">
                             <customControls:TextBlockEx Margin="5,5,5,2" Text="{Binding FilterName}" FontSize="9"></customControls:TextBlockEx>
                             <TextBox Margin="5,5,5,2"
                                      Width="60"

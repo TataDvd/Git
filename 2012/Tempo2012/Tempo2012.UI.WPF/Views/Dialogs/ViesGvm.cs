@@ -224,7 +224,7 @@ namespace Tempo2012.UI.WPF.Views.Dialogs
             });
             LookupModelm.Fields.Add(new TableField
             {
-                Name = "VIN заместващ Контрагент",
+                Name = "VIN заместен Контрагент",
                 DbField = "VARCHAR(16)",
                 NameEng = "VINDEST",
                 Length=16

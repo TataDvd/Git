@@ -144,6 +144,10 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                 if (co.DebitAccount==CurrenAcc.Id)
                 {
                     sumad += Math.Round(co.Oborot,2);
+                    if (co.CreditAccount == CurrenAcc.Id)
+                    {
+                        sumac += Math.Round(co.Oborot, 2);
+                    }
                 }
                 else
                 {
@@ -161,46 +165,53 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                 contos = new List<Conto>(Context.GetAllContoOrfiltered(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, Entrence.Mask));
                 Entrence.Mask.FromDate = oldDateTimeF;
                 Entrence.Mask.ToDate = oldDateTimeT;
-               
-                if (!fullsaldo)
+
+            if (!fullsaldo)
+            {
+                foreach (
+                    var co in
+                        contos.Where(
+                            e =>
+                                (e.DebitAccount == CurrenAcc.Id || e.CreditAccount == CurrenAcc.Id) && e.Data < oldDateTimeF && (e.CDetails.Contains(contain) || e.DDetails.Contains(contain))))
                 {
-                    foreach (
-                        var co in
-                            contos.Where(
-                                e =>
-                                    (e.DebitAccount == CurrenAcc.Id || e.CreditAccount == CurrenAcc.Id) && e.Data < oldDateTimeF && (e.CDetails.Contains(contain) || e.DDetails.Contains(contain))))
+                    if (co.DebitAccount == CurrenAcc.Id)
                     {
-                        if (co.DebitAccount == CurrenAcc.Id)
+                        sumadb += Math.Round(co.Oborot, 2);
+                        if (co.CreditAccount == CurrenAcc.Id)
                         {
-                            sumadb += Math.Round(co.Oborot,2);
-                        }
-                        else
-                        {
-                            sumacb += Math.Round(co.Oborot,2);
+                            sumacb += Math.Round(co.Oborot, 2);
                         }
                     }
-
-
-                }
-                else
-                {
-                    foreach (
-                           var co in
-                               contos.Where(
-                                   e =>
-                                       (e.DebitAccount == CurrenAcc.Id || e.CreditAccount == CurrenAcc.Id) && e.Data < oldDateTimeF))
+                    else
                     {
-                        if (co.DebitAccount == CurrenAcc.Id)
-                        {
-                            sumadb += Math.Round(co.Oborot,2);
-                           
-                        }
-                        else
-                        {
-                            sumacb += Math.Round(co.Oborot,2);
-                        }
+                        sumacb += Math.Round(co.Oborot, 2);
                     }
                 }
+
+
+            }
+            else
+            {
+                foreach (
+                       var co in
+                           contos.Where(
+                               e =>
+                                   (e.DebitAccount == CurrenAcc.Id || e.CreditAccount == CurrenAcc.Id) && e.Data < oldDateTimeF))
+                {
+                    if (co.DebitAccount == CurrenAcc.Id)
+                    {
+                        sumadb += Math.Round(co.Oborot, 2);
+                        if (co.CreditAccount == CurrenAcc.Id)
+                        {
+                            sumacb += Math.Round(co.Oborot, 2);
+                        }
+                    }
+                    else
+                    {
+                        sumacb += Math.Round(co.Oborot, 2);
+                    }
+                }
+            }
             //}
             if (!fullsaldo)
             {
