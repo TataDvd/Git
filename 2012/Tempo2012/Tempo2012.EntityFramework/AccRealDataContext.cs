@@ -588,7 +588,7 @@ namespace Tempo2012.EntityFramework
             decimal sumdds,
             Sells prodazbi, string code, decimal suma, ref decimal gumdds, string codedoc)
         {
-            if (codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
+            if (codedoc.Equals("05") || codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
                 return gsuma;
             if (KindActivity == 2)
             {
@@ -774,8 +774,7 @@ namespace Tempo2012.EntityFramework
                 while (dbman.DataReader.Read())
                 {
                     string codedoc = dbman.DataReader["CODEDOC"].ToString();
-                    if (codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
-                        continue;
+                    
                     string code = dbman.DataReader["CODE"].ToString();
                     decimal sum = decimal.Parse(dbman.DataReader["SUMADDS"].ToString());
                     decimal sumdds = decimal.Parse(dbman.DataReader["SUMAWITHDDS"].ToString());
@@ -785,6 +784,8 @@ namespace Tempo2012.EntityFramework
                         tester = newtester;
                         purchases.Count++;
                     }
+                    if (codedoc.Equals("05") || codedoc.Equals("04") || codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
+                        continue;
                     switch (code)
                     {
                         case "ОСВ":
@@ -863,8 +864,7 @@ namespace Tempo2012.EntityFramework
                 while (dbman.DataReader.Read())
                 {
                     string codedoc = dbman.DataReader["CODEDOC"].ToString();
-                    if (codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
-                        continue;
+                    
                     decimal suma = decimal.Parse(dbman.DataReader["SUMADDS"].ToString());
                     decimal sumdds = decimal.Parse(dbman.DataReader["SUMAWITHDDS"].ToString());
                     decimal dds = sumdds;
@@ -875,6 +875,8 @@ namespace Tempo2012.EntityFramework
                         tester = newtester;
                         sells.Count++;
                     }
+                    if (codedoc.Equals("05") || codedoc.Equals("04") || codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
+                        continue;
                     switch (code)
                     {
                         case "ДК":
@@ -4060,28 +4062,28 @@ namespace Tempo2012.EntityFramework
         internal static List<ViesRowG> GetViesG(int month, int year, Dictionary<string, string> declar)
         {
             List<ViesRowG> list = new List<ViesRowG>();
-            var dbman = new DBManager(DataProvider.Firebird);
-            dbman.ConnectionString = Entrence.ConnectionString;
-            dbman.Open();
-            dbman.ExecuteReader(CommandType.Text,
-                string.Format("Select * from VIESG v where v.PERIOD='{0}'",
-                    year*100+month));
-            int i = 1;
-            while (dbman.DataReader.Read())
-            {
-                ViesRowG v = new ViesRowG();
-                v.NomRow = i;
-                v.Period =int.Parse(dbman.DataReader["PERIOD"].ToString());
-                //v.Nom=int.Parse(dbman.DataReader["NOM"].ToString());
-                v.VIN = dbman.DataReader["VIN"].ToString();
-                v.KOD=int.Parse(dbman.DataReader["KOD"].ToString());
-                v.VINDest=dbman.DataReader["VINDEST"].ToString();
-                v.PeriodOP = dbman.DataReader["PERIODOP"].ToString();
-                list.Add(v);
-                i++;
-            }
-            declar.Add("countG", (i-1).ToString());
-            dbman.Dispose();
+            //var dbman = new DBManager(DataProvider.Firebird);
+            //dbman.ConnectionString = Entrence.ConnectionString;
+            //dbman.Open();
+            //dbman.ExecuteReader(CommandType.Text,
+            //    string.Format("Select * from VIESG v where v.PERIOD='{0}'",
+            //        year*100+month));
+            //int i = 1;
+            //while (dbman.DataReader.Read())
+            //{
+            //    ViesRowG v = new ViesRowG();
+            //    v.NomRow = i;
+            //    v.Period =int.Parse(dbman.DataReader["PERIOD"].ToString());
+            //    //v.Nom=int.Parse(dbman.DataReader["NOM"].ToString());
+            //    v.VIN = dbman.DataReader["VIN"].ToString();
+            //    v.KOD=int.Parse(dbman.DataReader["KOD"].ToString());
+            //    v.VINDest=dbman.DataReader["VINDEST"].ToString();
+            //    v.PeriodOP = dbman.DataReader["PERIODOP"].ToString();
+            //    list.Add(v);
+            //    i++;
+            //}
+            //declar.Add("countG", (i-1).ToString());
+            //dbman.Dispose();
             return list;
         }
         internal static int GetAllContoCount(int id, int year, int month)

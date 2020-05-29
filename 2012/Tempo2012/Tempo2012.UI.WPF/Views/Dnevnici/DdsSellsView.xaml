@@ -101,6 +101,7 @@
                     <CustomControls:TextBoxEx Grid.Row="5" Grid.Column="1" Text="{Binding Path=Branch}" Margin="10,5,150,2" Width="50" MaxLength="4" TabIndex="5"></CustomControls:TextBoxEx>
                     <CustomControls:TextBlockEx Grid.Row="6" Text="Дост.чл.163а,внос чл.167а" Margin="10,5,10,2"></CustomControls:TextBlockEx>
                     <CustomControls:TextBoxEx Grid.Row="6" Grid.Column="1" Margin="10,5,160,5" Width="25" Text="{Binding Path=A8,Mode=TwoWay}" TabIndex="6"></CustomControls:TextBoxEx>
+                    <CustomControls:TextBlockEx Grid.Row="6" Grid.Column="1" Text="кол.8а" Margin="50,5,10,2"></CustomControls:TextBlockEx>
                     <!--<TextBlockEx Grid.Row="7" Text="Име на Контрагента" Margin="10,5,10,2"></TextBlockEx>-->
                     <!--<ComboBox Grid.Row="7" Grid.Column="1" TabIndex="10" 
                               ItemsSource="{Binding ElementName=_this,Path=DataContext.SelectedLookup}"

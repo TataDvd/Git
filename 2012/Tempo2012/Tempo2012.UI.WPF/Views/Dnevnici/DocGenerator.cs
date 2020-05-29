@@ -180,31 +180,42 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                 sb.AppendFormat("{0,15}", item[13]);                         //15 ДДС с пълен ДК
                 sb.AppendFormat("{0,15}", item[14]);                         //16 ПОСР
                 sb.AppendFormat("{0,15}", item[15]);                         //17 163а
+                                      //18  8а
                 int a8;
                 if (int.TryParse(item[8], out a8))
                 {
-                    switch (a8)
+                    if (a8 == 0)
                     {
-                        case 0:
-                            sb.Append("  ");
-                            break;
-                        case 1:
-                            sb.Append("01");
-                            break;
-                        case 2:
-                            sb.Append("02");
-                            break;
-                        default:
-                            sb.Append("  ");
-                            break;
+                        sb.Append("  ");
                     }
+                    else
+                    {
+                        sb.AppendFormat("{0}", item[8].Length == 1 ? "0" + item[8] : item[8]);
+                    }
+                }    
+                    //{
+                    //    switch (a8)
+                    //    {
+                    //        case 0:
+                    //            
+                    //            break;
+                    //        case 1:
+                    //            sb.Append("01");
+                    //            break;
+                    //        case 2:
+                    //            sb.Append("02");
+                    //            break;
+                    //        default:
+                    //            sb.Append("  ");
+                    //            break;
+                    //    }
 
-                }
-                else
-                {
-                    sb.Append("  ");
-                }                       //8а
-                sb.AppendLine();
+                    //}
+                    //else
+                    //{
+                    //    sb.Append("  ");
+                    //}                       //8а
+                    sb.AppendLine();
                 //i++;
             }
             Encoding srcEncodingFormat = Encoding.Unicode;
@@ -317,27 +328,39 @@ namespace Tempo2012.UI.WPF.Views.Dnevnici
                 int a8;
                 if (int.TryParse(item[8], out a8))
                 {
-                    switch (a8)
+                    if (a8 == 0)
                     {
-                        case 0:
-                            sb.Append("  ");
-                            break;
-                        case 1:
-                            sb.Append("01");
-                            break;
-                        case 2:
-                            sb.Append("02");
-                            break;
-                        default:
-                            sb.Append("  ");
-                            break;
+                        sb.Append("  ");
                     }
-
+                    else
+                    {
+                        sb.AppendFormat("{0}", item[8].Length == 1 ? "0" + item[8] : item[8]);
+                    }
                 }
-                else
-                {
-                    sb.Append("  ");
-                }                       //8а
+                //int a8;
+                //if (int.TryParse(item[8], out a8))
+                //{
+                //    switch (a8)
+                //    {
+                //        case 0:
+                //            sb.Append("  ");
+                //            break;
+                //        case 1:
+                //            sb.Append("01");
+                //            break;
+                //        case 2:
+                //            sb.Append("02");
+                //            break;
+                //        default:
+                //            sb.Append("  ");
+                //            break;
+                //    }
+
+                //}
+                //else
+                //{
+                //    sb.Append("  ");
+                //}                       //8а
                 sb.AppendLine();
                 //i++;
             }

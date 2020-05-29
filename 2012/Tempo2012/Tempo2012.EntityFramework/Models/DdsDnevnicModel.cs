@@ -52,7 +52,7 @@ namespace Tempo2012.EntityFramework.Models
         public virtual decimal SumaDDS { get; set; }
         public virtual int Year { get; set;}
         public virtual int Month { get; set; }
-        public virtual int A8 { get; set; }
+        public virtual string A8 { get; set; }
         public virtual DateTime FromDate { get; set;}
         public virtual DateTime ToDate { get; set;}
         public virtual string ClNum { get; set; }

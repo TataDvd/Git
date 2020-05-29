@@ -352,7 +352,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                 OnPropertyChanged("Branch");
             }
         }
-        public int A8
+        public string A8
         {
             get { return ddsDnevnikModel.A8; }
             set
@@ -685,7 +685,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                     int i = 0;
                     foreach (var item in ret)
                     {
-                        if ((i > 7) && (i<ret.Count-3))
+                        if ((i > 8) && (i<ret.Count-3))
                         {
                             items.Add(new ReportItem {Name = item, Height = 10, IsShow = true, Width = hs[i],Sborno = true,IsSuma = true});
                         }
@@ -698,7 +698,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                     }
                     if (KindActivity == 2)
                         {
-                            items[14].IsShow = true;//Денкее Денкее гулема ли
+                            items[14].IsShow = true;//Денкее Денкее гулема си
                             for(var k=17;k<26;k++) items[k].IsShow = false;
 
                         }

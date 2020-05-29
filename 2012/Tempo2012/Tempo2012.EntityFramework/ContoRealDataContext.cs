@@ -469,7 +469,7 @@ namespace Tempo2012.EntityFramework
                     result.Bulstat = dbman.DataReader["BULSTAD"].ToString();
                     result.ClNum = dbman.DataReader["CLNUM"].ToString();
                     int val;
-                    result.A8 =int.TryParse(dbman.DataReader["A8"].ToString(),out val)?val:0;
+                    result.A8 =dbman.DataReader["A8"].ToString();
                     result.IsSuma = int.TryParse(dbman.DataReader["ISSUMA"].ToString(), out val) ? val : 0;
                     master = true;
                     result.IsLinked = true;
