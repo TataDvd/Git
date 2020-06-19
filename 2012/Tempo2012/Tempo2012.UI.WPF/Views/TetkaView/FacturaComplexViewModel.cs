@@ -96,11 +96,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = "КС", Width = 15, IsSuma = true });
             }
             ReportItems = _reportItems;
-            filter=null;
-            if (contr != null)
-            {
-                filter = string.Format("|{0} ", contr);
-            }
+            filter=contr;
+            //if (contr != null)
+            //{
+            //    filter = string.Format("|{0} ", contr);
+            //}
             typerep = 1;
             this.withletter = withletter;
         }
@@ -265,10 +265,10 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                 blanka = File.ReadAllText(Path.Combine(Entrence.CurrentFirmaPathTemplate, "Pismo.txt"));
             }
 
-            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
-            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise < FromDate));
-            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
-            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            AllMovementDebit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id,false,filter).Where(e => e.DataInvoise < FromDate));
+            AllMovementCredit = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,false,filter).Where(e => e.DataInvoise < FromDate));
+            AllMovementDebit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoDebit(accountsModel.Id,false,filter).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
+            AllMovementCredit1 = new ObservableCollection<InvoiseControl>(Context.GetFullInvoiseContoCredit(accountsModel.Id,false,filter).Where(e => e.DataInvoise >= FromDate && e.DataInvoise <= ToDate));
             if (!string.IsNullOrWhiteSpace(KindValuta))
             {
                 AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(e => e.VidValCode == KindValuta));
@@ -279,17 +279,17 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             var rezi = Context.GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId, !string.IsNullOrWhiteSpace(KindValuta)?KindValuta:null);
             if (typerep == 1 && filter != null)
             {
-                string contr = "";
-                var filt = filter.Split('|');
-                if (filt.Length > 0)
-                {
-                    contr = filt[1].Trim();
-                    AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(w => w.CodeContragent == contr));
-                    AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(w => w.CodeContragent == contr));
-                    AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(w => w.CodeContragent == contr));
-                    AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(w => w.CodeContragent == contr));
-                    rezi = new List<SaldoFactura>(rezi.Where(t => t.Code == contr));
-                }
+                //string contr = "";
+                //var filt = filter.Split('|');
+                //if (filt.Length > 0)
+                //{
+                //    contr = filt[1].Trim();
+                    //AllMovementDebit = new ObservableCollection<InvoiseControl>(AllMovementDebit.Where(w => w.CodeContragent == contr));
+                    //AllMovementCredit = new ObservableCollection<InvoiseControl>(AllMovementCredit.Where(w => w.CodeContragent == contr));
+                    //AllMovementDebit1 = new ObservableCollection<InvoiseControl>(AllMovementDebit1.Where(w => w.CodeContragent == contr));
+                    //AllMovementCredit1 = new ObservableCollection<InvoiseControl>(AllMovementCredit1.Where(w => w.CodeContragent == contr));
+                    rezi = new List<SaldoFactura>(rezi.Where(t => t.Code == filter));
+               // }
 
             }
             int luki = 0;

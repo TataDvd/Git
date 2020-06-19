@@ -102,8 +102,8 @@ namespace Tempo2012.EntityFramework
         List<List<string>> GetOborotnaVed(DateTime toDate, DateTime fromDate,bool hideAllZero);
         Dictionary<string, string> GetOborotnaVedTemplate(DateTime toDate, DateTime fromDate);
         void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4,bool et5, BackgroundWorker bw);
-        IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false);
-        IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false);
+        IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false,string filter=null);
+        IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false,string filter=null);
         AccSaldo GetSaldoAcc(int accId);
         IEnumerable<IEnumerable<string>> GetSysLookup(string p);
         bool CheckLookup(List<string> list, LookupModel lookup);

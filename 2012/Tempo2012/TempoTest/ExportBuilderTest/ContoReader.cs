@@ -175,7 +175,16 @@ namespace TempoTest.ExportBuilderTest
                 DBManager. AddParameters(14, "@DDSSUMA", ddsDnevnikModel.SumaDDS);
                 DBManager. AddParameters(15, "@CODEDOC", ddsDnevnikModel.CodeDoc);
                 DBManager. AddParameters(16, "@DATAF", ddsDnevnikModel.DataF);
-                DBManager. AddParameters(17, "@A8", ddsDnevnikModel.A8);
+                int a8;
+                if (int.TryParse(ddsDnevnikModel.A8, out a8))
+                {
+                    DBManager.AddParameters(17, "@A8", a8);
+                }
+                else
+                {
+                    DBManager.AddParameters(17, "@A8", 0);
+                }
+               // DBManager. AddParameters(17, "@A8", ddsDnevnikModel.A8);
                 DBManager. AddParameters(18, "@CLNUM", ddsDnevnikModel.ClNum);
                 DBManager. AddParameters(19, "@ISSUMA", ddsDnevnikModel.IsSuma);
                 DBManager. ExecuteNonQuery(CommandType.StoredProcedure, "ADDDDSDNEV");

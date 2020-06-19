@@ -388,13 +388,13 @@ namespace Tempo2012.EntityFramework
             RealDataContext.CopyAccFromYtoY(firmaId, fromYear, toYear,et1,et2,et3,et4,et5,bw);
         }
 
-        public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false)
+        public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false,string filter=null)
         {
-            return RealDataContext.GetFullInvoiseContoDebit(accId,withoutsuma);
+            return RealDataContext.GetFullInvoiseContoDebit(accId,withoutsuma,filter);
         }
-        public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false)
+        public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false,string filter=null)
         {
-            return RealDataContext.GetFullInvoiseContoCredit(accId,withoutsuma);
+            return RealDataContext.GetFullInvoiseContoCredit(accId,withoutsuma,filter);
         }
         public virtual  AccSaldo GetSaldoAcc(int accId)
         {

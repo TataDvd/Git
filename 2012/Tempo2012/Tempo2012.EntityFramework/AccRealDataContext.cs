@@ -588,8 +588,8 @@ namespace Tempo2012.EntityFramework
             decimal sumdds,
             Sells prodazbi, string code, decimal suma, ref decimal gumdds, string codedoc)
         {
-            if (codedoc.Equals("05") || codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
-                return gsuma;
+            //if (codedoc.Equals("04") || codedoc.Equals("05") || codedoc.Equals("11") || codedoc.Equals("12") || codedoc.Equals("13") || codedoc.Equals("94"))
+            //    return gsuma;
             if (KindActivity == 2)
             {
                 switch (code)
@@ -3284,7 +3284,7 @@ namespace Tempo2012.EntityFramework
 
         }
 
-        public static IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int AccID,bool withoutsuma=false)
+        public static IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int AccID,bool withoutsuma=false, string filter = null)
         {
             Dictionary<int, Dictionary<int, string>> nomen = new Dictionary<int, Dictionary<int, string>>();
             List<InvoiseControl> result = new List<InvoiseControl>();
@@ -3294,9 +3294,17 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    s = s + $" AND ((c.CDETAILS like '%- {filter} %' and c.\"CreditAccount\"={AccID}) OR (c.DDETAILS like '%- {filter} %' and c.\"DebitAccount\"={AccID}))) order by c.\"Id\",m.SORTORDER";
+                }
+                else
+                {
+                    s = s + ") order by c.\"Id\",m.SORTORDER";
+                }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
                 int oldid = 0;
@@ -3517,7 +3525,7 @@ namespace Tempo2012.EntityFramework
             return rez;
         }
 
-        public static IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int AccID,bool withoutsuma=false)
+        public static IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int AccID,bool withoutsuma=false,string filter=null)
         {
             Dictionary<int, Dictionary<int, string>> nomen = new Dictionary<int, Dictionary<int, string>>();
             List<InvoiseControl> result = new List<InvoiseControl>();
@@ -3527,9 +3535,17 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}) order by c.\"Id\",m.SORTORDER",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    s = s + $" AND ((c.CDETAILS like '%- {filter} %' and c.\"CreditAccount\"={AccID}) OR (c.DDETAILS like '%- {filter} %' and c.\"DebitAccount\"={AccID}))) order by c.\"Id\",m.SORTORDER";
+                }
+                else
+                {
+                    s = s + ") order by c.\"Id\",m.SORTORDER";
+                }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
                 int oldid = 0;
@@ -4062,29 +4078,63 @@ namespace Tempo2012.EntityFramework
         internal static List<ViesRowG> GetViesG(int month, int year, Dictionary<string, string> declar)
         {
             List<ViesRowG> list = new List<ViesRowG>();
-            //var dbman = new DBManager(DataProvider.Firebird);
-            //dbman.ConnectionString = Entrence.ConnectionString;
-            //dbman.Open();
-            //dbman.ExecuteReader(CommandType.Text,
-            //    string.Format("Select * from VIESG v where v.PERIOD='{0}'",
-            //        year*100+month));
-            //int i = 1;
-            //while (dbman.DataReader.Read())
-            //{
-            //    ViesRowG v = new ViesRowG();
-            //    v.NomRow = i;
-            //    v.Period =int.Parse(dbman.DataReader["PERIOD"].ToString());
-            //    //v.Nom=int.Parse(dbman.DataReader["NOM"].ToString());
-            //    v.VIN = dbman.DataReader["VIN"].ToString();
-            //    v.KOD=int.Parse(dbman.DataReader["KOD"].ToString());
-            //    v.VINDest=dbman.DataReader["VINDEST"].ToString();
-            //    v.PeriodOP = dbman.DataReader["PERIODOP"].ToString();
-            //    list.Add(v);
-            //    i++;
-            //}
-            //declar.Add("countG", (i-1).ToString());
-            //dbman.Dispose();
-            return list;
+            
+            var rez = GetDnevItemVies(2, new DateTime(year, month, 1), new DateTime(year, month, GetEndDate(month, year))).Where(e=>e[2]=="04");
+            int k = 1;
+            foreach (List<string> list1 in rez)
+            {
+                ViesRowG row = new ViesRowG();
+                row.NomRow = k;
+                string m = month < 10 ? "0" + month.ToString() : month.ToString();
+                row.PeriodOP = m+"/"+year.ToString();
+                row.VIN = list1[5];
+                k++;
+                if (list1[8] == "41") {
+                    row.KOD = 1;
+                    
+                }
+                if (list1[8] == "48")
+                {
+                    row.KOD = 2;
+                }
+                if (list1[8] == "43")
+                {
+                    row.KOD = 3;
+                    row.VINDest = list1[7];
+                }
+                if (list1[8] == "46")
+                {
+                    ViesRowG row1 = new ViesRowG();
+                    row1.NomRow = k - 1;
+                    row.NomRow = k;
+                    k++;
+                    row1.KOD = 2;
+                    row.KOD =1;
+                    row1.VIN = list1[5];
+                    row.VIN = list1[7];
+                    string m1 = month < 10 ? "0" + month.ToString() : month.ToString();
+                    row1.PeriodOP = m1+ "/" + year.ToString();
+                    list.Add(row1);
+                }
+                list.Add(row);
+            }
+            var query = (from t in list
+                          group t by new { t.VIN,t.KOD}
+                                into grp
+                          select new ViesRowG
+                          {
+                              VIN = grp.Key.VIN,
+                              KOD = grp.Key.KOD,
+                              VINDest = grp.First().VINDest,
+                              PeriodOP = grp.First().PeriodOP,
+                          }).ToList();
+            k = 1;
+            foreach (var item in query)
+            {
+                item.NomRow = k;
+                k++;
+            }
+            return query;
         }
         internal static int GetAllContoCount(int id, int year, int month)
         {

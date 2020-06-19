@@ -574,7 +574,15 @@ namespace Tempo2012.EntityFramework
                 dbman.AddParameters(14, "@DDSSUMA", ddsDnevnikModel.SumaDDS);
                 dbman.AddParameters(15, "@CODEDOC", ddsDnevnikModel.CodeDoc);
                 dbman.AddParameters(16, "@DATAF", ddsDnevnikModel.DataF);
-                dbman.AddParameters(17, "@A8", ddsDnevnikModel.A8);
+                int a8;
+                if (int.TryParse(ddsDnevnikModel.A8, out a8))
+                {
+                    dbman.AddParameters(17, "@A8", a8);
+                }
+                else
+                {
+                    dbman.AddParameters(17, "@A8", 0);
+                }
                 dbman.AddParameters(18, "@CLNUM", ddsDnevnikModel.ClNum);
                 dbman.AddParameters(19, "@ISSUMA", ddsDnevnikModel.IsSuma);
                 dbman.ExecuteNonQuery(CommandType.StoredProcedure, "ADDDDSDNEV");
