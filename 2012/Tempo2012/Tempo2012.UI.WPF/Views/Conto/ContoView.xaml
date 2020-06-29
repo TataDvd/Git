@@ -563,6 +563,7 @@
                                 <ColumnDefinition Width="200"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="75"></ColumnDefinition>
+                                <ColumnDefinition Width="75"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}">
                                 <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Дебит сметка" Margin="5,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}"/>
@@ -585,7 +586,7 @@
                          IsEnabled="True"
                          Foreground="BlueViolet"
                         />-->
-                            <CustomControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                            <CustomControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                            Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
                            Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" />
                             <Button   
@@ -600,6 +601,21 @@
                          Foreground="BlueViolet"
                          Focusable="False" Height="25" VerticalAlignment="Top"
                         />
+                            <CustomControls:TextBlockEx Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                           Text="{Binding Path=DAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                           Margin="10,5,10,2" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" />
+                            <Button   
+                         Grid.Row="0" Grid.Column="3"
+                         Click="Button_Click_5" 
+                         Content="Детайли ЦГ" 
+                         Visibility="{Binding DAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="Blue"
+                         Focusable="False" Height="25" VerticalAlignment="Top"
+                        />
                             <!--<Button   
                          Grid.Row="1" Grid.Column="2"
                          Click="Button_Click_3" 
@@ -612,7 +628,7 @@
                          Foreground="BlueViolet"
                          Focusable="False"
                         />-->
-                            <Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
+                            <Border Grid.Row="2" Grid.ColumnSpan="4" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewKeyDown="UIElement_OnPreviewKeyDown">
                                     <ItemsControl 
                                         ItemsSource="{Binding ElementName=_this, Path=DataContext.ItemsDebit}" 
@@ -638,8 +654,9 @@
                                 <ColumnDefinition Width="200"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="75"></ColumnDefinition>
+                                <ColumnDefinition Width="75"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Grid.ColumnSpan="3">
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" IsEnabled="{Binding ElementName=_this,Path=DataContext.EnableEdits}" Grid.ColumnSpan="4">
                                 <CustomControls:TextBlockEx Grid.Row="0" Grid.Column="0" Text="Kредит сметка" Margin="5,5,10,2"/>
                                 <CustomControls:TextBoxEx Text="{Binding Path=CAccountsModel.Search}"  Margin="10,0,10,0" Width="100" HorizontalAlignment="Left" KeyDown="kreditsmetka_KeyDown" TabIndex="60" LostFocus="Kredit_OnLostFocus"/>
 
@@ -659,7 +676,7 @@
                          />-->
                             <CustomControls:TextBlockEx Grid.Row="1" 
                          Grid.Column="0"
-                         Grid.ColumnSpan="2" Text="{Binding Path=CAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.ColumnSpan="3" Text="{Binding Path=CAccountsModel,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}" 
                          Margin="10,5,10,2"
                         />
                             <Button   
@@ -674,6 +691,18 @@
                          Foreground="BlueViolet"
                          Focusable="False"
                         />
+                            <Button   
+                         Grid.Row="0" Grid.Column="3"
+                         Click="Button_Click_6"
+                         Content="Детайли ЦГ" 
+                         Visibility="{Binding CAccountsModel,Converter={StaticResource AccToVisibleConvertor}}" 
+                         BorderBrush="{x:Null}" 
+                         BorderThickness="0" 
+                         Background="{x:Null}"
+                         IsEnabled="True"
+                         Foreground="Blue"
+                         Focusable="False"
+                        />
                             <!--<Button   
                          Grid.Row="1" Grid.Column="2"
                          Click="Button_Click_4" 
@@ -686,7 +715,7 @@
                          Foreground="BlueViolet"
                          Focusable="False"
                         />-->
-                            <Border Grid.Row="2" Grid.ColumnSpan="3" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
+                            <Border Grid.Row="2" Grid.ColumnSpan="4" OpacityMask="#FF480E0E"  BorderBrush="#8A8585" BorderThickness="1" CornerRadius="1" Margin="5,10,10,10">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewKeyDown="UIElement_OnPreviewKeyDown">
                                     <ItemsControl  
                                         ItemsSource="{Binding ElementName=_this,Path=DataContext.ItemsCredit}" 

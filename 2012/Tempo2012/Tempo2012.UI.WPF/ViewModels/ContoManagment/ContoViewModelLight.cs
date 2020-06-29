@@ -3399,6 +3399,70 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 }
             }
         }
+        internal void DoDetailsDebitAllYear(EditMode mode)
+        {
+            string filter = "";
+            string contofilter = "";
+            bool first = true;
+            foreach (var saldoItem in ItemsDebit)
+            {
+                if (!String.IsNullOrWhiteSpace(saldoItem.Value) && !saldoItem.Name.Contains("Дата "))
+                {
+                    filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
+                    if (first && saldoItem.IsLookUp)
+                    {
+                        contofilter = string.Format("{0} - {1} ", saldoItem.Name, saldoItem.Value);
+                        first = false;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+           
+                DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12,31));
+                sv.ShowDialog();
+                if (sv.SelectedRow != null)
+                {
+                    int i = 0;
+                    Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                    string[] stringSeparators = new string[] { "---" };
+                    foreach (var saldoItem in ItemsDebit)
+                    {
+                        if (saldoItem.Name == "Количествo")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            i++;
+                            continue;
+
+                        }
+                        if (saldoItem.Name == "Сума валута")
+                        {
+                            Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
+                            saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
+                            saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
+                            if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
+                            i++;
+                            continue;
+                        }
+                        var item = sv.SelectedRow[i].Trim();
+                        if (item.Contains("---"))
+                        {
+                            var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                            saldoItem.Value = spliti[0];
+                            saldoItem.Lookupval = spliti[1];
+                        }
+                        else
+                        {
+                            saldoItem.Value = item;
+                        }
+                        i++;
+                    }
+                }
+        }
 
         internal void DoDetailsCredit(EditMode mode)
         {

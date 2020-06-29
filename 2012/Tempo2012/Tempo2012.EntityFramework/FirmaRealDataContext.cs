@@ -331,7 +331,7 @@ namespace Tempo2012.EntityFramework
                         "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",c.CDETAILS,c.DDETAILS,c.\"DebitAccount\",c.\"CreditAccount\" FROM \"conto\" c " +
                         //"inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\" " +
                         //"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
-                        "where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='{2}.{3}.{1}' and (c.\"CreditAccount\"={4} or c.\"DebitAccount\"={4}) ",
+                        "where (c.\"FirmId\"={0} and (c.\"CreditAccount\"={4} or c.\"DebitAccount\"={4}) and c.\"Date\">='1.1.{1}' and c.\"Date\"<='{2}.{3}.{1}'  ",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         enddate.Year, 
                         enddate.Day,

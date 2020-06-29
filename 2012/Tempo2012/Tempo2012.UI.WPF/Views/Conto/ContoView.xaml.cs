@@ -740,5 +740,15 @@ namespace Tempo2012.UI.WPF.Views
         {
             vm.ClearContoAll();
         }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            vm.DoDetailsDebitAll(vm.Mode);
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            vm.DoDetailsCreditAll(vm.Mode);
+        }
     }
 }
