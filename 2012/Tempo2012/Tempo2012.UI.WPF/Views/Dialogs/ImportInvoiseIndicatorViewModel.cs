@@ -199,9 +199,9 @@ namespace Tempo2012.UI.WPF.Views
 
         }
 
-        private void ImportFactTransport(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, int tipplashtane, decimal dototal, decimal ddstotal, int kodsdelka, string vidsdelka, string creditsm, int osnovanie,string kindvaluta,decimal sumavaluta)
+        private void ImportFactTransport(string nomFak, DateTime dataF, string viddoc, string klient, string bulstat, string ddsnom, int tipplashtane, decimal dototal, decimal ddstotal, int kodsdelka, string vidsdelka, string creditsm, int osnovanie, string kindvaluta, decimal sumavaluta)
         {
-             if (string.IsNullOrWhiteSpace(bulstat))
+            if (string.IsNullOrWhiteSpace(bulstat))
             {
                 bulstat = "999999999999999";
             }
@@ -253,6 +253,7 @@ namespace Tempo2012.UI.WPF.Views
 
             //}
             int sm;
+
             if (int.TryParse(creditsm, out sm))
             {
                 var kredit = AllAccounts.FirstOrDefault(e => e.Num == sm && e.SubNum == 0);
@@ -265,7 +266,22 @@ namespace Tempo2012.UI.WPF.Views
                     c.Conto.CreditAccount = kredit.Id;
                 }
             }
-            
+            else
+            {
+                int num, subnum;
+                var ac = creditsm.Split('/');
+
+                if (int.TryParse(ac[0], out num) && int.TryParse(ac[1], out subnum))
+                {
+                    var model = AllAccounts.FirstOrDefault(e => e.Num == num && e.SubNum == subnum);
+                    if (model != null)
+                    {
+                        c.Conto.CreditAccount = model.Id;
+                    }
+
+                }
+
+            }
             switch (tipplashtane)
             {
                 case 1:
@@ -318,7 +334,14 @@ namespace Tempo2012.UI.WPF.Views
             c.Conto.Oborot = dototal;
             c.Conto.IsDdsSales = 1;
             c.Conto.IsSales = 1;
-            NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
+            if (kodsdelka == 10)
+            {
+                NewMethod1(nomFak, dataF, klient, ddsnom, c, bulstat);
+                c.ItemsCredit = null;
+            }
+            else {
+                NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
+            }
             if (ddstotal != 0)
             {
                 c.Conto.IsDdsSalesIncluded = 0;

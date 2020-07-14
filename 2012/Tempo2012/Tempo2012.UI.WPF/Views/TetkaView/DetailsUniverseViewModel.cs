@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Documents;
 using DataGrid2DLibrary;
 using ReportBuilder;
 using Tempo2012.EntityFramework;
@@ -50,7 +51,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             }
         }
         public ObservableCollection<Filter> Filters { get; set; }
-        public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode,DateTime enddate)
+        public DetailsUniverseViewModel(AccountsModel dAccountsModel,string filter,ContoViewModel cvm,int tip, EditMode mode,DateTime enddate,bool oldmode)
         {
             var reportItems = new List<ReportItem>();
             Filt = filter;
@@ -71,8 +72,8 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             Cvm = cvm;
             
              List<List<string>> v = null;
-           
-            var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate);
+            
+            var c =oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUniOld(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
              if (c!= null)v = c.Select(i => i.ToList()).ToList();
                 _fields = new List<List<string>>();
             if (v != null)
@@ -143,7 +144,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             ReportItems = reportItems;
             OnPropertyChanged("Fields");
         }
-        public DetailsUniverseViewModel(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode,DateTime enddate)
+        public DetailsUniverseViewModel(AccountsModel dAccountsModel, string filter, ContoViewModelLight cvm, int tip, EditMode mode,DateTime enddate,bool oldmode)
         {
             var reportItems = new List<ReportItem>();
             Filt = filter;
@@ -164,7 +165,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
             List<List<string>> v = null;
 
-            var c = Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate);
+            var c = oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUniOld(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
             if (c != null) v = c.Select(i => i.ToList()).ToList();
             _fields = new List<List<string>>();
             if (v != null)

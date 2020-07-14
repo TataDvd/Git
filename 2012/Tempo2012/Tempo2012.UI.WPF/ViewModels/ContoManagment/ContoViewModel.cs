@@ -3360,7 +3360,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             ds.ShowDialog();
             if (ds.DialogResult.HasValue && ds.DialogResult.Value)
             {
-                DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, ds.SelectedDate);
+                DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, ds.SelectedDate,true);
                 sv.ShowDialog();
                 if (sv.SelectedRow != null)
                 {
@@ -3426,7 +3426,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 }
             }
            
-            DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,12,31));
+            DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,12,31),false);
             sv.ShowDialog();
             if (sv.SelectedRow != null)
             {
@@ -3496,7 +3496,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             ds.ShowDialog();
             if (ds.DialogResult.HasValue && ds.DialogResult.Value)
             {
-                DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, ds.SelectedDate);
+                DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, ds.SelectedDate,true);
                 sv.ShowDialog();
                 if (sv.SelectedRow != null)
                 {
@@ -3562,7 +3562,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 }
             }
            
-            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31));
+            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31),false);
             sv.ShowDialog();
             if (sv.SelectedRow != null)
             {
