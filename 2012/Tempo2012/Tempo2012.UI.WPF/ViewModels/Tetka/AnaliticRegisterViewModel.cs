@@ -93,7 +93,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Tetka
                     }
                 }
             }
-            foreach (var co in res.OrderBy(e => e.Data))
+            foreach (var co in res.OrderBy(e => e.Data).ThenBy(e => e.Id))
             {
                 List<string> item = new List<string>();
                 item.Add(co.Nd.ToString());

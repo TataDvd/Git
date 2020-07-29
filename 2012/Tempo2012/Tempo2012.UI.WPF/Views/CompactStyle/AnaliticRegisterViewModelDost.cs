@@ -87,7 +87,7 @@ namespace Tempo2012.UI.WPF.Views.AccountRegisters
             //    }
             //}
             res = new List<Conto>(contos0.Union(res,new ContoComparer()));
-            foreach (var co in res.OrderBy(e => e.Data))
+            foreach (var co in res.OrderBy(e => e.Data).ThenBy(e => e.Id))
             {
                 List<string> item = new List<string>();
                 item.Add(co.Nd.ToString());

@@ -693,9 +693,9 @@ namespace Tempo2012.EntityFramework
         {
             return RealDataContext.GetDetailsContoToAccUni(id,typeAccount,kol,val,filter,enddate);
         }
-        public IEnumerable<IEnumerable<string>> GetDetailsContoToAccUniOld(int id, int typeAccount, int kol, int val, string filter, DateTime enddate)
+        public void GetDetailsContoToAccUniOld(int id)
         {
-            return RealDataContext.GetDetailsContoToAccUniOld(id, typeAccount, kol, val, filter, enddate);
+            RealDataContext.GetDetailsContoToAccUniOld(id);
         }
 
         public IEnumerable<IEnumerable<string>> GetDetailsContoToAccMat(int id, int typeAccount, string filter)

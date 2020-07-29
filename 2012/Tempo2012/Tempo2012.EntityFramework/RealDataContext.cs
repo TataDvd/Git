@@ -40,6 +40,10 @@ namespace Tempo2012.EntityFramework
         {
             SaldoItems.Remove(key);
         }
+        public void Clear()
+        {
+            SaldoItems=new Dictionary<string, List<SaldoFactura>>();
+        }
     }
 
 public static partial class RealDataContext

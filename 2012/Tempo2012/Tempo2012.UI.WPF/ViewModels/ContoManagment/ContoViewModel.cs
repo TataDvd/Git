@@ -3406,69 +3406,9 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         }
         internal void DoDetailsDebitAll(EditMode mode)
         {
-            string filter = "";
-            string contofilter = "";
-            bool first = true;
-            foreach (var saldoItem in ItemsDebit)
-            {
-                if (!String.IsNullOrWhiteSpace(saldoItem.Value) && !saldoItem.Name.Contains("Дата "))
-                {
-                    filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
-                    if (first && saldoItem.IsLookUp)
-                    {
-                        contofilter = string.Format("{0} - {1} ", saldoItem.Name, saldoItem.Value);
-                        first = false;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-           
-            DetailsUniverse sv = new DetailsUniverse(DAccountsModel, $"{filter}#{contofilter}", this, 1, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year,12,31),false);
-            sv.ShowDialog();
-            if (sv.SelectedRow != null)
-            {
-                int i = 0;
-                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                string[] stringSeparators = new string[] { "---" };
-                foreach (var saldoItem in ItemsDebit)
-                {
-                    if (saldoItem.Name == "Количествo")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        i++;
-                        continue;
-
-                    }
-                    if (saldoItem.Name == "Сума валута")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
-                        i++;
-                        continue;
-                    }
-                    var item = sv.SelectedRow[i].Trim();
-                    if (item.Contains("---"))
-                    {
-                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                        saldoItem.Value = spliti[0];
-                        saldoItem.Lookupval = spliti[1];
-                    }
-                    else
-                    {
-                        saldoItem.Value = item;
-                    }
-                    i++;
-                }
-
-            }
-           
+            Mouse.SetCursor(Cursors.Wait);
+            Context.GetDetailsContoToAccUniOld(DAccountsModel.Id);
+            Mouse.SetCursor(Cursors.Arrow);
         }
         internal void DoDetailsCredit(EditMode mode)
         {
@@ -3542,69 +3482,10 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
         }
         internal void DoDetailsCreditAll(EditMode mode)
         {
-            string filter = "";
-            string contofilter = "";
-            bool first = true;
-            foreach (var saldoItem in ItemsCredit)
-            {
-                if (!String.IsNullOrWhiteSpace(saldoItem.Value))
-                {
-                    filter = string.Format("{0}|{1} ", filter, saldoItem.Value);
-                    if (first && saldoItem.IsLookUp)
-                    {
-                        contofilter = string.Format("{0} - {1} ", saldoItem.Name, saldoItem.Value);
-                        first = false;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-           
-            DetailsUniverse sv = new DetailsUniverse(CAccountsModel, $"{filter}#{contofilter}", this, 2, mode, new DateTime(ConfigTempoSinglenton.GetInstance().WorkDate.Year, 12, 31),false);
-            sv.ShowDialog();
-            if (sv.SelectedRow != null)
-            {
-                string[] stringSeparators = new string[] { "---" };
-                int i = 0;
-                Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                foreach (var saldoItem in ItemsCredit)
-                {
-                    if (saldoItem.Name == "Количествo")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueKol = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        i++;
-                        continue;
+            Mouse.SetCursor(Cursors.Wait);
+            Context.GetDetailsContoToAccUniOld(CAccountsModel.Id);
+            Mouse.SetCursor(Cursors.Arrow);
 
-                    }
-                    if (saldoItem.Name == "Сума валута")
-                    {
-                        Oborot = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 1]);
-                        saldoItem.ValueVal = decimal.Parse(sv.SelectedRow[sv.SelectedRow.Count - 5]);
-                        saldoItem.Value = sv.SelectedRow[sv.SelectedRow.Count - 5];
-                        if (saldoItem.ValueVal != 0) { saldoItem.MainKurs = Oborot / saldoItem.ValueVal; }
-                        i++;
-                        continue;
-                    }
-                    var item = sv.SelectedRow[i].Trim();
-                    if (item.Contains("---"))
-                    {
-                        var spliti = item.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                        saldoItem.Value = spliti[0];
-                        saldoItem.Lookupval = spliti[1];
-                    }
-                    else
-                    {
-                        saldoItem.Value = item;
-                    }
-                    i++;
-                }
-
-            }
-            
         }
 
         internal void UpdateCol()
