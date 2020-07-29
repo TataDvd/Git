@@ -84,7 +84,7 @@ namespace Tempo2012.UI.WPF.Views.Framework
             contos.AddRange(contos1);
             foreach (
                 var co in
-                    contos.OrderBy(e => e.ClienCode))
+                    contos.OrderBy(e => e.ClienCode).ThenBy(e=>e.Data))
             {
                 if (oldrec == "")
                 {

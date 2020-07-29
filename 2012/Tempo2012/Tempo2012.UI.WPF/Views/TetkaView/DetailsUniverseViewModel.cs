@@ -73,7 +73,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
             
              List<List<string>> v = null;
             
-            var c =oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUniOld(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
+            var c =oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
              if (c!= null)v = c.Select(i => i.ToList()).ToList();
                 _fields = new List<List<string>>();
             if (v != null)
@@ -165,7 +165,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
 
             List<List<string>> v = null;
 
-            var c = oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUniOld(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
+            var c = oldmode?Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter,EndDate): Context.GetDetailsContoToAccUni(dAccountsModel.Id, dAccountsModel.TypeAccount, dAccountsModel.Kol, dAccountsModel.Val, filter, EndDate);
             if (c != null) v = c.Select(i => i.ToList()).ToList();
             _fields = new List<List<string>>();
             if (v != null)

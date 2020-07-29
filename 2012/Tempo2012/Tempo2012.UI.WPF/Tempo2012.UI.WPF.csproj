@@ -170,7 +170,7 @@
     <Compile Include="Views\CompactStyle\AccReg.xaml.cs">
       <DependentUpon>AccReg.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelТруеContr.cs" />
+    <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelTrueContr.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContrGrupaDocument.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelContr.cs" />
     <Compile Include="Views\CompactStyle\AnaliticRegisterViewModelDost.cs" />

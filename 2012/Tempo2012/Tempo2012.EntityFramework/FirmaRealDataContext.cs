@@ -327,7 +327,9 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
+                        "SELECT c.\"Id\",c.\"Oborot\",c.OBOROTVALUTAK,c.OBOROTVALUTA,c.OBOROTKOL,c.OBOROTKOLK,c.\"Date\",m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,c.\"DebitAccount\",m.LOOKUPVAL FROM \"conto\" c " +
+                        "inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"" +
+                        "inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" " +
                         "where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year,
@@ -673,6 +675,8 @@ namespace Tempo2012.EntityFramework
         }
         internal static IEnumerable<IEnumerable<string>> GetDetailsContoToAccUni(int id, int typeAccount, int kol, int val, string filter,DateTime enddate)
         {
+            //StringBuilder loging = new StringBuilder();
+            //loging.AppendLine("Start " + DateTime.Now.ToLongTimeString());
             var filti = filter.Split('#');
             filter = filti[0];
             List<AccItemSaldo> rez = new List<AccItemSaldo>();
@@ -703,16 +707,17 @@ namespace Tempo2012.EntityFramework
                 }
                 dbman.Open();
                 dbman.ExecuteReader(CommandType.Text, s);
-               // string command =
-               //string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
-               //              " FROM \"accounts\" a " +
-               //              "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
-               //              "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
-               //              "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
-               //              "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
-               //              "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
-               //              " where a.\"Id\"={0}", id);
-               // int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
+                //loging.AppendLine("Execute Query" + DateTime.Now.ToLongTimeString());
+                // string command =
+                //string.Format("SELECT count(ca.\"AnaliticalNameID\") " +
+                //              " FROM \"accounts\" a " +
+                //              "inner join \"analiticalaccount\" aa on a.\"AnaliticalNum\"=aa.\"Id\"" +
+                //              "inner join \"analiticalaccounttype\" aat on aa.\"TypeID\"=aat.\"Id\"" +
+                //              "inner join \"conectoranaliticfield\" ca on aa.\"Id\"=ca.\"AnaliticalNameID\"" +
+                //              "inner join \"lookupsfield\" af on af.\"Id\"=ca.\"AnaliticalFieldId\" " +
+                //              "left outer join MAPACCTOLOOKUP l on l.ACCOUNTS_ID=a.\"Id\" and l.ANALITIC_ID=aa.\"Id\" and l.ANALITIC_FIELD_ID=ca.\"AnaliticalFieldId\"" +
+                //              " where a.\"Id\"={0}", id);
+                // int count = (int)dbman.ExecuteScalar(CommandType.Text, command);
                 //bool change = false;
                 //bool first = true;
                 bool firstrow = true;
@@ -810,6 +815,7 @@ namespace Tempo2012.EntityFramework
             titles.Add("ОК");
             titles.Add("КС");
             rez1.Add(titles);
+            //loging.AppendLine("Finish faze 1 " + DateTime.Now.ToLongTimeString());
             var query = (from t in rez
                          group t by new { t.Code,t.NInvoise}
                              into grp
@@ -833,10 +839,11 @@ namespace Tempo2012.EntityFramework
             //{
             //    query = query.Where(e => e.Details != null && e.Fields != null && e.Details.StartsWith(filter)).OrderBy(e => e.Details).ToList();
             //}
+            //loging.AppendLine("Finish faze 2 " + DateTime.Now.ToLongTimeString());
             var rezi = GetAllAnaliticSaldos(id, Entrence.CurrentFirma.Id);
             if (!string.IsNullOrEmpty(filter)) rezi = rezi.Where(mbox => mbox.Details.Contains(filter)).ToList();
 
-
+            //loging.AppendLine("Finish saldo load " + DateTime.Now.ToLongTimeString());
             foreach (AccItemSaldo accItemSaldo in query)
             {
                 var saldo =
@@ -853,6 +860,7 @@ namespace Tempo2012.EntityFramework
                     rezi.Remove(saldo);
                 }
             }
+            //loging.AppendLine("Finish remove saldo " + DateTime.Now.ToLongTimeString());
             foreach (var items in rezi)
             {
                 //var saldo =
@@ -875,7 +883,7 @@ namespace Tempo2012.EntityFramework
                 //}
             }
 
-
+            //loging.AppendLine("List unsed saldos " + DateTime.Now.ToLongTimeString());
             foreach (var item in query.OrderBy(e=>e.Details))
                 {
                     if (item.Details != null && item.Fields!=null)
@@ -963,6 +971,8 @@ namespace Tempo2012.EntityFramework
                     
                 }
             }
+            //loging.AppendLine("Finish preparation " + DateTime.Now.ToLongTimeString());
+            //Logger.Instance().WriteLogError(loging.ToString(), "statistic ");
             return rez1;
         }
 

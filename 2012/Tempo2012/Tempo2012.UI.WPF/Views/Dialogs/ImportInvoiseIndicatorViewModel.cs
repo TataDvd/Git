@@ -338,6 +338,7 @@ namespace Tempo2012.UI.WPF.Views
             {
                 NewMethod1(nomFak, dataF, klient, ddsnom, c, bulstat);
                 c.ItemsCredit = null;
+                c.Conto.CDetails = "";
             }
             else {
                 NewMethod(nomFak, dataF, klient, ddsnom, c,bulstat);
@@ -361,7 +362,10 @@ namespace Tempo2012.UI.WPF.Views
                 c.Conto.VopPurchases = "";
                 //c.Conto.Oborot = dds;
                 c.Conto.CreditAccount = ddssmetka.Id;
-                LoadAnaliticDetailsK(c);
+                if (kodsdelka != 10)
+                {
+                    LoadAnaliticDetailsK(c);
+                }
                 SaveMainConto(c);
             }
             else
@@ -1411,7 +1415,7 @@ namespace Tempo2012.UI.WPF.Views
                     sa.LOOKUPID = currentsaldos.Relookup;
                     sa.CONTOID = allconto.Conto.Id;
                     sa.SORTORDER = ii;
-                    debit.Add(sa);
+                    credit.Add(sa);
                     ii++;
                 }
             ii = 0;
@@ -1440,7 +1444,7 @@ namespace Tempo2012.UI.WPF.Views
                     sa.LOOKUPVAL = currentsaldos.Lookupval;
                     sa.CONTOID = allconto.Conto.Id;
                     sa.SORTORDER = ii;
-                    credit.Add(sa);
+                    debit.Add(sa);
                     ii++;
                 }
             Context.SaveConto(allconto.Conto, debit, credit);
