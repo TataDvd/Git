@@ -763,7 +763,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         OnOborotChange();
                         if (!string.IsNullOrEmpty(WorkValuta))
                         {
-                            UpdateValutenKurs(WorkValuta);
+                            UpdateValutenKurs(WorkValuta,1);
                         }
                         UpdateData();
                     }
@@ -1984,7 +1984,8 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                }
                
                SaldoItem saldoItem = new SaldoItem();
-               saldoItem.ChangedKindCurrency+=saldoItem_ChangedKindCurrency;
+                if (typecpnto == 0) { saldoItem.ChangedKindCurrency += saldoItem_ChangedKindCurrency; }
+                else { saldoItem.ChangedKindCurrency += saldoItem_ChangedKindCurrencyCr; }
                 saldoItem.Type = saldotype;                   
                 saldoItem.Name = analiticalFields.Name;
                 saldoItem.Value = analiticalFields.VAL;
@@ -2121,11 +2122,21 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                 WorkValuta = e.KindCurrency;
                 if (!string.IsNullOrWhiteSpace(WorkValuta))
                 {
-                    UpdateValutenKurs(WorkValuta);
+                    UpdateValutenKurs(WorkValuta,1);
                 }
             }
         }
-
+        private void saldoItem_ChangedKindCurrencyCr(object sender, ChangeKindCurrencyArg e)
+        {
+            if (Mode == EditMode.Add)
+            {
+                WorkValuta = e.KindCurrency;
+                if (!string.IsNullOrWhiteSpace(WorkValuta))
+                {
+                    UpdateValutenKurs(WorkValuta,2);
+                }
+            }
+        }
         protected int GroupId { get; set; }
 
         public string Index
@@ -2774,7 +2785,7 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
             }
         }
 
-        internal void UpdateValutenKurs(string vidvaluta)
+        internal void UpdateValutenKurs(string vidvaluta,int vid)
         {
             if (notupdated) return;
             if (this.Mode == EditMode.Add)
@@ -2796,15 +2807,21 @@ namespace Tempo2012.UI.WPF.ViewModels.ContoManagment
                         kursforaday = valutaAdd.Kurs;
                     }
                 }
-                foreach (var saldoItem in ItemsCredit)
+                if (vid == 2)
                 {
-                    saldoItem.ValueKurs = kursforaday;
-                    saldoItem.MainKurs = kursforaday;
+                    foreach (var saldoItem in ItemsCredit)
+                    {
+                        saldoItem.ValueKurs = kursforaday;
+                        saldoItem.MainKurs = kursforaday;
+                    }
                 }
-                foreach (var saldoItem in ItemsDebit)
+                else
                 {
-                    saldoItem.ValueKurs = kursforaday;
-                    saldoItem.MainKurs = kursforaday;
+                    foreach (var saldoItem in ItemsDebit)
+                    {
+                        saldoItem.ValueKurs = kursforaday;
+                        saldoItem.MainKurs = kursforaday;
+                    }
                 }
             }
         }

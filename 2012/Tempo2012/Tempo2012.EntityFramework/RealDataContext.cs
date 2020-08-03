@@ -1499,8 +1499,11 @@ public static partial class RealDataContext
         {
             List<SaldoFactura> allmovement = null;
             allmovement = SaldoRepository.Instance.ContoItems(string.Format("{0}-{1}-{2}", accid, firmid,kindValuta));
-            if (allmovement != null)
-                return allmovement;
+            if (allmovement != null) {
+                //List<SaldoFactura> newlist = new List<SaldoFactura>();
+                //newlist.AddRange(allmovement);
+                return allmovement; 
+            }
             allmovement = new List<SaldoFactura>();
             var dbman = new DBManager(DataProvider.Firebird);
             dbman.ConnectionString = Entrence.ConnectionString;

@@ -491,6 +491,8 @@ namespace Tempo2012.EntityFramework
             
             var rezi = GetAllAnaliticSaldos(id, Entrence.CurrentFirma.Id);
             if (!string.IsNullOrEmpty(filter)) rezi = rezi.Where(mbox => mbox.Details.Contains(filter)).ToList();
+            else
+                rezi = new List<SaldoFactura>(rezi.ToArray());
 
             //loging.AppendLine("Finish saldo load " + DateTime.Now.ToLongTimeString());
             foreach (AccItemSaldo accItemSaldo in query)
