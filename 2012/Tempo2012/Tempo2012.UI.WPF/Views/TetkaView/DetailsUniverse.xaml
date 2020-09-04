@@ -19,7 +19,7 @@
             <customControls:TextBlockEx Text="{Binding EndDateShort}" Width="100" Margin="10,5,10,5"></customControls:TextBlockEx>
             <CheckBox Margin="10,5,10,5" Click="OnlySaldo_OnClick" IsChecked="True">Покажи само записи със салдо</CheckBox>
             <Button Margin="10,5,10,5" Click="Button_Click">Справка</Button>
-            <Button Margin="10,5,10,5" Click="ContoSave_OnClick" Visibility="{Binding IsEditMode}">Осчетоводи</Button>
+            <Button Margin="10,5,10,0" Click="ContoSave_OnClick" Visibility="{Binding IsEditMode}" Height="20" VerticalAlignment="Top">Осчетоводи</Button>
         </StackPanel>
         <ItemsControl ItemsSource="{Binding Filters}" Grid.Row="1" >
             <ItemsControl.ItemsPanel>

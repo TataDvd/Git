@@ -362,7 +362,7 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
                     Cvm1.DocId = (test + 1).ToString();
                 }
             }
-    }
+        }
 
         internal void UpdateProperty()
         {
@@ -495,11 +495,11 @@ namespace Tempo2012.UI.WPF.Views.TetkaView
         internal void Clear()
         {
             Cvm.Oborot = 0;
-            int test;
-            if (int.TryParse(Cvm.CurrentWraperConto.CurrentConto.DocNum, out test))
-            {
-                Cvm.CurrentWraperConto.DocId = (test + 1).ToString();
-            }
+            //int test;
+            //if (int.TryParse(Cvm.CurrentWraperConto.CurrentConto.DocNum, out test))
+            //{
+            //    Cvm.CurrentWraperConto.DocId = (test + 1).ToString();
+            //}
             if (Tip == 1)
             {
                 foreach (SaldoItem saldoItem in Cvm.ItemsDebit)
