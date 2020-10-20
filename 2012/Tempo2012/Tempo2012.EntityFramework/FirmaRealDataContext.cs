@@ -640,7 +640,7 @@ namespace Tempo2012.EntityFramework
                     if (str1.Length > 0)
                     {
                         string name = str1[0];
-                        string value = str1[1].Trim();
+                        string value =a.Replace(str1[0]+ " - ", "");
                         if (name == "Контрагент")
                         {
                             row.Code = value.Split(' ')[0];

@@ -602,9 +602,13 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                         DebitItems.Add(new NameValuePair { Name = saldoAnaliticModel.Name });
                     }
                 }
-                OnPropertyChanged("DebitItems");
-            }
 
+            }
+            else
+            {
+                DebitItems = new ObservableCollection<INameValuePair>();
+            }
+            OnPropertyChanged("DebitItems");
         }
         public void FindCreditAcc()
         {
@@ -631,8 +635,13 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                         CreditItems.Add(new NameValuePair { Name = saldoAnaliticModel.Name });
                     }
                 }
-                OnPropertyChanged("CreditItems");
+
             }
+            else
+            {
+                CreditItems = new ObservableCollection<INameValuePair>();
+            }
+            OnPropertyChanged("CreditItems");
         }
 
         public IList<INameValuePair> DebitItems { get; set;}

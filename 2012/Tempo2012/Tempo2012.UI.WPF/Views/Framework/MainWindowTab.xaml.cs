@@ -497,7 +497,7 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                if (MessageBoxWrapper.Show("С включени нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                if (MessageBoxWrapper.Show("Без нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
                     ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(),HideAllZero=true,Title = (sender as MenuItem).Tag.ToString() });
                     rd.ShowDialog();
@@ -935,7 +935,7 @@ namespace Tempo2012.UI.WPF
                 reportMenuProvider.ShowDialog();
                 if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
                 {
-                    if (MessageBoxWrapper.Show("С включени нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                    if (MessageBoxWrapper.Show("Без нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                     {
                         ReportDialog rd = new ReportDialog(new OborotkiViewModelDetail { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), AccString = acc.Acc, HideAllZero = true, Title = (sender as MenuItem).Tag.ToString()});
                         rd.ShowDialog();
@@ -985,7 +985,7 @@ namespace Tempo2012.UI.WPF
             reportMenuProvider.ShowDialog();
             if (reportMenuProvider.DialogResult.HasValue && reportMenuProvider.DialogResult.Value)
             {
-                if (MessageBoxWrapper.Show("С включени нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
+                if (MessageBoxWrapper.Show("Без нулеви редове?", "Изберете", MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
                 {
                     ReportDialog rd = new ReportDialog(new OborotkiViewModel { FromDate = reportMenuProvider.Vm.FromDate(), ToDate = reportMenuProvider.Vm.ToDate(), FullReport = 1 ,HideAllZero=false,Title= (sender as MenuItem).Tag.ToString()});
                     rd.ShowDialog();
