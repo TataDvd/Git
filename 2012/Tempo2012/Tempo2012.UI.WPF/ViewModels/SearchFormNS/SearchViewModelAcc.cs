@@ -424,6 +424,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                     return;
                 }
                 DebitAcc=SetValue(value);
+                DebitMask = null;
                 OnPropertyChanged("Debit");}
         }
 
@@ -443,6 +444,7 @@ namespace Tempo2012.UI.WPF.ViewModels.SearchFormNS
                     return;
                 }
                 CreditAcc =SetValue(value);
+                CreditMask = null;
                 OnPropertyChanged("Credit");
             }
         }

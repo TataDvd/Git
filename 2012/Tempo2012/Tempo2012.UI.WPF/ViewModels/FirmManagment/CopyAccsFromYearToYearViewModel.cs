@@ -22,6 +22,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         public bool IsCalculateSaldoDetailZero { get { return isCalculateSaldoDetailZero; } set { isCalculateSaldoDetailZero = value; OnPropertyChanged("IsCalculateSaldoDetailZero"); } }
         public bool ExcludeTotalZero { get { return excludeTotalZero; } set { excludeTotalZero = value; OnPropertyChanged("ExcludeTotalZero"); } }
+        public bool Exclude005 { get { return еxclude005; } set { еxclude005 = value; OnPropertyChanged("Exclude005"); } }
 
         public int CurrentProgress
         {
@@ -99,6 +100,7 @@ namespace Tempo2012.UI.WPF.ViewModels
         private bool isCalculateSaldoDetail;
         private bool isCalculateSaldoDetailZero;
         private bool excludeTotalZero;
+        private bool еxclude005;
         private BackgroundWorker bw;
         private int currentProgress;
 

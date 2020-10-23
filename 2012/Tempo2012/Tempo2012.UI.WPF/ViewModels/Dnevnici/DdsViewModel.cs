@@ -627,7 +627,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                 {
                     List<ReportItem> items = new List<ReportItem>();
                     List<int> hs = new List<int> { 5, 2, 3, 12, 11,
-                                            13, 15, 18, 4, 12,
+                                            15, 15, 18, 4, 12,
                                             11, 11, 11, 12, 11,
                                             11, 11, 11, 11, 11,
                                             11, 11, 11, 11, 11,
@@ -635,7 +635,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Dnevnici
                     if (KindActivity == 1)
                     {
                         hs = new List<int> { 5, 2, 3, 12, 11,
-                                            13, 15, 18, 4, 12,
+                                            15, 15, 18, 4, 12,
                                             11, 11, 11, 11, 11,
                                             11,6, 3, 3 };
                     }
