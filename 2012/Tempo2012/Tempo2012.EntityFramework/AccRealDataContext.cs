@@ -2730,7 +2730,7 @@ namespace Tempo2012.EntityFramework
             }
             return sFieldses;
         }
-        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4,bool et5, BackgroundWorker bw)
+        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4,bool et5,bool et6, BackgroundWorker bw)
         {
             if (et1)
             {
@@ -2795,7 +2795,7 @@ namespace Tempo2012.EntityFramework
                     if (a.LevelAccount == 2)
                     {
                         list2.Add(new List<string> { a.ShortName });
-                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4,et5));
+                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4,et5,et6));
                     }
                 }
                 bw.ReportProgress(80);
@@ -2869,7 +2869,7 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(100);
         }
 
-        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0, bool po00)
+        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0, bool po00,bool et6)
         {
             var items = new List<List<string>>();
             var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
@@ -3127,10 +3127,25 @@ namespace Tempo2012.EntityFramework
                     if (t.Ks==0) _movements1.RemoveAll(e => e.Code == t.Code);
                 };
                     
-            }
+            } 
+            decimal suma0=0;
+            bool first = true;
+            AccItemSaldo worksaldo = null;
+            AccItemSaldo firstsaldo = null;
             foreach (AccItemSaldo itemSaldo in _movements1.OrderBy(m => m.Cod))
             {
-                List<string> row = new List<string>();
+
+                if (first) 
+                {
+                    first = false;
+                    firstsaldo = itemSaldo;
+                }
+                if (et6 && itemSaldo.NInvoise == "0")
+                {
+                    worksaldo = itemSaldo;
+                    continue;
+                }
+                
                 if (accountsModel.TypeAccount != 1)
                 {
                     itemSaldo.Ks = itemSaldo.Nsc + itemSaldo.Oc - (itemSaldo.Nsd + itemSaldo.Od);
@@ -3151,6 +3166,51 @@ namespace Tempo2012.EntityFramework
                     itemSaldo.Ksv = itemSaldo.Nsdv + itemSaldo.Odv - (itemSaldo.Nscv + itemSaldo.Ocv);
                     itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
                 }
+                if (et6)
+                {
+                    if (Math.Abs(itemSaldo.Ks) < decimal.Parse("0.05"))
+                    {
+                        suma0 += itemSaldo.Ks;
+                        continue;
+                    }
+                }
+                if (et6 && firstsaldo.Cod != itemSaldo.Cod)
+                {
+                    if (worksaldo != null)
+                    {
+                        worksaldo.Ks += suma0;
+                    }
+                    else
+                    {
+                        worksaldo = firstsaldo;
+                        worksaldo.NInvoise = "0";
+                        worksaldo.Ks = suma0;
+                    }
+                    if (worksaldo.Ks != 0)
+                    {
+                        List<string> row1 = new List<string>();
+                        row1.Add(worksaldo.Code);
+                        row1.Add(worksaldo.NameContragent);
+                        row1.Add(worksaldo.NInvoise);
+                        row1.Add(string.Format("{0}.{1}.{2}", worksaldo.Data.Day.ToZeroString(2), worksaldo.Data.Month.ToZeroString(2), worksaldo.Data.Year.ToZeroString(4)));
+                        row1.Add(worksaldo.Ns.ToString(Vf.LevFormatUI));
+                        row1.Add(worksaldo.Od.ToString(Vf.LevFormatUI));
+                        row1.Add(worksaldo.Oc.ToString(Vf.LevFormatUI));
+                        row1.Add(worksaldo.Ks.ToString(Vf.LevFormatUI));
+                        row1.Add(worksaldo.Folder);
+                        row1.Add(worksaldo.DocNumber);
+                        row1.Add(worksaldo.Reason);
+                        row1.Add(worksaldo.Ksv.ToString(Vf.ValFormatUI));
+                        row1.Add(worksaldo.VidVal);
+                        row1.Add(worksaldo.VidValCode);
+                        row1.Add(accountsModel.Short);
+                        items.Add(row1);
+                    }
+                    worksaldo = null;
+                    firstsaldo = itemSaldo;
+                    suma0 = 0;
+                }
+                List<string> row = new List<string>();
                 row.Add(itemSaldo.Code);
                 row.Add(itemSaldo.NameContragent);
                 row.Add(itemSaldo.NInvoise);

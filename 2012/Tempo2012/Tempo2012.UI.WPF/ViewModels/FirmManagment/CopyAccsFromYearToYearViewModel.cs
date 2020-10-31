@@ -48,6 +48,7 @@ namespace Tempo2012.UI.WPF.ViewModels
             isCopySmetkoplan = true;
             isCalculateSaldoDetailZero = false;
             excludeTotalZero = false;
+            еxclude005 = true;
         }
 
         private bool CanCopyAccFromYtoY()
@@ -79,7 +80,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         private void DoCopy(object sender, DoWorkEventArgs e)
         {
-            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero, ExcludeTotalZero, bw);
+            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero, ExcludeTotalZero,Exclude005, bw);
         }
 
         
