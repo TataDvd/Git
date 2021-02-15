@@ -102,7 +102,7 @@ namespace Tempo2012.EntityFramework
         IEnumerable<Conto> GetPrevConto(int firmaId, ISearchAcc pSearcAcc);
         List<List<string>> GetOborotnaVed(DateTime toDate, DateTime fromDate,bool hideAllZero);
         Dictionary<string, string> GetOborotnaVedTemplate(DateTime toDate, DateTime fromDate);
-        void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4,bool et5,bool e6, BackgroundWorker bw);
+        void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4,bool et5, BackgroundWorker bw);
         IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false,string filter=null);
         IEnumerable<InvoiseControl> GetFullInvoiseContoCredit(int accId,bool withoutsuma=false,string filter=null);
         AccSaldo GetSaldoAcc(int accId);
@@ -114,7 +114,9 @@ namespace Tempo2012.EntityFramework
         IEnumerable<ValutaEntity> GetCurRates(string codevaluta, DateTime fromDate, DateTime toDate);
         void DeleteKurs(List<ValutaEntity> itemsfordelete);
         decimal? LoadKursForaDay(DateTime Data, string vidvaluta);
-        List<List<string>> GetAllMovementsDetails(int p, int p_2, int p_3, out string sumalvk, out string sumalvd, out string sumalvdsub, out string sumalvksub);
+        List<List<string>> GetAllMovementsDetails(int accid, int accnum, int firmid, out string sumalvk, out string sumalvd, out string sumalvdsub, out string sumalvksub);
+        List<SaldosStModel> GetAllMovementsDetailControl(int accid);
+        List<SaldoAnaliticModel> GetAllMovementsDetailraz(int accid);
         List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid,string kindValuta=null);
         bool DeleteAllConto(int firmaId);
         List<ViesRow> GetVies(int month, int year, Dictionary<string, string> declar);
@@ -162,7 +164,7 @@ namespace Tempo2012.EntityFramework
 
         IEnumerable<Conto> GetAllContoWithoutDds(int p, CSearchAcc cSearchAcc, int tipdnev);
 
-        void Reorder();
+        void Reorder(DateTime date);
 
         IEnumerable<ValutaControl> GetAllContoValuta(int FirmaId, int ValId, DateTime fromDate, DateTime toDate, string vidval, int mode = 1,string codeclient="");
 

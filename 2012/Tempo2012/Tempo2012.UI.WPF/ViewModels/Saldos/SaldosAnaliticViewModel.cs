@@ -42,6 +42,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
         }
 
         private int _CurrentRowIndex;
+        private int _KontragentID;
         public int CurrentRowIndex
         {
             get
@@ -498,7 +499,7 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
             string sumalvk, sumalvd,sumalvksub, sumalvdsub;
             this.accountsModel = accountsModel;
             AllSaldoss = Context.GetAllMovementsDetails(accountsModel.Id,accountsModel.Num,accountsModel.FirmaId,out sumalvk, out sumalvd,out sumalvdsub,out sumalvksub);
-
+            _KontragentID = -1;
             if (AllSaldoss != null && AllSaldoss.Count > 0)
             {
                 var _reportItems = new List<ReportItem>();
@@ -512,6 +513,10 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
                     else
                     {
                         _reportItems.Add(new ReportItem { Height = 10, IsShow = true, Name = item, Width = 30 });
+                    }
+                    if (item == "Номер")
+                    {
+                        _KontragentID = k;
                     }
                     k++;
                 }
@@ -534,7 +539,14 @@ namespace Tempo2012.UI.WPF.ViewModels.Saldos
                 var _reportItems = new List<ReportItem>();
                 this.ReportItems = _reportItems;
             }
-            AllSaldos = new List<List<string>>(AllSaldoss);
+            if (_KontragentID != -1)
+            {
+                AllSaldos = new List<List<string>>(AllSaldoss.OrderBy(t => int.Parse(t[_KontragentID])));
+            }
+            else
+            {
+                 AllSaldos = new List<List<string>>(AllSaldoss);
+            }
             SumaLvD = sumalvd;
             SumaLvK = sumalvk;
             string sumavd, sumavk, sumakd, sumakk;

@@ -198,7 +198,7 @@
 
                     <CheckBox  
                                       IsChecked="{Binding Path=WithContragentSum,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                      TabIndex="-1" ToolTip="Включи междинна суме в справкарта" 
+                                      TabIndex="-1" ToolTip="Включи междинна сума в справката" 
                                        Margin="20,5,0,0" Visibility="{Binding ShowContragentSum,Converter={StaticResource BoolToVisibleConvertor}}"
                                       >
                         <CustomControls:TextBlockEx Text="С междинни суми"  Height="15" Margin="0" Visibility="{Binding ShowContragentSum,Converter={StaticResource BoolToVisibleConvertor}}"/>

@@ -1381,5 +1381,26 @@ namespace Tempo2012.UI.WPF
             ViesG dialog = new ViesG();
             dialog.ShowDialog();
         }
+
+        private void MenuItem_Click_47(object sender, RoutedEventArgs e)
+        {
+            SelectAccDialog acc = new SelectAccDialog(true);
+            acc.ShowDialog();
+            if (acc.DialogResult.HasValue && acc.DialogResult.Value)
+            {
+                var accountsModel =
+                    (DataContext as MainViewModel).Context.GetAllAccounts(
+                        ConfigTempoSinglenton.GetInstance().CurrentFirma.Id).FirstOrDefault(p => p.Short == acc.Acc);
+                if (accountsModel == null)
+                {
+                    MessageBoxWrapper.Show("Не е намерена сметка с номер " + acc.Acc);
+                    return;
+                }
+
+                Stotinka dialog = new Stotinka(accountsModel);
+                dialog.ShowDialog();
+
+            }
+        }
     }
 }

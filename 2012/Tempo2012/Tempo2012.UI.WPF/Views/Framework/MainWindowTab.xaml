@@ -580,6 +580,13 @@
                                     <CustomControls:TextBlockEx Text="Копиране на сметкоплан от фирма на фирма"/>
                                 </DataTemplate>
                             </MenuItem.HeaderTemplate>
+                        </MenuItem> 
+                        <MenuItem  Click="MenuItem_Click_47">
+                            <MenuItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TextBlockEx Text="Изчистване на стот. По партиди в нач. Салда"/>
+                                </DataTemplate>
+                            </MenuItem.HeaderTemplate>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Click="MenuItem_Click_11">

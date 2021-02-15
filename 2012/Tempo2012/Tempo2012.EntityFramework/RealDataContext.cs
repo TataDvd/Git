@@ -1323,6 +1323,169 @@ public static partial class RealDataContext
 
             return allmovement;
         }
+        public static List<SaldoAnaliticModel> GetAllMovementsDetailraz(int accid)
+        {
+            List<SaldoAnaliticModel> allmovement = new List<SaldoAnaliticModel>();
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            try
+            {
+                dbman.Open();
+                string command =
+                    string.Format(
+                        "SELECT * FROM MOVEMENT a inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\" where accid={0} order by a.\"group\",a.SORTORDER",
+                        accid);
+                dbman.ExecuteReader(CommandType.Text, command);
+              
+                while (dbman.DataReader.Read())
+                {
+                    var saldo = new SaldoAnaliticModel();
+                    saldo.ID = int.Parse(dbman.DataReader["Id"].ToString());
+                    saldo.ACCFIELDKEY = int.Parse(dbman.DataReader["ACCFIELDKEY"].ToString());
+                    saldo.ACCID = int.Parse(dbman.DataReader["ACCID"].ToString());
+                    saldo.DATA = DateTime.Parse(dbman.DataReader["DATA"].ToString());
+                    saldo.VAL = dbman.DataReader["VALUE"].ToString();
+                    saldo.VALUED = decimal.Parse(dbman.DataReader["VALUED"].ToString());
+                    saldo.DBField = dbman.DataReader["DBField"].ToString();
+                    saldo.GROUP = int.Parse(dbman.DataReader["GROUP"].ToString());
+                    saldo.ISNULL = int.Parse(dbman.DataReader["ISNULL"].ToString());
+                    saldo.LOOKUPFIELDKEY =
+                        int.Parse(dbman.DataReader["LOOKUPFIELDKEY"].ToString());
+                    saldo.LOOKUPID = int.Parse(dbman.DataReader["LOOKUPID"].ToString());
+                    //int b = 0;
+                    //var a = dbman.DataReader["LOOKUP_ID"].ToString();
+                    //if (int.TryParse(a, out b))
+                    //{
+                    //    saldo.LOOKUPID = b;
+                    //}
+                    saldo.VALUEDATE = DateTime.Parse(dbman.DataReader["VALUEDATE"].ToString());
+                    saldo.VALUEMONEY = decimal.Parse(dbman.DataReader["VALUEMONEY"].ToString());
+                    saldo.VALUENUM = int.Parse(dbman.DataReader["VALUENUM"].ToString());
+                    decimal test;
+                    saldo.VALKOLD = decimal.TryParse(dbman.DataReader["VALKOLD"].ToString(), out test) ? decimal.Parse(dbman.DataReader["VALKOLD"].ToString()) : 0;
+                    saldo.VALKOLK = decimal.TryParse(dbman.DataReader["VALKOLK"].ToString(), out test) ? decimal.Parse(dbman.DataReader["VALKOLK"].ToString()) : 0;
+                    saldo.VALVALD = decimal.TryParse(dbman.DataReader["VALVALD"].ToString(), out test) ? decimal.Parse(dbman.DataReader["VALVALD"].ToString()) : 0;
+                    saldo.VALVALK = decimal.TryParse(dbman.DataReader["VALVALK"].ToString(), out test) ? decimal.Parse(dbman.DataReader["VALVALK"].ToString()) : 0;
+                    saldo.VALS = dbman.DataReader["VALS"].ToString();
+                    saldo.Name = dbman.DataReader["Name"].ToString();
+                    saldo.SORTORDER = int.Parse(dbman.DataReader["SORTORDER"].ToString());
+                    allmovement.Add(saldo);
+
+
+
+
+                }
+               
+               
+            }
+
+            catch (Exception ex)
+            {
+                Logger.Instance().WriteLogError(ex.Message, "public static List<List<string>> GetAllMovementsDetail(int accid, int accnum, int firmid, out string sumalvk, out string sumalvd, out string sumalvksub, out string sumalvdsub)");
+            }
+
+            finally
+            {
+                dbman.Dispose();
+            }
+
+            return allmovement;
+        }
+        public static List<SaldosStModel> GetAllMovementsDetailControl(int accid)
+        {
+            List<SaldosStModel> allmovement =new  List<SaldosStModel>();
+            var dbman = new DBManager(DataProvider.Firebird);
+            dbman.ConnectionString = Entrence.ConnectionString;
+            try
+            {
+                dbman.Open();
+                string command =
+                    string.Format(
+                        "SELECT * FROM MOVEMENT a inner join \"lookupsfield\" b on a.ACCFIELDKEY=b.\"Id\" where accid={0} order by a.\"group\",a.SORTORDER",
+                        accid);
+                dbman.ExecuteReader(CommandType.Text, command);
+                SaldosStModel row = new SaldosStModel();
+                int group = -1;
+                int curqroup = -1;
+                bool havesaldo = false;
+                while (dbman.DataReader.Read())
+                {
+                    havesaldo = true;
+                    curqroup = int.Parse(dbman.DataReader["group"].ToString());
+                    var lk = int.Parse(dbman.DataReader["LOOKUPID"].ToString());
+                    if (curqroup != group)
+                    {
+                        if (group == -1)
+                        {
+                            group = curqroup;
+                        }
+                        else
+                        {
+                            
+                            row.Group=group;
+                            allmovement.Add(row);
+                            row = new SaldosStModel();
+                            group = curqroup;
+                        }
+                    }
+
+                    if (dbman.DataReader["NAMEENG"].ToString() == "SUMALV" || dbman.DataReader["NAMEENG"].ToString() == "COLICHESTVO" || dbman.DataReader["NAMEENG"].ToString() == "SUMAVALUTA")
+                    {
+                       
+                        if (dbman.DataReader["NAMEENG"].ToString().Equals("SUMALV"))
+                        {
+                            row.SaldoDebit= decimal.Parse(dbman.DataReader["VALUED"].ToString());
+                            row.SaldoCredit= decimal.Parse(dbman.DataReader["VALUEMONEY"].ToString());
+                        }
+                        if (dbman.DataReader["NAMEENG"].ToString().Equals("COLICHESTVO"))
+                        {
+                            row.SaldoKolDebit= decimal.Parse(dbman.DataReader["VALKOLD"].ToString());
+                            row.SaldoKolCredit= decimal.Parse(dbman.DataReader["VALKOLK"].ToString());
+                        }
+                        if (dbman.DataReader["NAMEENG"].ToString().Equals("SUMAVALUTA"))
+                        {
+                            row.SaldoValutaDebit= decimal.Parse(dbman.DataReader["VALVALD"].ToString());
+                            row.SaldoValutaCredit=decimal.Parse(dbman.DataReader["VALVALK"].ToString());
+                        }
+
+                    }
+                    else
+                    {
+                        var field = dbman.DataReader["Name"].ToString();
+                        
+                        if (field == "Контрагент")
+                        {
+                            row.Code=dbman.DataReader["VALUE"].ToString();
+                            row.Name=dbman.DataReader["VALS"].ToString();
+                        }
+                        if (field=="Номер фактура")
+                            row.Invoise=dbman.DataReader["VALUE"].ToString();
+                        }
+                    }
+
+                
+                
+                if (havesaldo)
+                {
+                    row.Group=curqroup;
+                    allmovement.Add(row);
+                }
+                
+            }
+
+            catch (Exception ex)
+            {
+                Logger.Instance().WriteLogError(ex.Message, "public static List<List<string>> GetAllMovementsDetail(int accid, int accnum, int firmid, out string sumalvk, out string sumalvd, out string sumalvksub, out string sumalvdsub)");
+            }
+
+            finally
+            {
+                dbman.Dispose();
+            }
+
+            return allmovement;
+        }
+
         public static List<List<string>> GetAllMovementsDetail(int accid, int accnum, int firmid, out string sumalvk, out string sumalvd, out string sumalvksub, out string sumalvdsub)
         {
             List<List<string>> allmovement = new List<List<string>>();

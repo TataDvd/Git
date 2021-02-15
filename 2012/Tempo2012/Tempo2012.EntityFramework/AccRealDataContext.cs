@@ -2730,7 +2730,7 @@ namespace Tempo2012.EntityFramework
             }
             return sFieldses;
         }
-        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4,bool et5,bool et6, BackgroundWorker bw)
+        public static void CopyAccFromYtoY(int firmaId, int fromYear, int toYear,bool et1,bool et2, bool et3,bool et4,bool et5, BackgroundWorker bw)
         {
             if (et1)
             {
@@ -2795,7 +2795,7 @@ namespace Tempo2012.EntityFramework
                     if (a.LevelAccount == 2)
                     {
                         list2.Add(new List<string> { a.ShortName });
-                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4,et5,et6));
+                        list2.AddRange(Facturi(new DateTime(fromYear, 1, 1), new DateTime(fromYear, 12, 31), a,et4,et5));
                     }
                 }
                 bw.ReportProgress(80);
@@ -2869,7 +2869,7 @@ namespace Tempo2012.EntityFramework
             bw.ReportProgress(100);
         }
 
-        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0, bool po00,bool et6)
+        private static List<List<string>> Facturi(DateTime FromDate, DateTime ToDate,AccountsModel accountsModel,bool po0, bool po00)
         {
             var items = new List<List<string>>();
             var rezi =GetAllAnaliticSaldos(accountsModel.Id, accountsModel.FirmaId);
@@ -3140,11 +3140,7 @@ namespace Tempo2012.EntityFramework
                     first = false;
                     firstsaldo = itemSaldo;
                 }
-                if (et6 && itemSaldo.NInvoise == "0")
-                {
-                    worksaldo = itemSaldo;
-                    continue;
-                }
+                
                 
                 if (accountsModel.TypeAccount != 1)
                 {
@@ -3166,50 +3162,8 @@ namespace Tempo2012.EntityFramework
                     itemSaldo.Ksv = itemSaldo.Nsdv + itemSaldo.Odv - (itemSaldo.Nscv + itemSaldo.Ocv);
                     itemSaldo.Nsv = itemSaldo.Nsdv - itemSaldo.Nscv;
                 }
-                if (et6)
-                {
-                    if (Math.Abs(itemSaldo.Ks) < decimal.Parse("0.05"))
-                    {
-                        suma0 += itemSaldo.Ks;
-                        continue;
-                    }
-                }
-                if (et6 && firstsaldo.Cod != itemSaldo.Cod)
-                {
-                    if (worksaldo != null)
-                    {
-                        worksaldo.Ks += suma0;
-                    }
-                    else
-                    {
-                        worksaldo = firstsaldo;
-                        worksaldo.NInvoise = "0";
-                        worksaldo.Ks = suma0;
-                    }
-                    if (worksaldo.Ks != 0)
-                    {
-                        List<string> row1 = new List<string>();
-                        row1.Add(worksaldo.Code);
-                        row1.Add(worksaldo.NameContragent);
-                        row1.Add(worksaldo.NInvoise);
-                        row1.Add(string.Format("{0}.{1}.{2}", worksaldo.Data.Day.ToZeroString(2), worksaldo.Data.Month.ToZeroString(2), worksaldo.Data.Year.ToZeroString(4)));
-                        row1.Add(worksaldo.Ns.ToString(Vf.LevFormatUI));
-                        row1.Add(worksaldo.Od.ToString(Vf.LevFormatUI));
-                        row1.Add(worksaldo.Oc.ToString(Vf.LevFormatUI));
-                        row1.Add(worksaldo.Ks.ToString(Vf.LevFormatUI));
-                        row1.Add(worksaldo.Folder);
-                        row1.Add(worksaldo.DocNumber);
-                        row1.Add(worksaldo.Reason);
-                        row1.Add(worksaldo.Ksv.ToString(Vf.ValFormatUI));
-                        row1.Add(worksaldo.VidVal);
-                        row1.Add(worksaldo.VidValCode);
-                        row1.Add(accountsModel.Short);
-                        items.Add(row1);
-                    }
-                    worksaldo = null;
-                    firstsaldo = itemSaldo;
-                    suma0 = 0;
-                }
+                
+               
                 List<string> row = new List<string>();
                 row.Add(itemSaldo.Code);
                 row.Add(itemSaldo.NameContragent);
@@ -3354,7 +3308,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.FOLDER,c.\"Reason\",c.\"Note\",c.DOCNUM,c.\"Date\" as DD,c.PR1,c.PR2,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"DebitAccount\"={2} and m.\"TYPE\"=1 and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 if (!string.IsNullOrWhiteSpace(filter))
@@ -3393,6 +3347,7 @@ namespace Tempo2012.EntityFramework
                     ic.Folder=dbman.DataReader["Folder"].ToString();
                     ic.DocNumber = dbman.DataReader["DOCNUM"].ToString();
                     ic.Reason=dbman.DataReader["Reason"].ToString();
+                    ic.Note = dbman.DataReader["Note"].ToString();
                     ic.Pr1=dbman.DataReader["PR1"].ToString();
                     ic.Pr2=dbman.DataReader["PR2"].ToString();
                     if (ic.NameField == "Номер фактура")
@@ -3513,6 +3468,7 @@ namespace Tempo2012.EntityFramework
                              DataInvoise = grp.Max(t => t.DataInvoise),
                              DataConto=grp.Max(t=>t.DataConto),
                              Reason = grp.First().Reason,
+                             Note=grp.First().Note,
                              Folder = grp.First().Folder,
                              DocNumber = grp.First().DocNumber,
                              VidVal = grp.First().VidVal,
@@ -3595,7 +3551,7 @@ namespace Tempo2012.EntityFramework
             {
                 string s =
                     string.Format(
-                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}",
+                        "SELECT c.\"Id\",c.\"Oborot\",c.\"Date\" as DD,c.FOLDER,c.\"Reason\",c.\"Note\",c.PR1,c.PR2,c.DOCNUM,m.LOOKUPFIELDKEY,m.LOOKUPID,m.\"VALUE\",lf.\"Name\",m.VALUEDATE,m.LOOKUPVAL,m.VALVAL FROM \"conto\" c inner join CONTOMOVEMENT m on m.CONTOID=c.\"Id\"inner join \"lookupsfield\" lf on m.ACCFIELDKEY=lf.\"Id\" where (c.\"FirmId\"={0} and c.\"Date\">='1.1.{1}' and c.\"Date\"<='31.12.{1}' and c.\"CreditAccount\"={2} and m.\"TYPE\"=2 and m.ACCID={2}",
                         ConfigTempoSinglenton.GetInstance().CurrentFirma.Id,
                         ConfigTempoSinglenton.GetInstance().WorkDate.Year, AccID);
                 if (!string.IsNullOrWhiteSpace(filter))
@@ -3634,6 +3590,7 @@ namespace Tempo2012.EntityFramework
                     ic.Folder = dbman.DataReader["Folder"].ToString();
                     ic.DocNumber = dbman.DataReader["DOCNUM"].ToString();
                     ic.Reason = dbman.DataReader["Reason"].ToString();
+                    ic.Note = dbman.DataReader["Note"].ToString();
                     ic.Pr1 = dbman.DataReader["Pr1"].ToString();
                     ic.Pr2 = dbman.DataReader["Pr2"].ToString();
 
@@ -3745,6 +3702,7 @@ namespace Tempo2012.EntityFramework
                              DataConto= grp.Max(t => t.DataConto),
                              Reason = grp.First().Reason,
                              Folder=grp.First().Folder,
+                             Note=grp.First().Note,
                              VidVal=grp.First().VidVal,
                              VidValCode=grp.First().VidValCode,
                              DocNumber=grp.First().DocNumber,
@@ -6116,7 +6074,7 @@ namespace Tempo2012.EntityFramework
             return allConto;
         }
 
-        internal static void Reorder()
+        internal static void Reorder(DateTime date)
         {
             var dbman = new DBManager(DataProvider.Firebird);
             dbman.ConnectionString = Entrence.ConnectionString;
@@ -6125,8 +6083,8 @@ namespace Tempo2012.EntityFramework
                 dbman.Open();
                 dbman.BeginTransaction();
                 dbman.CreateParameters(3);
-                dbman.AddParameters(0, "@WM", ConfigTempoSinglenton.GetInstance().WorkDate.Month);
-                dbman.AddParameters(1, "@WY", ConfigTempoSinglenton.GetInstance().WorkDate.Year);
+                dbman.AddParameters(0, "@WM", date.Month);
+                dbman.AddParameters(1, "@WY", date.Year);
                 dbman.AddParameters(2, "@FI",  ConfigTempoSinglenton.GetInstance().CurrentFirma.Id);
                 dbman.ExecuteNonQuery(CommandType.StoredProcedure, "SETPORNOM");
                 dbman.CommitTransaction();

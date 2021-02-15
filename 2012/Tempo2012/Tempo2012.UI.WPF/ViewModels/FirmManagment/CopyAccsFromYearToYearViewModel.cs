@@ -22,7 +22,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         public bool IsCalculateSaldoDetailZero { get { return isCalculateSaldoDetailZero; } set { isCalculateSaldoDetailZero = value; OnPropertyChanged("IsCalculateSaldoDetailZero"); } }
         public bool ExcludeTotalZero { get { return excludeTotalZero; } set { excludeTotalZero = value; OnPropertyChanged("ExcludeTotalZero"); } }
-        public bool Exclude005 { get { return еxclude005; } set { еxclude005 = value; OnPropertyChanged("Exclude005"); } }
+       
 
         public int CurrentProgress
         {
@@ -80,7 +80,7 @@ namespace Tempo2012.UI.WPF.ViewModels
 
         private void DoCopy(object sender, DoWorkEventArgs e)
         {
-            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero, ExcludeTotalZero,Exclude005, bw);
+            Context.CopyAccFromYtoY(ConfigTempoSinglenton.GetInstance().CurrentFirma.Id, FromYear, ToYear,IsCopySmetkoplan,IsCalculateSaldo,IsCalculateSaldoDetail,IsCalculateSaldoDetailZero, ExcludeTotalZero, bw);
         }
 
         

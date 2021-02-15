@@ -25,4 +25,17 @@ namespace Tempo2012.EntityFramework.Models
         public decimal SaldoValutaDebit { get; set; }
         public decimal SaldoValutaCredit { get; set; }
     }
+    public class SaldosStModel
+    {
+        public int Group { get; set; }
+        public string Code { get; set; }
+        public string Invoise { get; set; }
+        public decimal SaldoDebit { get; set; }
+        public decimal SaldoCredit { get; set; }
+        public decimal SaldoValutaDebit { get; set; }
+        public decimal SaldoValutaCredit { get; set; }
+        public decimal SaldoKolDebit { get; set; }
+        public decimal SaldoKolCredit { get; set; }
+        public string Name { get; internal set; }
+    }
 }

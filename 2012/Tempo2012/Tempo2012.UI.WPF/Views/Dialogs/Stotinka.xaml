@@ -1,0 +1,49 @@
+﻿<Window x:Class="Tempo2012.UI.WPF.Views.Dialogs.Stotinka"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:Behavior="clr-namespace:Tempo2012.UI.WPF.AttachedProps"
+             x:Name="_this" 
+             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customControls="clr-namespace:Tempo2012.UI.WPF.CustomControls" xmlns:l="clr-namespace:Tempo2012.UI.WPF.Convertors"
+        Title="Изчистване на стот. По партиди в нач. Салда" Height="100" Width="550">
+    <Window.Resources>
+        <l:AccToVisibleConvertor x:Key="AccToVisibleConvertor"></l:AccToVisibleConvertor>
+        <l:LevConvertor x:Key="lv"/>
+        <l:ValConvertor x:Key="val"></l:ValConvertor>
+        <l:KolConvertor x:Key="kol"></l:KolConvertor>
+        <l:KursConvertor x:Key="kurs"></l:KursConvertor>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+
+
+            <StackPanel Orientation="Horizontal"/>
+            <StackPanel Orientation="Horizontal"  Margin="10,5,10,5" >
+                <customControls:TextBlockEx  Text="Лимит за изчистване" Margin="10,5,10,5" Width="160"  />
+                <customControls:MaskTextBox 
+                            Behavior:TextBoxBehavior.SelectAllTextOnFocus="True"
+                            Grid.Row="3" 
+                            Grid.Column="3" 
+                            Text="{Binding Path=Oborot,Mode=TwoWay,Converter={StaticResource lv},UpdateSourceTrigger=PropertyChanged}" 
+                            Margin="0,5,0,5" 
+                            Width="100" 
+                            HorizontalAlignment="Left"
+                            DataType="decimal"
+                            FontFamily="Arial" FontSize="14" FontWeight="Bold" TabIndex="13"/>
+                <Button Content="Старт" Width="150" Margin="10,10,0,10" Command="{Binding StartImportCommand}"></Button>
+                <Viewbox  Margin="10,5,19,5" Width="30" Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" Visibility="{Binding Visible}">
+                    <customControls:Pb  Visibility="{Binding Visible}"  />
+
+                </Viewbox>
+            </StackPanel>
+
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>

@@ -41,5 +41,6 @@ namespace Tempo2012.EntityFramework.Models
 
         public string Pr1 { get; set; }
         public string Pr2 { get; set; }
+        public string Note { get;  set; }
     }
 }

@@ -383,9 +383,9 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.GetOborotnaVed(toDate,fromDate,hideAllZero);
         }
 
-        public virtual  void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4,bool et5,bool et6 ,BackgroundWorker bw)
+        public virtual  void CopyAccFromYtoY(int firmaId, int fromYear, int toYear, bool et1, bool et2, bool et3,bool et4,bool et5 ,BackgroundWorker bw)
         {
-            RealDataContext.CopyAccFromYtoY(firmaId, fromYear, toYear,et1,et2,et3,et4,et5,et6,bw);
+            RealDataContext.CopyAccFromYtoY(firmaId, fromYear, toYear,et1,et2,et3,et4,et5,bw);
         }
 
         public virtual  IEnumerable<InvoiseControl> GetFullInvoiseContoDebit(int accId,bool withoutsuma=false,string filter=null)
@@ -441,11 +441,18 @@ namespace Tempo2012.EntityFramework
             return RealDataContext.LoadKursForaDay(Data, vidvaluta);
         }
 
-        public virtual  List<List<string>> GetAllMovementsDetails(int p, int p_2, int p_3, out string sumalvk, out string sumalvd, out string sumalvdsub, out string sumalvksub)
+        public virtual  List<List<string>> GetAllMovementsDetails(int accid, int accnum, int firmid, out string sumalvk, out string sumalvd, out string sumalvdsub, out string sumalvksub)
         {
-            return RealDataContext.GetAllMovementsDetail(p, p_2, p_3, out sumalvk,out sumalvd,out sumalvdsub,out sumalvksub);
+            return RealDataContext.GetAllMovementsDetail(accid, accnum, firmid, out sumalvk,out sumalvd,out sumalvdsub,out sumalvksub);
         }
-
+        public virtual List<SaldosStModel> GetAllMovementsDetailControl(int accid)
+        {
+            return RealDataContext.GetAllMovementsDetailControl(accid);
+        }
+        public virtual List<SaldoAnaliticModel> GetAllMovementsDetailraz(int accid)
+        {
+            return RealDataContext.GetAllMovementsDetailraz(accid);
+        }
         public virtual  List<SaldoFactura> GetAllAnaliticSaldos(int accid, int firmid,string kindValuta=null)
         {
             return RealDataContext.GetAllAnaliticSaldos(accid, firmid,kindValuta);
@@ -610,9 +617,9 @@ namespace Tempo2012.EntityFramework
         }
 
 
-        public void Reorder()
+        public void Reorder(DateTime date)
         {
-            RealDataContext.Reorder();
+            RealDataContext.Reorder(date);
         }
 
 

@@ -313,8 +313,8 @@ namespace Tempo2012.UI.WPF.Views
                     c.KindDds = "ВОД";
                     break;
                 case 4:
-                    c.Conto.VopSales = "ГЛЗ";
-                    c.KindDds = "ГЛЗ";
+                    c.Conto.VopSales = "ГЛ3";
+                    c.KindDds = "ГЛ3";
                     break;
                 case 5:
                     c.Conto.VopSales = "ДРЧЛЕНКА";

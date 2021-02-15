@@ -428,6 +428,7 @@ namespace Tempo2012.EntityFramework
                     var atr = LoadAllAnaliticfields(id);
                     foreach (SaldoAnaliticModel saldoAnaliticModel in atr)
                     {
+                        if (saldoAnaliticModel.Name != "Сума валута" && saldoAnaliticModel.Name !="Количество")
                         titles.Add(saldoAnaliticModel.Name);
                     }
                 }
@@ -640,7 +641,7 @@ namespace Tempo2012.EntityFramework
                     if (str1.Length > 0)
                     {
                         string name = str1[0];
-                        string value =a.Replace(str1[0]+ " - ", "");
+                        string value =a.Replace(str1[0]+ " - ", "").Trim();
                         if (name == "Контрагент")
                         {
                             row.Code = value.Split(' ')[0];
