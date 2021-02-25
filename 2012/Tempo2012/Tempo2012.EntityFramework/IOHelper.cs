@@ -16,7 +16,7 @@ namespace Tempo2012.EntityFramework
             if (!dir.Exists)
             {
                 throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
+                    "Няма папка с име: "
                     + sourceDirName);
             }
 

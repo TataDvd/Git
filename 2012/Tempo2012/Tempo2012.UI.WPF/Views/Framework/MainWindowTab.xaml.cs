@@ -698,11 +698,17 @@ namespace Tempo2012.UI.WPF
                     if (hs.Holding != null)
                     {
                         //"User ID=sysdba;Password=masterkey;Database={0}:{1}\\{2}\\TEMPO2012.FDB;DataSource={0};Charset=UTF8"
+                        if (!File.Exists(System.IO.Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + hs.Holding.Nom + System.IO.Path.DirectorySeparatorChar+ "TEMPO2012.FDB")))
+                        {
+                            MessageBoxWrapper.Show("Невалидна конфигурация! Моля копираите TEMPO2012.FDB в папка "+ System.IO.Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + hs.Holding.Nom+ System.IO.Path.DirectorySeparatorChar + "TEMPO2012.FDB"));
+                            return;
+                        }
                         conf.ConectionString =hs.Holding.ConnectionString;
                         conf.ActiveHolding = hs.Holding.Nom;
                         conf.ActiveFirma = 1;
                         conf.SaveConfiguration();
                         Entrence.ConnectionString = conf.ConectionString;
+                        
                         //if (Entrence.IsShowLogin)
                         //{
                         //    Login login = new Login();

@@ -117,8 +117,24 @@ namespace Tempo2012.UI.WPF.Views.Framework
                 MessageBoxWrapper.Show("Копиране на празна база от темплейтите?", "Предупреждение",
                     MessageBoxWrapperButton.YesNo) == MessageBoxWrapperResult.Yes)
             {
-                IoHelper.DirectoryCopy(ConfigTempoSinglenton.GetInstance().BaseTemplatePath,
+                try
+                {
+                    IoHelper.DirectoryCopy(ConfigTempoSinglenton.GetInstance().BaseTemplatePath,
                     Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + holding.Nom), true);
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    MessageBoxWrapper.Show("Моля създайте папка " + ConfigTempoSinglenton.GetInstance().BaseTemplatePath + " и копирайте там темпейт файловете");
+                    return;
+                }
+            }
+            else
+            {
+                if (!Directory.Exists(Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + holding.Nom)))
+                {
+                    Directory.CreateDirectory(Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + holding.Nom));
+                    MessageBoxWrapper.Show("Моля копираите TEMPO2012.FDB в папка "+Path.Combine(ConfigTempoSinglenton.GetInstance().BaseDbPath, "H" + holding.Nom));
+                }
             }
             foreach (var item in conf.ConfigNames)
             {
